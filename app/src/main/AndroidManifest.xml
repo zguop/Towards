@@ -33,7 +33,8 @@
             android:name=".model.jokes.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".model.ThemeActivity"/>
+        <activity android:name=".model.jokes.activity.ThemeActivity"/>
+
     </application>
 
 </manifest>

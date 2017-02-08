@@ -152,4 +152,5 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.xContentLayout.showLoading();
     }
 
+
 }

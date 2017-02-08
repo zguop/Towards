@@ -171,6 +171,11 @@ public class ChangeModeController {
         return null;
     }
 
+    public ThemeModel getThemeModel() {
+        int themeId = SharedPref.get().getInteger(PRE_THEME_MODEL);
+        return ThemeModel.valueOf(themeId);
+    }
+
     /**
      * 设置当前主题
      */
@@ -305,7 +310,7 @@ public class ChangeModeController {
                 Context context = view.getContext();
                 view.setBackgroundTintList(ThemeUtils.getColorStateList(context, applyValue(context, resName, theme)));
             }
-        } ,TINT("tint") {
+        }, TINT("tint") {
             @Override
             public void apply(View view, String resName, int theme) {
                 Context context = view.getContext();

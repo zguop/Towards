@@ -19,6 +19,15 @@
             android:layout_height="wrap_content"
             android:text="sfsafasfas"/>
 
+        <com.waitou.towards.view.RectView
+            android:id="@+id/theme_item"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorAccent"
+            app:radius="20dp"/>
+
+
     </LinearLayout>
 
 </layout>

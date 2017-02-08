@@ -14,7 +14,9 @@ import com.waitou.lib_theme.ThemeUtils;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
+import com.waitou.towards.model.event.DrawerToggleEvent;
 import com.waitou.towards.model.jokes.activity.RecommendedActivity;
+import com.waitou.towards.model.jokes.activity.ThemeActivity;
 import com.waitou.towards.model.jokes.contract.MainContract;
 import com.waitou.towards.model.jokes.fragment.CircleFragment;
 import com.waitou.towards.model.jokes.fragment.FigureFragment;
@@ -25,6 +27,8 @@ import com.waitou.towards.model.presenter.MainPresenter;
 
 import cn.droidlover.xdroid.base.XActivity;
 import cn.droidlover.xdroid.base.XFragmentAdapter;
+import cn.droidlover.xdroid.router.Router;
+import cn.droidlover.xdroid.rx.RxBus;
 
 
 public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener, MainContract.MainView {
@@ -41,7 +45,7 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
     }
 
     @Override
-    protected MainPresenter createPresenter() {
+    public MainPresenter createPresenter() {
         return new MainPresenter(getTextJokeFragment());
     }
 
@@ -88,6 +92,12 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
             return true;
         });
 
+        RxBus.getDefault().toObservable(DrawerToggleEvent.class).
+                subscribe(drawerToggleEvent -> {
+                    if(drawerToggleEvent.getInfo() != null){
+                        ChangeModeController.get().changeNight(MainActivity.this,drawerToggleEvent.getInfo().themeModel);
+                    }
+                });
     }
 
     @Override
@@ -121,13 +131,14 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
                 toActivity(RecommendedActivity.class);
                 break;
             case R.id.nav_all:
-                toActivity(ThemeActivity.class);
+
                 break;
             case R.id.nav_meizi:
                 break;
             case R.id.nav_collect:
                 break;
             case R.id.nav_theme:
+                Router.newIntent().from(this).to(ThemeActivity.class).launch();
                 break;
             case R.id.nav_about:
                 break;
@@ -171,4 +182,5 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         }
         return mPersonFragment;
     }
+
 }

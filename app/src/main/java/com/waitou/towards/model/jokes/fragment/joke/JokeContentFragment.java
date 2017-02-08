@@ -9,7 +9,6 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.towards.model.jokes.contract.MainContract;
-import com.waitou.towards.model.presenter.MainPresenter;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
  * Created by waitou on 17/1/10.
  */
 
-public class JokeContentFragment extends XFragment<MainPresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener, MainContract.JokeContentView<JokeInfo> {
+public class JokeContentFragment extends XFragment<MainContract.MainPresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener, MainContract.JokeContentView<JokeInfo> {
 
     private int                        mType;
     private MultiTypeAdapter           mAdapter;
@@ -90,7 +89,7 @@ public class JokeContentFragment extends XFragment<MainPresenter, IncludePullRec
         getBinding().xList.getRecyclerView().setDefaultPageSize();
     }
 
-    public static Fragment getInstance(int type, MainPresenter presenter) {
+    public static Fragment getInstance(int type, MainContract.MainPresenter presenter) {
         JokeContentFragment fragment = new JokeContentFragment();
         fragment.setPresenter(presenter);
         Bundle bundle = new Bundle();
@@ -100,7 +99,7 @@ public class JokeContentFragment extends XFragment<MainPresenter, IncludePullRec
     }
 
     @Override
-    public void setPresenter(MainPresenter presenter) {
+    public void setPresenter(MainContract.MainPresenter presenter) {
         this.mPresenter = presenter;
     }
 }

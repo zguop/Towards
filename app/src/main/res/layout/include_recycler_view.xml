@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <cn.droidlover.xdroid.recycler.XRecyclerView
+        android:id="@+id/x_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colore7e7e7"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"/>
+
+</layout>

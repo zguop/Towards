@@ -8,16 +8,17 @@ package com.waitou.lib_theme;
 
 public enum ThemeModel {
 
-    POWDER(R.style.AppThemePowder, "powder"),
-    RED(R.style.AppThemeRed, "red");
+    POWDER(R.style.AppThemePowder, R.color.colorPowder, "powder"),
+    RED(R.style.AppThemeRed, R.color.colorRed, "red");
 
     private int    theme;
+    private int    colorId;
     private String themeStr;
 
-    ThemeModel(int theme, String themeStr) {
+    ThemeModel(int theme, int colorId, String themeStr) {
         this.theme = theme;
+        this.colorId = colorId;
         this.themeStr = themeStr;
-
     }
 
     public int getTheme() {
@@ -28,8 +29,14 @@ public enum ThemeModel {
         return themeStr;
     }
 
+    public int getColorId() {
+        return colorId;
+    }
+
     public static ThemeModel valueOf(int theme) {
-        if (theme == R.style.AppThemePowder) {
+        if (theme == R.style.AppThemeRed) {
+            return RED;
+        } else if (theme == R.style.AppThemePowder) {
             return POWDER;
         } else {
             return RED;

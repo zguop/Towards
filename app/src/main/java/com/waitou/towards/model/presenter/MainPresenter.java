@@ -25,10 +25,7 @@ import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
 
 public class MainPresenter extends XPresent<MainActivity> implements MainContract.MainPresenter {
 
-
     private MainContract.TextJokeView mTextJokeView;
-
-
     private List<Fragment> fragments = new ArrayList<>();
 
     public MainPresenter(MainContract.TextJokeView textJokeView) {

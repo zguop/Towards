@@ -15,7 +15,7 @@ import cn.droidlover.xdroid.base.XFragment;
  * 首页
  */
 
-public class HomeFragment extends XFragment<MainPresenter,FragmentHomeBinding> {
+public class HomeFragment extends XFragment<MainPresenter, FragmentHomeBinding> {
 
     @Override
     public boolean initXView() {

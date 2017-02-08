@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="item"
+            type="com.waitou.towards.bean.ThemeInfo"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.presenter.ThemePresenter"/>
+
+    </data>
+
+    <com.waitou.towards.view.SquareRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.waitou.towards.view.RectView
+            android:id="@+id/theme_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> presenter.onItemClick(item)}"
+            app:color="@{item.themeModel.colorId}"
+            app:radius="20dp"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/theme_item_focus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_theme_duihao"
+            android:visibility="@{item.focus ? View.VISIBLE : View.GONE}"/>
+
+    </com.waitou.towards.view.SquareRelativeLayout>
+
+</layout>
