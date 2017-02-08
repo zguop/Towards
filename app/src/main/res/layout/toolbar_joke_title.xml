@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/item1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_open_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:text="推荐段子"
+            android:textColor="@color/skin_joke_title_not"
+            android:textSize="14dp"/>
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_open_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:text="最热趣图"
+            android:textColor="@color/skin_joke_title_not"
+            android:textSize="14dp"/>
+    </RadioGroup>
+
+</layout>

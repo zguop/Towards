@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:checkableBehavior="single" 会有选中的效果-->
+    <group>
+        <item
+            android:id="@+id/nav_tuijian"
+            android:icon="@drawable/navigation_tuijian"
+            android:title="今日推荐"/>
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@drawable/navigation_all"
+            android:title="分类浏览"/>
+        <item
+            android:id="@+id/nav_meizi"
+            android:icon="@drawable/navigation_meizi"
+            android:title="福利"/>
+        <item
+            android:id="@+id/nav_collect"
+            android:icon="@drawable/navigation_collect"
+            android:title="我的收藏"/>
+    </group>
+
+    <item android:title="Gank">
+        <menu>
+            <item
+                android:id="@+id/nav_theme"
+                android:icon="@drawable/icon_theme"
+                android:title="主题"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/icon_about"
+                android:title="关于"/>
+        </menu>
+    </item>
+
+</menu>

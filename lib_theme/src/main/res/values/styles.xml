@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <!--指定不带ActionBar的主题-->
+    <!--Theme.AppCompat.Light.NoActionBar 表示淡色主题，它会将界面的主题颜色设成淡色，陪衬颜色设置成深色-->
+    <!--Theme.AppCompat.NoActionBar 表示深色主题，它会将界面的主题颜色设成深色，配村颜色设成淡色-->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+
+
+    </style>
+
+    <style name="AppThemePowder" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPowder</item>
+        <item name="colorPrimaryDark">@color/colorPowder</item>
+        <item name="colorAccent">@color/colorPowder</item>
+
+        <item name="skin_kind_color_not">@color/colorWhite</item>
+
+    </style>
+
+
+    <style name="AppThemeRed" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorRed</item>
+        <item name="colorAccent">@color/colorRed</item>
+
+        <item name="skin_kind_color_not">@color/colorWhite</item>
+
+    </style>
+</resources>

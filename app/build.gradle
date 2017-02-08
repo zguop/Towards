@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    publishNonDefault true
+    defaultPublishConfig "debug"
+    defaultConfig {
+        applicationId "com.waitou.towards"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        resConfigs "zh" //还好强大的gradle支持语言的配置，比如国内应用只支持中文
+        //支持dataBinding
+        dataBinding {
+            enabled = true
+        }
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            //混淆
+            minifyEnabled true
+            //ZipAlign优化
+            zipAlignEnabled true
+            //去除无用资源
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile rootProject.ext.dependencies['gradle-retrolambda']
+    compile rootProject.ext.dependencies['cardview-v7']
+    compile rootProject.ext.dependencies['databinding-adapter']
+    compile rootProject.ext.dependencies["statusbar"]
+    //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme
+
+    debugCompile project(path: ':littlelibrary', configuration: 'debug')
+    releaseCompile project(path: ':littlelibrary', configuration: 'release')
+
+}

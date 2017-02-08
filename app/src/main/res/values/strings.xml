@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">towards</string>
+    <string name="home">主页</string>
+    <string name="joke">段子</string>
+    <string name="figure">趣图</string>
+    <string name="circle">圈子</string>
+    <string name="personal">个人</string>
+
+
+    <string name="warn_net_error">网络异常，请更换网络或稍后再试</string>
+
+
+    <string name="footer_bar_behavior">com.waitou.towards.util.behavior.FooterBarBehavior</string>
+    <string name="quick_hide_behavior">com.waitou.towards.util.behavior.QuickHideBehavior</string>
+</resources>

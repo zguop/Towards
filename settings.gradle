@@ -1,0 +1,1 @@
+include ':app', ':XDroidLibrary', ':net_library', ':lib_theme', ':littlelibrary'

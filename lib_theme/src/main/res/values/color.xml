@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--主题1-->
+    <color name="colorPowder">#FF4081</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+
+    <!--主题2-->
+    <color name="colorRed">#CE3D3A</color>
+
+</resources>

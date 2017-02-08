@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="adapter"
+            type="cn.droidlover.xdroid.base.XFragmentAdapter"/>
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.waitou.towards.view.CompatViewPager
+                    android:id="@+id/f_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:adapter="@{adapter}"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:page_TouchMode="true"/>
+
+                <android.support.design.widget.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/include"
+                        layout="@layout/include_toolbar"/>
+
+                </android.support.design.widget.AppBarLayout>
+
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="76dp"
+                    android:layout_marginRight="16dp"
+                    app:backgroundTint="?android:attr/colorPrimary"
+                    app:layout_behavior="@string/quick_hide_behavior"
+                    app:srcCompat="@android:drawable/ic_dialog_email"/>
+
+
+                <com.waitou.towards.view.ExBottomNavigationView
+                    android:id="@+id/main_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:itemBackground="?android:attr/colorPrimary"
+                    app:itemIconTint="@color/skin_bottom_bar_not"
+                    app:itemTextColor="@color/skin_bottom_bar_not"
+                    app:layout_behavior="@string/footer_bar_behavior"
+                    app:menu="@menu/menu_tab"/>
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/activity_main_drawer"/>
+
+    </android.support.v4.widget.DrawerLayout>
+</layout>

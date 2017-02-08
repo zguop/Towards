@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+    </data>
+
+
+    <cn.droidlover.xdroid.view.WTContentLayout
+        android:id="@+id/x_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:wt_emptyLayoutId="@layout/include_x_empty"
+        app:wt_errorLayoutId="@layout/include_x_error"
+        app:wt_loadingLayoutId="@layout/include_x_loading">
+
+    </cn.droidlover.xdroid.view.WTContentLayout>
+</layout>
