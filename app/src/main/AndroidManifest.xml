@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".model.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -30,10 +30,12 @@
 
 
         <activity
-            android:name=".model.jokes.activity.RecommendedActivity"
+            android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".model.jokes.activity.ThemeActivity"/>
+        <activity android:name=".model.activity.theme.ThemeActivity"/>
+
+        <activity android:name=".model.AsiActivity"/>
 
     </application>
 

@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.waitou.lib_theme.ThemeUtils;
 import com.waitou.towards.ExtraValue;
 import com.waitou.towards.R;
-import com.waitou.towards.databinding.FragmentTextJokeBinding;
+import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ToolbarJokeTitleBinding;
 import com.waitou.towards.model.jokes.contract.MainContract;
 
@@ -27,7 +27,7 @@ import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
  * 段子
  */
 
-public class TextJokeFragment extends XFragment<MainContract.MainPresenter, FragmentTextJokeBinding> implements MainContract.TextJokeView {
+public class TextJokeFragment extends XFragment<MainContract.MainPresenter, IncludeViewPagerBinding> implements MainContract.TextJokeView {
 
     private MainContract.MainPresenter mPresenter;
     private ToolbarJokeTitleBinding    mToolbarJokeTitle;
@@ -39,7 +39,7 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Frag
 
     @Override
     public int getContentViewId() {
-        return R.layout.fragment_text_joke;
+        return R.layout.include_view_pager;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Frag
             mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
             mToolbarJokeTitle.item2.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
         }
-        XFragmentAdapter adapter = new XFragmentAdapter(getActivity().getSupportFragmentManager(), jokeFragmentList, null);
+        XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), jokeFragmentList, null);
         getBinding().setAdapter(adapter);
-        getBinding().jokeViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        getBinding().viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
@@ -68,10 +68,10 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Frag
         mToolbarJokeTitle.group.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.item1:
-                    getBinding().jokeViewPager.setCurrentItem(ExtraValue.EXTRA_VALUE_0);
+                    getBinding().viewPager.setCurrentItem(ExtraValue.EXTRA_VALUE_0);
                     break;
                 case R.id.item2:
-                    getBinding().jokeViewPager.setCurrentItem(ExtraValue.EXTRA_VALUE_1);
+                    getBinding().viewPager.setCurrentItem(ExtraValue.EXTRA_VALUE_1);
                     break;
             }
         });
@@ -83,7 +83,7 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Frag
 
     @Override
     public JokeContentFragment getCurrentJokeFragment() {
-        return (JokeContentFragment) mPresenter.getJokeFragmentList().get(getBinding().jokeViewPager.getCurrentItem());
+        return (JokeContentFragment) mPresenter.getJokeFragmentList().get(getBinding().viewPager.getCurrentItem());
     }
 
     public ViewDataBinding initTootBar() {
@@ -93,7 +93,7 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Frag
         return mToolbarJokeTitle;
     }
 
-    public ViewDataBinding getJokeToolbar() {
+    public ViewDataBinding getJokeToolBar() {
         return initTootBar();
     }
 

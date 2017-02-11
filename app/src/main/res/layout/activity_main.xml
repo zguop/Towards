@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="presenter"
+            type="com.waitou.towards.model.presenter.MainPresenter"/>
+
+        <variable
             name="adapter"
             type="cn.droidlover.xdroid.base.XFragmentAdapter"/>
     </data>
@@ -25,24 +29,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <android.support.design.widget.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <cn.droidlover.xdroid.view.TowardsToolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorPrimary"
+                        android:minHeight="?android:attr/actionBarSize"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetStart="0dp"
+                        app:layout_scrollFlags="scroll|enterAlways|snap"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+                </android.support.design.widget.AppBarLayout>
+
                 <com.waitou.towards.view.CompatViewPager
                     android:id="@+id/f_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:adapter="@{adapter}"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:offscreenPageLimit="@{4}"
                     app:page_TouchMode="true"/>
-
-                <android.support.design.widget.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <include
-                        android:id="@+id/include"
-                        layout="@layout/include_toolbar"/>
-
-                </android.support.design.widget.AppBarLayout>
-
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab"
@@ -55,18 +66,17 @@
                     app:layout_behavior="@string/quick_hide_behavior"
                     app:srcCompat="@android:drawable/ic_dialog_email"/>
 
-
                 <com.waitou.towards.view.ExBottomNavigationView
                     android:id="@+id/main_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    app:enableShiftingMode="@{false}"
                     app:itemBackground="?android:attr/colorPrimary"
                     app:itemIconTint="@color/skin_bottom_bar_not"
                     app:itemTextColor="@color/skin_bottom_bar_not"
                     app:layout_behavior="@string/footer_bar_behavior"
                     app:menu="@menu/menu_tab"/>
-
 
             </android.support.design.widget.CoordinatorLayout>
 

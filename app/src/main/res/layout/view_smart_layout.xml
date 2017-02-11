@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="provider"
+            type="com.ogaclejapan.smarttablayout.SmartTabLayout.TabProvider"/>
+
+        <variable
+            name="viewPager"
+            type="android.support.v4.view.ViewPager"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/view_smart_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            app:customTabView="@{provider}"
+            app:stl_dividerColor="@color/transparent"
+            app:stl_dividerThickness="0dp"
+            app:stl_indicatorColor="@color/transparent"
+            app:stl_indicatorCornerRadius="18dp"
+            app:stl_indicatorGravity="center"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorThickness="36dp"
+            app:stl_underlineColor="@color/transparent"
+            app:stl_underlineThickness="0dp"
+            app:viewPager="@{viewPager}"/>
+    </FrameLayout>
+    <!--stl_dividerColor 标签之间的分割线颜色-->
+    <!--stl_indicatorColor指示器颜色-->
+    <!--stl_indicatorCornerRadius 指示器圆角-->
+    <!--stl_indicatorThickness指示器的高度-->
+    <!--stl_underlineColor底线-->
+
+
+</layout>

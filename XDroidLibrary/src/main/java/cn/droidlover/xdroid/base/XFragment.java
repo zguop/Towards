@@ -1,9 +1,11 @@
 package cn.droidlover.xdroid.base;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +20,17 @@ import cn.droidlover.xdroid.recycler.XPullRecyclerView;
 
 public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends BaseFragment implements UIView<P> {
 
-    private VDelegate        mVDelegate;
-    private FragmentXBinding mXBinding;
+    private VDelegate         mVDelegate;
+    private FragmentXBinding  mXBinding;
+    private LayoutInflater    mInflater;
+    private AppCompatActivity mAppCompatActivity;
 
     private D d;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.mInflater = inflater;
         if (initXView()) {
             mXBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_x, container, false);
             initReloadData(mXBinding.xContentLayout.getErrorView());
@@ -42,16 +47,6 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         return initXView() ? mXBinding.getRoot() : d.getRoot();
     }
 
-
-    /**
-     * 设置错误页面的按钮点击事件 注：如果使用的是pullRecyclerView显示错误页面 则需要手动设置调用
-     *
-     * @param view 错误页面的View
-     */
-    public void initReloadData(View view) {
-        view.findViewById(R.id.error).setOnClickListener(v -> reloadData());
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -60,6 +55,25 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         if (getUserVisibleHint() && fragmentVisibleHint()) {
             isLoadDataCompleted = true;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AppCompatActivity) {
+            this.mAppCompatActivity = (AppCompatActivity) context;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getVDelegate().destroy();
+        mVDelegate = null;
+    }
+
+    protected void initReloadData(View view) {
+        view.findViewById(R.id.error).setOnClickListener(v -> reloadData());
     }
 
     protected VDelegate getVDelegate() {
@@ -77,12 +91,15 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         return mXBinding;
     }
 
+    protected AppCompatActivity getAppCompatActivity() {
+        return mAppCompatActivity;
+    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getVDelegate().destroy();
-        mVDelegate = null;
+    protected LayoutInflater getInflater() {
+        if (mInflater == null) {
+            return getActivity().getLayoutInflater();
+        }
+        return mInflater;
     }
 
 
@@ -96,9 +113,9 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     }
 
     protected void showError(boolean isReload) {
-        if(isReload){
+        if (isReload) {
             mXBinding.xContentLayout.showError();
-        }else {
+        } else {
             if (mXBinding.xContentLayout.getContentView() instanceof XPullRecyclerView) {
                 ((XPullRecyclerView) mXBinding.xContentLayout.getContentView()).showError(false);
             }

@@ -14,14 +14,14 @@ import com.waitou.lib_theme.ThemeUtils;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
-import com.waitou.towards.model.event.DrawerToggleEvent;
-import com.waitou.towards.model.jokes.activity.RecommendedActivity;
-import com.waitou.towards.model.jokes.activity.ThemeActivity;
+import com.waitou.towards.model.activity.RecommendedActivity;
+import com.waitou.towards.model.activity.theme.ThemeActivity;
+import com.waitou.towards.model.event.ThemeEvent;
 import com.waitou.towards.model.jokes.contract.MainContract;
 import com.waitou.towards.model.jokes.fragment.CircleFragment;
 import com.waitou.towards.model.jokes.fragment.FigureFragment;
-import com.waitou.towards.model.jokes.fragment.HomeFragment;
 import com.waitou.towards.model.jokes.fragment.PersonFragment;
+import com.waitou.towards.model.jokes.fragment.home.HomeFragment;
 import com.waitou.towards.model.jokes.fragment.joke.TextJokeFragment;
 import com.waitou.towards.model.presenter.MainPresenter;
 
@@ -29,6 +29,9 @@ import cn.droidlover.xdroid.base.XActivity;
 import cn.droidlover.xdroid.base.XFragmentAdapter;
 import cn.droidlover.xdroid.router.Router;
 import cn.droidlover.xdroid.rx.RxBus;
+
+import static com.waitou.towards.model.AsiActivity.FRUIT_IMAGE_ID;
+import static com.waitou.towards.model.AsiActivity.FRUIT_NAME;
 
 
 public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener, MainContract.MainView {
@@ -46,7 +49,7 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
 
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenter(getTextJokeFragment());
+        return new MainPresenter(getHomeFragment(), getTextJokeFragment());
     }
 
     @Override
@@ -61,51 +64,46 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        getBinding().include.toolbar.initMenuActionBar("首页");
-        getBinding().include.toolbar.setBackListener(R.drawable.icon_menu, v -> getBinding().mainDrawerLayout.openDrawer(GravityCompat.START));
+        getBinding().toolbar.fromCustomMenuView(getHomeFragment().getHomeToolbar(this), R.id.home);
+        getBinding().toolbar.setBackListener(R.drawable.icon_menu, v -> getBinding().mainDrawerLayout.openDrawer(GravityCompat.START));
         XFragmentAdapter adapter = new XFragmentAdapter(getSupportFragmentManager(), getHomeFragment(), getTextJokeFragment(), getFigureFragment(), getCircleFragment(), getPersonFragment());
         getBinding().setAdapter(adapter);
+        getBinding().setPresenter(getP());
         getBinding().mainTab.setupWithViewPager(getBinding().fContent);
-        getBinding().mainTab.enableShiftingMode(false);
-        getBinding().fContent.setOffscreenPageLimit(4);
         NavHeaderMainBinding binding = NavHeaderMainBinding.inflate((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE));
         binding.setDrawableId(R.drawable.nav_header_img);
         getBinding().navView.addHeaderView(binding.getRoot());
         getBinding().navView.setNavigationItemSelectedListener(this);
-        StatusBarUtil.setColorNoTranslucentForDrawerLayout(MainActivity.this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         ChangeModeController.get().setOnThemeChangeListener(resourceId -> {
             //主题改版之后，刷新一下bottomBar的状态
             getBinding().mainTab.setItemIconTintList(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
             getBinding().mainTab.setItemTextColor(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
             getBinding().mainTab.setItemBackgroundResource(ThemeUtils.getAttrTypedValue(this, R.attr.colorPrimary).resourceId);
-            StatusBarUtil.setColorNoTranslucentForDrawerLayout(MainActivity.this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+            StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         });
+
         getBinding().mainTab.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_home:
-                    getBinding().include.toolbar.addCustomMenuView(null, 0);
+                    getBinding().toolbar.fromCustomMenuView(getHomeFragment().getHomeToolbar(this), R.id.home);
                     break;
                 case R.id.menu_joke:
-                    getBinding().include.toolbar.addCustomMenuView(getTextJokeFragment().getJokeToolbar(), R.id.menu_joke);
+                    getBinding().toolbar.fromCustomMenuView(getTextJokeFragment().getJokeToolBar(), R.id.menu_joke);
                     break;
             }
             return true;
         });
-
-        RxBus.getDefault().toObservable(DrawerToggleEvent.class).
-                subscribe(drawerToggleEvent -> {
-                    if(drawerToggleEvent.getInfo() != null){
-                        ChangeModeController.get().changeNight(MainActivity.this,drawerToggleEvent.getInfo().themeModel);
+        pend(RxBus.getDefault().toObservable(ThemeEvent.class).
+                subscribe(event -> {
+                    if (event.getInfo() != null) {
+                        ChangeModeController.get().changeNight(MainActivity.this, event.getInfo().themeModel);
                     }
-                });
+                }));
     }
 
     @Override
     public void reloadData() {
-    }
-
-    @Override
-    public void setPresenter(MainPresenter presenter) {
     }
 
     /**
@@ -114,6 +112,7 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
     private boolean toggle() {
         return getBinding().mainDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -128,10 +127,10 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_tuijian:
-                toActivity(RecommendedActivity.class);
+                Router.newIntent().from(this).to(RecommendedActivity.class).launch();
                 break;
             case R.id.nav_all:
-
+                Router.newIntent().from(this).to(AsiActivity.class).putString(FRUIT_NAME, "adsfas").putString(FRUIT_IMAGE_ID, "http://img.hb.aicdn.com/621034b37c53ffc81f5d6a23ae1226d5c67e2b9628267-BYuZLo_fw658").launch();
                 break;
             case R.id.nav_meizi:
                 break;
@@ -182,5 +181,4 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         }
         return mPersonFragment;
     }
-
 }

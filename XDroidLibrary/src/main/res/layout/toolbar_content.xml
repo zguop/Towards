@@ -12,8 +12,8 @@
             android:id="@+id/left_img"
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/back_white"
             android:tint="?attr/skin_kind_color_not"/>
 
         <!--中间标题-->
@@ -24,6 +24,7 @@
             android:layout_marginRight="50dp"
             android:layout_toRightOf="@id/left_img">
 
+
             <cn.droidlover.xdroid.view.DoubleClickTextView
                 android:id="@+id/title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
@@ -32,10 +33,10 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
+                android:text="标题"
                 android:textColor="?attr/skin_kind_color_not"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                android:text="标题"/>
+                android:textStyle="bold"/>
 
         </FrameLayout>
 

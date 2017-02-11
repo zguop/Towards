@@ -1,11 +1,9 @@
-package com.waitou.towards.model.presenter;
+package com.waitou.towards.model.activity.theme;
 
 import com.github.markzhai.recyclerview.BaseViewAdapter;
 import com.waitou.lib_theme.ChangeModeController;
 import com.waitou.lib_theme.ThemeModel;
 import com.waitou.towards.bean.ThemeInfo;
-import com.waitou.towards.model.jokes.activity.ThemeActivity;
-import com.waitou.towards.model.jokes.contract.ThemeContract;
 
 import java.util.ArrayList;
 import java.util.List;

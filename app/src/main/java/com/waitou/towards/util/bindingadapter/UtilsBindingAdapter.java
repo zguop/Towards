@@ -1,9 +1,13 @@
 package com.waitou.towards.util.bindingadapter;
 
 import android.databinding.BindingAdapter;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.waitou.towards.R;
 
 import cn.droidlover.xdroid.rx.RxBus;
 
@@ -32,5 +36,20 @@ public class UtilsBindingAdapter {
     @BindingAdapter("post")
     public static void post(View view, Object o) {
         view.setOnClickListener(v -> RxBus.getDefault().post(o));
+    }
+
+    @BindingAdapter("home_title")
+    public static void setImageDrawable(ImageView view, int position) {
+        switch (position) {
+            case 0:
+                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon__recommended));
+                break;
+            case 1:
+                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon_cargo));
+                break;
+            case 2:
+                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon_android));
+                break;
+        }
     }
 }

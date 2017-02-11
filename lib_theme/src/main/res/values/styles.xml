@@ -12,24 +12,28 @@
 
     </style>
 
-    <style name="AppThemePowder" parent="AppTheme">
+    <style name="AppThemePowder" parent="Transparent">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPowder</item>
         <item name="colorPrimaryDark">@color/colorPowder</item>
         <item name="colorAccent">@color/colorPowder</item>
 
         <item name="skin_kind_color_not">@color/colorWhite</item>
+        <item name="skin_home_title_not">@color/home_title1</item>
 
     </style>
 
 
-    <style name="AppThemeRed" parent="AppTheme">
+    <style name="AppThemeRed" parent="Transparent">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorRed</item>
         <item name="colorPrimaryDark">@color/colorRed</item>
         <item name="colorAccent">@color/colorRed</item>
 
         <item name="skin_kind_color_not">@color/colorWhite</item>
+        <item name="skin_home_title_not">@color/home_title2</item>
 
     </style>
+
+    <style name="Transparent" parent="AppTheme"></style>
 </resources>

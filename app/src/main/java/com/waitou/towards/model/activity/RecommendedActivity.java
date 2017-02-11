@@ -1,4 +1,4 @@
-package com.waitou.towards.model.jokes.activity;
+package com.waitou.towards.model.activity;
 
 import android.os.Bundle;
 
@@ -25,11 +25,6 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter,Activity
 
     @Override
     public void reloadData() {
-
-    }
-
-    @Override
-    public void setPresenter(RecommendedPresenter presenter) {
 
     }
 

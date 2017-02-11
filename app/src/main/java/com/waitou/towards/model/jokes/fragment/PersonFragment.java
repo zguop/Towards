@@ -18,7 +18,6 @@ public class PersonFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         TextView textView  = new TextView(getActivity());
         textView.setTextColor(Color.BLACK);
         textView.setText(getClass().getSimpleName());

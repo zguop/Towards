@@ -9,6 +9,9 @@
     <color name="white">#ffffff</color>
     <color name="color666666">#666666</color>
     <color name="font_color">#999999</color>
+    <color name="color33white">#33FFFFFF</color>
+
+    <color name="color_ec7172">#99CE3D3A</color>
 
     <color name="transparent">#00000000</color>
 
@@ -20,7 +23,7 @@
     <color name="colorWhite">#ffffffff</color>
 
 
-    <color name="skin_bg_red">#ffce3d3a</color>
+    <color name="skin_bg_red">#CE3D3A</color>
     <color name="skin_bg_powder">#FF4081</color>
 
 

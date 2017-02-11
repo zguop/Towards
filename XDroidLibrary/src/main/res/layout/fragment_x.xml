@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-
-    </data>
-
-
     <cn.droidlover.xdroid.view.WTContentLayout
         android:id="@+id/x_content_layout"
         android:layout_width="match_parent"

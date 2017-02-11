@@ -57,7 +57,9 @@ public class TowardsToolbar extends Toolbar {
      */
     public void initMenuActionBar(String title, String menuText, OnClickListener listener) {
         if (mBinding != null) {
-            setBackListener(0, v -> ((AppCompatActivity) getContext()).onBackPressed());
+            if (mBinding.leftImg.getDrawable() == null) {
+                setBackListener(R.drawable.back_white, v -> ((AppCompatActivity) getContext()).onBackPressed());
+            }
             if (title != null) {
                 mBinding.title.setText(title);
             }
@@ -80,7 +82,9 @@ public class TowardsToolbar extends Toolbar {
      */
     public void initIconActionBar(String title, int menuIcon, OnClickListener listener) {
         if (mBinding != null) {
-            setBackListener(0, v -> ((AppCompatActivity) getContext()).onBackPressed());
+            if (mBinding.leftImg.getDrawable() == null) {
+                setBackListener(R.drawable.back_white, v -> ((AppCompatActivity) getContext()).onBackPressed());
+            }
             if (title != null) {
                 mBinding.title.setText(title);
             }
@@ -118,12 +122,16 @@ public class TowardsToolbar extends Toolbar {
         }
     }
 
+    public void formTitle() {
+        fromCustomMenuView(null, 0);
+    }
+
     /**
      * 初始化文字菜单自定义view代替标题 多次使用只会叠加view 的个数
      *
      * @param dataBinding view
      */
-    public void addCustomMenuView(ViewDataBinding dataBinding, int bindingKey) {
+    public void fromCustomMenuView(ViewDataBinding dataBinding, int bindingKey) {
         if (mBinding != null) {
             if (dataBinding != null) {
                 View root = dataBinding.getRoot();

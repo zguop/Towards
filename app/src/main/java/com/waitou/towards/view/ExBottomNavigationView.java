@@ -26,15 +26,15 @@ import java.lang.reflect.Field;
 
 public class ExBottomNavigationView extends BottomNavigationView {
     // used for animation
-    private int mShiftAmount;
-    private float mScaleUpFactor;
-    private float mScaleDownFactor;
+    private int     mShiftAmount;
+    private float   mScaleUpFactor;
+    private float   mScaleDownFactor;
     private boolean animationRecord;
-    private float mLargeLabelSize;
-    private float mSmallLabelSize;
+    private float   mLargeLabelSize;
+    private float   mSmallLabelSize;
     private boolean visibilityTextSizeRecord;
     private boolean visibilityHeightRecord;
-    private int mItemHeight;
+    private int     mItemHeight;
     // used for animation end
 
     // used for setupWithViewPager
@@ -59,8 +59,6 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
     /**
      * change the visibility of icon
-     *
-     * @param visibility
      */
     public void setIconVisibility(boolean visibility) {
         /*
@@ -295,7 +293,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
      *
      * @param enable It will has a shift animation if true. Otherwise all items are the same width.
      */
-    public void enableShiftingMode(boolean enable) {
+    public void setEnableShiftingMode(boolean enable) {
         /*
         1. get field in this class
         private final BottomNavigationMenuView mMenuView;
@@ -416,11 +414,10 @@ public class ExBottomNavigationView extends BottomNavigationView {
         BottomNavigationItemView[] mButtons = getBottomNavigationItemViews();
         // get mOnClickListener
         View.OnClickListener mOnClickListener = getField(mMenuView.getClass(), mMenuView, "mOnClickListener", View.OnClickListener.class);
-
-//        System.out.println("mMenuView:" + mMenuView + " mButtons:" + mButtons + " mOnClickListener" + mOnClickListener);
         // 3. call mOnClickListener.onClick();
-        mOnClickListener.onClick(mButtons[item]);
-
+        if (mOnClickListener != null) {
+            mOnClickListener.onClick(mButtons[item]);
+        }
     }
 
     /**
@@ -445,6 +442,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
     /**
      * get private mMenuView
+     *
      * @return
      */
     private BottomNavigationMenuView getBottomNavigationMenuView() {
@@ -455,6 +453,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
     /**
      * get private mButtons in mMenuView
+     *
      * @return
      */
     public BottomNavigationItemView[] getBottomNavigationItemViews() {
@@ -471,6 +470,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
     /**
      * get private mButton in mMenuView at position
+     *
      * @param position
      * @return
      */
@@ -480,6 +480,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
     /**
      * get icon at position
+     *
      * @param position
      * @return
      */
@@ -509,9 +510,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
             Field field = targetClass.getDeclaredField(fieldName);
             field.setAccessible(true);
             return (T) field.get(instance);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -530,9 +529,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
             Field field = targetClass.getDeclaredField(fieldName);
             field.setAccessible(true);
             field.set(instance, value);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -578,9 +575,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
         }
         viewPager.addOnPageChangeListener(mPageChangeListener);
 
-        // Now we'll add a navigation item selected listener to set ViewPager's current item
-        BottomNavigationView.OnNavigationItemSelectedListener listener = getOnNavigationItemSelectedListener();
-        mMyOnNavigationItemSelectedListener = new MyOnNavigationItemSelectedListener(viewPager, this, smoothScroll, listener);
+        mMyOnNavigationItemSelectedListener = new MyOnNavigationItemSelectedListener(viewPager, this, smoothScroll);
         super.setOnNavigationItemSelectedListener(mMyOnNavigationItemSelectedListener);
     }
 
@@ -594,7 +589,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
      * addOnPageChangeListener(OnPageChangeListener)} without removing the listener and
      * not cause a leak.
      */
-    private static class BottomNavigationViewExOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    private class BottomNavigationViewExOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
         private final WeakReference<ExBottomNavigationView> mBnveRef;
 
         public BottomNavigationViewExOnPageChangeListener(ExBottomNavigationView bnve) {
@@ -602,27 +597,17 @@ public class ExBottomNavigationView extends BottomNavigationView {
         }
 
         @Override
-        public void onPageScrollStateChanged(final int state) {
-        }
-
-        @Override
-        public void onPageScrolled(final int position, final float positionOffset,
-                                   final int positionOffsetPixels) {
-        }
-
-        @Override
         public void onPageSelected(final int position) {
             final ExBottomNavigationView bnve = mBnveRef.get();
             if (null != bnve)
                 bnve.setCurrentItem(position);
-//            Log.d("onPageSelected", "--------- position " + position + " ------------");
         }
     }
 
     /**
      * Decorate OnNavigationItemSelectedListener for setupWithViewPager
      */
-    private static class MyOnNavigationItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private class MyOnNavigationItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         private       BottomNavigationView.OnNavigationItemSelectedListener listener;
         private final WeakReference<ViewPager>                              viewPagerRef;
         private       boolean                                               smoothScroll;
@@ -630,9 +615,8 @@ public class ExBottomNavigationView extends BottomNavigationView {
         private int previousPosition = -1;
 
 
-        MyOnNavigationItemSelectedListener(ViewPager viewPager, ExBottomNavigationView bnve, boolean smoothScroll, BottomNavigationView.OnNavigationItemSelectedListener listener) {
+        MyOnNavigationItemSelectedListener(ViewPager viewPager, ExBottomNavigationView bnve, boolean smoothScroll) {
             this.viewPagerRef = new WeakReference<>(viewPager);
-            this.listener = listener;
             this.smoothScroll = smoothScroll;
 
             // create items
@@ -670,10 +654,10 @@ public class ExBottomNavigationView extends BottomNavigationView {
             if (null == viewPager)
                 return false;
 
-            viewPager.setCurrentItem(items.get(item.getItemId()), smoothScroll);
-
             // update previous position
             previousPosition = position;
+
+            viewPager.setCurrentItem(position, smoothScroll);
 
             return true;
         }

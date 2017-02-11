@@ -29,6 +29,14 @@ import java.util.Map;
 
 /**
  * 主题切换控制器
+ * 支持@开头？开头属性
+ * 可自定义主题属性 ?attr/
+ * 支出属性 @color/ @drawable/
+ * 文件命名 以skin开头 not结尾时 不改变文件名称直接使用
+ * 否则如  skin_theme_color_red ----> 替换成 skin_theme_color_当前主题颜色名，需事先定义好相应color颜色
+ * 需要和ThemeModel字符串相匹配。
+ * 默认定义了colorPrimary colorPrimaryDark colorAccent 主题颜色
+ * 支持属性可在SkinAttrType 枚举中增加
  */
 public class ChangeModeController {
 
@@ -38,9 +46,7 @@ public class ChangeModeController {
     private static final String ATTR_PREFIX        = "skin"; //开头
     private static final String ATTR_NOT           = "not"; //这个结尾 不进行改变
 
-
     private static final String PRE_THEME_MODEL = "theme_model"; //sp 保存当前的主题
-
 
     private final Object[] mConstructorArgs = new Object[2];
 
@@ -69,7 +75,6 @@ public class ChangeModeController {
 
     public void init(final AppCompatActivity activity) {
         LayoutInflaterCompat.setFactory(LayoutInflater.from(activity), (parent, name, context, attrs) -> {
-
             List<SkinAttr> skinAttrsList = getSkinAttrs(attrs, context);
             if (skinAttrsList == null || skinAttrsList.isEmpty()) {
                 return null;
@@ -115,7 +120,6 @@ public class ChangeModeController {
         }
     }
 
-
     private View createView(Context context, String name, String prefix)
             throws ClassNotFoundException, InflateException {
         Constructor<? extends View> constructor = sConstructorMap.get(name);
@@ -144,7 +148,7 @@ public class ChangeModeController {
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             String attributeName = attrs.getAttributeName(i);
             String attributeValue = attrs.getAttributeValue(i);
-            SkinAttrType attrType = getSupprotAttrType(attributeName);
+            SkinAttrType attrType = getSupportAttrType(attributeName);
             if (attrType == null) {
                 continue;
             }
@@ -163,7 +167,7 @@ public class ChangeModeController {
         return skinAttrsList;
     }
 
-    private SkinAttrType getSupprotAttrType(String attrName) {
+    private SkinAttrType getSupportAttrType(String attrName) {
         for (SkinAttrType attrType : SkinAttrType.values()) {
             if (attrType.getAttrType().equals(attrName))
                 return attrType;
@@ -171,6 +175,9 @@ public class ChangeModeController {
         return null;
     }
 
+    /**
+     * 获取当前的主题model
+     */
     public ThemeModel getThemeModel() {
         int themeId = SharedPref.get().getInteger(PRE_THEME_MODEL);
         return ThemeModel.valueOf(themeId);

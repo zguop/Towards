@@ -1,10 +1,15 @@
 package cn.droidlover.xdroid.base;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -79,6 +84,14 @@ public abstract class BaseFragment extends Fragment {
         if (subscription != null) {
             mPendingSubscriptions.add(subscription);
         }
+    }
+
+    protected ViewDataBinding bindingInflate(@LayoutRes int resId, ViewGroup container) {
+        return DataBindingUtil.inflate(getActivity().getLayoutInflater(), resId, container, false);
+    }
+
+    protected View inflate(@LayoutRes int resId, ViewGroup container) {
+        return getActivity().getLayoutInflater().inflate(resId, container, false);
     }
 
     /**

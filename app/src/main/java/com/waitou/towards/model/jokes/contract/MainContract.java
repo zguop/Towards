@@ -16,7 +16,11 @@ import cn.droidlover.xdroid.base.UIPresent;
  */
 
 public interface MainContract {
-    interface MainView{
+    interface MainView {
+    }
+
+    interface HomeView extends IView<com.waitou.towards.model.presenter.MainPresenter> {
+
     }
 
     interface TextJokeView extends IView<MainPresenter> {
@@ -31,8 +35,11 @@ public interface MainContract {
     }
 
     interface MainPresenter extends UIPresent<MainActivity> {
+        List<Fragment> getHomeFragmentList();
+
         List<Fragment> getJokeFragmentList();
 
         void loadJokeData(int page, int type);
+
     }
 }

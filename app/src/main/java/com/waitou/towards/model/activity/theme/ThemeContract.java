@@ -1,7 +1,6 @@
-package com.waitou.towards.model.jokes.contract;
+package com.waitou.towards.model.activity.theme;
 
 import com.waitou.towards.bean.ThemeInfo;
-import com.waitou.towards.model.jokes.activity.ThemeActivity;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ public interface ThemeContract {
 
     interface ThemePresenter extends UIPresent<ThemeActivity> {
         List<ThemeInfo> loadData();
-
         void onItemClick(ThemeInfo model);
     }
 

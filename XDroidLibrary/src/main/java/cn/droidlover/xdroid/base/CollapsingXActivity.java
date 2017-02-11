@@ -8,16 +8,16 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import cn.droidlover.xdroid.R;
-import cn.droidlover.xdroid.databinding.ActivityXBinding;
+import cn.droidlover.xdroid.databinding.ActivityXCollapsingToolbarBinding;
 
 /**
- * Created by wanglei on 2016/11/27.
+ * Created by waitou on 17/2/10.
  */
 
-public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> extends BaseActivity implements UIView<P> {
+public abstract class CollapsingXActivity<P extends UIPresent, D extends ViewDataBinding> extends BaseActivity implements UIView<P> {
 
-    private VDelegate        mVDelegate;
-    private ActivityXBinding mXBinding;
+    private VDelegate                         mVDelegate;
+    private ActivityXCollapsingToolbarBinding mXBinding;
 
     private P presenter;
     private D d;
@@ -27,7 +27,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (initXView()) {
-            mXBinding = DataBindingUtil.setContentView(this, R.layout.activity_x);
+            mXBinding = DataBindingUtil.setContentView(this, R.layout.activity_x_collapsing_toolbar);
             initReloadData(mXBinding.xContentLayout.getErrorView().findViewById(R.id.error));
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.inflate(getLayoutInflater(), getContentViewId(), null, false);
@@ -49,7 +49,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         initData(savedInstanceState);
     }
 
-    public ActivityXBinding getXBinding() {
+    public ActivityXCollapsingToolbarBinding getXBinding() {
         return mXBinding;
     }
 
@@ -57,7 +57,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         return d;
     }
 
-    public P getP() {
+    protected P getP() {
         return presenter;
     }
 

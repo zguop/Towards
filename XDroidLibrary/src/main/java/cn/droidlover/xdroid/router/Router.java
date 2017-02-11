@@ -16,13 +16,13 @@ import cn.droidlover.xdroid.XDroidConf;
  */
 public class Router {
 
-    private Intent intent;
+    private Intent   intent;
     private Activity from;
     private Class<?> to;
-    private Bundle data;
+    private Bundle   data;
     private int requestCode = -1;
-    private int enterAnim = XDroidConf.ROUTER_ANIM_ENTER;
-    private int exitAnim = XDroidConf.ROUTER_ANIM_EXIT;
+    private int enterAnim   = XDroidConf.ROUTER_ANIM_ENTER;
+    private int exitAnim    = XDroidConf.ROUTER_ANIM_EXIT;
 
     public static final int RES_NONE = -1;
 
@@ -141,7 +141,9 @@ public class Router {
 
                 intent.setClass(from, to);
 
-                intent.putExtras(getBundleData());
+                if (data != null) {
+                    intent.putExtras(data);
+                }
 
                 if (requestCode < 0) {
                     from.startActivity(intent);

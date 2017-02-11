@@ -63,6 +63,16 @@ public class GlideBindingAdapter {
                 .into(view);
     }
 
+    @BindingAdapter("imageUrl")
+    public static void loadImageFromUrl(ImageView view, String url) {
+        Glide.with(view.getContext())
+                .load(url)
+                .crossFade()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(view);
+    }
+
 
     @BindingAdapter("load")
     public static void loadImageFromUrl(ImageView view, int drawable) {
