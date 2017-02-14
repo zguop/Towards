@@ -9,7 +9,7 @@
             name="item"
             type="com.waitou.towards.bean.JokeInfo"/>
 
-        <import type="cn.droidlover.xdroid.kit.Kits.Date"/>
+        <import type="com.waitou.wt_library.kit.Kits.Date"/>
 
 
     </data>

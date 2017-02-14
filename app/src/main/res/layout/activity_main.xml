@@ -11,7 +11,7 @@
 
         <variable
             name="adapter"
-            type="cn.droidlover.xdroid.base.XFragmentAdapter"/>
+            type="com.waitou.wt_library.base.XFragmentAdapter"/>
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <cn.droidlover.xdroid.view.TowardsToolbar
+                    <com.waitou.wt_library.view.TowardsToolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_gravity="bottom|end"
                     android:layout_marginBottom="76dp"
                     android:layout_marginRight="16dp"
-                    app:backgroundTint="?android:attr/colorPrimary"
+                    app:backgroundTint="?attr/colorPrimary"
                     app:layout_behavior="@string/quick_hide_behavior"
                     app:srcCompat="@android:drawable/ic_dialog_email"/>
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     app:enableShiftingMode="@{false}"
-                    app:itemBackground="?android:attr/colorPrimary"
+                    app:itemBackground="?attr/colorPrimary"
                     app:itemIconTint="@color/skin_bottom_bar_not"
                     app:itemTextColor="@color/skin_bottom_bar_not"
                     app:layout_behavior="@string/footer_bar_behavior"

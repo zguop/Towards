@@ -8,9 +8,9 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.IncludeRecyclerViewBinding;
 import com.waitou.towards.model.event.ThemeEvent;
+import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.rx.RxBus;
 
-import cn.droidlover.xdroid.base.XActivity;
-import cn.droidlover.xdroid.rx.RxBus;
 
 /**
  * Created by waitou on 17/1/16.

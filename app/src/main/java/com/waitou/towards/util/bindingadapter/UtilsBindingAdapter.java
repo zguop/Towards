@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.waitou.towards.R;
+import com.waitou.wt_library.rx.RxBus;
 
-import cn.droidlover.xdroid.rx.RxBus;
 
 /**
  * Created by waitou on 17/1/11.

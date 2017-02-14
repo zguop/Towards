@@ -51,7 +51,8 @@ dependencies {
     compile rootProject.ext.dependencies["smarttablayout"]
     //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme
 
-    debugCompile project(path: ':littlelibrary', configuration: 'debug')
-    releaseCompile project(path: ':littlelibrary', configuration: 'release')
+
+    debugCompile project(path: ':wt_library', configuration: 'debug')
+    releaseCompile project(path: ':wt_library', configuration: 'release')
 
 }

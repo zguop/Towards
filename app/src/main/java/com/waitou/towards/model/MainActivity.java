@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
-import com.waitou.lib_theme.ChangeModeController;
-import com.waitou.lib_theme.ThemeUtils;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
@@ -24,11 +22,12 @@ import com.waitou.towards.model.jokes.fragment.PersonFragment;
 import com.waitou.towards.model.jokes.fragment.home.HomeFragment;
 import com.waitou.towards.model.jokes.fragment.joke.TextJokeFragment;
 import com.waitou.towards.model.presenter.MainPresenter;
-
-import cn.droidlover.xdroid.base.XActivity;
-import cn.droidlover.xdroid.base.XFragmentAdapter;
-import cn.droidlover.xdroid.router.Router;
-import cn.droidlover.xdroid.rx.RxBus;
+import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.base.XFragmentAdapter;
+import com.waitou.wt_library.router.Router;
+import com.waitou.wt_library.rx.RxBus;
+import com.waitou.wt_library.theme.ChangeModeController;
+import com.waitou.wt_library.theme.ThemeUtils;
 
 import static com.waitou.towards.model.AsiActivity.FRUIT_IMAGE_ID;
 import static com.waitou.towards.model.AsiActivity.FRUIT_NAME;
@@ -97,7 +96,7 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         pend(RxBus.getDefault().toObservable(ThemeEvent.class).
                 subscribe(event -> {
                     if (event.getInfo() != null) {
-                        ChangeModeController.get().changeNight(MainActivity.this, event.getInfo().themeModel);
+                        ChangeModeController.get().changeNight(MainActivity.this, event.getInfo().themeEnum);
                     }
                 }));
     }

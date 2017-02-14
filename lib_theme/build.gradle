@@ -34,4 +34,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile rootProject.ext.dependencies["appcompat-v7"]
 
+
 }

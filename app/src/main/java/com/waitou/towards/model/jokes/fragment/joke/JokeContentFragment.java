@@ -9,11 +9,10 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.towards.model.jokes.contract.MainContract;
+import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.recycler.XRecyclerView;
 
 import java.util.List;
-
-import cn.droidlover.xdroid.base.XFragment;
-import cn.droidlover.xdroid.recycler.XRecyclerView;
 
 import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
 

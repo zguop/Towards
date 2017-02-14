@@ -63,4 +63,6 @@
     <declare-styleable name="TintImageView">
         <attr name="tint" format="reference|color"/>
     </declare-styleable>
+
+
 </resources>

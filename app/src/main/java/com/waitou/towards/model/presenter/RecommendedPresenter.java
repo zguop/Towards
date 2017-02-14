@@ -4,8 +4,8 @@ import android.os.SystemClock;
 
 import com.waitou.towards.model.activity.RecommendedActivity;
 import com.waitou.towards.model.jokes.contract.RecommendedContract;
+import com.waitou.wt_library.base.XPresent;
 
-import cn.droidlover.xdroid.base.XPresent;
 
 /**
  * Created by waitou on 17/1/9.

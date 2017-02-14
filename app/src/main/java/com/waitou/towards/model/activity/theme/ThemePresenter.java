@@ -1,14 +1,14 @@
 package com.waitou.towards.model.activity.theme;
 
 import com.github.markzhai.recyclerview.BaseViewAdapter;
-import com.waitou.lib_theme.ChangeModeController;
-import com.waitou.lib_theme.ThemeModel;
 import com.waitou.towards.bean.ThemeInfo;
+import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.theme.ChangeModeController;
+import com.waitou.wt_library.theme.ThemeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.droidlover.xdroid.base.XPresent;
 
 /**
  * Created by waitou on 17/2/8.
@@ -27,11 +27,11 @@ public class ThemePresenter extends XPresent<ThemeActivity> implements ThemeCont
         if (themeInfoList.size() > 0) {
             return themeInfoList;
         }
-        ThemeModel theme = ChangeModeController.get().getThemeModel();
-        for (ThemeModel themeModel : ThemeModel.values()) {
+        ThemeEnum theme = ChangeModeController.get().getThemeModel();
+        for (ThemeEnum themeModel : ThemeEnum.values()) {
             ThemeInfo themeInfo = new ThemeInfo();
-            themeInfo.themeModel = themeModel;
-            themeInfo.focus = theme.getColorId() == themeInfo.themeModel.getColorId();
+            themeInfo.themeEnum = themeModel;
+            themeInfo.focus = theme.getColorId() == themeInfo.themeEnum.getColorId();
             themeInfoList.add(themeInfo);
         }
         return themeInfoList;

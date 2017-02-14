@@ -7,17 +7,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.waitou.lib_theme.ThemeUtils;
 import com.waitou.towards.ExtraValue;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ToolbarJokeTitleBinding;
 import com.waitou.towards.model.jokes.contract.MainContract;
+import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.base.XFragmentAdapter;
+import com.waitou.wt_library.theme.ThemeUtils;
 
 import java.util.List;
-
-import cn.droidlover.xdroid.base.XFragment;
-import cn.droidlover.xdroid.base.XFragmentAdapter;
 
 import static com.waitou.towards.ExtraValue.EXTRA_VALUE_0;
 import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;

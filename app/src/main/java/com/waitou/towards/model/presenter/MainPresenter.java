@@ -11,11 +11,10 @@ import com.waitou.towards.model.jokes.fragment.home.HomeCommendFragment;
 import com.waitou.towards.model.jokes.fragment.joke.JokeContentFragment;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
+import com.waitou.wt_library.base.XPresent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.droidlover.xdroid.base.XPresent;
 
 import static com.waitou.towards.ExtraValue.EXTRA_VALUE_0;
 import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;

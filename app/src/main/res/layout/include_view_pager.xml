@@ -6,7 +6,7 @@
 
         <variable
             name="adapter"
-            type="cn.droidlover.xdroid.base.XFragmentAdapter"/>
+            type="com.waitou.wt_library.base.XFragmentAdapter"/>
 
     </data>
 

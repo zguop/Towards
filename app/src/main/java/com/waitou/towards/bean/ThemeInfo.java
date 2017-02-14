@@ -3,8 +3,8 @@ package com.waitou.towards.bean;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.waitou.lib_theme.ThemeModel;
 import com.waitou.towards.BR;
+import com.waitou.wt_library.theme.ThemeEnum;
 
 /**
  * Created by waitou on 17/2/8.
@@ -12,7 +12,7 @@ import com.waitou.towards.BR;
 
 public class ThemeInfo extends BaseObservable {
 
-    public ThemeModel themeModel;
+    public ThemeEnum themeEnum;
 
     @Bindable
     public boolean focus;

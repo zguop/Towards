@@ -16,8 +16,15 @@
         <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="sfasfdsfsd"/>
+
+
+        <com.waitou.wt_library.view.viewpager.WTBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:background="@color/colore7e7e7"/>
 
     </LinearLayout>
 

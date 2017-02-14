@@ -6,8 +6,8 @@ import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityRecommendedBinding;
 import com.waitou.towards.model.jokes.contract.RecommendedContract;
 import com.waitou.towards.model.presenter.RecommendedPresenter;
+import com.waitou.wt_library.base.XActivity;
 
-import cn.droidlover.xdroid.base.XActivity;
 
 /**
  * Created by waitou on 17/1/5.

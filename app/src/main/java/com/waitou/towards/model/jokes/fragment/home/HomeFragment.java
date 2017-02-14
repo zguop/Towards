@@ -16,11 +16,11 @@ import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ViewSmartLayoutBinding;
 import com.waitou.towards.model.jokes.contract.MainContract;
 import com.waitou.towards.model.presenter.MainPresenter;
+import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.base.XFragmentAdapter;
 
 import java.util.List;
 
-import cn.droidlover.xdroid.base.XFragment;
-import cn.droidlover.xdroid.base.XFragmentAdapter;
 
 
 /**

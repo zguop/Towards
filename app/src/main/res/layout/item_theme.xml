@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:onClick="@{() -> presenter.onItemClick(item)}"
-            app:color="@{item.themeModel.colorId}"
+            app:color="@{item.themeEnum.colorId}"
             app:radius="20dp"/>
 
         <android.support.v7.widget.AppCompatImageView

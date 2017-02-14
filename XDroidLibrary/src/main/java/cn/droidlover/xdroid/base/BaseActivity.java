@@ -11,7 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.waitou.lib_theme.ChangeModeController;
+import cn.droidlover.xdroid.theme.ChangeModeController;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;

@@ -1,1 +1,1 @@
-include ':app', ':XDroidLibrary', ':net_library', ':lib_theme', ':littlelibrary'
+include ':app', ':net_library', ':wt_library'

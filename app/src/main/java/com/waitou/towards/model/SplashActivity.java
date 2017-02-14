@@ -2,8 +2,9 @@ package com.waitou.towards.model;
 
 import android.os.Bundle;
 
-import cn.droidlover.xdroid.base.UIPresent;
-import cn.droidlover.xdroid.base.XActivity;
+import com.waitou.wt_library.base.UIPresent;
+import com.waitou.wt_library.base.XActivity;
+
 
 /**
  * Created by waitou on 17/2/3.

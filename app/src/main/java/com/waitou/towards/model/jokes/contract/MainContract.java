@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.model.MainActivity;
 import com.waitou.towards.model.jokes.fragment.joke.JokeContentFragment;
+import com.waitou.wt_library.base.IView;
+import com.waitou.wt_library.base.UIPresent;
 
 import java.util.List;
 
-import cn.droidlover.xdroid.base.IView;
-import cn.droidlover.xdroid.base.UIPresent;
 
 /**
  * Created by waitou on 17/1/28.

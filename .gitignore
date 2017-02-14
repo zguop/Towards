@@ -17,6 +17,7 @@ gen/
 .idea/
 gradle.properties
 .bash_profile
+reports
 
 
 

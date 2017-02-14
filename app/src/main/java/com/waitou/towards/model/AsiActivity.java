@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityAslBinding;
 import com.waitou.towards.model.presenter.RecommendedPresenter;
+import com.waitou.wt_library.base.XActivity;
 
-import cn.droidlover.xdroid.base.XActivity;
 
 /**
  * Created by waitou on 17/1/9.
