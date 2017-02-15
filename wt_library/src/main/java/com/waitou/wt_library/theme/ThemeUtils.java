@@ -48,7 +48,7 @@ public class ThemeUtils {
      *
      * @return ColorStateList
      */
-    public static ColorStateList getColorStateList(Context context,@ColorRes int color) {
+    public static ColorStateList getColorStateList(Context context, int color) {
         if (context == null) {
             return null;
         }

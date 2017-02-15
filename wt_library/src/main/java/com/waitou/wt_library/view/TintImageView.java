@@ -1,4 +1,4 @@
-package com.waitou.towards.view;
+package com.waitou.wt_library.view;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -6,7 +6,8 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.waitou.towards.R;
+import com.waitou.wt_library.R;
+
 
 /**
  * https://gist.github.com/tylerchesley/5d15d859be4f3ce31213

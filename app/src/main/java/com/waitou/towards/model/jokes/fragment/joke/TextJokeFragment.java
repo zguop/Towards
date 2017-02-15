@@ -48,6 +48,8 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Incl
         if (Build.VERSION.SDK_INT < 23) { //6.0以下xml中默认颜色 高亮 原因未知 代码重新设置一遍
             mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
             mToolbarJokeTitle.item2.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
+
+
         }
         XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), jokeFragmentList, null);
         getBinding().setAdapter(adapter);

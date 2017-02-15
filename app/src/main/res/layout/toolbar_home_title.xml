@@ -4,9 +4,16 @@
 
     <data>
 
+        <import type="com.waitou.wt_library.theme.ThemeUtils"/>
+
         <variable
             name="position"
             type="int"/>
+
+        <variable
+            name="colorId"
+            type="int"/>
+
     </data>
 
     <FrameLayout
@@ -16,16 +23,17 @@
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:background="?attr/selectableItemBackground"
             android:paddingBottom="5dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="5dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginLeft="3dp"
             android:scaleType="centerInside"
             android:tint="@color/skin_tab_icon_not"
-            app:home_title="@{position}"/>
+            app:home_title="@{position}"
+            app:imageTintList="@{ThemeUtils.getColorStateList(context,colorId)}"/>
 
     </FrameLayout>
 </layout>

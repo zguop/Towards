@@ -22,7 +22,6 @@ import com.waitou.wt_library.base.XFragmentAdapter;
 import java.util.List;
 
 
-
 /**
  * Created by waitou on 16/12/23.
  * 首页
@@ -30,8 +29,8 @@ import java.util.List;
 
 public class HomeFragment extends XFragment<MainPresenter, IncludeViewPagerBinding> implements MainContract.HomeView, SmartTabLayout.TabProvider {
 
-    private MainPresenter           mPresenter;
-    private ViewSmartLayoutBinding  mLayoutBinding;
+    private MainPresenter          mPresenter;
+    private ViewSmartLayoutBinding mLayoutBinding;
 
     @Override
     public boolean initXView() {
@@ -76,7 +75,8 @@ public class HomeFragment extends XFragment<MainPresenter, IncludeViewPagerBindi
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
         ViewDataBinding viewDataBinding = bindingInflate(R.layout.toolbar_home_title, container);
-        viewDataBinding.setVariable(BR.position,position);
+        viewDataBinding.setVariable(BR.position, position);
+        viewDataBinding.setVariable(BR.colorId, R.color.skin_tab_icon_not);
         return viewDataBinding.getRoot();
     }
 }

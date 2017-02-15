@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.waitou.wt_library.R;
+import com.waitou.wt_library.view.TintImageView;
 import com.waitou.wt_library.view.viewpager.CircleIndicator;
 
 import java.lang.reflect.Constructor;
@@ -321,6 +322,10 @@ public class ChangeModeController {
             @Override
             public void apply(View view, String resName, int theme) {
                 Context context = view.getContext();
+                if (view instanceof TintImageView) {
+                    ((TintImageView) view).setColorFilter(ThemeUtils.getColorStateList(context, applyValue(context, resName, theme)));
+                    return;
+                }
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                     ((ImageView) view).setImageTintList(ThemeUtils.getColorStateList(context, applyValue(context, resName, theme)));
                 }
@@ -329,8 +334,8 @@ public class ChangeModeController {
             @Override
             public void apply(View view, String resName, int theme) {
                 Context context = view.getContext();
-                if(view instanceof CircleIndicator){
-                    ((CircleIndicator)view).setIndicatorSelectedBackground(applyValue(context, resName, theme));
+                if (view instanceof CircleIndicator) {
+                    ((CircleIndicator) view).setIndicatorSelectedBackground(applyValue(context, resName, theme));
                 }
             }
         };

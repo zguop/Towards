@@ -60,9 +60,6 @@
         <attr name="right_shadow" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="TintImageView">
-        <attr name="tint" format="reference|color"/>
-    </declare-styleable>
 
 
 </resources>
