@@ -1,4 +1,4 @@
-package com.waitou.towards.model;
+package com.waitou.towards.model.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,15 +12,16 @@ import com.jaeger.library.StatusBarUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
+import com.waitou.towards.model.AsiActivity;
 import com.waitou.towards.model.activity.RecommendedActivity;
 import com.waitou.towards.model.activity.theme.ThemeActivity;
 import com.waitou.towards.model.event.ThemeEvent;
-import com.waitou.towards.model.jokes.contract.MainContract;
-import com.waitou.towards.model.jokes.fragment.CircleFragment;
-import com.waitou.towards.model.jokes.fragment.FigureFragment;
-import com.waitou.towards.model.jokes.fragment.PersonFragment;
-import com.waitou.towards.model.jokes.fragment.home.HomeFragment;
-import com.waitou.towards.model.jokes.fragment.joke.TextJokeFragment;
+import com.waitou.towards.model.main.contract.MainContract;
+import com.waitou.towards.model.main.fragment.CircleFragment;
+import com.waitou.towards.model.main.fragment.FigureFragment;
+import com.waitou.towards.model.main.fragment.PersonFragment;
+import com.waitou.towards.model.main.fragment.home.HomeFragment;
+import com.waitou.towards.model.main.fragment.joke.TextJokeFragment;
 import com.waitou.towards.model.presenter.MainPresenter;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.base.XFragmentAdapter;
@@ -180,4 +181,5 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         }
         return mPersonFragment;
     }
+
 }

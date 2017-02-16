@@ -46,7 +46,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies['gradle-retrolambda']
     compile rootProject.ext.dependencies['cardview-v7']
-    compile rootProject.ext.dependencies['databinding-adapter']
     compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["smarttablayout"]
     //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme

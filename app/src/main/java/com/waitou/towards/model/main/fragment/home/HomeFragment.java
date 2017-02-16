@@ -1,4 +1,4 @@
-package com.waitou.towards.model.jokes.fragment.home;
+package com.waitou.towards.model.main.fragment.home;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
@@ -14,7 +14,7 @@ import com.waitou.towards.BR;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ViewSmartLayoutBinding;
-import com.waitou.towards.model.jokes.contract.MainContract;
+import com.waitou.towards.model.main.contract.MainContract;
 import com.waitou.towards.model.presenter.MainPresenter;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
@@ -78,5 +78,10 @@ public class HomeFragment extends XFragment<MainPresenter, IncludeViewPagerBindi
         viewDataBinding.setVariable(BR.position, position);
         viewDataBinding.setVariable(BR.colorId, R.color.skin_tab_icon_not);
         return viewDataBinding.getRoot();
+    }
+
+    @Override
+    public Fragment getCurrentHomeFragment() {
+        return mPresenter.getHomeFragmentList().get(getBinding().viewPager.getCurrentItem());
     }
 }

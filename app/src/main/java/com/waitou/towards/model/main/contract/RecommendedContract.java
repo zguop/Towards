@@ -1,4 +1,4 @@
-package com.waitou.towards.model.jokes.contract;
+package com.waitou.towards.model.main.contract;
 
 /**
  * Created by waitou on 17/1/9.

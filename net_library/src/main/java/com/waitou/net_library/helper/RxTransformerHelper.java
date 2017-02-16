@@ -62,7 +62,7 @@ public class RxTransformerHelper {
     }
 
     /**
-     * 错误码返回
+     * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功
      */
     public static <T> Func1<T, Boolean> verifyBusiness(ErrorVerify errorVerify) {
         return t -> {
@@ -75,7 +75,7 @@ public class RxTransformerHelper {
                 }
                 return success;
             }
-            return false;
+            return true;
         };
     }
 }

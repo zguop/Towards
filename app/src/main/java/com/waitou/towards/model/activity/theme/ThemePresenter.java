@@ -1,8 +1,8 @@
 package com.waitou.towards.model.activity.theme;
 
-import com.github.markzhai.recyclerview.BaseViewAdapter;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.theme.ChangeModeController;
 import com.waitou.wt_library.theme.ThemeEnum;
 
@@ -38,7 +38,7 @@ public class ThemePresenter extends XPresent<ThemeActivity> implements ThemeCont
     }
 
     @Override
-    public void onItemClick(ThemeInfo info) {
+    public void onItemClick(ThemeInfo info, int position) {
         for (int i = 0; i < themeInfoList.size(); i++) {
             if (themeInfoList.get(i).focus) {
                 themeInfoList.get(i).setFocus(false);

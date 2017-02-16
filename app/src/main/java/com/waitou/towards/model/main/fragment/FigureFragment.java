@@ -1,4 +1,4 @@
-package com.waitou.towards.model.jokes.fragment;
+package com.waitou.towards.model.main.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 /**
  * Created by waitou on 16/12/23.
+ * 图片
  */
 
-public class PersonFragment extends Fragment {
+public class FigureFragment extends Fragment {
 
     @Nullable
     @Override

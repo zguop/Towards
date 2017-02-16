@@ -14,6 +14,9 @@
             name="presenter"
             type="com.waitou.towards.model.activity.theme.ThemePresenter"/>
 
+        <variable
+            name="position"
+            type="int"/>
     </data>
 
     <com.waitou.towards.view.SquareRelativeLayout
@@ -26,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:onClick="@{() -> presenter.onItemClick(item)}"
+            android:onClick="@{() -> presenter.onItemClick(item,position)}"
             app:color="@{item.themeEnum.colorId}"
             app:radius="20dp"/>
 

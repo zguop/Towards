@@ -25,7 +25,11 @@ public class HttpUtil {
 
     public static final String RANDOM_BASE_URL = "v.juhe.cn/joke/";
 
-    public static final String GANK_BASE_URL   = "gank.io/api/";
+    public static final String GANK_BASE_URL = "gank.io/api/";
+
+    //    public static final String ROUTE_URL = "route.showapi.com/852-2";
+    public final static String API_DONG_TING = "api.dongting.com";
+
 
     private final static String TEST_DOMAIN_URL   = TEST_HTTP;
     private final static String ACTIVE_DOMAIN_URL = ACTIVE_HTTPS;

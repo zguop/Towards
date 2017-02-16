@@ -55,7 +55,6 @@ public class WTContentLayout extends FrameLayout {
         typedArray.recycle();
     }
 
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

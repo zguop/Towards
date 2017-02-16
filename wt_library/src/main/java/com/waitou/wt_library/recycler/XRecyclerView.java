@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 /**
  * Created by wanglei on 2016/10/30.
  */
@@ -597,7 +596,7 @@ public class XRecyclerView extends RecyclerView {
         return this;
     }
 
-    public int getCurrentPage(){
+    public int getCurrentPage() {
         return currentPage;
     }
 
@@ -624,5 +623,12 @@ public class XRecyclerView extends RecyclerView {
         void onRefresh();
 
         void onLoadMore(int page);
+    }
+
+    public abstract class OnRefreshListener implements OnRefreshAndLoadMoreListener {
+        @Override
+        public void onLoadMore(int page) {
+
+        }
     }
 }

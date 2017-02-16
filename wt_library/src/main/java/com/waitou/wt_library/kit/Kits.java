@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -1097,13 +1098,21 @@ public class Kits {
         }
 
         /**
+         * 返回一个代表当期日期是星期几的数字。1表示星期天、2表示星期一、7表示星期六
+         */
+        public static int getDayOfWeek(java.util.Date date) {
+            Calendar cal = new GregorianCalendar();
+            cal.setTime(date);
+            return cal.get(Calendar.DAY_OF_WEEK);
+        }
+
+        /**
          * 获取当月第一天的时间（毫秒值）
          */
         public static long getFirstOfMonth(long mills) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(mills);
             calendar.set(Calendar.DAY_OF_MONTH, 1);
-
             return calendar.getTimeInMillis();
         }
 

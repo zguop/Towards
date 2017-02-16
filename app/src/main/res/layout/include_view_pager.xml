@@ -8,6 +8,7 @@
             name="adapter"
             type="com.waitou.wt_library.base.XFragmentAdapter"/>
 
+
     </data>
 
     <!--
@@ -22,6 +23,7 @@
         android:descendantFocusability="blocksDescendants"
         app:adapter="@{adapter}"
         app:mode="right_overlay"
+        app:offscreenPageLimit="@{adapter.getCount() &lt; 3 ? 1 : adapter.getCount() - 1}"
         app:outset="62%"
         app:shadow_width="30dp"/>
 

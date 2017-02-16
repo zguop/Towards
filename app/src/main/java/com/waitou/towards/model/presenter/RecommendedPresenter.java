@@ -3,7 +3,7 @@ package com.waitou.towards.model.presenter;
 import android.os.SystemClock;
 
 import com.waitou.towards.model.activity.RecommendedActivity;
-import com.waitou.towards.model.jokes.contract.RecommendedContract;
+import com.waitou.towards.model.main.contract.RecommendedContract;
 import com.waitou.wt_library.base.XPresent;
 
 

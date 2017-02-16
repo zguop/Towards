@@ -1,10 +1,10 @@
-package com.waitou.towards.model.jokes.contract;
+package com.waitou.towards.model.main.contract;
 
 import android.support.v4.app.Fragment;
 
 import com.waitou.net_library.model.Displayable;
-import com.waitou.towards.model.MainActivity;
-import com.waitou.towards.model.jokes.fragment.joke.JokeContentFragment;
+import com.waitou.towards.model.main.MainActivity;
+import com.waitou.towards.model.main.fragment.joke.JokeContentFragment;
 import com.waitou.wt_library.base.IView;
 import com.waitou.wt_library.base.UIPresent;
 
@@ -20,7 +20,7 @@ public interface MainContract {
     }
 
     interface HomeView extends IView<com.waitou.towards.model.presenter.MainPresenter> {
-
+        Fragment getCurrentHomeFragment();
     }
 
     interface TextJokeView extends IView<MainPresenter> {

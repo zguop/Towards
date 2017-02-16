@@ -1,9 +1,8 @@
 package com.waitou.wt_library.imageloader;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
-
-import com.waitou.wt_library.XDroidConf;
 
 import java.io.File;
 
@@ -37,18 +36,25 @@ public interface ILoader {
 
     class Options {
 
-        public int loadingResId = RES_NONE;        //加载中的资源id
-        public int loadErrorResId = RES_NONE;      //加载失败的资源id
+        int loadingResId   = RES_NONE;        //加载中的资源id
+        int loadErrorResId = RES_NONE;      //加载失败的资源id
+        Drawable loadingDrawable;
+        Drawable loadErrorDrawable;
 
-        public static final int RES_NONE = -1;
+        static final int RES_NONE = -1;
 
-        public static Options defaultOptions() {
-            return new Options(XDroidConf.IL_LOADING_RES, XDroidConf.IL_ERROR_RES);
+        static Options defaultOptions() {
+            return new Options(RES_NONE, RES_NONE);
         }
 
         public Options(int loadingResId, int loadErrorResId) {
             this.loadingResId = loadingResId;
             this.loadErrorResId = loadErrorResId;
+        }
+
+        public Options(Drawable loadingDrawable, Drawable loadErrorDrawable) {
+            this.loadingDrawable = loadingDrawable;
+            this.loadErrorDrawable = loadErrorDrawable;
         }
     }
 

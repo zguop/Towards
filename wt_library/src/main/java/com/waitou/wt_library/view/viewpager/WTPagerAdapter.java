@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
 
     private static final int MULTIPLE_COUNT = 300;
 
-    protected List<T>           mData;
+    protected List<T>           mData = new ArrayList<>();
     private   SparseArray<View> mViews;
     private   WTViewPager       mViewPager;
     private   boolean           isCanLoop;
 
-    public WTPagerAdapter(List<T> data) {
+    WTPagerAdapter(List<T> data) {
         this.mData = data;
         mViews = new SparseArray<>();
     }
@@ -55,7 +56,6 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        super.destroyItem(container, position, object);
     }
-
 
     @Override
     public void finishUpdate(ViewGroup container) {
@@ -94,5 +94,5 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
         return mData == null ? 0 : mData.size();
     }
 
-    public abstract View newView(Context context, int position);
+    protected abstract View newView(Context context, int realPosition);
 }

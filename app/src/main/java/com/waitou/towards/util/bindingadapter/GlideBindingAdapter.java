@@ -5,7 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.waitou.wt_library.imageloader.ILFactory;
+import com.waitou.wt_library.imageloader.ILoader;
 
 /**
  * Created by waitou on 17/1/3.
@@ -53,24 +54,12 @@ public class GlideBindingAdapter {
 
     @BindingAdapter({"imageUrl", "placeholder", "error"})
     public static void loadImageFromUrl(ImageView view, String url, Drawable drawable, Drawable error) {
-        Glide.with(view.getContext())
-                .load(url)
-                .crossFade()
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .error(error)
-                .placeholder(drawable)
-                .into(view);
+        ILFactory.getLoader().loadNet(view, url, new ILoader.Options(drawable, error));
     }
 
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("image_url")
     public static void loadImageFromUrl(ImageView view, String url) {
-        Glide.with(view.getContext())
-                .load(url)
-                .crossFade()
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(view);
+        ILFactory.getLoader().loadNet(view, url,null);
     }
 
 

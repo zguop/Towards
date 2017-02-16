@@ -1,20 +1,18 @@
-package com.waitou.towards.model.jokes.fragment.joke;
+package com.waitou.towards.model.main.fragment.joke;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.github.markzhai.recyclerview.MultiTypeAdapter;
 import com.waitou.towards.ExtraValue;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
-import com.waitou.towards.model.jokes.contract.MainContract;
+import com.waitou.towards.model.main.contract.MainContract;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.recycler.XRecyclerView;
+import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 
 import java.util.List;
-
-import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
 
 
 /**
@@ -24,7 +22,7 @@ import static com.waitou.towards.ExtraValue.EXTRA_VALUE_1;
 public class JokeContentFragment extends XFragment<MainContract.MainPresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener, MainContract.JokeContentView<JokeInfo> {
 
     private int                        mType;
-    private MultiTypeAdapter           mAdapter;
+    private MultiTypeAdapter<JokeInfo>           mAdapter;
     private MainContract.MainPresenter mPresenter;
 
     @Override
@@ -40,9 +38,9 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
     @Override
     public void initData(Bundle savedInstanceState) {
         mType = getArguments().getInt(ExtraValue.JOKE_CONTENT_TYPE);
-        mAdapter = new MultiTypeAdapter(getActivity());
-        mAdapter.addViewTypeToLayoutMap(ExtraValue.EXTRA_VALUE_0, R.layout.item_textjoke);
-        mAdapter.addViewTypeToLayoutMap(ExtraValue.EXTRA_VALUE_1, R.layout.item_imagejoke);
+        mAdapter = new MultiTypeAdapter<>(getActivity());
+        mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
+        mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);
         getBinding().xList.getRecyclerView().verticalLayoutManager(getActivity()).setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
@@ -57,12 +55,12 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
     @Override
     public void reloadData() {
         showLoading();
-        mPresenter.loadJokeData(EXTRA_VALUE_1, mType);
+        mPresenter.loadJokeData(1, mType);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadJokeData(EXTRA_VALUE_1, mType);
+        mPresenter.loadJokeData(1, mType);
     }
 
     @Override
@@ -77,7 +75,7 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
 
     @Override
     public void success(int page, List<JokeInfo> info) {
-        if (page == EXTRA_VALUE_1) {
+        if (page == 1) {
             mAdapter.clear();
             if (info == null || info.size() == 0) {
                 showEmpty();

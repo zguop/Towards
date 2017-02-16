@@ -3,12 +3,12 @@ package com.waitou.towards.model.activity.theme;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.github.markzhai.recyclerview.SingleTypeAdapter;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.IncludeRecyclerViewBinding;
 import com.waitou.towards.model.event.ThemeEvent;
 import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.rx.RxBus;
 
 

@@ -2,8 +2,6 @@ package com.waitou.towards.util.bindingadapter;
 
 import android.databinding.BindingAdapter;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -17,13 +15,6 @@ import com.waitou.wt_library.rx.RxBus;
 
 public class UtilsBindingAdapter {
 
-    /**
-     * 设置viewpager的adapter
-     */
-    @BindingAdapter("adapter")
-    public static void setAdapter(ViewPager pager, PagerAdapter adapter) {
-        pager.setAdapter(adapter);
-    }
 
     @BindingAdapter({"code", "post"})
     public static void post(View view, int code, Object o) {

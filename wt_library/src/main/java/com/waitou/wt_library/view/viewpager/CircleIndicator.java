@@ -106,6 +106,10 @@ public class CircleIndicator extends View {
         setUpListener();
     }
 
+    public int getCountSize() {
+        return countSize;
+    }
+
     private void setUpListener() {
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 

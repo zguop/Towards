@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityRecommendedBinding;
-import com.waitou.towards.model.jokes.contract.RecommendedContract;
+import com.waitou.towards.model.main.contract.RecommendedContract;
 import com.waitou.towards.model.presenter.RecommendedPresenter;
 import com.waitou.wt_library.base.XActivity;
 

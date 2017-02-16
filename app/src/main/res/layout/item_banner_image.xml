@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <variable
+            name="position"
+            type="int"/>
+
+        <variable
+            name="item"
+            type="com.waitou.towards.bean.BannerPageInfo.BannerInfo.BannerDataInfo"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.presenter.MainPresenter"/>
+
+    </data>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{() -> presenter.onBannerItemClick(item,position)}"
+        android:scaleType="fitXY"
+        app:image_url="@{item.picUrl}"/>
+
+</layout>
+

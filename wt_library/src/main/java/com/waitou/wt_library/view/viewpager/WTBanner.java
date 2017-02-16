@@ -1,6 +1,7 @@
 package com.waitou.wt_library.view.viewpager;
 
 import android.content.Context;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -13,7 +14,6 @@ import com.waitou.wt_library.R;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-
 
 
 /**
@@ -124,6 +124,10 @@ public class WTBanner extends RelativeLayout {
                 if (convenientBanner.mViewPager != null && convenientBanner.turning) {
                     int page = convenientBanner.mViewPager.getCurrentItem() + 1;
                     convenientBanner.mViewPager.setCurrentItem(page);
+                    if(convenientBanner.mCircleIndicator.getCountSize() == 0){
+                        convenientBanner.showIndicators(convenientBanner.canLoop);
+                        convenientBanner.mCircleIndicator.setViewPager(convenientBanner.mViewPager,convenientBanner.canLoop);
+                    }
                     convenientBanner.postDelayed(convenientBanner.mAdSwitchTask, convenientBanner.autoTurningTime);
                 }
             }
@@ -132,10 +136,15 @@ public class WTBanner extends RelativeLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (canLoop && ev.getActionMasked() == MotionEvent.ACTION_DOWN) {
+        final int action = MotionEventCompat.getActionMasked(ev);
+        if (canLoop && action == MotionEvent.ACTION_DOWN) {
             stopTurning();
         }
-        if (canLoop && ev.getActionMasked() == MotionEvent.ACTION_UP) {
+        if (canLoop && action == MotionEvent.ACTION_UP) {
+            startTurning();
+        }
+
+        if(canLoop && action == MotionEvent.ACTION_CANCEL){
             startTurning();
         }
         return super.dispatchTouchEvent(ev);

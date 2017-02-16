@@ -15,7 +15,7 @@ public interface ThemeContract {
 
     interface ThemePresenter extends UIPresent<ThemeActivity> {
         List<ThemeInfo> loadData();
-        void onItemClick(ThemeInfo model);
+        void onItemClick(ThemeInfo info,int position);
     }
 
 

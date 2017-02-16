@@ -115,13 +115,23 @@ public class GlideLoader implements ILoader {
     }
 
     private void load(DrawableTypeRequest request, ImageView target, Options options) {
-        if (options == null) options = Options.defaultOptions();
+        if (options == null){
+            options = Options.defaultOptions();
+        }
 
         if (options.loadingResId != Options.RES_NONE) {
             request.placeholder(options.loadingResId);
         }
         if (options.loadErrorResId != Options.RES_NONE) {
             request.error(options.loadErrorResId);
+        }
+
+        if(options.loadingDrawable != null){
+            request.placeholder(options.loadingDrawable);
+        }
+
+        if(options.loadErrorDrawable != null){
+            request.error(options.loadErrorDrawable);
         }
         request.diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()

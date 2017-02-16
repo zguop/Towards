@@ -3,7 +3,7 @@ package com.waitou.wt_library.base;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -123,7 +123,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.toolbar.initIconActionBar(title, menuIcon, listener);
     }
 
-    protected void setBackListener(@IdRes int resId, View.OnClickListener listener) {
+    protected void setBackListener(@DrawableRes int resId, View.OnClickListener listener) {
         mXBinding.toolbar.setBackListener(resId, listener);
     }
 
