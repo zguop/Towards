@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ToolbarJokeTitleBinding;
-import com.waitou.towards.model.main.contract.MainContract;
+import com.waitou.towards.model.main.MainContract;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
 import com.waitou.wt_library.theme.ThemeUtils;

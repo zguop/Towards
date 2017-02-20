@@ -14,7 +14,11 @@ public class DataLoader {
         return DataServiceProvider.getInstance().provide(HttpUtil.RANDOM_BASE_URL, LoaderService.class);
     }
 
-    public static LoaderService getBannerApi() {
-        return DataServiceProvider.getInstance().provide(HttpUtil.API_DONG_TING, LoaderService.class);
+    public static LoaderService getGithubApi() {
+        return DataServiceProvider.getInstance().provide(HttpUtil.GITHUB_API, LoaderService.class);
+    }
+
+    public static LoaderService getGankApi(){
+        return DataServiceProvider.getInstance().provide(HttpUtil.GANK_BASE_URL,LoaderService.class);
     }
 }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by wanglei on 2016/11/28.
@@ -956,12 +957,14 @@ public class Kits {
 
     @SuppressWarnings("SimpleDateFormat") //unchecked
     public static class Date {
+
+        public static final String YMD    = "yyyy-MM-dd";
+        public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+
         private static SimpleDateFormat m        = new SimpleDateFormat("MM");
         private static SimpleDateFormat d        = new SimpleDateFormat("dd");
         private static SimpleDateFormat md       = new SimpleDateFormat("MM-dd");
-        private static SimpleDateFormat ymd      = new SimpleDateFormat("yyyy-MM-dd");
         private static SimpleDateFormat ymdDot   = new SimpleDateFormat("yyyy.MM.dd");
-        private static SimpleDateFormat ymdhms   = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         private static SimpleDateFormat ymdhmss  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         private static SimpleDateFormat ymdhm    = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         private static SimpleDateFormat hm       = new SimpleDateFormat("HH:mm");
@@ -972,8 +975,24 @@ public class Kits {
          * 年月日[2015-07-28]
          */
         public static String getYmd(long timeInMills) {
-            return ymd.format(new java.util.Date(timeInMills));
+            return getFormatDateTime(new java.util.Date(timeInMills), YMD);
         }
+
+        public static String getCurrentDate() {
+            return getFormatDateTime(new java.util.Date(), YMD);
+        }
+
+        /**
+         * 根据给定的格式与时间(Date类型的)，返回时间字符串<br>
+         *
+         * @param date   指定的日期
+         * @param format 日期格式字符串
+         * @return String 指定格式的日期字符串.
+         */
+        public static String getFormatDateTime(java.util.Date date, String format) {
+            return new SimpleDateFormat(format, Locale.getDefault()).format(date);
+        }
+
 
         /**
          * 年月日[2015.07.28]
@@ -983,7 +1002,7 @@ public class Kits {
         }
 
         public static String getYmdhms(long timeInMills) {
-            return ymdhms.format(new java.util.Date(timeInMills * 1000L));
+            return getFormatDateTime(new java.util.Date(timeInMills * 1000L), YMDHMS);
         }
 
         public static String getYmdhmsS(long timeInMills) {

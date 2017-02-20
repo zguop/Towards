@@ -14,8 +14,8 @@ import com.waitou.towards.BR;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ViewSmartLayoutBinding;
-import com.waitou.towards.model.main.contract.MainContract;
-import com.waitou.towards.model.presenter.MainPresenter;
+import com.waitou.towards.model.main.MainContract;
+import com.waitou.towards.model.main.MainPresenter;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
 

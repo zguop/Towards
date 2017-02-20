@@ -33,7 +33,7 @@
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".model.activity.theme.ThemeActivity"/>
+        <activity android:name=".model.theme.ThemeActivity"/>
 
         <activity android:name=".model.AsiActivity"/>
 

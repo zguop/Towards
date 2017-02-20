@@ -1,4 +1,4 @@
-package com.waitou.towards.model.activity.theme;
+package com.waitou.towards.model.theme;
 
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.wt_library.base.UIPresent;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface ThemeContract {
 
 
-    interface ThemePresenter extends UIPresent<ThemeActivity> {
+    interface ThemePresenter extends UIPresent<ThemeActivity>{
         List<ThemeInfo> loadData();
         void onItemClick(ThemeInfo info,int position);
     }

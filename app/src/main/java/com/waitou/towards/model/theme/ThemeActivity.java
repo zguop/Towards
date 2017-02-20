@@ -1,13 +1,14 @@
-package com.waitou.towards.model.activity.theme;
+package com.waitou.towards.model.theme;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
 import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
-import com.waitou.towards.databinding.IncludeRecyclerViewBinding;
+import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
 import com.waitou.towards.model.event.ThemeEvent;
 import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.rx.RxBus;
 
@@ -16,7 +17,7 @@ import com.waitou.wt_library.rx.RxBus;
  * Created by waitou on 17/1/16.
  */
 
-public class ThemeActivity extends XActivity<ThemePresenter, IncludeRecyclerViewBinding> {
+public class ThemeActivity extends XActivity<ThemePresenter, IncludeMatchRecyclerViewBinding> {
 
     private SingleTypeAdapter<ThemeInfo> mAdapter;
     private ThemeInfo                    info;
@@ -33,7 +34,7 @@ public class ThemeActivity extends XActivity<ThemePresenter, IncludeRecyclerView
 
     @Override
     public int getContentViewId() {
-        return R.layout.include_recycler_view;
+        return R.layout.include_match_recycler_view;
     }
 
     @Override
@@ -44,7 +45,8 @@ public class ThemeActivity extends XActivity<ThemePresenter, IncludeRecyclerView
         });
         mAdapter = new SingleTypeAdapter<>(this, R.layout.item_theme);
         mAdapter.setPresenter(getP());
-        getBinding().xList.gridLayoutManager(this, 3).setAdapter(mAdapter);
+        getBinding().setManager(LayoutManagerUtli.getGridLayoutManager(this,3));
+        getBinding().setAdapter(mAdapter);
         getBinding().xList.setBackgroundColor(Color.WHITE);
         reloadData();
     }

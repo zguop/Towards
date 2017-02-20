@@ -14,15 +14,13 @@ import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
 import com.waitou.towards.model.AsiActivity;
 import com.waitou.towards.model.activity.RecommendedActivity;
-import com.waitou.towards.model.activity.theme.ThemeActivity;
 import com.waitou.towards.model.event.ThemeEvent;
-import com.waitou.towards.model.main.contract.MainContract;
 import com.waitou.towards.model.main.fragment.CircleFragment;
 import com.waitou.towards.model.main.fragment.FigureFragment;
 import com.waitou.towards.model.main.fragment.PersonFragment;
 import com.waitou.towards.model.main.fragment.home.HomeFragment;
 import com.waitou.towards.model.main.fragment.joke.TextJokeFragment;
-import com.waitou.towards.model.presenter.MainPresenter;
+import com.waitou.towards.model.theme.ThemeActivity;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.base.XFragmentAdapter;
 import com.waitou.wt_library.router.Router;
@@ -82,7 +80,6 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
             getBinding().mainTab.setItemBackgroundResource(ThemeUtils.getAttrTypedValue(this, R.attr.colorPrimary).resourceId);
             StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         });
-
         getBinding().mainTab.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_home:
@@ -90,6 +87,9 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
                     break;
                 case R.id.menu_joke:
                     getBinding().toolbar.fromCustomMenuView(getTextJokeFragment().getJokeToolBar(), R.id.menu_joke);
+                    break;
+                case R.id.menu_circle:
+                    getUiDelegate().gone(getBinding().toolbar);
                     break;
             }
             return true;

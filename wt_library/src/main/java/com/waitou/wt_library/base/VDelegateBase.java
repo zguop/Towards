@@ -34,15 +34,24 @@ public class VDelegateBase implements VDelegate {
 
     }
 
-
     @Override
-    public void visible(boolean flag, View view) {
+    public void flagVisible(boolean flag, View view) {
         if (flag) view.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void gone(boolean flag, View view) {
+    public void visible(View view) {
+        view.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void flagGone(boolean flag, View view) {
         if (flag) view.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void gone(View view) {
+        view.setVisibility(View.GONE);
     }
 
     @Override

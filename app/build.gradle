@@ -48,6 +48,7 @@ dependencies {
     compile rootProject.ext.dependencies['cardview-v7']
     compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["smarttablayout"]
+    compile rootProject.ext.dependencies["circleimageview"]
     //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme
 
 

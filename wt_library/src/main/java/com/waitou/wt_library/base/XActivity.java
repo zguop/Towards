@@ -17,7 +17,6 @@ import com.waitou.wt_library.databinding.ActivityXBinding;
 
 public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> extends BaseActivity implements UIView<P> {
 
-    private VDelegate        mVDelegate;
     private ActivityXBinding mXBinding;
 
     private P presenter;
@@ -62,32 +61,6 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         return presenter;
     }
 
-    protected VDelegate getUiDelegate() {
-        if (mVDelegate == null) {
-            mVDelegate = VDelegateBase.create(this);
-        }
-        return mVDelegate;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getUiDelegate().resume();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getUiDelegate().pause();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -95,8 +68,6 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
             getP().detachV();
             presenter = null;
         }
-        getUiDelegate().destroy();
-        mVDelegate = null;
     }
 
     @Override

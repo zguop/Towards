@@ -23,6 +23,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private VDelegate             mVDelegate;
     private CompositeSubscription mPendingSubscriptions;
 
     /**
@@ -43,6 +44,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             mScreenHeight = displayMetrics.heightPixels;
             mScreenWidth = displayMetrics.widthPixels;
         }
+    }
+
+    protected VDelegate getUiDelegate() {
+        if (mVDelegate == null) {
+            mVDelegate = VDelegateBase.create(this);
+        }
+        return mVDelegate;
     }
 
     /**
@@ -73,6 +81,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getUiDelegate().resume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getUiDelegate().pause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mPendingSubscriptions != null && mPendingSubscriptions.hasSubscriptions()) {
@@ -81,5 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (ActivityUtil.getActivityList().contains(this)) {
             ActivityUtil.getActivityList().remove(this);
         }
+        getUiDelegate().destroy();
+        mVDelegate = null;
     }
 }

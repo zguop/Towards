@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.waitou.towards.model.presenter.MainPresenter"/>
+            type="com.waitou.towards.model.main.MainPresenter"/>
 
         <variable
             name="adapter"

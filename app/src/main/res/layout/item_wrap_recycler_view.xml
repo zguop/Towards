@@ -2,13 +2,23 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="item"
+            type="com.waitou.towards.bean.RecyclerAdapterInfo"/>
+
+    </data>
+
     <com.waitou.wt_library.recycler.XRecyclerView
         android:id="@+id/x_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colore7e7e7"
         android:fadeScrollbars="false"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        app:adapter="@{item.adapter}"
+        app:layoutManager="@{item.layoutManager}"/>
 
 </layout>

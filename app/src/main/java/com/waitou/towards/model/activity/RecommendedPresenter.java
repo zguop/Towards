@@ -1,9 +1,7 @@
-package com.waitou.towards.model.presenter;
+package com.waitou.towards.model.activity;
 
 import android.os.SystemClock;
 
-import com.waitou.towards.model.activity.RecommendedActivity;
-import com.waitou.towards.model.main.contract.RecommendedContract;
 import com.waitou.wt_library.base.XPresent;
 
 

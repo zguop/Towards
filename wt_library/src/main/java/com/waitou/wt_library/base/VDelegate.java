@@ -9,12 +9,18 @@ import android.view.View;
 public interface VDelegate {
 
     void resume();
+
     void pause();
+
     void destroy();
 
-    void visible(boolean flag, View view);
-    void gone(boolean flag, View view);
+    void flagVisible(boolean flag, View view);
+
+    void visible(View view);
+
+    void flagGone(boolean flag, View view);
+
+    void gone(View view);
+
     void inVisible(View view);
-
-
 }

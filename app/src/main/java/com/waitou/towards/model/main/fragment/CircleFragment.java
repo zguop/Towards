@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.Homeinfo;
 import com.waitou.towards.databinding.FragmentHomeBinding;
-import com.waitou.towards.model.presenter.MainPresenter;
+import com.waitou.towards.model.main.MainPresenter;
 import com.waitou.wt_library.base.XFragment;
 
 /**

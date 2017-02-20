@@ -13,13 +13,15 @@
             type="android.support.v7.widget.RecyclerView.LayoutManager"/>
     </data>
 
-    <com.waitou.wt_library.recycler.XPullRecyclerView
+    <com.waitou.wt_library.recycler.XRecyclerView
         android:id="@+id/x_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:recyclerBackgroundColor="@color/colore7e7e7"
+        android:background="@color/colore7e7e7"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
         app:adapter="@{adapter}"
-        app:layoutManager="@{manager}"
-        app:recyclerScrollbarNone="true"/>
+        app:layoutManager="@{manager}"/>
 
 </layout>

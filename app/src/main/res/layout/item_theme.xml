@@ -12,7 +12,7 @@
 
         <variable
             name="presenter"
-            type="com.waitou.towards.model.activity.theme.ThemePresenter"/>
+            type="com.waitou.towards.model.theme.ThemePresenter"/>
 
         <variable
             name="position"

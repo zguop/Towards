@@ -4,7 +4,6 @@ import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.imageloader.ILoader;
 
@@ -59,15 +58,11 @@ public class GlideBindingAdapter {
 
     @BindingAdapter("image_url")
     public static void loadImageFromUrl(ImageView view, String url) {
-        ILFactory.getLoader().loadNet(view, url,null);
+        ILFactory.getLoader().loadNet(view, url, null);
     }
-
 
     @BindingAdapter("load")
     public static void loadImageFromUrl(ImageView view, int drawable) {
-        Glide.with(view.getContext())
-                .load(drawable)
-                .crossFade()
-                .into(view);
+        ILFactory.getLoader().loadResource(view, drawable, null);
     }
 }

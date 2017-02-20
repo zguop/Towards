@@ -1,13 +1,12 @@
-package com.waitou.towards.model.presenter;
+package com.waitou.towards.model.main;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.ExtraValue;
 import com.waitou.towards.bean.BannerPageInfo;
-import com.waitou.towards.model.main.MainActivity;
-import com.waitou.towards.model.main.contract.MainContract;
 import com.waitou.towards.model.main.fragment.CircleFragment;
 import com.waitou.towards.model.main.fragment.home.HomeCommendFragment;
 import com.waitou.towards.model.main.fragment.joke.JokeContentFragment;
@@ -17,15 +16,20 @@ import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.Kits;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by waitou on 17/1/27.
  */
 
-public class MainPresenter extends XPresent<MainActivity> implements MainContract.MainPresenter, SingleViewPagerAdapter.Presenter {
+public class MainPresenter extends XPresent<MainActivity> implements MainContract.MainPresenter, SingleViewPagerAdapter.Presenter ,Serializable{
 
     private List<Fragment> homeFragments = new ArrayList<>();
     private List<Fragment> jokeFragments = new ArrayList<>();
@@ -107,42 +111,34 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
     /**
      * 广告位的点击方法
      */
-    public void onBannerItemClick(BannerPageInfo.BannerInfo.BannerDataInfo url, int position) {
+    public void onBannerItemClick(BannerPageInfo url, int position) {
 
     }
-
-    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg"
-    };
 
     /**
      * 加载HomeCommendFragment首页数据
      */
     public void loadHomeData() {
-        getV().pend(DataLoader.getBannerApi().getBannerPage()
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter(getV(), new SimpleErrorVerify() {
-                    @Override
-                    public void call(String code, String desc) {
-                        super.call(code, desc);
-                        List<BannerPageInfo.BannerInfo.BannerDataInfo> bannerDataInfoList = new ArrayList<>();
-                        for (String image : images) {
-                            BannerPageInfo.BannerInfo.BannerDataInfo dataInfo = new BannerPageInfo.BannerInfo.BannerDataInfo();
-                            dataInfo.picUrl = image;
-                            bannerDataInfoList.add(dataInfo);
-                        }
-                        ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).bannerSuccess(bannerDataInfoList);
+        getV().pend(Observable.zip(DataLoader.getGithubApi().getBannerPage(), DataLoader.getGithubApi().getHomeData(), Pair::create)
+                .compose(RxTransformerHelper.applySchedulers())
+                .map(pair -> {
+                    if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
+                        int dayOfWeek = Kits.Date.getDayOfWeek(new Date()) - 1;
+                        ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onBannerSuccess(pair.first.result.get(dayOfWeek));
                     }
-                }))
-                .subscribe(bannerPageInfo -> {
-                    if (bannerPageInfo.data == null || bannerPageInfo.data.size() == 0) {
-                        return;
+                    if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
+                        ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onFunctionSuccess(pair.second.result.function);
                     }
-                    int dayOfWeek = Kits.Date.getDayOfWeek(new Date());
-                    BannerPageInfo.BannerInfo bannerInfo = bannerPageInfo.data.get(dayOfWeek);
-
-                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).bannerSuccess(bannerInfo.data);
+                    return Kits.Date.getCurrentDate().split("-");
+                })
+                .observeOn(Schedulers.io())
+                .flatMap((currentDate -> DataLoader.getGankApi().getGankIoDay(currentDate[0], currentDate[1], currentDate[2])))
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(RxTransformerHelper.verifyNotEmpty())
+                .subscribe(gankIoDayInfo -> {
+                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onSuccess(gankIoDayInfo);
+                }, throwable -> {
+                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onError(throwable);
                 }));
     }
 }

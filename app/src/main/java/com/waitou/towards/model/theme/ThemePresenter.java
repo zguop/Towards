@@ -1,4 +1,4 @@
-package com.waitou.towards.model.activity.theme;
+package com.waitou.towards.model.theme;
 
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.wt_library.base.XPresent;

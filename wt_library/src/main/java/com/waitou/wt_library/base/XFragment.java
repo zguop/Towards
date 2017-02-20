@@ -21,7 +21,7 @@ import com.waitou.wt_library.recycler.XPullRecyclerView;
 
 public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends BaseFragment implements UIView<P> {
 
-    private VDelegate         mVDelegate;
+
     private FragmentXBinding  mXBinding;
     private LayoutInflater    mInflater;
     private AppCompatActivity mAppCompatActivity;
@@ -39,12 +39,13 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
                 d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
                 mXBinding.xContentLayout.addContentView(d.getRoot());
             }
+            showLoading();
         } else {
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
             }
         }
-
+        isViewCreated = true;
         return initXView() ? mXBinding.getRoot() : d.getRoot();
     }
 
@@ -52,8 +53,8 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
-        isViewCreated = true;
-        if (getUserVisibleHint() && fragmentVisibleHint()) {
+        //fragment可见 且 数据未加载 调用 fragmentVisibleHint
+        if (getUserVisibleHint() && !isLoadDataCompleted && fragmentVisibleHint()) {
             isLoadDataCompleted = true;
         }
     }
@@ -66,22 +67,8 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getVDelegate().destroy();
-        mVDelegate = null;
-    }
-
     protected void initReloadData(View view) {
         view.findViewById(R.id.error).setOnClickListener(v -> reloadData());
-    }
-
-    protected VDelegate getVDelegate() {
-        if (mVDelegate == null) {
-            mVDelegate = VDelegateBase.create(getContext());
-        }
-        return mVDelegate;
     }
 
     protected D getBinding() {
@@ -111,6 +98,10 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
 
     protected void showEmpty() {
         mXBinding.xContentLayout.showEmpty();
+    }
+
+    protected void showError() {
+        showError(true);
     }
 
     protected void showError(boolean isReload) {

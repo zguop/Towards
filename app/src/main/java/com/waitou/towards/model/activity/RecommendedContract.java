@@ -1,4 +1,4 @@
-package com.waitou.towards.model.main.contract;
+package com.waitou.towards.model.activity;
 
 /**
  * Created by waitou on 17/1/9.

@@ -17,7 +17,6 @@ public class ThemeInfo extends BaseObservable {
     @Bindable
     public boolean focus;
 
-
     public void setFocus(boolean focus) {
         this.focus = focus;
         notifyPropertyChanged(BR.focus);

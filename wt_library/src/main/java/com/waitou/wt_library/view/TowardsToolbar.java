@@ -132,6 +132,9 @@ public class TowardsToolbar extends Toolbar {
      * @param dataBinding view
      */
     public void fromCustomMenuView(ViewDataBinding dataBinding, int bindingKey) {
+        if (getVisibility() != VISIBLE) {
+            setVisibility(VISIBLE);
+        }
         if (mBinding != null) {
             if (dataBinding != null) {
                 View root = dataBinding.getRoot();

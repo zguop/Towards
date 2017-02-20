@@ -23,12 +23,14 @@ public class HttpUtil {
     private static final String TEST_HTTP    = "http://";
     private static final String ACTIVE_HTTPS = "https://";
 
+    //笑话大全api
     public static final String RANDOM_BASE_URL = "v.juhe.cn/joke/";
-
-    public static final String GANK_BASE_URL = "gank.io/api/";
+    //干货api
+    public static final String GANK_BASE_URL   = "gank.io/api/";
+    //首页轮播api
+    public final static String GITHUB_API = "raw.githubusercontent.com/zguop/Waitou_Json/";
 
     //    public static final String ROUTE_URL = "route.showapi.com/852-2";
-    public final static String API_DONG_TING = "api.dongting.com";
 
 
     private final static String TEST_DOMAIN_URL   = TEST_HTTP;
@@ -63,7 +65,7 @@ public class HttpUtil {
             isTestHttp = isDebugStr.equals("true");
             isDebug = true;
         }
-        setCurrentUrl(RANDOM_BASE_URL);
+//        setCurrentUrl(RANDOM_BASE_URL);
     }
 
 

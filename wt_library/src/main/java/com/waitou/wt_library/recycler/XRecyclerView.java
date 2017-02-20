@@ -191,39 +191,6 @@ public class XRecyclerView extends RecyclerView {
         return this;
     }
 
-
-    public XRecyclerView verticalLayoutManager(Context context) {
-        LinearLayoutManager manager = new LinearLayoutManager(context);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        setLayoutManager(manager);
-        return this;
-    }
-
-    public XRecyclerView horizontalLayoutManager(Context context) {
-        LinearLayoutManager manager = new LinearLayoutManager(context);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        setLayoutManager(manager);
-        return this;
-    }
-
-    public XRecyclerView gridLayoutManager(Context context, int spanCount) {
-        GridLayoutManager manager = new GridLayoutManager(context, spanCount);
-        setLayoutManager(manager);
-        return this;
-    }
-
-    public XRecyclerView verticalStaggeredLayoutManager(int spanCount) {
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
-        setLayoutManager(manager);
-        return this;
-    }
-
-    public XRecyclerView horizontalStaggeredLayoutManager(int spanCount) {
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
-        setLayoutManager(manager);
-        return this;
-    }
-
     public int getLastVisibleItemPosition() {
         return getLastVisibleItemPosition(getLayoutManager());
     }

@@ -34,15 +34,17 @@ public class RxTransformerHelper {
         return tObservable -> tObservable
                 .compose(applySchedulers())
                 .onErrorReturn(throwable -> {
+                    //rx异常先处理
                     LogUtil.e(Log.getStackTraceString(throwable));
                     throwable.printStackTrace();
                     if (errorVerify != null) {
                         errorVerify.netError(throwable);
                     }
+                    //返回值null 继续执行 filter
                     return null;
                 })
-                .filter(verifyNotEmpty())
-                .filter(verifyBusiness(errorVerify));
+                .filter(verifyNotEmpty()) //异常后返回null，filter判断数据中断
+                .filter(verifyBusiness(errorVerify)); //业务异常 code异常中断
     }
 
     /**
@@ -62,7 +64,7 @@ public class RxTransformerHelper {
     }
 
     /**
-     * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功
+     * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功 自行判断
      */
     public static <T> Func1<T, Boolean> verifyBusiness(ErrorVerify errorVerify) {
         return t -> {

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityAslBinding;
-import com.waitou.towards.model.presenter.RecommendedPresenter;
+import com.waitou.towards.model.activity.RecommendedPresenter;
 import com.waitou.wt_library.base.XActivity;
 
 

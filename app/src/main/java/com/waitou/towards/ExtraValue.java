@@ -13,6 +13,8 @@ public class ExtraValue {
     /*--------------- bundle ---------------*/
     //JokeContentFragment
     public static final String JOKE_CONTENT_TYPE = "joke_content_type";
+    //MainPresenter
+    public static final String MAIN_PRESENTER    = "main_presenter";
 
 
     /*--------------- int ---------------*/

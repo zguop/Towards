@@ -7,8 +7,9 @@ import com.waitou.towards.ExtraValue;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
-import com.waitou.towards.model.main.contract.MainContract;
+import com.waitou.towards.model.main.MainContract;
 import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.XRecyclerView;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class JokeContentFragment extends XFragment<MainContract.MainPresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener, MainContract.JokeContentView<JokeInfo> {
 
     private int                        mType;
-    private MultiTypeAdapter<JokeInfo>           mAdapter;
+    private MultiTypeAdapter<JokeInfo> mAdapter;
     private MainContract.MainPresenter mPresenter;
 
     @Override
@@ -41,7 +42,8 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);
-        getBinding().xList.getRecyclerView().verticalLayoutManager(getActivity()).setAdapter(mAdapter);
+        getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
+        getBinding().setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
     }
