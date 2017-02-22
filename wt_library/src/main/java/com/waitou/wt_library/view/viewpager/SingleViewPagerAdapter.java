@@ -24,7 +24,7 @@ public class SingleViewPagerAdapter<T> extends WTPagerAdapter<T> {
     }
 
     public SingleViewPagerAdapter(Context context, List<T> data, int layoutRes) {
-        super(data);
+        mData.addAll(data);
         mLayoutRes = layoutRes;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -46,12 +46,12 @@ public class SingleViewPagerAdapter<T> extends WTPagerAdapter<T> {
         return mLayoutRes;
     }
 
-    public void set(List<T> viewModels) {
+    public void set(List<? extends T> viewModels) {
         mData.clear();
         addAll(viewModels);
     }
 
-    public void addAll(List<T> viewModels) {
+    public void addAll(List<? extends T> viewModels) {
         mData.addAll(viewModels);
         notifyDataSetChanged();
     }

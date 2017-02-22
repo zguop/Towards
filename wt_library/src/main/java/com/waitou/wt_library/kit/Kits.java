@@ -36,7 +36,14 @@ import java.util.Locale;
 
 public class Kits {
 
+    public static class Util {
+        public static boolean isNotEmptyList(List<?> list) {
+            return list != null && list.size() > 0;
+        }
+    }
+
     public static class Strings {
+
         /**
          * 判断字符串是否为null或长度为0
          */

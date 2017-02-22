@@ -7,6 +7,7 @@ import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.ExtraValue;
 import com.waitou.towards.bean.BannerPageInfo;
+import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.model.main.fragment.CircleFragment;
 import com.waitou.towards.model.main.fragment.home.HomeCommendFragment;
 import com.waitou.towards.model.main.fragment.joke.JokeContentFragment;
@@ -29,7 +30,7 @@ import rx.schedulers.Schedulers;
  * Created by waitou on 17/1/27.
  */
 
-public class MainPresenter extends XPresent<MainActivity> implements MainContract.MainPresenter, SingleViewPagerAdapter.Presenter ,Serializable{
+public class MainPresenter extends XPresent<MainActivity> implements MainContract.MainPresenter, SingleViewPagerAdapter.Presenter, Serializable {
 
     private List<Fragment> homeFragments = new ArrayList<>();
     private List<Fragment> jokeFragments = new ArrayList<>();
@@ -129,16 +130,71 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                     if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
                         ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onFunctionSuccess(pair.second.result.function);
                     }
+
                     return Kits.Date.getCurrentDate().split("-");
                 })
                 .observeOn(Schedulers.io())
                 .flatMap((currentDate -> DataLoader.getGankApi().getGankIoDay(currentDate[0], currentDate[1], currentDate[2])))
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(RxTransformerHelper.verifyNotEmpty())
-                .subscribe(gankIoDayInfo -> {
-                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onSuccess(gankIoDayInfo);
-                }, throwable -> {
-                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onError(throwable);
-                }));
+                .flatMap(gankIoDayInfo -> {
+                    List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
+                    if (gankIoDayInfo.results != null) {
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.福利)) {
+                            lists.add(gankIoDayInfo.results.福利);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.休息视频)) {
+                            lists.add(gankIoDayInfo.results.休息视频);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.Android)) {
+                            lists.add(gankIoDayInfo.results.Android);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.瞎推荐)) {
+                            lists.add(gankIoDayInfo.results.瞎推荐);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.App)) {
+                            lists.add(gankIoDayInfo.results.App);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.iOS)) {
+                            lists.add(gankIoDayInfo.results.iOS);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.拓展资源)) {
+                            lists.add(gankIoDayInfo.results.拓展资源);
+                        }
+                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.前端)) {
+                            lists.add(gankIoDayInfo.results.前端);
+                        }
+                        if (lists.size() > 0) {
+                            lists.get(0).get(0).isShowTitle = true;
+                        }
+                    }
+                    return Observable.just(lists);
+                })
+                .doOnNext(lists -> {
+                    if (lists.size() > 0) {
+                        for (List<GankResultsTypeInfo> list : lists) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (list.get(i).type.equals("福利")) {
+                                    list.get(i).desc = "今日美图";
+                                    if (list.get(i).images == null) {
+                                        list.get(i).images = new ArrayList<>();
+                                        list.get(i).images.add(list.get(i).url);
+                                    }
+                                }
+                                if (Kits.Util.isNotEmptyList(list.get(i).images)) {
+                                    ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).setImages(list.get(i));
+                                }
+                            }
+                        }
+                    }
+                })
+                .subscribe(lists -> {
+                            ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onSuccess(lists);
+                        }
+                        , throwable -> {
+                            ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onError(throwable);
+                        }));
+
+
     }
 }

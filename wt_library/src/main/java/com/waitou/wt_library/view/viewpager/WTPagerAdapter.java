@@ -17,13 +17,12 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
 
     private static final int MULTIPLE_COUNT = 300;
 
-    protected List<T>           mData = new ArrayList<>();
-    private   SparseArray<View> mViews;
-    private   WTViewPager       mViewPager;
-    private   boolean           isCanLoop;
+    protected List<T> mData = new ArrayList<>();
+    private SparseArray<View> mViews;
+    private WTViewPager       mViewPager;
+    private boolean           isCanLoop;
 
-    WTPagerAdapter(List<T> data) {
-        this.mData = data;
+    WTPagerAdapter() {
         mViews = new SparseArray<>();
     }
 
@@ -59,6 +58,9 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
 
     @Override
     public void finishUpdate(ViewGroup container) {
+        if (mViewPager == null) {
+            return;
+        }
         int position = mViewPager.getCurrentItem();
         if (position == 0) {
             position = mViewPager.getFirstItem();

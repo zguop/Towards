@@ -28,6 +28,7 @@ public class WTBanner extends RelativeLayout {
     private boolean         turning; //是否正在翻页
     private long autoTurningTime = 4_000;
     private AdSwitchTask mAdSwitchTask;
+    private boolean      isSetAdapter;
 
 
     public WTBanner(Context context) {
@@ -52,6 +53,9 @@ public class WTBanner extends RelativeLayout {
     }
 
     public void setAdapter(PagerAdapter adapter) {
+        if (adapter == null || isSetAdapter) {
+            return;
+        }
         if (mViewPager != null) {
             mViewPager.setAdapter(adapter);
             canLoop = mViewPager.isCanLoop();
@@ -63,6 +67,8 @@ public class WTBanner extends RelativeLayout {
                 mCircleIndicator.setViewPager(mViewPager, canLoop);
             }
         }
+
+        this.isSetAdapter = true;
     }
 
     public void showIndicators(boolean flag) {
@@ -124,9 +130,9 @@ public class WTBanner extends RelativeLayout {
                 if (convenientBanner.mViewPager != null && convenientBanner.turning) {
                     int page = convenientBanner.mViewPager.getCurrentItem() + 1;
                     convenientBanner.mViewPager.setCurrentItem(page);
-                    if(convenientBanner.mCircleIndicator.getCountSize() == 0){
+                    if (convenientBanner.mCircleIndicator.getCountSize() == 0) {
                         convenientBanner.showIndicators(convenientBanner.canLoop);
-                        convenientBanner.mCircleIndicator.setViewPager(convenientBanner.mViewPager,convenientBanner.canLoop);
+                        convenientBanner.mCircleIndicator.setViewPager(convenientBanner.mViewPager, convenientBanner.canLoop);
                     }
                     convenientBanner.postDelayed(convenientBanner.mAdSwitchTask, convenientBanner.autoTurningTime);
                 }
@@ -144,7 +150,7 @@ public class WTBanner extends RelativeLayout {
             startTurning();
         }
 
-        if(canLoop && action == MotionEvent.ACTION_CANCEL){
+        if (canLoop && action == MotionEvent.ACTION_CANCEL) {
             startTurning();
         }
         return super.dispatchTouchEvent(ev);

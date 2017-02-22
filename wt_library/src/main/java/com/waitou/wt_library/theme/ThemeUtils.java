@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
-import android.support.annotation.ColorRes;
 import android.text.TextUtils;
 import android.util.TypedValue;
 
@@ -14,7 +13,6 @@ import com.waitou.wt_library.R;
 import com.waitou.wt_library.theme.appres.AppCompatResources;
 
 import java.lang.reflect.Field;
-
 
 
 /**
@@ -40,7 +38,7 @@ public class ThemeUtils {
         }
 
         String resIdStr = attrValue.substring(1);
-        return Integer.valueOf(resIdStr);
+        return Integer.parseInt(resIdStr);
     }
 
     /**
@@ -48,12 +46,12 @@ public class ThemeUtils {
      *
      * @return ColorStateList
      */
-    public static ColorStateList getColorStateList(Context context, int color) {
+    public static ColorStateList getColorStateList(Context context, int resId) {
         if (context == null) {
             return null;
         }
 
-        return AppCompatResources.getColorStateList(context, color);
+        return AppCompatResources.getColorStateList(context, resId);
     }
 
     /**
@@ -61,11 +59,11 @@ public class ThemeUtils {
      *
      * @return Drawable
      */
-    public static Drawable getDrawable(Context context, @ColorRes int color) {
+    public static Drawable getDrawable(Context context, int resId) {
         if (context == null) {
             return null;
         }
-        return AppCompatResources.getDrawable(context, color);
+        return AppCompatResources.getDrawable(context, resId);
     }
 
     /**

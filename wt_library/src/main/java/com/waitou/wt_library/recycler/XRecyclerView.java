@@ -41,6 +41,8 @@ public class XRecyclerView extends RecyclerView {
     private int     totalPage   = 1;
     private int     currentPage = 1;
 
+    private boolean isSetAdapter;
+
     XRecyclerAdapter             adapter;
     StateCallback                stateCallback;
     OnRefreshAndLoadMoreListener onRefreshAndLoadMoreListener;
@@ -66,13 +68,17 @@ public class XRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
-        if (adapter == null) return;
+        if (adapter == null || isSetAdapter) {
+            return;
+        }
 
         if (!(adapter instanceof XRecyclerAdapter)) {
             adapter = new XRecyclerAdapter(adapter);
         }
 
         super.setAdapter(adapter);
+
+        isSetAdapter = true;
 
         if (adapter.getItemCount() > 0) {
             if (getStateCallback() != null) {

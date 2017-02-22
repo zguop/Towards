@@ -6,10 +6,11 @@ import com.waitou.wt_library.R;
  * Created by waitou on 17/2/14.
  */
 
-public enum  ThemeEnum {
+public enum ThemeEnum {
 
     POWDER(R.style.AppThemePowder, R.color.colorPowder, "powder"),
-    RED(R.style.AppThemeRed, R.color.colorRed, "red");
+    RED(R.style.AppThemeRed, R.color.colorRed, "red"),
+    BLUE(R.style.AppThemeBlue, R.color.colorBlue, "blue");
 
     private int    theme;
     private int    colorId;
@@ -38,6 +39,8 @@ public enum  ThemeEnum {
             return RED;
         } else if (theme == R.style.AppThemePowder) {
             return POWDER;
+        } else if (theme == R.style.AppThemeBlue) {
+            return BLUE;
         } else {
             return RED;
         }

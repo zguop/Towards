@@ -36,6 +36,8 @@ ext {
             "okhttp3-integration": "com.github.bumptech.glide:okhttp3-integration:1.4.0",
             "smarttablayout"     : "com.ogaclejapan.smarttablayout:library:1.6.1@aar",
             "circleimageview"    : "de.hdodenhof:circleimageview:2.1.0",
+            "flexbox"            : "com.google.android:flexbox:0.2.4",
+
 
             "picasso"            : "com.squareup.picasso:picasso:2.5.2",
             "canary-debug"       : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",

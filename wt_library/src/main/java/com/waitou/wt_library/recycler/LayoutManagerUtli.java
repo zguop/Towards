@@ -25,6 +25,7 @@ public class LayoutManagerUtli {
 
     public static GridLayoutManager getGridLayoutManager(Context context, int spanCount) {
         GridLayoutManager manager = new GridLayoutManager(context, spanCount);
+//        manager.setInitialPrefetchItemCount();
         return manager;
     }
 

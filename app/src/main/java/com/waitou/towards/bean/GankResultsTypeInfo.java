@@ -2,14 +2,16 @@ package com.waitou.towards.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.waitou.net_library.model.Displayable;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by waitou on 17/2/16.
  */
 
-public class GankResultsTypeInfo {
+public class GankResultsTypeInfo implements Displayable,Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -22,7 +24,7 @@ public class GankResultsTypeInfo {
     @SerializedName("desc")
     @Expose
     public String desc; //Android 上个性自定义 Loader
-    
+
     @SerializedName("images")
     @Expose
     public List<String> images;
@@ -50,5 +52,12 @@ public class GankResultsTypeInfo {
     @SerializedName("who")
     @Expose
     public String who; //dmj
+
+    public boolean isShowTitle;
+
+    public BannerAdapterInfo bannerAdapterInfo;
+
+
+
 
 }

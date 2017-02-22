@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="adapter"
+            type="android.support.v4.view.PagerAdapter"/>
+
+        <variable
+            name="visibility"
+            type="int"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{visibility}">
+
+        <com.waitou.towards.view.parallaxviewpager.ParallaxViewPager
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:descendantFocusability="blocksDescendants"
+            app:adapter="@{adapter}"
+            app:mode="right_overlay"
+            app:outset="62%"
+            app:shadow_width="30dp"/>
+    </FrameLayout>
+</layout>

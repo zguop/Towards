@@ -9,15 +9,21 @@ import android.view.View;
 
 public class SkinAttr {
 
-    private String                            resName;
+    private String attrName;
+    private String attrValueResName;
+    private String attrValueTypeName;
+
+
     private ChangeModeController.SkinAttrType attrType;
 
-    public SkinAttr(ChangeModeController.SkinAttrType attrType, String resName) {
-        this.resName = resName;
+    public SkinAttr(ChangeModeController.SkinAttrType attrType, String attrName, String attrValueResName, String attrValueTypeName) {
         this.attrType = attrType;
+        this.attrName = attrName;
+        this.attrValueResName = attrValueResName;
+        this.attrValueTypeName = attrValueTypeName;
     }
 
-    public void apply(View view, int theme) {
-        attrType.apply(view, resName,theme);
+    public void apply(View view) {
+        attrType.apply(view, attrName, attrValueResName, attrValueTypeName);
     }
 }

@@ -68,7 +68,7 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
         return mCollectionViewType.get(position);
     }
 
-    public void set(List<T> viewModels, int viewType) {
+    public void set(List<? extends T> viewModels, int viewType) {
         mCollection.clear();
         mCollectionViewType.clear();
 
@@ -79,7 +79,7 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
         }
     }
 
-    public void set(List<T> viewModels, MultiViewType viewType) {
+    public void set(List<? extends T> viewModels, MultiViewType viewType) {
         mCollection.clear();
         mCollectionViewType.clear();
         addAll(viewModels, viewType);
@@ -97,7 +97,7 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
         notifyItemInserted(position);
     }
 
-    public void addAll(List<T> viewModels, int viewType) {
+    public void addAll(List<? extends T> viewModels, int viewType) {
         mCollection.addAll(viewModels);
         for (int i = 0; i < viewModels.size(); ++i) {
             mCollectionViewType.add(viewType);
@@ -105,7 +105,7 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
         notifyDataSetChanged();
     }
 
-    public void addAll(int position, List<T> viewModels, int viewType) {
+    public void addAll(int position, List<? extends T> viewModels, int viewType) {
         mCollection.addAll(position, viewModels);
         for (int i = 0; i < viewModels.size(); i++) {
             mCollectionViewType.add(position + i, viewType);
@@ -113,7 +113,7 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
         notifyItemRangeChanged(position, viewModels.size() - position);
     }
 
-    public void addAll(List<T> viewModels, MultiViewType multiViewType) {
+    public void addAll(List<? extends T> viewModels, MultiViewType multiViewType) {
         mCollection.addAll(viewModels);
         for (int i = 0; i < viewModels.size(); ++i) {
             mCollectionViewType.add(multiViewType.getViewType(viewModels.get(i)));

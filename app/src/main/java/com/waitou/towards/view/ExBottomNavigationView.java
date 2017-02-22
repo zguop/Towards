@@ -579,6 +579,7 @@ public class ExBottomNavigationView extends BottomNavigationView {
         super.setOnNavigationItemSelectedListener(mMyOnNavigationItemSelectedListener);
     }
 
+
     /**
      * A {@link ViewPager.OnPageChangeListener} class which contains the
      * necessary calls back to the provided {@link ExBottomNavigationView} so that the tab position is

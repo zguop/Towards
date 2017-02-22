@@ -67,12 +67,12 @@ public class SingleTypeAdapter<T> extends BaseViewAdapter<T> {
         notifyDataSetChanged();
     }
 
-    public void set(List<T> viewModels) {
+    public void set(List<? extends T> viewModels) {
         mCollection.clear();
         addAll(viewModels);
     }
 
-    public void addAll(List<T> viewModels) {
+    public void addAll(List<? extends T> viewModels) {
         mCollection.addAll(viewModels);
         notifyDataSetChanged();
     }

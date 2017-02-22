@@ -7,6 +7,8 @@
     <string name="personal">个人</string>
 
 
+    <string name="home_gank_title">&lt;b&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;/b&gt;&#160;&#160;&#160;作者: %2$s</string>
+
     <string name="warn_net_error">网络异常，请更换网络或稍后再试</string>
 
 

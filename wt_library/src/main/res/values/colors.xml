@@ -15,4 +15,8 @@
     <!--主题2-->
     <color name="colorRed">#CE3D3A</color>
     <color name="home_title2">#EC7172</color>
+
+    <!--主题3-->
+    <color name="colorBlue">#1090da</color>
+    <color name="home_title3">#59adde</color>
 </resources>

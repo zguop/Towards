@@ -10,12 +10,13 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.Shape;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.waitou.wt_library.R;
+import com.waitou.wt_library.theme.SkinCompatSupportable;
+import com.waitou.wt_library.theme.ThemeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by xiayong on 2015/9/29.
  */
-public class CircleIndicator extends View {
+public class CircleIndicator extends View implements SkinCompatSupportable {
     private ViewPager viewPager;
     private int       countSize;
 
@@ -148,8 +149,8 @@ public class CircleIndicator extends View {
      */
     private void trigger(int position, float positionOffset) {
         isRight = positionOffset > mCurItemPositionOffset;
-        CircleIndicator.this.mCurItemPosition = position;
-        CircleIndicator.this.mCurItemPositionOffset = positionOffset;
+        mCurItemPosition = position;
+        mCurItemPositionOffset = positionOffset;
         requestLayout();
     }
 
@@ -275,7 +276,6 @@ public class CircleIndicator extends View {
             drawItem(canvas, item);
         }
 
-
         if (movingItem != null) {
             drawItem(canvas, movingItem);
         }
@@ -303,8 +303,12 @@ public class CircleIndicator extends View {
 
     public void setIndicatorSelectedBackground(int indicatorSelectedBackground) {
         mIndicatorBackground = indicatorSelectedBackground;
-        if (movingItem.getPaint() != null) {
-            movingItem.getPaint().setColor(ActivityCompat.getColor(getContext(), indicatorSelectedBackground));
+    }
+
+    @Override
+    public void applySkin() {
+        if (movingItem != null) {
+            movingItem.getPaint().setColor(ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorPrimary));
             requestLayout();
         }
     }

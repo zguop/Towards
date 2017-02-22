@@ -18,7 +18,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.waitou.towards.view.CustomCircleImageView
             android:id="@+id/ib_xiandu"
             android:layout_width="60dp"
             android:layout_height="60dp"

@@ -34,4 +34,12 @@ public class GankResultsInfo {
     @SerializedName("福利")
     @Expose
     public List<GankResultsTypeInfo> 福利;
+
+    @SerializedName("瞎推荐")
+    @Expose
+    public List<GankResultsTypeInfo> 瞎推荐;
+
+    @SerializedName("App")
+    @Expose
+    public List<GankResultsTypeInfo> App;
 }

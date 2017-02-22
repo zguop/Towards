@@ -18,10 +18,18 @@ public class SkinView {
         this.attrs = skinAttrs;
     }
 
-    public void apply(int theme) {
-        if (view == null) return;
+    public void apply() {
+        if (view == null) {
+            return;
+        }
+        if (view instanceof SkinCompatSupportable) {
+            ((SkinCompatSupportable) view).applySkin();
+        }
+        if (attrs == null) {
+            return;
+        }
         for (SkinAttr attr : attrs) {
-            attr.apply(view,theme);
+            attr.apply(view);
         }
     }
 }

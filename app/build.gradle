@@ -49,6 +49,7 @@ dependencies {
     compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["smarttablayout"]
     compile rootProject.ext.dependencies["circleimageview"]
+    compile rootProject.ext.dependencies["flexbox"]
     //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme
 
 

@@ -1,0 +1,57 @@
+package com.waitou.towards.enums;
+
+import com.waitou.towards.R;
+
+/**
+ * Created by waitou on 17/2/21.
+ */
+
+public enum GankEnum {
+    Android(R.drawable.icon_home_android, "Android"),
+    福利(R.drawable.icon_home_meizi, "福利"),
+    瞎推荐(R.drawable.icon_home_xia, "瞎推荐"),
+    App(R.drawable.icon_home_app, "App"),
+    iOS(R.drawable.icon_home_ios, "iOS"),
+    拓展资源(R.drawable.icon_home_source, "拓展资源"),
+    前端(R.drawable.icon_home_qian, "前端"),
+    休息视频(R.drawable.icon_home_movie, "休息视频");
+
+    private int    type;
+    private String typeStr;
+
+    GankEnum(int type, String typeStr) {
+        this.type = type;
+        this.typeStr = typeStr;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getTypeStr() {
+        return typeStr;
+    }
+
+    public static int valueFrom(String value) {
+        switch (value) {
+            case "Android":
+                return Android.type;
+            case "福利":
+                return 福利.type;
+            case "瞎推荐":
+                return 瞎推荐.type;
+            case "App":
+                return App.type;
+            case "iOS":
+                return iOS.type;
+            case "拓展资源":
+                return 拓展资源.type;
+            case "前端":
+                return 前端.type;
+            case "休息视频":
+                return 休息视频.type;
+            default:
+                return Android.type;
+        }
+    }
+}

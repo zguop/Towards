@@ -7,7 +7,8 @@ import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerAdapterInfo;
 import com.waitou.towards.bean.BannerPageInfo;
-import com.waitou.towards.bean.GankIoDayInfo;
+import com.waitou.towards.bean.CanInfo;
+import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
@@ -24,6 +25,7 @@ import java.util.List;
 
 /**
  * Created by waitou on 17/2/10.
+ * 首页推荐
  */
 
 public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRecyclerViewBinding> {
@@ -48,6 +50,8 @@ public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRe
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_banner);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_wrap_recycler_view);
+        mAdapter.addViewTypeToLayoutMap(2, R.layout.item_gank_page);
+        mAdapter.addViewTypeToLayoutMap(3, R.layout.item_bottom);
         getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
         getBinding().setAdapter(mAdapter);
     }
@@ -94,7 +98,6 @@ public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRe
         } else {
             mFunctionInfoAdapter.set(homeFunctionInfo);
         }
-
     }
 
     public void onError(Throwable throwable) {
@@ -102,9 +105,21 @@ public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRe
         showError();
     }
 
-    public void onSuccess(GankIoDayInfo gankIoDayInfo) {
+    public void onSuccess(List<List<GankResultsTypeInfo>> gankIoDayInfo) {
         showContent();
+        if (gankIoDayInfo.size() > 0) {
+            for (int i = 0; i < gankIoDayInfo.size(); i++) {
+                List<GankResultsTypeInfo> gankResultsTypeInfo = gankIoDayInfo.get(i);
+                mAdapter.addAll(gankResultsTypeInfo, 2);
+            }
+        }
+        mAdapter.add(new CanInfo(), 3);
     }
 
-
+    public void setImages(GankResultsTypeInfo info) {
+        if (info.bannerAdapterInfo == null) {
+            SingleViewPagerAdapter<String> singleViewPagerAdapter = new SingleViewPagerAdapter<>(getActivity(), info.images, R.layout.item_string_page_image);
+            info.bannerAdapterInfo = new BannerAdapterInfo(singleViewPagerAdapter);
+        }
+    }
 }
