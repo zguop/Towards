@@ -61,7 +61,6 @@ public class SimpleLoadMoreFooter extends RelativeLayout implements LoadMoreUIHa
         setVisibility(VISIBLE);
         progressBar.setVisibility(GONE);
         tvMsg.setText(TextUtils.isEmpty(des) ? "网络异常，请更换网络或稍后再试" : des);
-
     }
 }
 

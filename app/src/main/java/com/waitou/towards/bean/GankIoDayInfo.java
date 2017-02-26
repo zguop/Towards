@@ -9,7 +9,7 @@ import java.util.List;
  * Created by waitou on 17/2/16.
  */
 
-public class GankIoDayInfo {
+public class GankIoDayInfo<T> {
 
     @SerializedName("error")
     @Expose
@@ -21,6 +21,6 @@ public class GankIoDayInfo {
 
     @SerializedName("results")
     @Expose
-    public GankResultsInfo results;
+    public T results;
 
 }

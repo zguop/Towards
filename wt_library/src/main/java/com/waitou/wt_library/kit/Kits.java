@@ -352,7 +352,7 @@ public class Kits {
 
 
     public static class Dimens {
-        public static float dpToPx(Context context, float dp) {
+        public static float dip2px(Context context, float dp) {
             return dp * context.getResources().getDisplayMetrics().density;
         }
 
@@ -360,8 +360,8 @@ public class Kits {
             return px / context.getResources().getDisplayMetrics().density;
         }
 
-        public static int dpToPxInt(Context context, float dp) {
-            return (int) (dpToPx(context, dp) + 0.5f);
+        public static int dip2pxInt(Context context, float dp) {
+            return (int) (dip2px(context, dp) + 0.5f);
         }
 
         public static int pxToDpCeilInt(Context context, float px) {

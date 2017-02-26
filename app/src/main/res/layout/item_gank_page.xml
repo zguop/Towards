@@ -83,7 +83,7 @@
                 android:textSize="18dp"/>
 
             <include
-                layout="@layout/item_view_pager"
+                layout="@layout/item_view_parallax_pager"
                 app:adapter="@{item.bannerAdapterInfo.pagerAdapter}"
                 app:visibility="@{item.bannerAdapterInfo == null ? View.GONE :View.VISIBLE}"/>
 

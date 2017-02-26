@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="我是有底线的"
+            android:text="( ⊙ o ⊙ )！我的底线出现了"
             android:textColor="?attr/colorPrimary"/>
 
         <View
@@ -29,8 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/bottom"
             android:background="?attr/colorPrimary"/>
     </RelativeLayout>

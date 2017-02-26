@@ -130,39 +130,39 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                     if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
                         ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onFunctionSuccess(pair.second.result.function);
                     }
-
                     return Kits.Date.getCurrentDate().split("-");
                 })
                 .observeOn(Schedulers.io())
                 .flatMap((currentDate -> DataLoader.getGankApi().getGankIoDay(currentDate[0], currentDate[1], currentDate[2])))
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(RxTransformerHelper.verifyNotEmpty())
-                .flatMap(gankIoDayInfo -> {
+                .map(info -> info.results)
+                .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
-                    if (gankIoDayInfo.results != null) {
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.福利)) {
-                            lists.add(gankIoDayInfo.results.福利);
+                    if (gankResultsInfo != null) {
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.福利)) {
+                            lists.add(gankResultsInfo.福利);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.休息视频)) {
-                            lists.add(gankIoDayInfo.results.休息视频);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.休息视频)) {
+                            lists.add(gankResultsInfo.休息视频);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.Android)) {
-                            lists.add(gankIoDayInfo.results.Android);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.Android)) {
+                            lists.add(gankResultsInfo.Android);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.瞎推荐)) {
-                            lists.add(gankIoDayInfo.results.瞎推荐);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.瞎推荐)) {
+                            lists.add(gankResultsInfo.瞎推荐);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.App)) {
-                            lists.add(gankIoDayInfo.results.App);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.App)) {
+                            lists.add(gankResultsInfo.App);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.iOS)) {
-                            lists.add(gankIoDayInfo.results.iOS);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.iOS)) {
+                            lists.add(gankResultsInfo.iOS);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.拓展资源)) {
-                            lists.add(gankIoDayInfo.results.拓展资源);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.拓展资源)) {
+                            lists.add(gankResultsInfo.拓展资源);
                         }
-                        if (Kits.Util.isNotEmptyList(gankIoDayInfo.results.前端)) {
-                            lists.add(gankIoDayInfo.results.前端);
+                        if (Kits.Util.isNotEmptyList(gankResultsInfo.前端)) {
+                            lists.add(gankResultsInfo.前端);
                         }
                         if (lists.size() > 0) {
                             lists.get(0).get(0).isShowTitle = true;
@@ -194,7 +194,5 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                         , throwable -> {
                             ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onError(throwable);
                         }));
-
-
     }
 }

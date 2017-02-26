@@ -56,6 +56,11 @@ public class GlideBindingAdapter {
         ILFactory.getLoader().loadNet(view, url, new ILoader.Options(drawable, error));
     }
 
+    @BindingAdapter({"imageUrl", "placeholder"})
+    public static void loadCenterCropImageFromUrl(ImageView view, String url, Drawable loading) {
+        ILFactory.getLoader().loadCenterCropNet(view, url, new ILoader.Options(loading, null));
+    }
+
     @BindingAdapter("image_url")
     public static void loadImageFromUrl(ImageView view, String url) {
         ILFactory.getLoader().loadNet(view, url, null);

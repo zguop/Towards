@@ -12,9 +12,9 @@ import com.jaeger.library.StatusBarUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
-import com.waitou.towards.model.AsiActivity;
 import com.waitou.towards.model.activity.RecommendedActivity;
 import com.waitou.towards.model.event.ThemeEvent;
+import com.waitou.towards.model.gallery.GalleryActivity;
 import com.waitou.towards.model.main.fragment.CircleFragment;
 import com.waitou.towards.model.main.fragment.FigureFragment;
 import com.waitou.towards.model.main.fragment.PersonFragment;
@@ -27,9 +27,6 @@ import com.waitou.wt_library.router.Router;
 import com.waitou.wt_library.rx.RxBus;
 import com.waitou.wt_library.theme.ChangeModeController;
 import com.waitou.wt_library.theme.ThemeUtils;
-
-import static com.waitou.towards.model.AsiActivity.FRUIT_IMAGE_ID;
-import static com.waitou.towards.model.AsiActivity.FRUIT_NAME;
 
 
 public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener, MainContract.MainView {
@@ -77,7 +74,7 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
             //主题改版之后，刷新一下bottomBar的状态
             getBinding().mainTab.setItemIconTintList(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
             getBinding().mainTab.setItemTextColor(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
-            getBinding().mainTab.setItemBackgroundResource(ThemeUtils.getAttrTypedValue(this, R.attr.colorPrimary).resourceId);
+            getBinding().mainTab.setItemBackgroundResource(ThemeUtils.getThemeAttrId(this, R.attr.colorPrimary));
             StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         });
         getBinding().mainTab.setOnNavigationItemSelectedListener(item -> {
@@ -130,9 +127,9 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
                 Router.newIntent().from(this).to(RecommendedActivity.class).launch();
                 break;
             case R.id.nav_all:
-                Router.newIntent().from(this).to(AsiActivity.class).putString(FRUIT_NAME, "adsfas").putString(FRUIT_IMAGE_ID, "http://img.hb.aicdn.com/621034b37c53ffc81f5d6a23ae1226d5c67e2b9628267-BYuZLo_fw658").launch();
                 break;
             case R.id.nav_meizi:
+                Router.newIntent().from(this).to(GalleryActivity.class).launch();
                 break;
             case R.id.nav_collect:
                 break;
@@ -181,5 +178,6 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         }
         return mPersonFragment;
     }
+
 
 }

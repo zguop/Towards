@@ -3,6 +3,8 @@ package com.waitou.wt_library.base;
 import android.content.Context;
 import android.view.View;
 
+import com.waitou.wt_library.imageloader.ILFactory;
+
 /**
  * Created by wanglei on 2016/12/1.
  */
@@ -21,17 +23,16 @@ public class VDelegateBase implements VDelegate {
 
     @Override
     public void resume() {
-
+        ILFactory.getLoader().resume(context);
     }
 
     @Override
     public void pause() {
-
+        ILFactory.getLoader().pause(context);
     }
 
     @Override
     public void destroy() {
-
     }
 
     @Override

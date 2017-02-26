@@ -4,6 +4,8 @@ import com.waitou.net_library.model.BaseResponse;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.GankIoDayInfo;
+import com.waitou.towards.bean.GankResultsInfo;
+import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.JokeInfo;
 
@@ -38,7 +40,11 @@ public interface LoaderService {
      * eg:http://gank.io/api/day/2015/08/06
      */
     @GET("day/{year}/{month}/{day}")
-    Observable<GankIoDayInfo> getGankIoDay(@Path("year") String year, @Path("month") String month, @Path("day") String day);
+    Observable<GankIoDayInfo<GankResultsInfo>> getGankIoDay(@Path("year") String year, @Path("month") String month, @Path("day") String day);
+
+    //获取图片
+    @GET("data/福利/10/{page}")
+    Observable<GankIoDayInfo<List<GankResultsTypeInfo>>> getGirlPics(@Path("page") int page);
 
 
 }

@@ -4,14 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.waitou.net_library.model.Displayable;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by waitou on 17/2/16.
  */
 
-public class GankResultsTypeInfo implements Displayable,Serializable {
+public class GankResultsTypeInfo implements Displayable {
 
     @SerializedName("_id")
     @Expose
@@ -56,8 +55,5 @@ public class GankResultsTypeInfo implements Displayable,Serializable {
     public boolean isShowTitle;
 
     public BannerAdapterInfo bannerAdapterInfo;
-
-
-
 
 }

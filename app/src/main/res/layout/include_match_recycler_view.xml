@@ -11,6 +11,10 @@
         <variable
             name="manager"
             type="android.support.v7.widget.RecyclerView.LayoutManager"/>
+
+        <variable
+            name="listener"
+            type="com.waitou.wt_library.recycler.XRecyclerView.OnRefreshAndLoadMoreListener"/>
     </data>
 
     <com.waitou.wt_library.recycler.XRecyclerView
@@ -21,6 +25,7 @@
         android:fadeScrollbars="true"
         android:scrollbars="none"
         app:adapter="@{adapter}"
-        app:layoutManager="@{manager}"/>
+        app:layoutManager="@{manager}"
+        app:onRefreshAndLoadMoreListener="@{listener}"/>
 
 </layout>

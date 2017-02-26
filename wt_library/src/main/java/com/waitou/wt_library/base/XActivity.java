@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.ActivityXBinding;
+import com.waitou.wt_library.recycler.XPullRecyclerView;
 
 
 /**
@@ -106,6 +107,10 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.toolbar.fromCustomMenuView(dataBinding, bindingKey);
     }
 
+    protected void goneToolBar() {
+        getUiDelegate().gone(mXBinding.toolbar);
+    }
+
     /*--------------- 界面状态 ---------------*/
     public void showContent() {
         mXBinding.xContentLayout.showContent();
@@ -115,8 +120,18 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.xContentLayout.showEmpty();
     }
 
-    public void showError() {
-        mXBinding.xContentLayout.showError();
+    protected void showError() {
+        showError(true);
+    }
+
+    protected void showError(boolean isReload) {
+        if (isReload) {
+            mXBinding.xContentLayout.showError();
+        } else {
+            if (mXBinding.xContentLayout.getContentView() instanceof XPullRecyclerView) {
+                ((XPullRecyclerView) mXBinding.xContentLayout.getContentView()).showError(false);
+            }
+        }
     }
 
     public void showLoading() {

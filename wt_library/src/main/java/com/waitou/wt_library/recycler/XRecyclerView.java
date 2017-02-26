@@ -533,12 +533,11 @@ public class XRecyclerView extends RecyclerView {
         }
     };
 
-    public XRecyclerView setOnRefreshAndLoadMoreListener(OnRefreshAndLoadMoreListener onRefreshAndLoadMoreListener) {
+    public void setOnRefreshAndLoadMoreListener(OnRefreshAndLoadMoreListener onRefreshAndLoadMoreListener) {
         this.onRefreshAndLoadMoreListener = onRefreshAndLoadMoreListener;
         if (getStateCallback() != null) {
             getStateCallback().refreshEnabled(true);
         }
-        return this;
     }
 
     public XRecyclerView noDivider() {
@@ -596,12 +595,5 @@ public class XRecyclerView extends RecyclerView {
         void onRefresh();
 
         void onLoadMore(int page);
-    }
-
-    public abstract class OnRefreshListener implements OnRefreshAndLoadMoreListener {
-        @Override
-        public void onLoadMore(int page) {
-
-        }
     }
 }

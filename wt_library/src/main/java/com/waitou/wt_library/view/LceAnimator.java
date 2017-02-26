@@ -22,7 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import static com.waitou.wt_library.kit.Kits.Dimens.dpToPx;
+import com.waitou.wt_library.kit.Kits;
 
 
 /**
@@ -89,19 +89,19 @@ public class LceAnimator {
 
         if (contentView.getVisibility() == View.VISIBLE) {
             // No Changing needed, because contentView is already visible
-            nullView(loadingView,null,errorView,emptyView);
+            nullView(loadingView, null, errorView, emptyView);
         } else {
-            nullView(null,null,errorView,emptyView);
+            nullView(null, null, errorView, emptyView);
             int translateDp = 40;
             // Not visible yet, so animate the view in
             AnimatorSet set = new AnimatorSet();
             ObjectAnimator contentFadeIn = ObjectAnimator.ofFloat(contentView, "alpha", 0f, 1f);
             ObjectAnimator contentTranslateIn = ObjectAnimator.ofFloat(contentView, "translationY",
-                    dpToPx(loadingView.getContext(), translateDp), 0);
+                    Kits.Dimens.dip2px(loadingView.getContext(), translateDp), 0);
 
             ObjectAnimator loadingFadeOut = ObjectAnimator.ofFloat(loadingView, "alpha", 1f, 0f);
             ObjectAnimator loadingTranslateOut = ObjectAnimator.ofFloat(loadingView, "translationY", 0,
-                    -dpToPx(loadingView.getContext(), translateDp));
+                    -Kits.Dimens.dip2px(loadingView.getContext(), translateDp));
 
             set.playTogether(contentFadeIn, contentTranslateIn, loadingFadeOut, loadingTranslateOut);
             set.setDuration(500);

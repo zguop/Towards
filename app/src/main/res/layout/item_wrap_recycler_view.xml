@@ -15,9 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colore7e7e7"
-        android:fadeScrollbars="false"
+        android:fadeScrollbars="true"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical"
+        android:scrollbars="none"
         app:adapter="@{item.adapter}"
         app:layoutManager="@{item.layoutManager}"/>
 

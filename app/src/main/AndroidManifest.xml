@@ -28,6 +28,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".model.gallery.GalleryActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".model.activity.RecommendedActivity"
@@ -35,7 +38,6 @@
 
         <activity android:name=".model.theme.ThemeActivity"/>
 
-        <activity android:name=".model.AsiActivity"/>
 
     </application>
 

@@ -52,6 +52,10 @@ public class SingleTypeAdapter<T> extends BaseViewAdapter<T> {
                 DataBindingUtil.inflate(mLayoutInflater, getLayoutRes(), parent, false));
     }
 
+    public T getPositionData(int position) {
+        return mCollection.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return mCollection.size();

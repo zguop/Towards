@@ -9,6 +9,7 @@ import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
+import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
@@ -33,58 +34,76 @@ public class GlideLoader implements ILoader {
 
     @Override
     public void loadNet(ImageView target, String url, Options options) {
-        load(getRequestManager(target.getContext()).load(url), target, options);
+        load(getRequestManager(target.getContext()).load(url), options).into(target);
+    }
+
+    @Override
+    public void loadCenterCropNet(ImageView target, String url, Options options) {
+        load(getRequestManager(target.getContext()).load(url), options).centerCrop().into(target);
     }
 
     @Override
     public void loadNet(Context context, String url, Options options, final LoadCallback callback) {
-        DrawableTypeRequest request = getRequestManager(context).load(url);
-        if (options == null) options = Options.defaultOptions();
+        DrawableTypeRequest request = load(getRequestManager(context).load(url), options);
+        request.into(new SimpleTarget<GlideBitmapDrawable>() {
 
-        if (options.loadingResId != Options.RES_NONE) {
-            request.placeholder(options.loadingResId);
-        }
-        if (options.loadErrorResId != Options.RES_NONE) {
-            request.error(options.loadErrorResId);
-        }
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                super.onLoadFailed(e, errorDrawable);
+                if (callback != null) {
+                    callback.onLoadFailed(e);
+                }
+            }
 
-        request.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .crossFade()
-                .into(new SimpleTarget<GlideBitmapDrawable>() {
-
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                        if (callback != null) {
-                            callback.onLoadFailed(e);
-                        }
+            @Override
+            public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
+                if (resource != null && resource.getBitmap() != null) {
+                    if (callback != null) {
+                        callback.onLoadReady(resource.getBitmap());
                     }
+                }
+            }
 
-                    @Override
-                    public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
-                        if (resource != null && resource.getBitmap() != null) {
-                            if (callback != null) {
-                                callback.onLoadReady(resource.getBitmap());
-                            }
-                        }
+        });
+    }
+
+    @Override
+    public void loadTransformNet(Context context, String url, Options options, Transformation transformation, LoadCallback callback) {
+        DrawableTypeRequest request = load(getRequestManager(context).load(url), options);
+        request.transform(transformation);
+        request.into(new SimpleTarget<GlideBitmapDrawable>() {
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                super.onLoadFailed(e, errorDrawable);
+                if (callback != null) {
+                    callback.onLoadFailed(e);
+                }
+            }
+
+            @Override
+            public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
+                if (resource != null && resource.getBitmap() != null) {
+                    if (callback != null) {
+                        callback.onLoadReady(resource.getBitmap());
                     }
-
-                });
+                }
+            }
+        });
     }
 
     @Override
     public void loadResource(ImageView target, int resId, Options options) {
-        load(getRequestManager(target.getContext()).load(resId), target, options);
+        load(getRequestManager(target.getContext()).load(resId), options).into(target);
     }
 
     @Override
     public void loadAssets(ImageView target, String assetName, Options options) {
-        load(getRequestManager(target.getContext()).load("file:///android_asset/" + assetName), target, options);
+        load(getRequestManager(target.getContext()).load("file:///android_asset/" + assetName), options).into(target);
     }
 
     @Override
     public void loadFile(ImageView target, File file, Options options) {
-        load(getRequestManager(target.getContext()).load(file), target, options);
+        load(getRequestManager(target.getContext()).load(file), options).into(target);
     }
 
     @Override
@@ -114,8 +133,8 @@ public class GlideLoader implements ILoader {
         return Glide.with(context);
     }
 
-    private void load(DrawableTypeRequest request, ImageView target, Options options) {
-        if (options == null){
+    private DrawableTypeRequest load(DrawableTypeRequest request, Options options) {
+        if (options == null) {
             options = Options.defaultOptions();
         }
 
@@ -126,15 +145,16 @@ public class GlideLoader implements ILoader {
             request.error(options.loadErrorResId);
         }
 
-        if(options.loadingDrawable != null){
+        if (options.loadingDrawable != null) {
             request.placeholder(options.loadingDrawable);
         }
 
-        if(options.loadErrorDrawable != null){
+        if (options.loadErrorDrawable != null) {
             request.error(options.loadErrorDrawable);
         }
         request.diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .crossFade()
-                .into(target);
+                .crossFade();
+
+        return request;
     }
 }
