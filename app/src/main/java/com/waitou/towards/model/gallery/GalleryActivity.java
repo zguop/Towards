@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, ActivityGalleryBinding> {
-    
+
     private CardAdapter<GankResultsTypeInfo> mAdapter;
     private CardScaleHelper                  mCardScaleHelper;
 
