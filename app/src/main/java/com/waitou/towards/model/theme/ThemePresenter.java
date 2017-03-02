@@ -19,10 +19,6 @@ public class ThemePresenter extends XPresent<ThemeActivity> implements ThemeCont
     private List<ThemeInfo> themeInfoList = new ArrayList<>();
 
     @Override
-    public void start() {
-    }
-
-    @Override
     public List<ThemeInfo> loadData() {
         if (themeInfoList.size() > 0) {
             return themeInfoList;

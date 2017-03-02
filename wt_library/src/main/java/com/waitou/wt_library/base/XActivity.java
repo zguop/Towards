@@ -7,6 +7,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
+import com.waitou.net_library.BuildConfig;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.ActivityXBinding;
 import com.waitou.wt_library.recycler.XPullRecyclerView;
@@ -19,7 +21,7 @@ import com.waitou.wt_library.recycler.XPullRecyclerView;
 public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> extends BaseActivity implements UIView<P> {
 
     private ActivityXBinding mXBinding;
-
+    private RxPermissions mRxPermissions;
     private P presenter;
     private D d;
 
@@ -60,6 +62,14 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
 
     public P getP() {
         return presenter;
+    }
+
+    public RxPermissions getRxPermissions(){
+        if(mRxPermissions == null){
+            mRxPermissions = new RxPermissions(this);
+            mRxPermissions.setLogging(BuildConfig.DEBUG);
+        }
+        return mRxPermissions;
     }
 
     @Override

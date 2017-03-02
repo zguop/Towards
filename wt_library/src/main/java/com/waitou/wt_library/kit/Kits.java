@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -37,6 +38,7 @@ import java.util.Locale;
 public class Kits {
 
     public static class Util {
+
         public static boolean isNotEmptyList(List<?> list) {
             return list != null && list.size() > 0;
         }
@@ -366,6 +368,22 @@ public class Kits {
 
         public static int pxToDpCeilInt(Context context, float px) {
             return (int) (pxToDp(context, px) + 0.5f);
+        }
+
+        /**
+         * 获取屏幕高度
+         */
+        public static int getDeviceHeight(Context context) {
+            DisplayMetrics dm = context.getResources().getDisplayMetrics();
+            return dm.heightPixels;
+        }
+
+        /**
+         * 获取屏幕宽度
+         */
+        public static int getDeviceWidth(Context context) {
+            DisplayMetrics dm = context.getResources().getDisplayMetrics();
+            return dm.widthPixels;
         }
     }
 

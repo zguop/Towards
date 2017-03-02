@@ -29,10 +29,14 @@ android {
             //去除无用资源
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [packageName1: "com.waitou.towards"]
         }
 
         debug {
             minifyEnabled false
+            manifestPlaceholders = [packageName1: "com.waitou.towards.debug"]
+
         }
     }
 
@@ -50,7 +54,8 @@ dependencies {
     compile rootProject.ext.dependencies["smarttablayout"]
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["flexbox"]
-    //工程依赖 app --> XDroidLibrary --> net_library --> lib_theme
+    compile rootProject.ext.dependencies["fab"]
+    //工程依赖 app --> wt_library --> net_library
 
 
     debugCompile project(path: ':wt_library', configuration: 'debug')

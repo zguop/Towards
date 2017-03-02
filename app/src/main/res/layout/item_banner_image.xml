@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:onClick="@{() -> presenter.onBannerItemClick(item,position)}"
         android:scaleType="fitXY"
-        app:image_url="@{item.banner}"/>
+        app:imageUrl="@{item.banner}"/>
 
 </layout>
 

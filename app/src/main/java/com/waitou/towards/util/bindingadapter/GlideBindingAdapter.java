@@ -61,7 +61,7 @@ public class GlideBindingAdapter {
         ILFactory.getLoader().loadCenterCropNet(view, url, new ILoader.Options(loading, null));
     }
 
-    @BindingAdapter("image_url")
+    @BindingAdapter("imageUrl")
     public static void loadImageFromUrl(ImageView view, String url) {
         ILFactory.getLoader().loadNet(view, url, null);
     }

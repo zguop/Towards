@@ -30,7 +30,8 @@
 
         <activity
             android:name=".model.gallery.GalleryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent"/>
 
         <activity
             android:name=".model.activity.RecommendedActivity"
@@ -39,6 +40,17 @@
         <activity android:name=".model.theme.ThemeActivity"/>
 
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${packageName1}.android.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
     </application>
 
 </manifest>

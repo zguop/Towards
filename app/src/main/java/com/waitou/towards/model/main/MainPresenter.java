@@ -105,10 +105,6 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                 }));
     }
 
-    @Override
-    public void start() {
-    }
-
     /**
      * 广告位的点击方法
      */

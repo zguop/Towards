@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.waitou.wt_library.theme.ThemeUtils"/>
+        <import type="com.waitou.towards.enums.HomeTitleEnum"/>
 
         <variable
             name="position"
@@ -32,7 +33,7 @@
             android:paddingTop="5dp"
             android:scaleType="centerInside"
             android:tint="@color/skin_tab_icon_not"
-            app:home_title="@{position}"
+            app:imageResource="@{HomeTitleEnum.valueOf(position)}"
             app:imageTintList="@{ThemeUtils.getColorStateList(context,colorId)}"/>
 
     </FrameLayout>

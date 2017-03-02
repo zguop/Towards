@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.load.Transformation;
 
 import java.io.File;
@@ -18,6 +19,8 @@ public interface ILoader {
     void init(Context context);
 
     void loadNet(ImageView target, String url, Options options);
+
+    DrawableTypeRequest load(Context context, String url, Options options);
 
     void loadCenterCropNet(ImageView target, String url, Options options);
 

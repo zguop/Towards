@@ -5,7 +5,6 @@ package com.waitou.wt_library.base;
  */
 
 public interface UIPresent<V extends IView> {
-    void start();
 
     V getV();
 

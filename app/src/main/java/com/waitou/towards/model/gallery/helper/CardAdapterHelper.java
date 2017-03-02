@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 
 import com.waitou.wt_library.kit.Kits;
 
-//import com.dingmouren.easymvp.util.ScreenUtil;
-
 
 /**
  * adapter中调用onCreateViewHolder, onBindViewHolder
  */
 public class CardAdapterHelper {
-    private int mPagePadding = 15;
+    private int mPagePadding       = 15;
     private int mShowLeftCardWidth = 15;
 
     public void onCreateViewHolder(ViewGroup parent, View itemView) {

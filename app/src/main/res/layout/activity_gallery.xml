@@ -13,33 +13,59 @@
             type="android.support.v7.widget.RecyclerView.LayoutManager"/>
 
         <variable
-            name="listener"
-            type="com.waitou.wt_library.recycler.XRecyclerView.OnRefreshAndLoadMoreListener"/>
+            name="presenter"
+            type="com.waitou.towards.model.gallery.GalleryPresenter"/>
 
     </data>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <include
             android:id="@+id/include"
             layout="@layout/include_match_recycler_view"
             app:adapter="@{adapter}"
-            app:listener="@{listener}"
+            app:listener="@{presenter}"
             app:manager="@{manager}"/>
 
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+        <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            app:backgroundTint="?attr/colorPrimary"/>
+            app:menu_colorNormal="?attr/colorPrimary"
+            app:menu_colorPressed="?attr/colorPrimary"
+            app:menu_colorRipple="#8c8e91"
+            app:menu_fab_size="mini">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{presenter.finish}"
+                android:src="@drawable/icon_back2"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="返回"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_download"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="保存"
+                app:fab_size="mini"/>
+
+        </com.github.clans.fab.FloatingActionMenu>
+
 
     </RelativeLayout>
 </layout>

@@ -11,7 +11,6 @@ import com.waitou.wt_library.base.XPresent;
 
 public class RecommendedPresenter extends XPresent<RecommendedActivity> implements RecommendedContract.IRecommendedPresenter {
 
-    @Override
     public void start() {
         new Thread(() -> {
             getV().showLoading();

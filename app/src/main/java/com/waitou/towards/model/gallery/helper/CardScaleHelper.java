@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.kit.Kits;
 
 
@@ -27,6 +28,7 @@ public class CardScaleHelper {
     private int mLastPos = -1;
 
     private CardLinearSnapHelper mLinearSnapHelper = new CardLinearSnapHelper();
+
 
     public void attachToRecyclerView(final RecyclerView recyclerView) {
         // 开启log会影响滑动体验, 调试时才开启
@@ -56,7 +58,8 @@ public class CardScaleHelper {
 
         initWidth();
         mLinearSnapHelper.attachToRecyclerView(mRecyclerView);
-        notifyBackgroundChange();
+        //第一次进入延迟调用 等待RecyclerView列表初始化完成
+        mRecyclerView.postDelayed(this::notifyBackgroundChange, 800);
     }
 
     private void notifyBackgroundChange() {
@@ -64,25 +67,34 @@ public class CardScaleHelper {
             return;
         }
         mLastPos = getCurrentItemPos();
-        View viewByPosition = mRecyclerView.getLayoutManager().findViewByPosition(mLastPos);
-        if (viewByPosition == null) {
-            mRecyclerView.postDelayed(() -> {
-                View view = mRecyclerView.getLayoutManager().findViewByPosition(mLastPos);
-                if (view != null) {
-                    startSwitchBackground(view);
-                }
-            }, 500);
-        } else {
-            startSwitchBackground(viewByPosition);
+        startSwitchBackground();
+    }
+
+    private View getPositionView() {
+        View positionView = mRecyclerView.getLayoutManager().findViewByPosition(mLastPos);
+        if (positionView != null) {
+            return ((ViewGroup) positionView).getChildAt(0);
+        }
+        return null;
+    }
+
+    private void startSwitchBackground() {
+        View positionView = getPositionView();
+        if (positionView != null) {
+            positionView.setDrawingCacheEnabled(true);
+            Bitmap drawingCache = positionView.getDrawingCache();
+            ViewSwitchUtils.startSwitchBackgroundAnim(mRecyclerView, ViewSwitchUtils.getBlurBitmap(mContext, drawingCache, 15));
+            positionView.setDrawingCacheEnabled(false);
         }
     }
 
-    private void startSwitchBackground(View viewPosition) {
-        if (viewPosition != null) {
-            View childAt = ((ViewGroup) viewPosition).getChildAt(0);
-            childAt.buildDrawingCache();
-            Bitmap drawingCache = childAt.getDrawingCache();
-            ViewSwitchUtils.startSwitchBackgroundAnim(mRecyclerView, ViewSwitchUtils.getBlurBitmap(mContext, drawingCache, 15));
+    public void saveImageToGallery(boolean isScreen) {
+        View positionView = getPositionView();
+        if (positionView != null) {
+            positionView.setDrawingCacheEnabled(true);
+            ViewSwitchUtils.saveImageToGallery(mContext, positionView.getDrawingCache(), isScreen);
+            AlertToast.show("图片成功保存到相册O(∩_∩)O~");
+            positionView.setDrawingCacheEnabled(false);
         }
     }
 
@@ -94,9 +106,13 @@ public class CardScaleHelper {
             mCardGalleryWidth = mRecyclerView.getWidth();
             mCardWidth = mCardGalleryWidth - Kits.Dimens.dip2pxInt(mContext, 2 * (mPagePadding + mShowLeftCardWidth));
             mOnePageWidth = mCardWidth;
-            mRecyclerView.smoothScrollToPosition(mCurrentItemPos);
-            onScrolledChangedCallback();
+            notifyChangeWidth();
         });
+    }
+
+    public void notifyChangeWidth() {
+        mRecyclerView.smoothScrollToPosition(mCurrentItemPos);
+        onScrolledChangedCallback();
     }
 
     public void setCurrentItemPos(int currentItemPos) {
@@ -130,9 +146,9 @@ public class CardScaleHelper {
      * RecyclerView位移事件监听, view大小随位移事件变化
      */
     private void onScrolledChangedCallback() {
+
         int offset = mCurrentItemOffset - mCurrentItemPos * mOnePageWidth;
         float percent = (float) Math.max(Math.abs(offset) * 1.0 / mOnePageWidth, 0.0001);
-
         View leftView = null;
         View currentView;
         View rightView = null;
@@ -140,9 +156,11 @@ public class CardScaleHelper {
             leftView = mRecyclerView.getLayoutManager().findViewByPosition(mCurrentItemPos - 1);
         }
         currentView = mRecyclerView.getLayoutManager().findViewByPosition(mCurrentItemPos);
+
         if (mCurrentItemPos < mRecyclerView.getAdapter().getItemCount() - 1) {
             rightView = mRecyclerView.getLayoutManager().findViewByPosition(mCurrentItemPos + 1);
         }
+
 
         if (leftView != null) {
             // y = (1 - mScale)x + mScale

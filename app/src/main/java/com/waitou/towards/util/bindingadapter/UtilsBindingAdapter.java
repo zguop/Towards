@@ -1,11 +1,10 @@
 package com.waitou.towards.util.bindingadapter;
 
 import android.databinding.BindingAdapter;
-import android.support.v4.app.ActivityCompat;
+import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.waitou.towards.R;
+import com.github.clans.fab.FloatingActionButton;
 import com.waitou.wt_library.rx.RxBus;
 
 
@@ -14,6 +13,11 @@ import com.waitou.wt_library.rx.RxBus;
  */
 
 public class UtilsBindingAdapter {
+
+    @BindingAdapter("onClick")
+    public static void onClick(View view ,View.OnClickListener clickListener){
+        view.setOnClickListener(clickListener);
+    }
 
 
     @BindingAdapter({"code", "post"})
@@ -29,18 +33,8 @@ public class UtilsBindingAdapter {
         view.setOnClickListener(v -> RxBus.getDefault().post(o));
     }
 
-    @BindingAdapter("home_title")
-    public static void setImageDrawable(ImageView view, int position) {
-        switch (position) {
-            case 0:
-                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon__recommended));
-                break;
-            case 1:
-                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon_cargo));
-                break;
-            case 2:
-                view.setImageDrawable(ActivityCompat.getDrawable(view.getContext(), R.drawable.icon_android));
-                break;
-        }
+    @BindingAdapter("label_color")
+    public static void setLabeBackground(FloatingActionButton view, Drawable drawable) {
+//        view.getla();
     }
 }

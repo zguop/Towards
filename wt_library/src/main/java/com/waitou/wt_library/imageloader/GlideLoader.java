@@ -38,6 +38,12 @@ public class GlideLoader implements ILoader {
     }
 
     @Override
+    public DrawableTypeRequest load(Context context, String url, Options options) {
+        return load(getRequestManager(context).load(url), options);
+    }
+
+
+    @Override
     public void loadCenterCropNet(ImageView target, String url, Options options) {
         load(getRequestManager(target.getContext()).load(url), options).centerCrop().into(target);
     }
