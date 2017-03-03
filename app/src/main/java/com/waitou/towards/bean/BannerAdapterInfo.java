@@ -14,5 +14,6 @@ public class BannerAdapterInfo implements Displayable {
 
     public BannerAdapterInfo(PagerAdapter pagerAdapter) {
         this.pagerAdapter = pagerAdapter;
+
     }
 }

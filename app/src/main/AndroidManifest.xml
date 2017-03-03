@@ -9,7 +9,6 @@
     <!--读sd卡权限-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-
     <application
         android:name=".TowardsApplication"
         android:allowBackup="true"
@@ -18,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".model.main.MainActivity"
+            android:name=".model.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,24 +27,31 @@
             </intent-filter>
         </activity>
 
+        <!--主页-->
+        <activity
+            android:name=".model.main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <!--妹子相册页面-->
         <activity
             android:name=".model.gallery.GalleryActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Transparent"/>
+            android:screenOrientation="portrait"/>
+        <!--更改主题页面-->
+        <activity
+            android:name=".model.theme.ThemeActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".model.theme.ThemeActivity"/>
-
-
+        <!--FileProvider配置-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${packageName1}.android.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>

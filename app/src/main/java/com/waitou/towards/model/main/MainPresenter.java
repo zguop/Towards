@@ -2,6 +2,7 @@ package com.waitou.towards.model.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.util.Log;
 
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
@@ -129,7 +130,7 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                     return Kits.Date.getCurrentDate().split("-");
                 })
                 .observeOn(Schedulers.io())
-                .flatMap((currentDate -> DataLoader.getGankApi().getGankIoDay(currentDate[0], currentDate[1], currentDate[2])))
+                .flatMap((currentDate -> DataLoader.getGankApi().getGankIoDay(currentDate[0], currentDate[1], "02")))
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(RxTransformerHelper.verifyNotEmpty())
                 .map(info -> info.results)
@@ -190,5 +191,9 @@ public class MainPresenter extends XPresent<MainActivity> implements MainContrac
                         , throwable -> {
                             ((HomeCommendFragment) mHomeView.getCurrentHomeFragment()).onError(throwable);
                         }));
+    }
+
+    public void completeChanged( int position, boolean isChecked){
+        Log.d("aa" , " position " + position + "  ischecked = " + isChecked);
     }
 }

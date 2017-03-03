@@ -31,9 +31,10 @@ import java.util.List;
 public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRecyclerViewBinding> {
 
     private MainPresenter                                    mPresenter;
-    private MultiTypeAdapter<Displayable>                    mAdapter;
-    private SingleViewPagerAdapter<BannerPageInfo>           mBannerAdapter;
-    private SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> mFunctionInfoAdapter;
+    private MultiTypeAdapter<Displayable>                    mAdapter; //整体页面适配器
+    private SingleViewPagerAdapter<BannerPageInfo>           mBannerAdapter;//轮播图适配器
+    private SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> mFunctionInfoAdapter; //功能图标适配器
+    private SingleViewPagerAdapter<String>                   mSingleViewPagerAdapter;//item多个图适配器
 
     @Override
     public boolean initXView() {
@@ -118,8 +119,10 @@ public class HomeCommendFragment extends XFragment<MainPresenter, IncludeMatchRe
 
     public void setImages(GankResultsTypeInfo info) {
         if (info.bannerAdapterInfo == null) {
-            SingleViewPagerAdapter<String> singleViewPagerAdapter = new SingleViewPagerAdapter<>(getActivity(), info.images, R.layout.item_string_page_image);
-            info.bannerAdapterInfo = new BannerAdapterInfo(singleViewPagerAdapter);
+            mSingleViewPagerAdapter = new SingleViewPagerAdapter<>(getActivity(), info.images, R.layout.item_string_page_image);
+            info.bannerAdapterInfo = new BannerAdapterInfo(mSingleViewPagerAdapter);
+        } else {
+            mSingleViewPagerAdapter.set(info.images);
         }
     }
 }

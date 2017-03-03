@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by waitou on 17/2/23.
+ * 妹子相册
  */
 
 public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, ActivityGalleryBinding> {

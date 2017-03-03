@@ -53,14 +53,14 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_home_android"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:tint="?attr/colorPrimary"
+                    android:layout_gravity="center_vertical"
                     app:load="@{GankEnum.valueFrom(item.type)}"/>
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -82,11 +82,33 @@
                 android:textColor="@color/color666666"
                 android:textSize="18dp"/>
 
-            <include
-                layout="@layout/item_view_parallax_pager"
-                app:adapter="@{item.bannerAdapterInfo.pagerAdapter}"
-                app:visibility="@{item.bannerAdapterInfo == null ? View.GONE :View.VISIBLE}"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:visibility="@{item.bannerAdapterInfo == null ? View.GONE :View.VISIBLE}">
 
+                <com.waitou.towards.view.parallaxviewpager.ParallaxViewPager
+                    android:id="@+id/page"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants"
+                    app:adapter="@{item.bannerAdapterInfo.pagerAdapter}"
+                    app:mode="right_overlay"
+                    app:outset="62%"
+                    app:shadow_width="30dp"/>
+
+                <TextView
+                    android:id="@+id/count_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/skin_shape_count_down"
+                    android:gravity="center"
+                    android:text="@{@string/home_item_page_count(page.currentItem + 1,item.bannerAdapterInfo.pagerAdapter.getCount())}"
+                    android:textColor="?attr/skin_kind_color_not"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

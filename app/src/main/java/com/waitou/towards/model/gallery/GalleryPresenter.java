@@ -10,13 +10,10 @@ import com.waitou.wt_library.recycler.XRecyclerView;
 
 /**
  * Created by waitou on 17/2/23.
+ * 妹子相册presenter
  */
 
 public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecyclerView.OnRefreshAndLoadMoreListener {
-
-    public void finish(View v) {
-        getV().finish();
-    }
 
     public void loadData(int page) {
         DataLoader.getGankApi().getGirlPics(page)
@@ -40,5 +37,8 @@ public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecy
         loadData(page);
     }
 
+    public void finish(View v) {
+        getV().finish();
+    }
 
 }

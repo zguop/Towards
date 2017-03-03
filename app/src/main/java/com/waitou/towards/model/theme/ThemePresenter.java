@@ -12,13 +12,13 @@ import java.util.List;
 
 /**
  * Created by waitou on 17/2/8.
+ * 主题presenter
  */
 
-public class ThemePresenter extends XPresent<ThemeActivity> implements ThemeContract.ThemePresenter, BaseViewAdapter.Presenter {
+public class ThemePresenter extends XPresent<ThemeActivity> implements BaseViewAdapter.Presenter {
 
     private List<ThemeInfo> themeInfoList = new ArrayList<>();
 
-    @Override
     public List<ThemeInfo> loadData() {
         if (themeInfoList.size() > 0) {
             return themeInfoList;
@@ -33,7 +33,6 @@ public class ThemePresenter extends XPresent<ThemeActivity> implements ThemeCont
         return themeInfoList;
     }
 
-    @Override
     public void onItemClick(ThemeInfo info, int position) {
         for (int i = 0; i < themeInfoList.size(); i++) {
             if (themeInfoList.get(i).focus) {

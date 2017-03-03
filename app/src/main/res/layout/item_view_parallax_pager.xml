@@ -9,19 +9,16 @@
             name="adapter"
             type="android.support.v4.view.PagerAdapter"/>
 
-        <variable
-            name="visibility"
-            type="int"/>
     </data>
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="@{visibility}">
+        android:layout_height="wrap_content">
 
         <com.waitou.towards.view.parallaxviewpager.ParallaxViewPager
+            android:id="@+id/page"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
             app:adapter="@{adapter}"
             app:mode="right_overlay"

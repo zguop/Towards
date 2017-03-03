@@ -41,7 +41,7 @@ public class TextJokeFragment extends XFragment<MainContract.MainPresenter, Incl
     public void initData(Bundle savedInstanceState) {
         initTootBar();
         List<Fragment> jokeFragmentList = mPresenter.getJokeFragmentList();
-        if (Build.VERSION.SDK_INT < 23) { //6.0以下xml中默认颜色 高亮 原因未知 代码重新设置一遍
+        if (Build.VERSION.SDK_INT < 23) { //6.0以下xml中默认颜色 高亮 代码重新设置一遍
             mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
             mToolbarJokeTitle.item2.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
         }

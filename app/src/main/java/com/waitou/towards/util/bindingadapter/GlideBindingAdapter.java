@@ -67,7 +67,7 @@ public class GlideBindingAdapter {
     }
 
     @BindingAdapter("load")
-    public static void loadImageFromUrl(ImageView view, int drawable) {
-        ILFactory.getLoader().loadResource(view, drawable, null);
+    public static void loadImageFromUrl(ImageView view, int drawableId) {
+        view.setImageResource(drawableId);
     }
 }

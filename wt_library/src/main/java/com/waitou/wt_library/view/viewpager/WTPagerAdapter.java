@@ -21,6 +21,7 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
     private SparseArray<View> mViews;
     private WTViewPager       mViewPager;
     private boolean           isCanLoop;
+    protected int mRealPosition;
 
     WTPagerAdapter() {
         mViews = new SparseArray<>();
@@ -38,12 +39,12 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int realPosition = toRealPosition(position);
-        View view = mViews.get(realPosition);
+        mRealPosition = toRealPosition(position);
+        View view = mViews.get(mRealPosition);
 
         if (view == null) {
-            view = newView(container.getContext(), realPosition);
-            mViews.put(realPosition, view);
+            view = newView(container.getContext(), mRealPosition);
+            mViews.put(mRealPosition, view);
         }
         if (view != null) {
             container.removeView(view);

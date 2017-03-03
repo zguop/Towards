@@ -15,6 +15,7 @@ import com.waitou.wt_library.rx.RxBus;
 
 /**
  * Created by waitou on 17/1/16.
+ * 主题页面
  */
 
 public class ThemeActivity extends XActivity<ThemePresenter, IncludeMatchRecyclerViewBinding> {
@@ -45,7 +46,7 @@ public class ThemeActivity extends XActivity<ThemePresenter, IncludeMatchRecycle
         });
         mAdapter = new SingleTypeAdapter<>(this, R.layout.item_theme);
         mAdapter.setPresenter(getP());
-        getBinding().setManager(LayoutManagerUtli.getGridLayoutManager(this,3));
+        getBinding().setManager(LayoutManagerUtli.getGridLayoutManager(this, 3));
         getBinding().setAdapter(mAdapter);
         getBinding().xList.setBackgroundColor(Color.WHITE);
         reloadData();

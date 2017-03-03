@@ -7,14 +7,14 @@ import com.waitou.towards.R;
  */
 
 public enum GankEnum {
-    Android(R.drawable.icon_home_android, "Android"),
-    福利(R.drawable.icon_home_meizi, "福利"),
-    瞎推荐(R.drawable.icon_home_xia, "瞎推荐"),
-    App(R.drawable.icon_home_app, "App"),
-    iOS(R.drawable.icon_home_ios, "iOS"),
-    拓展资源(R.drawable.icon_home_source, "拓展资源"),
-    前端(R.drawable.icon_home_qian, "前端"),
-    休息视频(R.drawable.icon_home_movie, "休息视频");
+    Android(R.drawable.svg_ic_android, "Android"),
+    福利(R.drawable.svg_ic_aixin, "福利"),
+    瞎推荐(R.drawable.svg_ic_xia, "瞎推荐"),
+    App(R.drawable.svg_ic_app, "App"),
+    iOS(R.drawable.svg_ic_ios, "iOS"),
+    拓展资源(R.drawable.svg_ic_tuozhan, "拓展资源"),
+    前端(R.drawable.svg_ic_qian, "前端"),
+    休息视频(R.drawable.svg_ic_movie, "休息视频");
 
     private int    type;
     private String typeStr;

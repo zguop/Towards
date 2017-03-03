@@ -1,5 +1,7 @@
 package com.waitou.towards.bean;
 
+import android.databinding.ObservableInt;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.waitou.net_library.model.Displayable;
@@ -56,4 +58,11 @@ public class GankResultsTypeInfo implements Displayable {
 
     public BannerAdapterInfo bannerAdapterInfo;
 
+   public ObservableInt position = new ObservableInt();
+
+
+    public void setPosition(int position){
+        this.position.set(position);
+        this.position.notifyChange();
+    }
 }

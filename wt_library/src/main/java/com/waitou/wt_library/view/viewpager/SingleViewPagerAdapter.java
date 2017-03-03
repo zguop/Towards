@@ -42,6 +42,10 @@ public class SingleViewPagerAdapter<T> extends WTPagerAdapter<T> {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public int getItem() {
+        return mRealPosition;
+    }
+
     @Override
     protected View newView(Context context, int realPosition) {
         ViewDataBinding inflate = DataBindingUtil.inflate(mLayoutInflater, getLayoutRes(), null, false);
