@@ -17,7 +17,7 @@
         android:id="@+id/x_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:recyclerBackgroundColor="@color/colore7e7e7"
+        app:recyclerBackgroundColor="@color/color_e7e7e7"
         app:adapter="@{adapter}"
         app:layoutManager="@{manager}"
         app:recyclerScrollbarNone="true"/>

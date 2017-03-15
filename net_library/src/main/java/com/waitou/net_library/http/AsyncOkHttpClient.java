@@ -13,7 +13,6 @@ public class AsyncOkHttpClient {
 
     private static final int TIMEOUT = 20_000;
 
-
     private static OkHttpClient sOkHttpClient;
 
     private AsyncOkHttpClient() {

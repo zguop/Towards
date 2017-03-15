@@ -6,15 +6,11 @@
     <data>
 
         <variable
-            name="presenter"
-            type="com.waitou.towards.model.main.MainPresenter"/>
-
-        <variable
             name="adapter"
             type="com.waitou.wt_library.base.XFragmentAdapter"/>
     </data>
 
-    <android.support.v4.widget.DrawerLayout
+    <com.waitou.towards.view.SkinDrawerLayout
         android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -90,5 +86,5 @@
             android:layout_gravity="start"
             app:menu="@menu/activity_main_drawer"/>
 
-    </android.support.v4.widget.DrawerLayout>
+    </com.waitou.towards.view.SkinDrawerLayout>
 </layout>

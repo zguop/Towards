@@ -17,6 +17,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.waitou.towards.R;
+import com.waitou.wt_library.theme.SkinCompatSupportable;
+import com.waitou.wt_library.theme.ThemeUtils;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
@@ -24,7 +28,7 @@ import java.lang.reflect.Field;
  * Created by waitou on 17/1/19.
  */
 
-public class ExBottomNavigationView extends BottomNavigationView {
+public class ExBottomNavigationView extends BottomNavigationView implements SkinCompatSupportable{
     // used for animation
     private int     mShiftAmount;
     private float   mScaleUpFactor;
@@ -577,6 +581,13 @@ public class ExBottomNavigationView extends BottomNavigationView {
 
         mMyOnNavigationItemSelectedListener = new MyOnNavigationItemSelectedListener(viewPager, this, smoothScroll);
         super.setOnNavigationItemSelectedListener(mMyOnNavigationItemSelectedListener);
+    }
+
+    @Override
+    public void applySkin() {
+        setItemIconTintList(ThemeUtils.getColorStateList(getContext(), R.color.skin_bottom_bar_not));
+        setItemTextColor(ThemeUtils.getColorStateList(getContext(), R.color.skin_bottom_bar_not));
+        setItemBackgroundResource(ThemeUtils.getThemeAttrId(getContext(), R.attr.colorPrimary));
     }
 
 

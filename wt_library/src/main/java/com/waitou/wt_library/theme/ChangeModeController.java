@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.waitou.wt_library.R;
+import com.waitou.wt_library.cache.SharedPref;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -44,8 +45,6 @@ import java.util.Map;
  * 2.在ThemeEnum增加枚举
  */
 public class ChangeModeController {
-
-//    public static final String TAG = ChangeModeController.class.getSimpleName();
 
     private static final String COLOR_PRIMARY      = "colorPrimary";
     private static final String COLOR_PRIMARY_DARK = "colorPrimaryDark";
@@ -246,35 +245,20 @@ public class ChangeModeController {
      * 刷新UI界面
      */
     private void refreshUI(Activity ctx) {
-        int resourceId = refreshStatusBar(ctx);
-        if (mOnThemeChangeListener != null && resourceId != 0) {
-            mOnThemeChangeListener.onChanged(resourceId);
-        }
+        refreshStatusBar(ctx);
         for (SkinView skinView : mSkinViewList) {
             skinView.apply();
         }
     }
 
-    public interface onThemeChangeListener {
-        void onChanged(int resourceId);
-    }
-
-    private onThemeChangeListener mOnThemeChangeListener;
-
-    public void setOnThemeChangeListener(onThemeChangeListener onThemeChangeListener) {
-        this.mOnThemeChangeListener = onThemeChangeListener;
-    }
-
     /**
      * 刷新 StatusBar
      */
-    private int refreshStatusBar(Activity ctx) {
+    private void refreshStatusBar(Activity ctx) {
         if (Build.VERSION.SDK_INT >= 21) {
             int resourceId = ThemeUtils.getThemeAttrId(ctx, R.attr.colorPrimaryDark);
             ctx.getWindow().setStatusBarColor(ActivityCompat.getColor(ctx, resourceId));
-            return resourceId;
         }
-        return 0;
     }
 
     /**

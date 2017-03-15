@@ -15,7 +15,7 @@
 
         <variable
             name="presenter"
-            type="com.waitou.towards.model.main.MainPresenter"/>
+            type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>
 
     </data>
 

@@ -82,11 +82,14 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
     }
 
     @Override
+    public P createPresenter() {
+        return null;
+    }
+
+    @Override
     public void setPresenter(P presenter) {
         this.presenter = presenter;
     }
-
-    protected abstract P createPresenter();
 
     protected void initReloadData(View view) {
         view.findViewById(R.id.error).setOnClickListener(v -> reloadData());

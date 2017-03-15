@@ -54,7 +54,7 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
     }
 
     @Override
-    protected GalleryPresenter createPresenter() {
+    public GalleryPresenter createPresenter() {
         return new GalleryPresenter();
     }
 

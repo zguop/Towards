@@ -26,8 +26,10 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     private LayoutInflater    mInflater;
     private AppCompatActivity mAppCompatActivity;
 
+    private P presenter;
     private D d;
 
+    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +48,13 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
             }
         }
         isViewCreated = true;
+
+        if (getP() == null) {
+            setPresenter(createPresenter());
+            if (getP() != null) {
+                getP().attachV(this);
+            }
+        }
         return initXView() ? mXBinding.getRoot() : d.getRoot();
     }
 
@@ -54,9 +63,24 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
         //fragment可见 且 数据未加载 调用 fragmentVisibleHint
-        if (getUserVisibleHint() && !isLoadDataCompleted && fragmentVisibleHint()) {
+        if (getUserVisibleHint() && !isLoadDataCompleted) {
+            fragmentVisibleHint();
             isLoadDataCompleted = true;
         }
+    }
+
+    public P getP() {
+        return presenter;
+    }
+
+    @Override
+    public P createPresenter() {
+        return null;
+    }
+
+    @Override
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -92,19 +116,19 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
 
 
     /*--------------- 界面状态 ---------------*/
-    protected void showContent() {
+    public void showContent() {
         mXBinding.xContentLayout.showContent();
     }
 
-    protected void showEmpty() {
+    public void showEmpty() {
         mXBinding.xContentLayout.showEmpty();
     }
 
-    protected void showError() {
+    public void showError() {
         showError(true);
     }
 
-    protected void showError(boolean isReload) {
+    public void showError(boolean isReload) {
         if (isReload) {
             mXBinding.xContentLayout.showError();
         } else {
@@ -114,7 +138,7 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         }
     }
 
-    protected void showLoading() {
+    public void showLoading() {
         mXBinding.xContentLayout.showLoading();
     }
 }

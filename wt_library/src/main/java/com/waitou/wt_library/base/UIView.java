@@ -7,7 +7,7 @@ import android.support.annotation.LayoutRes;
  * Created by waitou on 17/1/9.
  */
 
-public interface UIView<P>  extends IView<P>{
+public interface UIView<P> extends IView<P> {
 
     boolean initXView();
 
@@ -17,4 +17,7 @@ public interface UIView<P>  extends IView<P>{
     void initData(Bundle savedInstanceState);
 
     void reloadData();
+
+    P createPresenter();
+
 }

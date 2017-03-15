@@ -5,7 +5,7 @@
     <style name="bottom_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
-        <item name="android:background">@color/colore7e7e7</item>
+        <item name="android:background">@color/color_e7e7e7</item>
     </style>
 
 </resources>

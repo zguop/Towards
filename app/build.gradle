@@ -55,6 +55,10 @@ dependencies {
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["flexbox"]
     compile rootProject.ext.dependencies["fab"]
+    compile rootProject.ext.dependencies["bottomsheet"]
+    compile rootProject.ext.dependencies["rxcache"]
+    compile rootProject.ext.dependencies["jolyglot_gson"]
+
     //工程依赖 app --> wt_library --> net_library
 
 

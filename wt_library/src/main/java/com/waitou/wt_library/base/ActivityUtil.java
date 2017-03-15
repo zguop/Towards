@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.waitou.wt_library.BaseApplication;
+
 import java.util.LinkedList;
 import java.util.List;
 

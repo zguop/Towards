@@ -212,4 +212,18 @@ public class ParallaxViewPager extends ViewPager {
         }
     }
 
+//    private boolean isCreateAdapter = false;
+//
+//    @Override
+//    public void setAdapter(PagerAdapter adapter) {
+//        if (isCreateAdapter) {
+//            if(getAdapter() != null){
+//                getAdapter().notifyDataSetChanged();
+//            }
+//
+//            return;
+//        }
+//        super.setAdapter(adapter);
+//        isCreateAdapter = true;
+//    }
 }

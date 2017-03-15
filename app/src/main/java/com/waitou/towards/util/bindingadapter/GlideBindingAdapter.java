@@ -57,8 +57,8 @@ public class GlideBindingAdapter {
     }
 
     @BindingAdapter({"imageUrl", "placeholder"})
-    public static void loadCenterCropImageFromUrl(ImageView view, String url, Drawable loading) {
-        ILFactory.getLoader().loadCenterCropNet(view, url, new ILoader.Options(loading, null));
+    public static void loadImageFromUrl(ImageView view, String url, Drawable drawable) {
+        ILFactory.getLoader().loadNet(view, url, new ILoader.Options(drawable, null));
     }
 
     @BindingAdapter("imageUrl")
@@ -66,7 +66,27 @@ public class GlideBindingAdapter {
         ILFactory.getLoader().loadNet(view, url, null);
     }
 
+    @BindingAdapter({"cropImageUrl", "placeholder", "error"})
+    public static void loadCenterCropImageFromUrl(ImageView view, String url, Drawable drawable, Drawable error) {
+        ILFactory.getLoader().loadCenterCropNet(view, url, new ILoader.Options(drawable, error));
+    }
+
+    @BindingAdapter({"cropImageUrl", "placeholder"})
+    public static void loadCenterCropImageFromUrl(ImageView view, String url, Drawable loading) {
+        ILFactory.getLoader().loadCenterCropNet(view, url, new ILoader.Options(loading, null));
+    }
+
+    @BindingAdapter({"cropImageUrl"})
+    public static void loadCenterCropImageFromUrl(ImageView view, String url) {
+        ILFactory.getLoader().loadCenterCropNet(view, url, null);
+    }
+
     @BindingAdapter("load")
+    public static void loadImage(ImageView view, int drawable) {
+        ILFactory.getLoader().loadResource(view, drawable, null);
+    }
+
+    @BindingAdapter("src")
     public static void loadImageFromUrl(ImageView view, int drawableId) {
         view.setImageResource(drawableId);
     }

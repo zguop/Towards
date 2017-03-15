@@ -23,13 +23,15 @@ import com.waitou.towards.model.main.fragment.joke.TextJokeFragment;
 import com.waitou.towards.model.theme.ThemeActivity;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.base.XFragmentAdapter;
+import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.router.Router;
 import com.waitou.wt_library.rx.RxBus;
 import com.waitou.wt_library.theme.ChangeModeController;
 import com.waitou.wt_library.theme.ThemeUtils;
 
 
-public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener, MainContract.MainView {
+public class MainActivity extends XActivity<XPresent, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener {
+
     private HomeFragment     mHomeFragment;
     private TextJokeFragment mTextJokeFragment;
     private FigureFragment   mFigureFragment;
@@ -40,11 +42,6 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().init(this);
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public MainPresenter createPresenter() {
-        return new MainPresenter(getHomeFragment(), getTextJokeFragment());
     }
 
     @Override
@@ -63,20 +60,12 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         getBinding().toolbar.setBackListener(R.drawable.icon_menu, v -> getBinding().mainDrawerLayout.openDrawer(GravityCompat.START));
         XFragmentAdapter adapter = new XFragmentAdapter(getSupportFragmentManager(), getHomeFragment(), getTextJokeFragment(), getFigureFragment(), getCircleFragment(), getPersonFragment());
         getBinding().setAdapter(adapter);
-        getBinding().setPresenter(getP());
         getBinding().mainTab.setupWithViewPager(getBinding().fContent);
         NavHeaderMainBinding binding = NavHeaderMainBinding.inflate((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE));
         binding.setDrawableId(R.drawable.nav_header_img);
+        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         getBinding().navView.addHeaderView(binding.getRoot());
         getBinding().navView.setNavigationItemSelectedListener(this);
-        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-        ChangeModeController.get().setOnThemeChangeListener(resourceId -> {
-            //主题改版之后，刷新一下bottomBar的状态
-            getBinding().mainTab.setItemIconTintList(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
-            getBinding().mainTab.setItemTextColor(ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not));
-            getBinding().mainTab.setItemBackgroundResource(ThemeUtils.getThemeAttrId(this, R.attr.colorPrimary));
-            StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-        });
         getBinding().mainTab.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_home:
@@ -178,6 +167,4 @@ public class MainActivity extends XActivity<MainPresenter, ActivityMainBinding> 
         }
         return mPersonFragment;
     }
-
-
 }

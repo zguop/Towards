@@ -1,8 +1,12 @@
 # Towards
+完全按照自己的想法开发，借鉴于github许多开源项目UI。目前正在慢慢开发中，不定时上传代码。
 
-技术练习DataBinding + MVP + rxJava + retrofit
+
+使用的到的技术DataBinding + MVP + rxJava + retrofit
 
 大量dataBinding例子
+
+
 
 部分界面截图：
 
@@ -24,7 +28,8 @@ https://github.com/zguop/Towards
 --
 
 这个属于个人开发作品。诸位勿传播于非技术人员，拒绝用于商业用途。***勿大面积传播，以免被查水表谢谢合作^_^***
- 邮箱：    *qq*:374735994
+
+
 
 总结
 -

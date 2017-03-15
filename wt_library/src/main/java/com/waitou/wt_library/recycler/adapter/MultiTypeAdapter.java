@@ -71,7 +71,6 @@ public class MultiTypeAdapter<T> extends BaseViewAdapter<T> {
     public void set(List<? extends T> viewModels, int viewType) {
         mCollection.clear();
         mCollectionViewType.clear();
-
         if (viewModels == null) {
             add(null, viewType);
         } else {

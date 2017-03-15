@@ -18,6 +18,7 @@ import java.lang.reflect.Field;
 
 /**
  * Created by waitou on 17/2/12.
+ * 轮播控件
  */
 
 public class WTBanner extends RelativeLayout {
@@ -115,7 +116,7 @@ public class WTBanner extends RelativeLayout {
         }
     }
 
-    static class AdSwitchTask implements Runnable {
+    private static class AdSwitchTask implements Runnable {
 
         private final WeakReference<WTBanner> reference;
 

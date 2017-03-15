@@ -79,4 +79,8 @@ public class SingleViewPagerAdapter<T> extends WTPagerAdapter<T> {
         mData.addAll(viewModels);
         notifyDataSetChanged();
     }
+
+    public T getItemData(int position){
+        return mData.get(position);
+    }
 }

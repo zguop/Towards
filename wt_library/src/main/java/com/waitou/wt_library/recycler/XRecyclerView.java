@@ -167,7 +167,7 @@ public class XRecyclerView extends RecyclerView {
     @Override
     public void setLayoutManager(LayoutManager layout) {
         if (layout == null) {
-            throw new IllegalArgumentException("LayoutManager can not be null.");
+            return;
         }
         super.setLayoutManager(layout);
 
@@ -319,7 +319,7 @@ public class XRecyclerView extends RecyclerView {
     public boolean addHeaderView(View view) {
         boolean result = false;
         if (view == null) {
-            return result;
+            return false;
         }
         if (adapter != null) {
             result = adapter.addHeadView(view);

@@ -32,6 +32,15 @@ public class DataServiceProvider {
         return sDataServiceProvider;
     }
 
+    private Retrofit getRetrofit(String baseUrl) {
+        return new Retrofit.Builder()
+                .baseUrl(HttpUtil.setCurrentUrl(baseUrl))
+                .client(AsyncOkHttpClient.getOkHttpClient())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
     public <T> T provide(String baseUrl, Class<T> tClass) {
         if (dataServiceMap == null) {
             dataServiceMap = new HashMap<>();
@@ -44,16 +53,6 @@ public class DataServiceProvider {
         return (T) dataServiceMap.get(baseUrl);
     }
 
-    private Retrofit getRetrofit(String baseUrl) {
-        return new Retrofit.Builder()
-                .baseUrl(HttpUtil.setCurrentUrl(baseUrl))
-                .client(AsyncOkHttpClient.getOkHttpClient())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }
-
-
 
 
 
@@ -64,11 +63,9 @@ public class DataServiceProvider {
         if (dataServiceMap == null) {
             dataServiceMap = new HashMap<>();
         }
-
         if (!dataServiceMap.containsKey(tClass.getName()) || dataServiceMap.get(tClass.getName()) == null) {
             dataServiceMap.put(tClass.getName(), getRetrofit(HttpUtil.RANDOM_BASE_URL).create(tClass));
         }
-
         return (T) dataServiceMap.get(tClass.getName());
     }
 

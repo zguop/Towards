@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -354,20 +355,13 @@ public class Kits {
 
 
     public static class Dimens {
+
         public static float dip2px(Context context, float dp) {
             return dp * context.getResources().getDisplayMetrics().density;
         }
 
-        public static float pxToDp(Context context, float px) {
-            return px / context.getResources().getDisplayMetrics().density;
-        }
-
         public static int dip2pxInt(Context context, float dp) {
             return (int) (dip2px(context, dp) + 0.5f);
-        }
-
-        public static int pxToDpCeilInt(Context context, float px) {
-            return (int) (pxToDp(context, px) + 0.5f);
         }
 
         /**
@@ -985,6 +979,8 @@ public class Kits {
 
         public static final String YMD    = "yyyy-MM-dd";
         public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+        public static final String HM     = "HH:mm";
+
 
         private static SimpleDateFormat m        = new SimpleDateFormat("MM");
         private static SimpleDateFormat d        = new SimpleDateFormat("dd");
@@ -992,7 +988,6 @@ public class Kits {
         private static SimpleDateFormat ymdDot   = new SimpleDateFormat("yyyy.MM.dd");
         private static SimpleDateFormat ymdhmss  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         private static SimpleDateFormat ymdhm    = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        private static SimpleDateFormat hm       = new SimpleDateFormat("HH:mm");
         private static SimpleDateFormat mdhm     = new SimpleDateFormat("MM月dd日 HH:mm");
         private static SimpleDateFormat mdhmLink = new SimpleDateFormat("MM-dd HH:mm");
 
@@ -1003,8 +998,80 @@ public class Kits {
             return getFormatDateTime(new java.util.Date(timeInMills), YMD);
         }
 
+        public static String getHm(long timeInMills) {
+            return getFormatDateTime(new java.util.Date(timeInMills), HM);
+        }
+
+        public static String getCurrentHm() {
+            return getFormatDateTime(new java.util.Date(), HM);
+        }
+
         public static String getCurrentDate() {
             return getFormatDateTime(new java.util.Date(), YMD);
+        }
+
+        /**
+         * 时间是否大于选择的时间
+         *
+         * @param hour   时
+         * @param minute 分
+         */
+        public static boolean isRightTime(int hour, int minute) {
+            Calendar calendar = Calendar.getInstance();
+            int h = calendar.get(Calendar.HOUR_OF_DAY);
+            int m = calendar.get(Calendar.MINUTE);
+            return h > hour || (h == hour && m >= minute);
+        }
+
+        public static String friendlyTime(String dateStr) {
+            java.util.Date time = null;
+            try {
+                time = getFormatDate(YMDHMS).parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (time == null) {
+                return "Unknown";
+            }
+            String ftime = "";
+            Calendar cal = Calendar.getInstance();
+            // 判断是否是同一天
+            SimpleDateFormat formatDate = getFormatDate(YMD);
+            String curDate = formatDate.format(cal.getTime());
+            String paramDate = formatDate.format(time);
+            if (curDate.equals(paramDate)) {
+                int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
+                if (hour == 0)
+                    ftime = Math.max(
+                            (cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+                            + "分钟前";
+                else
+                    ftime = hour + "小时前";
+                return ftime;
+            }
+
+            long lt = time.getTime() / 86400000;
+            long ct = cal.getTimeInMillis() / 86400000;
+            int days = (int) (ct - lt);
+            if (days == 0) {
+                int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
+                if (hour == 0)
+                    ftime = Math.max(
+                            (cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+                            + "分钟前";
+                else
+                    ftime = hour + "小时前";
+            } else if (days == 1) {
+                ftime = "昨天";
+            } else if (days == 2) {
+                ftime = "前天";
+            } else if (days > 2 && days <= 10) {
+                ftime = days + "天前";
+            } else if (days > 10) {
+                ftime = formatDate.format(time);
+            }
+            return ftime;
         }
 
         /**
@@ -1016,6 +1083,10 @@ public class Kits {
          */
         public static String getFormatDateTime(java.util.Date date, String format) {
             return new SimpleDateFormat(format, Locale.getDefault()).format(date);
+        }
+
+        public static SimpleDateFormat getFormatDate(String format) {
+            return new SimpleDateFormat(format, Locale.getDefault());
         }
 
 
@@ -1038,9 +1109,6 @@ public class Kits {
             return ymdhm.format(new java.util.Date(timeInMills));
         }
 
-        public static String getHm(long timeInMills) {
-            return hm.format(new java.util.Date(timeInMills));
-        }
 
         public static String getMd(long timeInMills) {
             return md.format(new java.util.Date(timeInMills));

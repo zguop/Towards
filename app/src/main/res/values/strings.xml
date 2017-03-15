@@ -9,8 +9,9 @@
 
     <string name="home_gank_title">&lt;b&gt;&lt;tt&gt;%1$s&lt;/tt&gt;&lt;/b&gt;&#160;&#160;&#160;作者: %2$s</string>
     <string name="home_item_page_count">%1$s / %2$s</string>
-
+    <string name="item_empty_str">暂时没有更新内容，去看看其他信息吧~</string>
     <string name="warn_net_error">网络异常，请更换网络或稍后再试</string>
+
 
 
     <string name="footer_bar_behavior">com.waitou.towards.util.behavior.FooterBarBehavior</string>

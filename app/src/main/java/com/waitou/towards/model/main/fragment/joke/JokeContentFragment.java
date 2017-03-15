@@ -1,13 +1,11 @@
 package com.waitou.towards.model.main.fragment.joke;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import com.waitou.towards.ExtraValue;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
+import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
-import com.waitou.towards.model.main.MainContract;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.XRecyclerView;
@@ -20,11 +18,10 @@ import java.util.List;
  * Created by waitou on 17/1/10.
  */
 
-public class JokeContentFragment extends XFragment<MainContract.MainPresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener, MainContract.JokeContentView<JokeInfo> {
+public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener {
 
     private int                        mType;
     private MultiTypeAdapter<JokeInfo> mAdapter;
-    private MainContract.MainPresenter mPresenter;
 
     @Override
     public boolean initXView() {
@@ -49,25 +46,24 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
     }
 
     @Override
-    protected boolean fragmentVisibleHint() {
+    protected void fragmentVisibleHint() {
         reloadData();
-        return true;
     }
 
     @Override
     public void reloadData() {
         showLoading();
-        mPresenter.loadJokeData(1, mType);
+        getP().loadJokeData(1, mType);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadJokeData(1, mType);
+        getP().loadJokeData(1, mType);
     }
 
     @Override
     public void onLoadMore(int page) {
-        mPresenter.loadJokeData(page, mType);
+        getP().loadJokeData(page, mType);
     }
 
     @Override
@@ -75,7 +71,6 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
         super.showError(isReload);
     }
 
-    @Override
     public void success(int page, List<JokeInfo> info) {
         if (page == 1) {
             mAdapter.clear();
@@ -86,20 +81,6 @@ public class JokeContentFragment extends XFragment<MainContract.MainPresenter, I
         }
         mAdapter.addAll(info, mType);
         getBinding().xList.getRecyclerView().setDefaultPageSize();
-    }
-
-    public static Fragment getInstance(int type, MainContract.MainPresenter presenter) {
-        JokeContentFragment fragment = new JokeContentFragment();
-        fragment.setPresenter(presenter);
-        Bundle bundle = new Bundle();
-        bundle.putInt(ExtraValue.JOKE_CONTENT_TYPE, type);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public void setPresenter(MainContract.MainPresenter presenter) {
-        this.mPresenter = presenter;
     }
 }
 

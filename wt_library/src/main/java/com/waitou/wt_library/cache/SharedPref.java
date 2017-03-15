@@ -1,4 +1,4 @@
-package com.waitou.wt_library.theme;
+package com.waitou.wt_library.cache;
 
 import android.app.Activity;
 import android.content.Context;
@@ -115,6 +115,10 @@ public class SharedPref {
 
     public String getString(String key) {
         return mPreferences.getString(key, null);
+    }
+
+    public String getString(String key, String defValue) {
+        return mPreferences.getString(key, defValue);
     }
 
     public Boolean getBoolean(String key) {

@@ -41,6 +41,8 @@ public abstract class BaseFragment extends Fragment {
      */
     protected boolean isLoadDataCompleted;
 
+    protected boolean isFragmentVisibleHint;
+
     /**
      * fragment是否要被恢复可见的标识
      */
@@ -97,9 +99,9 @@ public abstract class BaseFragment extends Fragment {
 
         //fragment 可见且View初始化完毕 并且数据未加载 调用 fragmentVisibleHint
         if (getUserVisibleHint() && isViewCreated && !isLoadDataCompleted) {
-            if (fragmentVisibleHint()) {
-                isLoadDataCompleted = true;
-            }
+            fragmentVisibleHint();
+            isLoadDataCompleted = true;
+
         }
     }
 
@@ -113,8 +115,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * fragment的懒加载
      */
-    protected boolean fragmentVisibleHint() {
-        return false;
+    protected void fragmentVisibleHint() {
     }
 
     /**

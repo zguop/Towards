@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import com.waitou.wt_library.XDroidConf;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,9 +19,10 @@ public class Router {
     private Activity from;
     private Class<?> to;
     private Bundle   data;
-    private int requestCode = -1;
-    private int enterAnim   = XDroidConf.ROUTER_ANIM_ENTER;
-    private int exitAnim    = XDroidConf.ROUTER_ANIM_EXIT;
+    private int     requestCode = -1;
+    private int     enterAnim   = RES_NONE;
+    private int     exitAnim    = RES_NONE;
+    private boolean isFinish    = false;
 
     public static final int RES_NONE = -1;
 
@@ -152,6 +151,10 @@ public class Router {
                     from.startActivityForResult(intent, requestCode);
                 }
 
+                if (isFinish){
+                    from.finish();
+                }
+
                 if (enterAnim > 0 && exitAnim > 0) {
                     from.overridePendingTransition(enterAnim, exitAnim);
                 }
@@ -174,8 +177,11 @@ public class Router {
         return data;
     }
 
-    public static void pop(Activity activity) {
-        activity.finish();
+    public Router finish() {
+        if (from != null) {
+            this.isFinish = true;
+        }
+        return this;
     }
 
     public static void setCallback(RouterCallback callback) {

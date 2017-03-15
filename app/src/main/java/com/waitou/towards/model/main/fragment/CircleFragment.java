@@ -5,14 +5,14 @@ import android.os.Bundle;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.Homeinfo;
 import com.waitou.towards.databinding.FragmentHomeBinding;
-import com.waitou.towards.model.main.MainPresenter;
 import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.base.XPresent;
 
 /**
  * Created by waitou on 16/12/23.
  */
 
-public class CircleFragment extends XFragment<MainPresenter, FragmentHomeBinding> {
+public class CircleFragment extends XFragment<XPresent, FragmentHomeBinding> {
 
 
     @Override
@@ -36,9 +36,4 @@ public class CircleFragment extends XFragment<MainPresenter, FragmentHomeBinding
 
     }
 
-
-    @Override
-    public void setPresenter(MainPresenter presenter) {
-
-    }
 }

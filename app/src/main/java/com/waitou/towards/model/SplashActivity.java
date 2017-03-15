@@ -20,7 +20,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class SplashActivity extends XActivity {
 
     @Override
-    protected UIPresent createPresenter() {
+    public UIPresent createPresenter() {
         return null;
     }
 
@@ -38,7 +38,7 @@ public class SplashActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         Observable.timer(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
-                    Router.newIntent().from(this).to(MainActivity.class).launch();
+                    Router.newIntent().from(this).to(MainActivity.class).finish().launch();
                 });
     }
 

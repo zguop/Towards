@@ -14,7 +14,7 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="176dp"
-        android:background="@color/colore7e7e7"
+        android:background="@color/color_e7e7e7"
         app:adapter="@{item.pagerAdapter}"/>
 
 </layout>

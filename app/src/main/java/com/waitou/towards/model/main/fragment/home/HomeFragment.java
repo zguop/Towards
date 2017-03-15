@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,8 @@ import com.waitou.towards.BR;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewParallaxPagerBinding;
 import com.waitou.towards.databinding.ViewSmartLayoutBinding;
-import com.waitou.towards.model.main.MainContract;
-import com.waitou.towards.model.main.MainPresenter;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
-
-import java.util.List;
 
 
 /**
@@ -27,14 +22,18 @@ import java.util.List;
  * 首页
  */
 
-public class HomeFragment extends XFragment<MainPresenter, IncludeViewParallaxPagerBinding> implements MainContract.HomeView, SmartTabLayout.TabProvider {
+public class HomeFragment extends XFragment<HomePresenter, IncludeViewParallaxPagerBinding> implements SmartTabLayout.TabProvider {
 
-    private MainPresenter          mPresenter;
     private ViewSmartLayoutBinding mLayoutBinding;
 
     @Override
     public boolean initXView() {
         return false;
+    }
+
+    @Override
+    public HomePresenter createPresenter() {
+        return new HomePresenter();
     }
 
     @Override
@@ -45,19 +44,13 @@ public class HomeFragment extends XFragment<MainPresenter, IncludeViewParallaxPa
     @Override
     public void initData(Bundle savedInstanceState) {
         initToolBar(getActivity());
-        List<Fragment> homeFragmentList = mPresenter.getHomeFragmentList();
-        XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), homeFragmentList, null);
+        XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), getP().getHomeCommendFragment(), getP().getCargoFragment(), getP().getHomeAndroidFragment());
         getBinding().setAdapter(adapter);
         mLayoutBinding.setViewPager(getBinding().viewPager);
     }
 
     @Override
     public void reloadData() {
-    }
-
-    @Override
-    public void setPresenter(MainPresenter presenter) {
-        this.mPresenter = presenter;
     }
 
     public ViewDataBinding initToolBar(Activity activity) {
@@ -78,10 +71,5 @@ public class HomeFragment extends XFragment<MainPresenter, IncludeViewParallaxPa
         viewDataBinding.setVariable(BR.position, position);
         viewDataBinding.setVariable(BR.colorId, R.color.skin_tab_icon_not);
         return viewDataBinding.getRoot();
-    }
-
-    @Override
-    public Fragment getCurrentHomeFragment() {
-        return mPresenter.getHomeFragmentList().get(getBinding().viewPager.getCurrentItem());
     }
 }

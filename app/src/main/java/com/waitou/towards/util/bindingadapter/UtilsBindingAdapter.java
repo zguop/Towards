@@ -49,6 +49,7 @@ public class UtilsBindingAdapter {
         });
     }
 
+
     public interface PageScrolled {
         void pageScrolled(int position, float positionOffset, int positionOffsetPixels);
     }

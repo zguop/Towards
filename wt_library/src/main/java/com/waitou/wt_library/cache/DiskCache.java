@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.waitou.wt_library.XDroidConf;
 import com.waitou.wt_library.kit.Codec;
 import com.waitou.wt_library.kit.Kits;
 
@@ -158,7 +157,7 @@ public class DiskCache implements ICache {
     }
 
     private String getCacheDir() {
-        return XDroidConf.CACHE_DISK_DIR;
+        return "cache";
     }
 
 
