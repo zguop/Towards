@@ -53,11 +53,11 @@ public class ChangeModeController {
 
     private static final String PRE_THEME_MODEL = "theme_model"; //sp 保存当前的主题
 
-    private final Object[] mConstructorArgs = new Object[2];
+    private static final Object[] mConstructorArgs = new Object[2];
 
-    private final Class<?>[] sConstructorSignature = new Class[]{Context.class, AttributeSet.class};
+    private static final Class<?>[] sConstructorSignature = new Class[]{Context.class, AttributeSet.class};
 
-    private final Map<String, Constructor<? extends View>> sConstructorMap = new ArrayMap<>();
+    private static final Map<String, Constructor<? extends View>> sConstructorMap = new ArrayMap<>();
 
     private static final String[] sClassPrefixList = {
             "android.widget.",
@@ -372,5 +372,10 @@ public class ChangeModeController {
                     return ThemeUtils.getIdentifier(context, resName, context.getPackageName());
             }
         }
+    }
+
+    public void cancel() {
+        mSkinViewList.clear();
+        sChangeModeController = null;
     }
 }

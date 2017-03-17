@@ -169,4 +169,10 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
         }
         return mPersonFragment;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ChangeModeController.get().cancel();
+    }
 }
