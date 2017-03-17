@@ -20,6 +20,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg_grey"
         android:descendantFocusability="blocksDescendants"
         app:adapter="@{adapter}"
         app:offscreenPageLimit="@{adapter.getCount() &lt; 3 ? 1 : adapter.getCount() - 1}"/>
