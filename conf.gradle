@@ -3,16 +3,12 @@ ext {
     android = [
             compileSdkVersion: 25,
             buildToolsVersion: "25.0.1",
-
             minSdkVersion    : 21,
             targetSdkVersion : 25,
-
             versionCode      : 1,
             versionName      : '1.0.0',
-
             VSupportSdk      : '25.1.0',
-
-            retrofitVersion  : '2.1.0'
+            retrofitVersion  : '2.2.0'
     ]
 
     dependencies = [
@@ -25,7 +21,7 @@ ext {
             "retrofit"           : "com.squareup.retrofit2:retrofit:${android["retrofitVersion"]}",
             "adapter-rxjava"     : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitVersion"]}",
             "converter-gson"     : "com.squareup.retrofit2:converter-gson:${android["retrofitVersion"]}",
-            "rxjava"             : "io.reactivex:rxjava:1.2.3",
+            "rxjava"             : "io.reactivex:rxjava:1.2.5",
             "rxandroid"          : "io.reactivex:rxandroid:1.2.1",
             "rxbinding"          : "com.jakewharton.rxbinding:rxbinding:1.0.0",
             "rxpermissions"      : 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2@aar',
@@ -41,8 +37,10 @@ ext {
             "fab"                : 'com.github.clans:fab:1.6.4',
             "canary-debug"       : 'com.squareup.leakcanary:leakcanary-android:1.5', //检测内存泄漏的
             "bottomsheet"        : 'com.cocosw:bottomsheet:1.+@aar',
-            "rxcache"            : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x",
+            "rxcache"            : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x", //缓存
             "jolyglot_gson"      : 'com.github.VictorAlbertos.Jolyglot:gson:0.0.3',
+
+            "stetho"             : 'com.facebook.stetho:stetho:1.4.2', //chrome来查看android数据库
 
     ]
 

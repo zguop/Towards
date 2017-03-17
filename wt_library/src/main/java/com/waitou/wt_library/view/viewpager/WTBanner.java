@@ -103,6 +103,14 @@ public class WTBanner extends RelativeLayout {
         }
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (canLoop) {
+            startTurning();
+        }
+    }
+
     private void initViewPagerScroll() {
         try {
             Field mScroller;

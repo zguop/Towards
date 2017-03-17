@@ -4,11 +4,11 @@
     <item
         android:id="@+id/menu_all"
         android:icon="@drawable/svg_ic_all"
-        android:title="全部"/>
+        android:title="all"/>
     <item
         android:id="@+id/menu_ios"
         android:icon="@drawable/svg_ic_ios"
-        android:title="IOS"/>
+        android:title="iOS"/>
     <item
         android:id="@+id/menu_app"
         android:icon="@drawable/svg_ic_app"

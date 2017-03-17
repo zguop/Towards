@@ -40,7 +40,7 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);
         getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
-        getBinding().setAdapter(mAdapter);
+        getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
     }

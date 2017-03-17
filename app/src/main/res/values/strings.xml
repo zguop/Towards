@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">towards</string>
+    <string name="app_name">大杂烩</string>
     <string name="home">主页</string>
     <string name="joke">段子</string>
     <string name="figure">趣图</string>
@@ -11,8 +11,6 @@
     <string name="home_item_page_count">%1$s / %2$s</string>
     <string name="item_empty_str">暂时没有更新内容，去看看其他信息吧~</string>
     <string name="warn_net_error">网络异常，请更换网络或稍后再试</string>
-
-
 
     <string name="footer_bar_behavior">com.waitou.towards.util.behavior.FooterBarBehavior</string>
     <string name="quick_hide_behavior">com.waitou.towards.util.behavior.QuickHideBehavior</string>

@@ -1,10 +1,11 @@
 package com.waitou.towards;
 
+import com.facebook.stetho.Stetho;
 import com.waitou.net_library.http.HttpUtil;
 import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.BaseApplication;
-import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.cache.SharedPref;
+import com.waitou.wt_library.imageloader.ILFactory;
 
 
 /**
@@ -24,6 +25,7 @@ public class TowardsApplication extends BaseApplication {
         AlertToast.init(this);
         //glide加载初始化
         ILFactory.getLoader().init(this);
-
+        //通过chrome来查看android数据库 chrome://inspect/#devices
+        Stetho.initializeWithDefaults(this);
     }
 }

@@ -56,6 +56,7 @@ dependencies {
     compile rootProject.ext.dependencies["flexbox"]
     compile rootProject.ext.dependencies["fab"]
     compile rootProject.ext.dependencies["bottomsheet"]
+    compile rootProject.ext.dependencies["stetho"]
     compile rootProject.ext.dependencies["rxcache"]
     compile rootProject.ext.dependencies["jolyglot_gson"]
 

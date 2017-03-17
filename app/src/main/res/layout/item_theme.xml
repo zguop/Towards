@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:onClick="@{() -> presenter.onItemClick(item,position)}"
+            android:onClick="@{() -> presenter.onItemClick(item)}"
             app:color="@{item.themeEnum.colorId}"
             app:radius="20dp"/>
 

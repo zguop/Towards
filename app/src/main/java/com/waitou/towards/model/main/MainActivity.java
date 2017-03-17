@@ -120,6 +120,8 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
             case R.id.nav_meizi:
                 Router.newIntent().from(this).to(GalleryActivity.class).launch();
                 break;
+            case R.id.nav_graffiti:
+                break;
             case R.id.nav_collect:
                 break;
             case R.id.nav_theme:

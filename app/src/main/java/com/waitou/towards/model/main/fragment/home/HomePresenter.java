@@ -3,11 +3,11 @@ package com.waitou.towards.model.main.fragment.home;
 import android.app.Activity;
 import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
-import android.util.Log;
 import android.view.View;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.waitou.net_library.helper.RxTransformerHelper;
+import com.waitou.net_library.log.LogUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.GankResultsInfo;
@@ -19,37 +19,29 @@ import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.cache.SharedPref;
 import com.waitou.wt_library.kit.Kits;
-import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
+import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.rx_cache.Reply;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.waitou.towards.R.id.menu_all;
-import static com.waitou.towards.R.id.menu_app;
-import static com.waitou.towards.R.id.menu_front;
-import static com.waitou.towards.R.id.menu_ios;
-import static com.waitou.towards.R.id.menu_movie;
-import static com.waitou.towards.R.id.menu_source;
 
 /**
  * Created by waitou on 17/3/5.
  * 首页presenter
  */
 
-public class HomePresenter extends XPresent<HomeFragment> implements SingleViewPagerAdapter.Presenter, MultiTypeAdapter.Presenter {
+public class HomePresenter extends XPresent<HomeFragment> implements SingleViewPagerAdapter.Presenter, BaseViewAdapter.Presenter {
 
     private HomeCommendFragment mHomeCommendFragment;
     private HomeCargoFragment   mCargoFragment;
     private HomeAndroidFragment mHomeAndroidFragment;
 
-    public ObservableField<CharSequence> txName = new ObservableField<>("全部");
+    public ObservableField<String> txName = new ObservableField<>("all");
 
     /**
      * 广告位的点击方法
@@ -62,7 +54,6 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * 加载HomeCommendFragment首页数据
      */
     public void loadHomeData() {
-
         getV().pend(Observable.zip(DataLoader.getGithubApi().getBannerPage(), DataLoader.getGithubApi().getHomeData(), Pair::create)
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
@@ -76,7 +67,29 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     return Kits.Date.getCurrentDate().split("-");
                 })
                 .observeOn(Schedulers.io())
-                .flatMap(currentDate -> getGankIoDay(currentDate[0], currentDate[1], currentDate[2]))
+                .flatMap(currentDate -> {
+                    String everyday = SharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
+                    String currentEveryday = Kits.Date.getCurrentDate();
+                    boolean isReload = false;
+                    if (!everyday.equals(currentEveryday)) { //第二天
+                        if (!Kits.Date.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
+                            currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString(); //请求前一天数据
+                        } else {
+                            isReload = true; //第二天 大于十二点三十 更新数据
+                        }
+                    }
+                    //如果请求的数据是null 请求前一天数据
+                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], isReload).flatMap(gankResultsInfo -> {
+                        LogUtil.e("aa", "loadHomeData is null = " + gankResultsInfo.isNull);
+                        if (gankResultsInfo.isNull) {
+                            currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString();
+                            return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], false);
+                        }
+                        return Observable.just(gankResultsInfo);
+                    }).doOnNext(info ->
+                            SharedPref.get().put(ExtraValue.EVERYDAY_DATA, currentDate[0] + "-" + currentDate[1] + "-" + currentDate[2])
+                    );
+                })
                 .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
                     if (gankResultsInfo != null) {
@@ -114,15 +127,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .doOnNext(lists -> {
                     if (lists.size() > 0) {
                         for (List<GankResultsTypeInfo> list : lists) {
-                            for (int i = 0; i < list.size(); i++) {
-                                if (list.get(i).type.equals("福利")) {
-                                    list.get(i).desc = "今日美图";
-                                    if (list.get(i).images == null) {
-                                        list.get(i).images = new ArrayList<>();
-                                        list.get(i).images.add(list.get(i).url);
-                                    }
-                                }
-                            }
+                            addWelfareImg(list);
                         }
                     }
                 })
@@ -130,32 +135,53 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         , throwable -> getHomeCommendFragment().onError(throwable)));
     }
 
-    private Observable<GankResultsInfo> getGankIoDay(String year, String month, String day) {
-        String everyday = SharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
-        String currentEveryday = Kits.Date.getCurrentDate();
-        boolean isReload = false;
-        if (!everyday.equals(currentEveryday)) { //第二天
-            if (!Kits.Date.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
-                day = (Integer.parseInt(day) - 1) + "";
-            } else {
-                isReload = true;
+    private void addWelfareImg(List<GankResultsTypeInfo> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).type.equals("福利")) {
+                list.get(i).desc = "今日美图";
+                if (list.get(i).images == null) {
+                    list.get(i).images = new ArrayList<>();
+                    list.get(i).images.add(list.get(i).url);
+                }
             }
         }
-        Observable<Reply<GankResultsInfo>> gankIoDay = Repository.getRepository().getGankIoDay(year, month, day, isReload);
-        return gankIoDay.map(reply -> {
-            Log.e("aa",reply.toString());
-            SharedPref.get().put(ExtraValue.EVERYDAY_DATA, currentEveryday);
-            return reply.getData();
-        });
     }
 
+    private Observable<GankResultsInfo> getGankIoDay(String year, String month, String day, boolean isReload) {
+        return Repository.getRepository().getGankIoDay(year, month, day, isReload)
+                .map(reply -> {
+                    LogUtil.e("aa", " day = " + day + " loadHomeData " + reply.toString());
+                    return reply.getData();
+                });
+    }
+
+    /**
+     * 加载干货数据
+     */
     public void loadCargoData(String type, int page) {
-        getV().pend(DataLoader.getGankApi().getGankIoData(type, page)
+        getV().pend(Repository.getRepository().getGankIoData(type, page)
+                .map(reply -> {
+                    LogUtil.e("aa", " type = " + type + " loadCargoData " + reply.toString());
+                    return reply.getData();
+                })
                 .compose(RxTransformerHelper.applySchedulers())
                 .filter(RxTransformerHelper.verifyNotEmpty())
-                .map(dayInfo -> dayInfo.results)
-                .subscribe(info -> mCargoFragment.onSuccess(info, page == 1),
-                        throwable -> mCargoFragment.showError(page == 1)));
+                .doOnNext(this::addWelfareImg)
+                .subscribe(info -> {
+                            if (type.equals(HomeAndroidFragment.TYPE_ANDROID)) {
+                                mHomeAndroidFragment.onSuccess(info, page == 1);
+                            } else {
+                                mCargoFragment.onSuccess(info, page == 1);
+                            }
+                        },
+                        throwable -> {
+                            if (type.equals(HomeAndroidFragment.TYPE_ANDROID)) {
+                                mHomeAndroidFragment.showError(page == 1);
+                            } else {
+                                mCargoFragment.showError(page == 1);
+                            }
+                            AlertToast.show(throwable.toString());
+                        }));
     }
 
     public void showBottomSheet(View view) {
@@ -166,28 +192,9 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         AlertToast.show("当前已经是 " + txName.get() + " 分类");
                         return true;
                     }
-                    txName.set(item.getTitle());
+                    txName.set(item.getTitle().toString());
                     mCargoFragment.showLoading();
-                    switch (item.getItemId()) {
-                        case menu_all:
-                            loadCargoData("all", 1);
-                            break;
-                        case menu_ios:
-                            loadCargoData("iOS", 1);
-                            break;
-                        case menu_app:
-                            loadCargoData("App", 1);
-                            break;
-                        case menu_front:
-                            loadCargoData("前端", 1);
-                            break;
-                        case menu_movie:
-                            loadCargoData("休息视频", 1);
-                            break;
-                        case menu_source:
-                            loadCargoData("拓展资源", 1);
-                            break;
-                    }
+                    loadCargoData(txName.get(), 1);
                     return true;
                 }).grid().show();
     }
@@ -197,6 +204,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         return Kits.Date.friendlyTime(date);
     }
 
+    /*--------------- fragment ---------------*/
     public HomeCommendFragment getHomeCommendFragment() {
         if (mHomeCommendFragment == null) {
             mHomeCommendFragment = new HomeCommendFragment();
@@ -216,6 +224,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     public HomeAndroidFragment getHomeAndroidFragment() {
         if (mHomeAndroidFragment == null) {
             mHomeAndroidFragment = new HomeAndroidFragment();
+            mHomeAndroidFragment.setPresenter(this);
         }
         return mHomeAndroidFragment;
     }

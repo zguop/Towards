@@ -38,8 +38,6 @@ dependencies {
     compile rootProject.ext.dependencies["recyclerview-v7"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["avi-loading"]
-    compile rootProject.ext.dependencies["rxjava"]
-    compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["rxpermissions"]
     compile rootProject.ext.dependencies["rxbinding"]
     compile rootProject.ext.dependencies["canary-debug"]

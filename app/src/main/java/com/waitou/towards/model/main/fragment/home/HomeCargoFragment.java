@@ -9,7 +9,8 @@ import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.towards.databinding.ItemHeaderCargoBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
-import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
+import com.waitou.wt_library.recycler.XRecyclerView;
+import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 
 import java.util.List;
 
@@ -18,10 +19,9 @@ import java.util.List;
  * 干货定制
  */
 
-public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyclerBinding> {
+public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener {
 
-    private MultiTypeAdapter<Displayable> mAdapter;
-    private ItemHeaderCargoBinding        mHeaderCargoBinding;
+    private SingleTypeAdapter<Displayable> mAdapter;
 
     @Override
     public boolean initXView() {
@@ -35,9 +35,15 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mAdapter = new MultiTypeAdapter<>(getActivity());
+        mAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_gank_page);
+        mAdapter.setPresenter(getP());
         getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
-        getBinding().setAdapter(mAdapter);
+        getBinding().xList.setAdapter(mAdapter);
+        getBinding().xList.getRecyclerView().useDefLoadMoreView();
+        getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
+        ItemHeaderCargoBinding headerCargoBinding = (ItemHeaderCargoBinding) bindingInflate(R.layout.item_header_cargo, null);
+        headerCargoBinding.setPresenter(getP());
+        getBinding().xList.getRecyclerView().addHeaderView(headerCargoBinding.getRoot());
     }
 
     @Override
@@ -48,21 +54,26 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
     @Override
     public void reloadData() {
         showLoading();
-        getP().loadCargoData("all", 1);
+        getP().loadCargoData(getP().txName.get(), 1);
     }
 
     public void onSuccess(List<GankResultsTypeInfo> info, boolean isClear) {
         showContent();
-        if (mHeaderCargoBinding == null) {
-            mHeaderCargoBinding = (ItemHeaderCargoBinding) bindingInflate(R.layout.item_header_cargo, null);
-            mHeaderCargoBinding.setPresenter(getP());
-            getBinding().xList.getRecyclerView().addHeaderView(mHeaderCargoBinding.getRoot());
-        }
         if (isClear) {
-//            mAdapter.set(info, 0);
+            mAdapter.set(info);
         } else {
-//            mAdapter.addAll(info, 0);
+            mAdapter.addAll(info);
         }
+        getBinding().xList.getRecyclerView().setDefaultPageSize();
     }
 
+    @Override
+    public void onRefresh() {
+        getP().loadCargoData(getP().txName.get(), 1);
+    }
+
+    @Override
+    public void onLoadMore(int page) {
+        getP().loadCargoData(getP().txName.get(), page);
+    }
 }

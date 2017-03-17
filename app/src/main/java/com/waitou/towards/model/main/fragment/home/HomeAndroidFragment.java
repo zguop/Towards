@@ -2,18 +2,27 @@ package com.waitou.towards.model.main.fragment.home;
 
 import android.os.Bundle;
 
+import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
+import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.wt_library.base.XFragment;
-import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.XRecyclerView;
+import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
+
+import java.util.List;
 
 /**
  * Created by waitou on 17/3/8.
  * 大android 数据
  */
 
-public class HomeAndroidFragment extends XFragment<XPresent, IncludePullRecyclerBinding> {
+public class HomeAndroidFragment extends XFragment<HomePresenter, IncludePullRecyclerBinding> implements XRecyclerView.OnRefreshAndLoadMoreListener {
 
+    private SingleTypeAdapter<Displayable> mAdapter;
+
+    public static final String TYPE_ANDROID = "Android";
 
     @Override
     public boolean initXView() {
@@ -27,7 +36,12 @@ public class HomeAndroidFragment extends XFragment<XPresent, IncludePullRecycler
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        mAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_gank_page);
+        mAdapter.setPresenter(getP());
+        getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
+        getBinding().xList.setAdapter(mAdapter);
+        getBinding().xList.getRecyclerView().useDefLoadMoreView();
+        getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
     }
 
     @Override
@@ -37,16 +51,27 @@ public class HomeAndroidFragment extends XFragment<XPresent, IncludePullRecycler
 
     @Override
     public void reloadData() {
-//        String[] split = Kits.Date.getCurrentDate().split("-");
-//        Observable<Reply<GankIoDayInfo<GankResultsInfo>>> compose = Repository.getRepository().getGankIoDay(split[0], split[1], split[2])
-//                .compose(RxTransformerHelper.applySchedulers());
-//
-//        compose.subscribe(new Action1<Reply<GankIoDayInfo<GankResultsInfo>>>() {
-//            @Override
-//            public void call(Reply<GankIoDayInfo<GankResultsInfo>> gankIoDayInfoReply) {
-//                showContent();
-//                Log.d("aa", " data = " + gankIoDayInfoReply.toString());
-//            }
-//        });
+        showLoading();
+        getP().loadCargoData(TYPE_ANDROID, 1);
+    }
+
+    public void onSuccess(List<GankResultsTypeInfo> info, boolean isClear) {
+        showContent();
+        if (isClear) {
+            mAdapter.set(info);
+        } else {
+            mAdapter.addAll(info);
+        }
+        getBinding().xList.getRecyclerView().setDefaultPageSize();
+    }
+
+    @Override
+    public void onRefresh() {
+        getP().loadCargoData(TYPE_ANDROID, 1);
+    }
+
+    @Override
+    public void onLoadMore(int page) {
+        getP().loadCargoData(TYPE_ANDROID, page);
     }
 }

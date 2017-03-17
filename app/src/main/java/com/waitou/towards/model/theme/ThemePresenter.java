@@ -33,7 +33,7 @@ public class ThemePresenter extends XPresent<ThemeActivity> implements BaseViewA
         return themeInfoList;
     }
 
-    public void onItemClick(ThemeInfo info, int position) {
+    public void onItemClick(ThemeInfo info) {
         for (int i = 0; i < themeInfoList.size(); i++) {
             if (themeInfoList.get(i).focus) {
                 themeInfoList.get(i).setFocus(false);

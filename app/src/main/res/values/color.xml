@@ -27,6 +27,9 @@
     <color name="skin_bg_red">#CE3D3A</color>
     <color name="skin_bg_powder">#FF4081</color>
 
+    <!--背景色-->
+    <color name="bg_grey">#F3F4F5</color>
+
 
 
 </resources>

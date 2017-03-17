@@ -43,4 +43,6 @@ public class GankResultsInfo implements Serializable{
     @SerializedName("App")
     @Expose
     public List<GankResultsTypeInfo> App;
+
+    public boolean isNull;
 }
