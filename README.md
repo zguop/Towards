@@ -10,11 +10,7 @@
 
 部分界面截图：
 
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_3236.gif)
-
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_9871.gif)
-
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489736672_1472.gif)
+![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_3236.gif) ![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_9871.gif) ![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489736672_1472.gif)
 
 
 下载链接：

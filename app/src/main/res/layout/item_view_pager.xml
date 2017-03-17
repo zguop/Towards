@@ -15,14 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.waitou.towards.view.parallaxviewpager.ParallaxViewPager
+        <com.waitou.towards.view.CompatViewPager
             android:id="@+id/page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
-            app:adapter="@{adapter}"
-            app:mode="right_overlay"
-            app:outset="62%"
-            app:shadow_width="30dp"/>
+            app:adapter="@{adapter}"/>
     </FrameLayout>
 </layout>

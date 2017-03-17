@@ -11,11 +11,9 @@
             <enum name="material" value="0"/>
             <enum name="linear" value="1"/>
         </attr>
-
         <attr name="ring_width" format="dimension"/>
         <attr name="ring_radius" format="dimension"/>
     </declare-styleable>
-
 
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color"/>
@@ -37,29 +35,12 @@
         <attr name="pstsSelectedTabTextColor" format="color"/>
     </declare-styleable>
 
-
     <declare-styleable name="CompatViewPager">
         <attr name="page_TouchMode" format="boolean"/>
     </declare-styleable>
 
-
     <declare-styleable name="RectView">
         <attr name="radius" format="dimension"/>
     </declare-styleable>
-
-    <declare-styleable name="ParallaxViewPager">
-        <attr name="mode">
-            <enum name="left_overlay" value="0" />
-            <enum name="right_overlay" value="1" />
-            <enum name="none" value="2" />
-        </attr>
-        <attr name="outset" format="fraction|dimension" />
-        <attr name="interpolator" format="reference" />
-        <attr name="shadow_width" format="dimension" />
-        <attr name="left_shadow" format="reference" />
-        <attr name="right_shadow" format="reference" />
-    </declare-styleable>
-
-
 
 </resources>

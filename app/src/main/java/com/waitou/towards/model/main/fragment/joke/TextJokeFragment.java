@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.waitou.towards.R;
-import com.waitou.towards.databinding.IncludeViewParallaxPagerBinding;
+import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ToolbarJokeTitleBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
@@ -18,7 +18,7 @@ import com.waitou.wt_library.theme.ThemeUtils;
  * 段子
  */
 
-public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewParallaxPagerBinding> {
+public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPagerBinding> {
 
     private ToolbarJokeTitleBinding mToolbarJokeTitle;
 
@@ -34,7 +34,7 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
 
     @Override
     public int getContentViewId() {
-        return R.layout.include_view_parallax_pager;
+        return R.layout.include_view_pager;
     }
 
     @Override

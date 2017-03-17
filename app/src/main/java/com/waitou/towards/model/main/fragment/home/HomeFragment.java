@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.waitou.towards.BR;
 import com.waitou.towards.R;
-import com.waitou.towards.databinding.IncludeViewParallaxPagerBinding;
+import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ViewSmartLayoutBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
@@ -22,7 +22,7 @@ import com.waitou.wt_library.base.XFragmentAdapter;
  * 首页
  */
 
-public class HomeFragment extends XFragment<HomePresenter, IncludeViewParallaxPagerBinding> implements SmartTabLayout.TabProvider {
+public class HomeFragment extends XFragment<HomePresenter, IncludeViewPagerBinding> implements SmartTabLayout.TabProvider {
 
     private ViewSmartLayoutBinding mLayoutBinding;
 
@@ -38,7 +38,7 @@ public class HomeFragment extends XFragment<HomePresenter, IncludeViewParallaxPa
 
     @Override
     public int getContentViewId() {
-        return R.layout.include_view_parallax_pager;
+        return R.layout.include_view_pager;
     }
 
     @Override
