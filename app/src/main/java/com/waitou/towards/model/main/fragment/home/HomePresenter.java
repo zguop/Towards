@@ -3,13 +3,13 @@ package com.waitou.towards.model.main.fragment.home;
 import android.app.Activity;
 import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.View;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.towards.R;
-import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.common.ExtraValue;
@@ -17,6 +17,7 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.browser.WebUtil;
 import com.waitou.wt_library.cache.SharedPref;
 import com.waitou.wt_library.kit.Kits;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
@@ -44,10 +45,15 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     public ObservableField<String> txName = new ObservableField<>("all");
 
     /**
-     * 广告位的点击方法
+     * banner item 点击
      */
-    public void onBannerItemClick(BannerPageInfo url, int position) {
-
+    public void onLinkClick(View view, int type, String url, String title) {
+        if (Kits.UString.isEmpty(url)) {
+            Log.e("aa", " url缺失了..");
+            AlertToast.show("url缺失了..");
+            return;
+        }
+        WebUtil.turnWeb(getV().getActivity(), url, title);
     }
 
     /**

@@ -8,6 +8,10 @@
         <variable
             name="item"
             type="com.waitou.towards.bean.HomeFunctionInfo.FunctionInfo"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>
     </data>
 
 
@@ -15,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:onClick="@{(view) -> presenter.onLinkClick(view,item.type,item.link,item.typeName)}"
         android:orientation="vertical"
         android:paddingBottom="8dp"
         android:paddingTop="8dp">

@@ -14,6 +14,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.waitou.wt_library.BaseApplication;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.FileInputStream;
@@ -159,6 +161,49 @@ public class Kits {
             } catch (NumberFormatException e) {
                 return false;
             }
+        }
+
+        /**
+         * 给传入的链接添加参数返回
+         *
+         * @param url          url
+         * @param paramName    key
+         * @param paramContent value
+         * @return url
+         */
+        public static String convertUrlWithParam(String url, String paramName, String paramContent) {
+            StringBuilder sb = new StringBuilder();
+
+            if (isNotEmpty(url) && isNotEmpty(paramName) && isNotEmpty(paramContent)) {
+                if (url.contains("?")) { //www.maihaoche.com?pp=11  --> //www.maihaoche.com?user_id=1&pp=11
+                    int position = url.indexOf("?");
+                    sb.append(url.substring(0, position + 1));
+                    sb.append(paramName);
+                    sb.append("=");
+                    sb.append(paramContent);
+                    sb.append("&");
+                    sb.append(url.substring(position + 1, url.length()));
+                } else {
+                    if (url.contains("#")) {//www.maihaoche.com#ss  -->www.maihaoche.com?user_id=1#ss
+                        int position = url.indexOf("#");
+                        sb.append(url.substring(0, position));
+                        sb.append("?");
+                        sb.append(paramName);
+                        sb.append("=");
+                        sb.append(paramContent);
+                        sb.append(url.substring(position + 1, url.length()));
+                    } else { //www.maihaoche.com   -->  www.maihaoche.com?user_id=1
+                        sb.append(url);
+                        sb.append("?");
+                        sb.append(paramName);
+                        sb.append("=");
+                        sb.append(paramContent);
+                    }
+                }
+            } else {
+                sb.append(url);
+            }
+            return sb.toString();
         }
 
         /**
@@ -457,6 +502,11 @@ public class Kits {
             return (int) (dip2px(context, dp) + 0.5f);
         }
 
+        public static int sp2px(Context ctx, float spValue) {
+            final float scaledDensity = ctx.getResources().getDisplayMetrics().scaledDensity;
+            return (int) (spValue * scaledDensity + 0.5f);
+        }
+
         /**
          * 获取屏幕高度
          */
@@ -472,6 +522,8 @@ public class Kits {
             DisplayMetrics dm = context.getResources().getDisplayMetrics();
             return dm.widthPixels;
         }
+
+
     }
 
 
@@ -1325,35 +1377,47 @@ public class Kits {
 
 
     public static class NetWork {
-        public static final String NETWORK_TYPE_WIFI       = "wifi";
-        public static final String NETWORK_TYPE_3G         = "eg";
-        public static final String NETWORK_TYPE_2G         = "2g";
-        public static final String NETWORK_TYPE_WAP        = "wap";
-        public static final String NETWORK_TYPE_UNKNOWN    = "unknown";
-        public static final String NETWORK_TYPE_DISCONNECT = "disconnect";
+        private static final String NETWORK_TYPE_WIFI       = "wifi";
+        private static final String NETWORK_TYPE_3G         = "eg";
+        private static final String NETWORK_TYPE_2G         = "2g";
+        private static final String NETWORK_TYPE_WAP        = "wap";
+        private static final String NETWORK_TYPE_UNKNOWN    = "unknown";
+        private static final String NETWORK_TYPE_DISCONNECT = "disconnect";
 
-        public static int getNetworkType(Context context) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager == null ? null : connectivityManager.getActiveNetworkInfo();
+        /**
+         * 判断网络是否连接
+         */
+        public static boolean isAvailable() {
+            NetworkInfo info = getActiveNetworkInfo();
+            return info != null && info.isAvailable();
+        }
+
+        /**
+         * 获取网络信息 需要权限 ACCESS_NETWORK_STATE
+         */
+        private static NetworkInfo getActiveNetworkInfo() {
+            ConnectivityManager cm = (ConnectivityManager) BaseApplication.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo();
+        }
+
+        public static int getNetworkType() {
+            NetworkInfo networkInfo = getActiveNetworkInfo();
             return networkInfo == null ? -1 : networkInfo.getType();
         }
 
-        public static String getNetworkTypeName(Context context) {
-            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo;
+        public static String getNetworkTypeName() {
+            NetworkInfo networkInfo = getActiveNetworkInfo();
             String type = NETWORK_TYPE_DISCONNECT;
-            if (manager == null || (networkInfo = manager.getActiveNetworkInfo()) == null) {
+            if (networkInfo == null) {
                 return type;
             }
-
             if (networkInfo.isConnected()) {
                 String typeName = networkInfo.getTypeName();
                 if ("WIFI".equalsIgnoreCase(typeName)) {
                     type = NETWORK_TYPE_WIFI;
                 } else if ("MOBILE".equalsIgnoreCase(typeName)) {
                     String proxyHost = android.net.Proxy.getDefaultHost();
-                    type = TextUtils.isEmpty(proxyHost) ? (isFastMobileNetwork(context) ? NETWORK_TYPE_3G : NETWORK_TYPE_2G)
+                    type = TextUtils.isEmpty(proxyHost) ? (isFastMobileNetwork() ? NETWORK_TYPE_3G : NETWORK_TYPE_2G)
                             : NETWORK_TYPE_WAP;
                 } else {
                     type = NETWORK_TYPE_UNKNOWN;
@@ -1362,12 +1426,11 @@ public class Kits {
             return type;
         }
 
-        private static boolean isFastMobileNetwork(Context context) {
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        private static boolean isFastMobileNetwork() {
+            TelephonyManager telephonyManager = (TelephonyManager) BaseApplication.getApp().getSystemService(Context.TELEPHONY_SERVICE);
             if (telephonyManager == null) {
                 return false;
             }
-
             switch (telephonyManager.getNetworkType()) {
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
                     return false;

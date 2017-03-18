@@ -80,6 +80,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
         if (mFunctionInfoAdapter == null) {
             mFunctionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
             mFunctionInfoAdapter.set(homeFunctionInfo);
+            mFunctionInfoAdapter.setPresenter(getP());
             RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(mFunctionInfoAdapter, LayoutManagerUtli.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));
             mAdapter.add(recyclerAdapterInfo, 1);
         } else {

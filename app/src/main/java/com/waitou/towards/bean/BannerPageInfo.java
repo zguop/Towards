@@ -25,6 +25,8 @@ public class BannerPageInfo {
     @Expose
     public String description;
 
+    public int linkType;
+
     @SerializedName("link")
     @Expose
     public String link;

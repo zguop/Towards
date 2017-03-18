@@ -122,6 +122,13 @@ public class TowardsToolbar extends Toolbar {
         }
     }
 
+    /**
+     * 获取标题
+     */
+    public String getTitle() {
+        return mBinding.title.getText().toString();
+    }
+
     public void formTitle() {
         fromCustomMenuView(null, 0);
     }
