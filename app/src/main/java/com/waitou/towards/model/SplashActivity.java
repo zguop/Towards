@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.waitou.towards.R;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.wt_library.base.UIPresent;
 import com.waitou.wt_library.base.XActivity;
@@ -34,7 +35,7 @@ public class SplashActivity extends XActivity {
 
     @Override
     public int getContentViewId() {
-        return 0;
+        return R.layout.activity_logo;
     }
 
     @Override

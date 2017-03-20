@@ -82,7 +82,7 @@ public class WTBanner extends RelativeLayout {
         }
     }
 
-    private void startTurning() {
+    public void startTurning() {
         if (turning) {
             stopTurning();
         }
@@ -90,10 +90,11 @@ public class WTBanner extends RelativeLayout {
         postDelayed(mAdSwitchTask, autoTurningTime);
     }
 
-    private void stopTurning() {
+    public void stopTurning() {
         turning = false;
         removeCallbacks(mAdSwitchTask);
     }
+
 
     @Override
     protected void onDetachedFromWindow() {

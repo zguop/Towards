@@ -59,7 +59,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     /**
      * 加载HomeCommendFragment首页数据
      */
-    public void loadHomeData() {
+    void loadHomeData() {
         getV().pend(Observable.zip(DataLoader.getGithubApi().getBannerPage(), DataLoader.getGithubApi().getHomeData(), Pair::create)
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
@@ -85,16 +85,17 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         }
                     }
                     //如果请求的数据是null 请求前一天数据
-                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], isReload).flatMap(gankResultsInfo -> {
-                        LogUtil.e("aa", "loadHomeData is null = " + gankResultsInfo.isNull);
-                        if (gankResultsInfo.isNull) {
-                            currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString();
-                            return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], false);
-                        }
-                        return Observable.just(gankResultsInfo);
-                    }).doOnNext(info ->
-                            SharedPref.get().put(ExtraValue.EVERYDAY_DATA, currentDate[0] + "-" + currentDate[1] + "-" + currentDate[2])
-                    );
+                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], isReload)
+                            .flatMap(info -> {
+                                LogUtil.e("aa", "loadHomeData is null = " + info.isNull);
+                                if (info.isNull) {
+                                    currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString();
+                                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], false);
+                                }
+                                return Observable.just(info);
+                            }).doOnNext(info ->
+                                    SharedPref.get().put(ExtraValue.EVERYDAY_DATA, currentDate[0] + "-" + currentDate[1] + "-" + currentDate[2])
+                            );
                 })
                 .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
@@ -164,7 +165,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     /**
      * 加载干货数据
      */
-    public void loadCargoData(String type, int page) {
+    void loadCargoData(String type, int page) {
         getV().pend(Repository.getRepository().getGankIoData(type, page)
                 .map(reply -> {
                     LogUtil.e("aa", " type = " + type + " loadCargoData " + reply.toString());
@@ -211,7 +212,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     }
 
     /*--------------- fragment ---------------*/
-    public HomeCommendFragment getHomeCommendFragment() {
+    HomeCommendFragment getHomeCommendFragment() {
         if (mHomeCommendFragment == null) {
             mHomeCommendFragment = new HomeCommendFragment();
             mHomeCommendFragment.setPresenter(this);
@@ -219,7 +220,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         return mHomeCommendFragment;
     }
 
-    public HomeCargoFragment getCargoFragment() {
+    HomeCargoFragment getCargoFragment() {
         if (mCargoFragment == null) {
             mCargoFragment = new HomeCargoFragment();
             mCargoFragment.setPresenter(this);
@@ -227,7 +228,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         return mCargoFragment;
     }
 
-    public HomeAndroidFragment getHomeAndroidFragment() {
+    HomeAndroidFragment getHomeAndroidFragment() {
         if (mHomeAndroidFragment == null) {
             mHomeAndroidFragment = new HomeAndroidFragment();
             mHomeAndroidFragment.setPresenter(this);

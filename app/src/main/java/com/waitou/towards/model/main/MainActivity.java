@@ -15,6 +15,7 @@ import com.waitou.towards.databinding.NavHeaderMainBinding;
 import com.waitou.towards.model.activity.RecommendedActivity;
 import com.waitou.towards.model.event.ThemeEvent;
 import com.waitou.towards.model.gallery.GalleryActivity;
+import com.waitou.towards.model.graffiti.GraffitiActivity;
 import com.waitou.towards.model.main.fragment.CircleFragment;
 import com.waitou.towards.model.main.fragment.FigureFragment;
 import com.waitou.towards.model.main.fragment.PersonFragment;
@@ -121,6 +122,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                 Router.newIntent().from(this).to(GalleryActivity.class).launch();
                 break;
             case R.id.nav_graffiti:
+                Router.newIntent().from(this).to(GraffitiActivity.class).launch();
                 break;
             case R.id.nav_collect:
                 break;
@@ -172,7 +174,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ChangeModeController.get().cancel();
+        super.onDestroy();
     }
 }

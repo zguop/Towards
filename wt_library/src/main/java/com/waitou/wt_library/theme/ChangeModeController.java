@@ -11,7 +11,6 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
 import android.view.InflateException;
@@ -84,18 +83,21 @@ public class ChangeModeController {
 
     public void init(final AppCompatActivity activity) {
         LayoutInflaterCompat.setFactory(LayoutInflater.from(activity), (parent, name, context, attrs) -> {
-            AppCompatDelegate delegate = activity.getDelegate();
-            View view = delegate.createView(parent, name, activity, attrs);
-            if (view == null) {
-                view = createViewFromTag(context, name, attrs);
-            }
             List<SkinAttr> skinAttrsList = getSkinAttrs(attrs, context);
+            //如果属性为null 并且名字没有包含. 说明不是自定义的view
             if (skinAttrsList == null || skinAttrsList.isEmpty()) {
-                if (!(view instanceof SkinCompatSupportable)) {
+                if (!name.contains(".")) {
                     return null;
                 }
             }
+            View view = activity.getDelegate().createView(parent, name, activity, attrs);
+            if (view == null) {
+                view = createViewFromTag(context, name, attrs);
+            }
             if (view != null) {
+                if (skinAttrsList == null && !(view instanceof SkinCompatSupportable)) {
+                    return null;
+                }
                 mSkinViewList.add(new SkinView(view, skinAttrsList));
             }
             return view;

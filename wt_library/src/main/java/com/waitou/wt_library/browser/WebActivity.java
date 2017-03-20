@@ -63,9 +63,8 @@ public class WebActivity extends BaseActivity {
         mWebBinding.web.getSettings().setAppCachePath(String.valueOf(getExternalCacheDir())); //sd卡下的缓存目录
         mWebBinding.web.getSettings().setCacheMode(Kits.NetWork.isAvailable() ? WebSettings.LOAD_NO_CACHE : WebSettings.LOAD_CACHE_ELSE_NETWORK);//有网就从网络获取最新的数据，否则本地获取
         mWebBinding.web.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            Uri uri = Uri.parse(url); //显示网页
-            Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent1);
+            //显示网页
+            startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         });
         mWebBinding.web.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -142,7 +141,7 @@ public class WebActivity extends BaseActivity {
         }
     }
 
-    /*---------------activity销毁WebView,先加载null内容，再移除，接着销毁WebView,最后置空 ---------------*/
+    /*---------------activity销毁WebView,先加载null内容，再移除，接着销毁WebView ---------------*/
     @Override
     protected void onDestroy() {
         if (mWebBinding.web != null) {

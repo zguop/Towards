@@ -30,6 +30,9 @@ public class HttpUtil {
     //首页轮播api
     public final static String GITHUB_API = "raw.githubusercontent.com/zguop/Waitou_Json/";
 
+    public final static String PIXIV_DAILY_URL = "http://www.pixiv.net/ranking.php?mode=daily&format=json";//&p=1
+
+
     //    public static final String ROUTE_URL = "route.showapi.com/852-2";
 
 

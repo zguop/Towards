@@ -34,6 +34,6 @@ public interface CacheProviders {
      * @param info            数据源
      * @param dynamicKeyGroup 需要两个key标识缓存数据 类型 分页
      */
-    @LifeCache(duration = 50, timeUnit = TimeUnit.HOURS)
+    @LifeCache(duration = 50, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<GankResultsTypeInfo>>> getGankIoData(Observable<List<GankResultsTypeInfo>> info, DynamicKeyGroup dynamicKeyGroup);
 }
