@@ -36,7 +36,7 @@
             android:layout_marginRight="12dp"
             android:background="@drawable/skin_select_bg_cargo"
             android:gravity="center"
-            android:onClick="@{presenter.showBottomSheet}"
+            android:onClick="@{() -> presenter.showBottomSheet()}"
             android:padding="5dp">
 
             <ImageView

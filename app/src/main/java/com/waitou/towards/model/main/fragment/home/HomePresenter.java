@@ -1,6 +1,5 @@
 package com.waitou.towards.model.main.fragment.home;
 
-import android.app.Activity;
 import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
 import android.util.Log;
@@ -191,8 +190,8 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         }));
     }
 
-    public void showBottomSheet(View view) {
-        new BottomSheet.Builder((Activity) view.getContext())
+    public void showBottomSheet() {
+        new BottomSheet.Builder(getV().getActivity())
                 .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
                 .listener(item -> {
                     if (txName.get().equals(item.getTitle())) {

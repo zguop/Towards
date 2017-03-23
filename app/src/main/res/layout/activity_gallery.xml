@@ -45,7 +45,7 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{presenter.finish}"
+                android:onClick="@{() -> presenter.finish()}"
                 android:src="@drawable/icon_back2"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"

@@ -1,7 +1,5 @@
 package com.waitou.towards.model.gallery;
 
-import android.view.View;
-
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
@@ -15,7 +13,7 @@ import com.waitou.wt_library.recycler.XRecyclerView;
 
 public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecyclerView.OnRefreshAndLoadMoreListener {
 
-    public void loadData(int page) {
+    void loadData(int page) {
         DataLoader.getGankApi().getGirlPics(page)
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(getV(), new SimpleErrorVerify() {
                     @Override
@@ -37,7 +35,7 @@ public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecy
         loadData(page);
     }
 
-    public void finish(View v) {
+    public void finish() {
         getV().finish();
     }
 
