@@ -35,7 +35,12 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class Codec {
+
     public static class MD5 {
+
+        public static String getMd5Key(String key) {
+            return MD5.getMessageDigest(key.getBytes());
+        }
 
         /**
          * 十六进制
@@ -514,12 +519,6 @@ public class Codec {
 
     }
 
-    public static boolean checkNull(String text) {
-        if (text == null || text.length() == 0)
-            return true;
-        else
-            return false;
-    }
 
     public enum Algorithm {
         SHA("SHA"),

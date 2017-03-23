@@ -35,6 +35,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import static java.io.File.separator;
+
 /**
  * Created by wanglei on 2016/11/28.
  */
@@ -45,6 +47,35 @@ public class Kits {
 
         public static boolean isNotEmptyList(List<?> list) {
             return list != null && list.size() > 0;
+        }
+    }
+
+    public static class UImage {
+
+        private static final String JPG = ".jpg";
+        private static final String PNG = ".png";
+
+        /**
+         * 获取下载图片URL的的文件保存路径
+         */
+        public static String getImageSavePath(Context context, String url) {
+            java.io.File file = context.getCacheDir();
+            if (file != null && file.exists()) {
+            } else {
+                file = context.getFilesDir();
+            }
+            return file.getAbsolutePath() + java.io.File.separator + getImageFileNameFromURL(url);
+        }
+
+        /**
+         * 获取下载图片URL的文件名
+         */
+        private static String getImageFileNameFromURL(String url) {
+            if (url.endsWith(PNG)) {
+                return Codec.MD5.getMd5Key(url) + PNG;
+            } else {
+                return Codec.MD5.getMd5Key(url) + JPG;
+            }
         }
     }
 
@@ -586,7 +617,7 @@ public class Kits {
         }
     }
 
-    public static class File {
+    public static class UFile {
         public final static String FILE_EXTENSION_SEPARATOR = ".";
 
         /**
@@ -871,7 +902,7 @@ public class Kits {
             }
 
             int extenPosi = filePath.lastIndexOf(FILE_EXTENSION_SEPARATOR);
-            int filePosi = filePath.lastIndexOf(java.io.File.separator);
+            int filePosi = filePath.lastIndexOf(separator);
             if (filePosi == -1) {
                 return (extenPosi == -1 ? filePath : filePath.substring(0, extenPosi));
             }
@@ -907,7 +938,7 @@ public class Kits {
                 return filePath;
             }
 
-            int filePosi = filePath.lastIndexOf(java.io.File.separator);
+            int filePosi = filePath.lastIndexOf(separator);
             return (filePosi == -1) ? filePath : filePath.substring(filePosi + 1);
         }
 
@@ -939,7 +970,7 @@ public class Kits {
                 return filePath;
             }
 
-            int filePosi = filePath.lastIndexOf(java.io.File.separator);
+            int filePosi = filePath.lastIndexOf(separator);
             return (filePosi == -1) ? "" : filePath.substring(0, filePosi);
         }
 
@@ -971,7 +1002,7 @@ public class Kits {
             }
 
             int extenPosi = filePath.lastIndexOf(FILE_EXTENSION_SEPARATOR);
-            int filePosi = filePath.lastIndexOf(java.io.File.separator);
+            int filePosi = filePath.lastIndexOf(separator);
             if (extenPosi == -1) {
                 return "";
             }
@@ -992,7 +1023,7 @@ public class Kits {
          * @return true if the necessary directories have been created or the target directory already exists, false one of
          * the directories can not be created.
          * <ul>
-         * <li>if {@link File#getFolderName(String)} return null, return false</li>
+         * <li>if {@link UFile#getFolderName(String)} return null, return false</li>
          * <li>if target directory already exists, return true</li>
          * </ul>
          */

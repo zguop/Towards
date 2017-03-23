@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
@@ -62,7 +61,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
         XFragmentAdapter adapter = new XFragmentAdapter(getSupportFragmentManager(), getHomeFragment(), getTextJokeFragment(), getFigureFragment(), getCircleFragment(), getPersonFragment());
         getBinding().setAdapter(adapter);
         getBinding().mainTab.setupWithViewPager(getBinding().fContent);
-        NavHeaderMainBinding binding = NavHeaderMainBinding.inflate((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE));
+        NavHeaderMainBinding binding = NavHeaderMainBinding.inflate(getLayoutInflater(), null, false);
         binding.setDrawableId(R.drawable.nav_header_img);
         StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         getBinding().navView.addHeaderView(binding.getRoot());

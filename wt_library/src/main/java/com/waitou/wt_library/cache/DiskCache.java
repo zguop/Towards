@@ -61,7 +61,7 @@ public class DiskCache implements ICache {
     public void put(String key, String value, long expireMills) {
         if (TextUtils.isEmpty(key) || TextUtils.isEmpty(value)) return;
 
-        String name = getMd5Key(key);
+        String name = Codec.MD5.getMd5Key(key);
         try {
             if (!TextUtils.isEmpty(get(name))) {     //如果存在，先删除
                 cache.remove(name);
@@ -85,7 +85,7 @@ public class DiskCache implements ICache {
 
     public String get(String key) {
         try {
-            String md5Key = getMd5Key(key);
+            String md5Key = Codec.MD5.getMd5Key(key);
             DiskLruCache.Snapshot snapshot = cache.get(md5Key);
             if (snapshot != null) {
                 String content = snapshot.getString(0);
@@ -118,14 +118,14 @@ public class DiskCache implements ICache {
 
     public void remove(String key) {
         try {
-            cache.remove(getMd5Key(key));
+            cache.remove(Codec.MD5.getMd5Key(key));
         } catch (Exception e) {
         }
     }
 
     public boolean contains(String key) {
         try {
-            DiskLruCache.Snapshot snapshot = cache.get(getMd5Key(key));
+            DiskLruCache.Snapshot snapshot = cache.get(Codec.MD5.getMd5Key(key));
             return snapshot != null;
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,10 +139,6 @@ public class DiskCache implements ICache {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getMd5Key(String key) {
-        return Codec.MD5.getMessageDigest(key.getBytes());
     }
 
     private static File getDiskCacheDir(Context context, String dirName) {

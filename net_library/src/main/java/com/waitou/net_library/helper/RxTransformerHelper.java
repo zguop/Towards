@@ -22,7 +22,7 @@ public class RxTransformerHelper {
      * 过滤器，result业务过滤 返回数据源
      */
     public static <T> Observable.Transformer<BaseResponse<T>, T> applySchedulersResult(Context context, ErrorVerify errorVerify) {
-        return observable -> observable
+        return  observable -> observable
                 .compose(applySchedulersAndAllFilter(context, errorVerify))
                 .map(tBaseResponse -> tBaseResponse.result);
     }

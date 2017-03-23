@@ -23,17 +23,26 @@ import rx.Observable;
 
 public interface LoaderService {
 
+    /*--------------- 存放在gitbub的json ---------------*/
+
+    @GET("master/wt_logo.json")
+    Observable<BaseResponse<List<String>>> getLogoList(); //logo图
 
     @GET("master/beats_banner.json")
     Observable<BaseResponse<List<List<BannerPageInfo>>>> getBannerPage(); //首页轮播图
-
 
     @GET("master/wt_home.json")
     Observable<BaseResponse<HomeFunctionInfo>> getHomeData(); //首页
 
 
+    /*--------------- 段子接口 ---------------*/
+
     @GET("randJoke.php")
     Observable<BaseResponse<List<JokeInfo>>> getTextJoke(@QueryMap RequestParams param); //笑话数据
+
+
+
+    /*--------------- gank 干货接口 ---------------*/
 
     //获取图片
     @GET("data/福利/10/{page}")

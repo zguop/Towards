@@ -7,7 +7,8 @@ package com.waitou.towards.common;
 public class ExtraValue {
 
     //笑话大全的key
-    public static String KEY = "7d0bcca9211cf28a52b9b6b5f9268fd9";
+//    public static String KEY = "7d0bcca9211cf28a52b9b6b5f9268fd9";
+    public static String KEY = "fcc736b44a9f3ed587971eb62276ff0b";
 
     /*--------------- bundle ---------------*/
     //JokeContentFragment
@@ -17,7 +18,7 @@ public class ExtraValue {
 
 
     /*--------------- SharedPreferences ---------------*/
-    public static final String EVERYDAY_DATA = "everyday_data";
+    public static final String EVERYDAY_DATA     = "everyday_data";
     public static final String HOME_COMMEND_DATA = "home_commend_data";
 
 }
