@@ -38,6 +38,21 @@ android {
             minifyEnabled false
             manifestPlaceholders = [packageName1: "com.waitou.towards.debug"]
 
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def apkFile = new File(
+                            output.outputFile.getParent(),
+                            "towards_v${variant.versionName}_${variant.buildType.name}.apk")
+                    output.outputFile = apkFile
+                    //删除unaligned
+                    if (output.zipAlign != null) {
+                        output.zipAlign.doLast {
+                            output.zipAlign.inputFile.delete()
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -46,9 +61,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    greendao{
+    greendao {
         schemaVersion 1//数据库版本号
-        daoPackage  'com.waitou.towards.greendao'
+        daoPackage 'com.waitou.towards.greendao'
         targetGenDir 'src/main/java'
     }
 

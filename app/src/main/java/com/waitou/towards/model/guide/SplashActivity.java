@@ -43,6 +43,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
 
+    public static final String TAG = SplashActivity.class.getSimpleName();
+
     private DownloadManager mManager;
 
     @Override
@@ -62,13 +64,12 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
         reloadData();
         long cTime = System.currentTimeMillis();
         long temp = cTime - currentTime;
-        Log.e("aa", " temp = " + temp);
+        Log.e(TAG, " temp = " + temp);
         if (temp < 2000) {
             pend(Observable.timer(temp < 2000 ? 2000 - temp : temp, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .subscribe(aLong -> Router.newIntent().from(SplashActivity.this).to(MainActivity.class).finish().launch()));
         }
     }
-
 
     @Override
     public void reloadData() {
@@ -80,6 +81,7 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
         pend(DataLoader.getGithubApi().getLogoList()
                 .compose(RxTransformerHelper.applySchedulersResult(this, new EmptyErrorVerify()))
                 .filter(strings -> strings != null && strings.size() > 0)
+
                 .doOnNext(strings -> {
                     if (!logoImgList.isEmpty()) {
                         if (logoImgList.size() > strings.size()) {
@@ -93,14 +95,14 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
                                     if (Kits.UString.isNotEmpty(savePath)) {
                                         //删除本地下载的图片
                                         boolean b = Kits.UFile.deleteFile(savePath);
-                                        Log.e("aa", "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
+                                        Log.e(TAG, "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
                                     }
                                     //删除数据库中的这条数据
                                     logoImgDao.delete(unique);
                                 }
                             }
                         } else {
-                            Log.e("aa", " 没有要删除的图片");
+                            Log.e(TAG, " 没有要删除的图片");
                         }
                     }
                 })
@@ -118,7 +120,7 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
                 .subscribe(s -> {
                     LogoImg logoImg = new LogoImg();
                     logoImg.setImgUrl(s);
-                    Log.e("aa", " 插入数据库的图片 ： " + logoImg.getImgUrl());
+                    Log.e(TAG, " 插入数据库的图片 ： " + logoImg.getImgUrl());
                     logoImgDao.insert(logoImg); //插入数据
                 }));
 
@@ -138,8 +140,8 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
         }
 
         if (!downloadList.isEmpty()) {
-            Log.e("aa", " 需要下载 ：" + downloadList.size() + " 张图片");
-            //去下载图片 存入到数据库
+            Log.e(TAG, " 需要下载 ：" + downloadList.size() + " 张图片");
+            //去下载图片 存入到数据库  //这个downloadManager 后期会替换掉 目前暂时使用
             mManager = new DownloadManager.Builder().context(this)
                     .downloader(OkHttpDownloader.create())
                     .threadPoolSize(2)
@@ -156,7 +158,7 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
                             @Override
                             public void onSuccess(int downloadId, String filePath) {
                                 super.onSuccess(downloadId, filePath);
-                                Log.e("aa", "下载成功  " + filePath);
+                                Log.e(TAG, "下载成功  " + filePath);
                                 logoImg.setSavePath(filePath);
                                 logoImgDao.update(logoImg);
                             }
@@ -166,7 +168,7 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
             }
         }
 
-        Log.e("aa", " 显示的图片有 " + showLogoList.size() + " 张");
+        Log.e(TAG, " 显示的图片有 " + showLogoList.size() + " 张");
         //如果没有显示的图片 设置默认的图片
         if (showLogoList.isEmpty()) {
             getBinding().logoIv.setImageResource(R.drawable.logo);
@@ -180,23 +182,23 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
             }
         }
 
-        Log.e("aa", " 可以显示的有 " + imgUrl.size() + " 张");
+        Log.e(TAG, " 可以显示的有 " + imgUrl.size() + " 张");
         boolean empty = imgUrl.isEmpty();
         //如果乳品全部都使用过，那么就从showLogoList 重新取一张图片使用
         int random = new Random().nextInt(empty ? showLogoList.size() : imgUrl.size());
         String savePath;
         if (empty) {
-            Log.e("aa", " 获取的是 showLogoList 中的图片 ");
+            Log.e(TAG, " 获取的是 showLogoList 中的图片 ");
             savePath = showLogoList.get(random).getSavePath();
         } else {
-            Log.e("aa", " 获取的是 imgUrl 中的图片 ");
+            Log.e(TAG, " 获取的是 imgUrl 中的图片 ");
             savePath = imgUrl.get(random);
         }
         //显示图片
         ILFactory.getLoader().loadFile(getBinding().logoIv, new File(savePath), null);
 
         if (empty) {
-            Log.e("aa", " 所有图片已经显示， 更新数据库标识");
+            Log.e(TAG, " 所有图片已经显示， 更新数据库标识");
             //所有图片都已经显示过 去数据库刷新标识
             for (LogoImg logoImg : showLogoList) {
                 logoImg.setIsShowLogoUrl(false);
@@ -207,7 +209,7 @@ public class SplashActivity extends XActivity<XPresent, ActivityLogoBinding> {
         //去数据库刷新使用过的图片标识
         //查询某个条件的数据
         LogoImg unique = logoImgDao.queryBuilder().where(LogoImgDao.Properties.SavePath.eq(savePath)).unique();
-        Log.e("aa", " 显示的图片是 ： " + unique.getImgUrl());
+        Log.e(TAG, " 显示的图片是 ： " + unique.getImgUrl());
         unique.setIsShowLogoUrl(true);
         //更新标识
         logoImgDao.update(unique);
