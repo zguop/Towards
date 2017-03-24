@@ -34,8 +34,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by waitou on 17/3/23.
@@ -201,7 +203,8 @@ public class SplashPresenter extends XPresent<SplashActivity> {
 
     private void initImageResource(Drawable drawable) {
         this.drawable.set(drawable);
-        initializeImageConfig();
+        getV().pend(Observable.timer(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(aLong -> initializeImageConfig()));
     }
 
     private void initializeImageConfig() {

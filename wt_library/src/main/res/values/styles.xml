@@ -11,7 +11,7 @@
 
     </style>
 
-    <style name="AppThemePowder" parent="Transparent">
+    <style name="AppThemePowder" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPowder</item>
         <item name="colorPrimaryDark">@color/colorPowder</item>
@@ -22,8 +22,7 @@
 
     </style>
 
-
-    <style name="AppThemeRed" parent="Transparent">
+    <style name="AppThemeRed" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorRed</item>
         <item name="colorPrimaryDark">@color/colorRed</item>
@@ -34,7 +33,7 @@
 
     </style>
 
-    <style name="AppThemeBlue" parent="Transparent">
+    <style name="AppThemeBlue" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorBlue</item>
         <item name="colorPrimaryDark">@color/colorBlue</item>
@@ -45,9 +44,9 @@
 
     </style>
 
+    
     <style name="Transparent" parent="AppTheme">
-
-        <!--<item name="android:windowTranslucentStatus">true</item>-->
-
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>
