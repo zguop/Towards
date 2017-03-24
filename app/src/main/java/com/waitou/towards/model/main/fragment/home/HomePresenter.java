@@ -19,6 +19,9 @@ import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.browser.WebUtil;
 import com.waitou.wt_library.cache.SharedPref;
 import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UMath;
+import com.waitou.wt_library.kit.UString;
+import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
@@ -47,7 +50,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * banner item 点击
      */
     public void onLinkClick(View view, int type, String url, String title) {
-        if (Kits.UString.isEmpty(url)) {
+        if (UString.isEmpty(url)) {
             Log.e("aa", " url缺失了..");
             AlertToast.show("url缺失了..");
             return;
@@ -78,7 +81,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     boolean isReload = false;
                     if (!everyday.equals(currentEveryday)) { //第二天
                         if (!Kits.Date.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
-                            currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString(); //请求前一天数据
+                            currentDate[2] = UMath.sub(currentDate[2], "1").toString(); //请求前一天数据
                         } else {
                             isReload = true; //第二天 大于十二点三十 更新数据
                         }
@@ -88,7 +91,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                             .flatMap(info -> {
                                 LogUtil.e("aa", "loadHomeData is null = " + info.isNull);
                                 if (info.isNull) {
-                                    currentDate[2] = Kits.UMath.sub(currentDate[2], "1").toString();
+                                    currentDate[2] = UMath.sub(currentDate[2], "1").toString();
                                     return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], false);
                                 }
                                 return Observable.just(info);
@@ -99,28 +102,28 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
                     if (gankResultsInfo != null) {
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.福利)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.福利)) {
                             lists.add(gankResultsInfo.福利);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.休息视频)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.休息视频)) {
                             lists.add(gankResultsInfo.休息视频);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.Android)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.Android)) {
                             lists.add(gankResultsInfo.Android);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.瞎推荐)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.瞎推荐)) {
                             lists.add(gankResultsInfo.瞎推荐);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.App)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.App)) {
                             lists.add(gankResultsInfo.App);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.iOS)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.iOS)) {
                             lists.add(gankResultsInfo.iOS);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.拓展资源)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.拓展资源)) {
                             lists.add(gankResultsInfo.拓展资源);
                         }
-                        if (Kits.Util.isNotEmptyList(gankResultsInfo.前端)) {
+                        if (Util.isNotEmptyList(gankResultsInfo.前端)) {
                             lists.add(gankResultsInfo.前端);
                         }
                         if (lists.size() > 0) {

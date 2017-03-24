@@ -19,7 +19,8 @@ import android.webkit.WebViewClient;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.BaseActivity;
 import com.waitou.wt_library.databinding.ActivityWebBinding;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UNetWork;
+import com.waitou.wt_library.kit.UString;
 
 /**
  * Created by waitou on 17/3/17.
@@ -46,7 +47,7 @@ public class WebActivity extends BaseActivity {
         mTitleStr = intent.getStringExtra(PLATFORM_WEB_TITLE);
 
         /*--------------- 初始化标题 ---------------*/
-        mWebBinding.toolbar.initMenuActionBar(Kits.UString.checkNotNull(mTitleStr, ""));
+        mWebBinding.toolbar.initMenuActionBar(UString.checkNotNull(mTitleStr, ""));
         /*--------------- 设置webView ---------------*/
         mWebBinding.web.getSettings().setJavaScriptEnabled(true);//设置使用够执行JS脚本
         mWebBinding.web.getSettings().setBuiltInZoomControls(false);//设置使支持缩放
@@ -61,7 +62,7 @@ public class WebActivity extends BaseActivity {
         mWebBinding.web.getSettings().setDisplayZoomControls(false);//隐藏原生的缩放控件
         mWebBinding.web.getSettings().setAppCacheEnabled(true); //开启webview缓存功能
         mWebBinding.web.getSettings().setAppCachePath(String.valueOf(getExternalCacheDir())); //sd卡下的缓存目录
-        mWebBinding.web.getSettings().setCacheMode(Kits.NetWork.isAvailable() ? WebSettings.LOAD_NO_CACHE : WebSettings.LOAD_CACHE_ELSE_NETWORK);//有网就从网络获取最新的数据，否则本地获取
+        mWebBinding.web.getSettings().setCacheMode(UNetWork.isAvailable() ? WebSettings.LOAD_NO_CACHE : WebSettings.LOAD_CACHE_ELSE_NETWORK);//有网就从网络获取最新的数据，否则本地获取
         mWebBinding.web.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             //显示网页
             startActivity( new Intent(Intent.ACTION_VIEW, Uri.parse(url)));

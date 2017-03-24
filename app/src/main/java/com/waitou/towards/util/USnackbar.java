@@ -24,7 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.waitou.towards.R;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDimens;
 
 import java.lang.ref.WeakReference;
 
@@ -589,7 +589,7 @@ public class USnackbar {
                 android:textAlignment="viewStart"/>
         */
         //文字高度+paddingTop+paddingBottom : 14sp + 14dp*2
-        int SnackbarHeight = Kits.Dimens.dip2pxInt(getSnackbar().getView().getContext(),28) + Kits.Dimens.sp2px(getSnackbar().getView().getContext(),14);
+        int SnackbarHeight = UDimens.dip2pxInt(getSnackbar().getView().getContext(),28) + UDimens.sp2px(getSnackbar().getView().getContext(),14);
         Log.e("Jet","直接获取MessageView高度:"+getSnackbar().getView().findViewById(R.id.snackbar_text).getHeight());
         return SnackbarHeight;
     }
@@ -660,7 +660,7 @@ public class USnackbar {
             int[] locations = new int[2];
             targetView.getLocationOnScreen(locations);
             int snackbarHeight = calculateSnackBarHeight();
-            int screenHeight = Kits.Dimens.getDeviceHeight(getSnackbar().getView().getContext());
+            int screenHeight = UDimens.getDeviceHeight(getSnackbar().getView().getContext());
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
@@ -690,7 +690,7 @@ public class USnackbar {
             int[] locations = new int[2];
             targetView.getLocationOnScreen(locations);
             int snackbarHeight = calculateSnackBarHeight();
-            int screenHeight = Kits.Dimens.getDeviceHeight(getSnackbar().getView().getContext());
+            int screenHeight = UDimens.getDeviceHeight(getSnackbar().getView().getContext());
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.

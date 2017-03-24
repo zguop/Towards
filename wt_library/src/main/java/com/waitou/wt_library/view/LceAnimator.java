@@ -22,7 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDimens;
 
 
 /**
@@ -97,11 +97,11 @@ public class LceAnimator {
             AnimatorSet set = new AnimatorSet();
             ObjectAnimator contentFadeIn = ObjectAnimator.ofFloat(contentView, "alpha", 0f, 1f);
             ObjectAnimator contentTranslateIn = ObjectAnimator.ofFloat(contentView, "translationY",
-                    Kits.Dimens.dip2px(loadingView.getContext(), translateDp), 0);
+                    UDimens.dip2px(loadingView.getContext(), translateDp), 0);
 
             ObjectAnimator loadingFadeOut = ObjectAnimator.ofFloat(loadingView, "alpha", 1f, 0f);
             ObjectAnimator loadingTranslateOut = ObjectAnimator.ofFloat(loadingView, "translationY", 0,
-                    -Kits.Dimens.dip2px(loadingView.getContext(), translateDp));
+                    -UDimens.dip2px(loadingView.getContext(), translateDp));
 
             set.playTogether(contentFadeIn, contentTranslateIn, loadingFadeOut, loadingTranslateOut);
             set.setDuration(500);

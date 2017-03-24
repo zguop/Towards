@@ -21,7 +21,7 @@ import android.view.View;
 
 import com.waitou.net_library.BuildConfig;
 import com.waitou.net_library.log.LogUtil;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDimens;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class ViewSwitchUtils {
     @SuppressLint("SimpleDateFormat")
     public static void saveImageToGallery(Context context, Bitmap bmp, boolean isScreen) {
         if (isScreen) {
-            bmp = resizeBitmap(bmp, Kits.Dimens.getDeviceWidth(context), Kits.Dimens.getDeviceHeight(context));
+            bmp = resizeBitmap(bmp, UDimens.getDeviceWidth(context), UDimens.getDeviceHeight(context));
         }
         java.io.File picDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         if (!picDir.exists()) {

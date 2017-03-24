@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.waitou.towards.util.AlertToast;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDimens;
 
 
 public class CardScaleHelper {
@@ -104,7 +104,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - Kits.Dimens.dip2pxInt(mContext, 2 * (mPagePadding + mShowLeftCardWidth));
+            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt(mContext, 2 * (mPagePadding + mShowLeftCardWidth));
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });

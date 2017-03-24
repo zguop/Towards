@@ -27,6 +27,8 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.EmptyErrorVerify;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UImage;
+import com.waitou.wt_library.kit.UString;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,7 +69,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                                     LogoImg unique = logoImgDao.queryBuilder().where(LogoImgDao.Properties.ImgUrl.eq(imgUrl)).unique();
                                     //查看本地是否下载过图片
                                     String savePath = unique.getSavePath();
-                                    if (Kits.UString.isNotEmpty(savePath)) {
+                                    if (UString.isNotEmpty(savePath)) {
                                         //删除本地下载的图片
                                         boolean b = Kits.UFile.deleteFile(savePath);
                                         Log.e(TAG, "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
@@ -107,7 +109,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<LogoImg> showLogoList = new ArrayList<>();
         // 数据库图片不为0
         for (LogoImg logoImg : logoImgList) {
-            if (Kits.UString.isNotEmpty(logoImg.getSavePath())) { // 已经下载过的图片
+            if (UString.isNotEmpty(logoImg.getSavePath())) { // 已经下载过的图片
                 showLogoList.add(logoImg);
             } else {
                 downloadList.add(logoImg);
@@ -123,7 +125,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                     .build();
             for (LogoImg logoImg : downloadList) {
                 String imgUrl = logoImg.getImgUrl();
-                String imageSavePath = Kits.UImage.getImageSavePath(getV(), imgUrl);
+                String imageSavePath = UImage.getImageSavePath(getV(), imgUrl);
                 DownloadRequest request = new DownloadRequest.Builder()
                         .uri(Uri.parse(imgUrl))
                         .priority(Priority.HIGH) // 下载最高有限级
