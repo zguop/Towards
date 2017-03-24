@@ -30,12 +30,10 @@ public class LayoutManagerUtli {
     }
 
     public static StaggeredGridLayoutManager getVerticalStaggeredLayoutManager(int spanCount) {
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
-        return manager;
+        return new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
     }
 
     public StaggeredGridLayoutManager getHorizontalStaggeredLayoutManager(int spanCount) {
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL);
-        return manager;
+        return new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL);
     }
 }
