@@ -1,4 +1,4 @@
-package com.waitou.wt_library.base;
+package com.waitou.wt_library.kit;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -12,9 +12,10 @@ import java.util.List;
 
 /**
  * Created by sanji on 2016/11/4.
+ * activity工具
  */
 
-public class ActivityUtil {
+public class UActivity {
 
     static LinkedList<Activity> mActivityList = new LinkedList<>();
 

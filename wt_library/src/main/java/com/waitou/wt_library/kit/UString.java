@@ -2,6 +2,7 @@ package com.waitou.wt_library.kit;
 
 /**
  * Created by waitou on 17/3/24.
+ * 字符串工具
  */
 
 public class UString {

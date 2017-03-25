@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 
 /**
  * Created by waitou on 17/3/24.
+ * 大小转换
  */
 
 public class UDimens {

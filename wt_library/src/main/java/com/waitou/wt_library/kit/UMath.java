@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * Created by waitou on 17/3/24.
+ * 数学工具
  */
 
 public class UMath {

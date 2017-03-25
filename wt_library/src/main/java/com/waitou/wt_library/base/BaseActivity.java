@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.waitou.wt_library.kit.UActivity;
 import com.waitou.wt_library.theme.ChangeModeController;
 
 import rx.Subscription;
@@ -37,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
-        ActivityUtil.getActivityList().add(this);
+        UActivity.getActivityList().add(this);
         if (isScreenDisplayMetrics()) {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -99,8 +100,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mPendingSubscriptions != null && mPendingSubscriptions.hasSubscriptions()) {
             mPendingSubscriptions.clear();
         }
-        if (ActivityUtil.getActivityList().contains(this)) {
-            ActivityUtil.getActivityList().remove(this);
+        if (UActivity.getActivityList().contains(this)) {
+            UActivity.getActivityList().remove(this);
         }
         getUiDelegate().destroy();
         mVDelegate = null;

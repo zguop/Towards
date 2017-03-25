@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.waitou.wt_library.kit.Codec;
 import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UCodec;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class DiskCache implements ICache {
     public void put(String key, String value, long expireMills) {
         if (TextUtils.isEmpty(key) || TextUtils.isEmpty(value)) return;
 
-        String name = Codec.MD5.getMd5Key(key);
+        String name = UCodec.md5(key);
         try {
             if (!TextUtils.isEmpty(get(name))) {     //如果存在，先删除
                 cache.remove(name);
@@ -85,7 +85,7 @@ public class DiskCache implements ICache {
 
     public String get(String key) {
         try {
-            String md5Key = Codec.MD5.getMd5Key(key);
+            String md5Key = UCodec.md5(key);
             DiskLruCache.Snapshot snapshot = cache.get(md5Key);
             if (snapshot != null) {
                 String content = snapshot.getString(0);
@@ -118,14 +118,14 @@ public class DiskCache implements ICache {
 
     public void remove(String key) {
         try {
-            cache.remove(Codec.MD5.getMd5Key(key));
+            cache.remove(UCodec.md5(key));
         } catch (Exception e) {
         }
     }
 
     public boolean contains(String key) {
         try {
-            DiskLruCache.Snapshot snapshot = cache.get(Codec.MD5.getMd5Key(key));
+            DiskLruCache.Snapshot snapshot = cache.get(UCodec.md5(key));
             return snapshot != null;
         } catch (IOException e) {
             e.printStackTrace();

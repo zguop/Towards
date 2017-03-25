@@ -66,8 +66,6 @@ public class LogoImg {
     public void setIsShowLogoUrl(boolean isShowLogoUrl) {
         this.isShowLogoUrl = isShowLogoUrl;
     }
-
-
 }
 
 /*.

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
+import com.waitou.wt_library.kit.UImage;
 
 
 public class CardScaleHelper {
@@ -83,7 +84,7 @@ public class CardScaleHelper {
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
             Bitmap drawingCache = positionView.getDrawingCache();
-            ViewSwitchUtils.startSwitchBackgroundAnim(mRecyclerView, ViewSwitchUtils.getBlurBitmap(mContext, drawingCache, 15));
+            UImage.startSwitchBackgroundAnim(mRecyclerView, UImage.fastBlur(drawingCache, 1, 25));
             positionView.setDrawingCacheEnabled(false);
         }
     }
@@ -92,7 +93,7 @@ public class CardScaleHelper {
         View positionView = getPositionView();
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
-            ViewSwitchUtils.saveImageToGallery(mContext, positionView.getDrawingCache(), isScreen);
+            UImage.saveImageToGallery(mContext, positionView.getDrawingCache(), isScreen);
             AlertToast.show("图片成功保存到相册O(∩_∩)O~");
             positionView.setDrawingCacheEnabled(false);
         }

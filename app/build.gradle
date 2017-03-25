@@ -83,7 +83,6 @@ dependencies {
     compile rootProject.ext.dependencies["rxcache"]
     compile rootProject.ext.dependencies["jolyglot_gson"]
     compile rootProject.ext.dependencies["greendao"]
-    compile rootProject.ext.dependencies["download"]
 
     //工程依赖 app --> wt_library --> net_library
 

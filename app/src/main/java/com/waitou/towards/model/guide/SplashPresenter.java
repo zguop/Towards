@@ -1,23 +1,21 @@
 package com.waitou.towards.model.guide;
 
 import android.databinding.ObservableField;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.coolerfall.download.DownloadCallback;
-import com.coolerfall.download.DownloadManager;
-import com.coolerfall.download.DownloadRequest;
-import com.coolerfall.download.OkHttpDownloader;
-import com.coolerfall.download.Priority;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.R;
 import com.waitou.towards.greendao.GreenDaoHelper;
@@ -26,7 +24,7 @@ import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.EmptyErrorVerify;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.UString;
 
@@ -35,9 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by waitou on 17/3/23.
@@ -46,9 +46,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class SplashPresenter extends XPresent<SplashActivity> {
 
-    private static final String TAG = SplashActivity.class.getSimpleName();
-
-    private DownloadManager mManager;
+    private static final String TAG = "aa";
 
     public ObservableField<Drawable> drawable = new ObservableField<>();
 
@@ -73,7 +71,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                                     String savePath = unique.getSavePath();
                                     if (UString.isNotEmpty(savePath)) {
                                         //删除本地下载的图片
-                                        boolean b = Kits.UFile.deleteFile(savePath);
+                                        boolean b = UFile.deleteFile(savePath);
                                         Log.e(TAG, "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
                                     }
                                     //删除数据库中的这条数据
@@ -100,7 +98,8 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                     LogoImg logoImg = new LogoImg();
                     logoImg.setImgUrl(s);
                     Log.e(TAG, " 插入数据库的图片 ： " + logoImg.getImgUrl());
-                    logoImgDao.insert(logoImg); //插入数据
+                    logoImgDao.insert(logoImg); //插入数据 直接开始下载图片
+                    downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
                 }));
 
         if (logoImgList.isEmpty()) {
@@ -110,8 +109,9 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<LogoImg> downloadList = new ArrayList<>();
         List<LogoImg> showLogoList = new ArrayList<>();
         // 数据库图片不为0
-        for (LogoImg logoImg : logoImgList) {
-            if (UString.isNotEmpty(logoImg.getSavePath())) { // 已经下载过的图片
+        for (LogoImg logoImg : logoImgList) { //本地图片一定要存在
+            String savePath = logoImg.getSavePath();
+            if (UString.isNotEmpty(savePath) && UFile.isFileExists(savePath)) {
                 showLogoList.add(logoImg);
             } else {
                 downloadList.add(logoImg);
@@ -120,29 +120,8 @@ public class SplashPresenter extends XPresent<SplashActivity> {
 
         if (!downloadList.isEmpty()) {
             Log.e(TAG, " 需要下载 ：" + downloadList.size() + " 张图片");
-            //去下载图片 存入到数据库  //这个downloadManager 后期会替换掉 目前暂时使用
-            mManager = new DownloadManager.Builder().context(getV())
-                    .downloader(OkHttpDownloader.create())
-                    .threadPoolSize(2)
-                    .build();
             for (LogoImg logoImg : downloadList) {
-                String imgUrl = logoImg.getImgUrl();
-                String imageSavePath = UImage.getImageSavePath(getV(), imgUrl);
-                DownloadRequest request = new DownloadRequest.Builder()
-                        .uri(Uri.parse(imgUrl))
-                        .priority(Priority.HIGH) // 下载最高有限级
-                        .allowedNetworkTypes(DownloadRequest.NETWORK_MOBILE)
-                        .destinationFilePath(imageSavePath)
-                        .downloadCallback(new DownloadCallback() {
-                            @Override
-                            public void onSuccess(int downloadId, String filePath) {
-                                super.onSuccess(downloadId, filePath);
-                                Log.e(TAG, "下载成功  " + filePath);
-                                logoImg.setSavePath(filePath);
-                                logoImgDao.update(logoImg);
-                            }
-                        }).build();
-                mManager.add(request);
+                downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
             }
         }
 
@@ -153,10 +132,18 @@ public class SplashPresenter extends XPresent<SplashActivity> {
             return;
         }
 
-        List<String> imgUrl = new ArrayList<>();
-        for (LogoImg logoImg : showLogoList) {
-            if (!logoImg.getIsShowLogoUrl()) {
-                imgUrl.add(logoImg.getSavePath());
+        List<String> imgUrl; //stream操作 java8的 一大新特性
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) { //6.0以下xml中默认颜色 高亮 代码重新设置一遍
+            imgUrl = showLogoList.stream()
+                    .filter(logoImg -> !logoImg.getIsShowLogoUrl())
+                    .map(LogoImg::getSavePath)
+                    .collect(Collectors.toList());
+        } else {
+            imgUrl = new ArrayList<>();
+            for (LogoImg logoImg : showLogoList) {
+                if (!logoImg.getIsShowLogoUrl()) {
+                    imgUrl.add(logoImg.getSavePath());
+                }
             }
         }
 
@@ -192,8 +179,20 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         logoImgDao.update(unique);
     }
 
+    /**
+     * 加载图片
+     */
     private void loadFileImg(String savePath) {
-        Glide.with(getV()).load(new File(savePath)).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>() {
+        File file = new File(savePath);
+        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>() {
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                super.onLoadFailed(e, errorDrawable);
+                initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
+                boolean b = UFile.deleteFile(file);//加载失败的图片需要删除
+                Log.e(TAG, "加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
+            }
+
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 initImageResource(resource);
@@ -201,6 +200,11 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         });
     }
 
+    /**
+     * 设置img图片并开始动画 延迟100毫秒使动画更流畅
+     *
+     * @param drawable 需要显示的图片
+     */
     private void initImageResource(Drawable drawable) {
         this.drawable.set(drawable);
         getV().pend(Observable.timer(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -216,10 +220,6 @@ public class SplashPresenter extends XPresent<SplashActivity> {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (mManager != null) {
-                    mManager.cancelAll();
-                    mManager = null;
-                }
                 getV().navigateToMain();
             }
 
@@ -228,5 +228,30 @@ public class SplashPresenter extends XPresent<SplashActivity> {
             }
         });
         getV().animateBackgroundImage(animation);
+    }
+
+    /**
+     * 主要用下载图片 保存到cache目录
+     */
+    private void downLoaderImg(String url, LogoImg logoImg, LogoImgDao logoImgDao) {
+        String imageCacheSavePath = UImage.getImageCacheSavePath(getV(), url);
+        DrawableTypeRequest request = (DrawableTypeRequest) Glide.with(getV())
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        request.into(new SimpleTarget<GlideBitmapDrawable>() {
+            @Override
+            public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
+                if (resource != null && resource.getBitmap() != null) {
+                    getV().pend(Observable.just(resource)
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(glideBitmapDrawable -> {
+                                boolean save = UImage.save(glideBitmapDrawable.getBitmap(), imageCacheSavePath, Bitmap.CompressFormat.JPEG, true);
+                                logoImg.setSavePath(imageCacheSavePath);
+                                logoImgDao.update(logoImg);
+                                Log.e(TAG, " svae = " + save + " 保存 = " + imageCacheSavePath);
+                            }));
+                }
+            }
+        });
     }
 }
