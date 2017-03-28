@@ -12,7 +12,7 @@
             android:title="分类浏览"/>
         <item
             android:id="@+id/nav_meizi"
-            android:icon="@drawable/icon_girls"
+            android:icon="@drawable/svg_ic_girls"
             android:title="妹子相册"/>
 
         <item
@@ -22,7 +22,7 @@
 
         <item
             android:id="@+id/nav_collect"
-            android:icon="@drawable/navigation_collect"
+            android:icon="@drawable/svg_ic_collect"
             android:title="我的收藏"/>
     </group>
 
@@ -30,11 +30,11 @@
         <menu>
             <item
                 android:id="@+id/nav_theme"
-                android:icon="@drawable/icon_theme"
+                android:icon="@drawable/svg_ic_theme"
                 android:title="主题"/>
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/icon_about"
+                android:icon="@drawable/svg_ic_about"
                 android:title="关于"/>
         </menu>
     </item>

@@ -1,7 +1,6 @@
 package com.waitou.towards.model.guide;
 
 import android.databinding.ObservableField;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -9,15 +8,15 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.waitou.net_library.helper.RxTransformerHelper;
+import com.waitou.net_library.http.AsyncOkHttpClient;
 import com.waitou.towards.R;
+import com.waitou.towards.common.thread.DownloadThread;
 import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
@@ -37,7 +36,6 @@ import java.util.stream.Collectors;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by waitou on 17/3/23.
@@ -46,7 +44,7 @@ import rx.schedulers.Schedulers;
 
 public class SplashPresenter extends XPresent<SplashActivity> {
 
-    private static final String TAG = "aa";
+    private static final String TAG = SplashPresenter.class.getSimpleName();
 
     public ObservableField<Drawable> drawable = new ObservableField<>();
 
@@ -211,6 +209,9 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                 .subscribe(aLong -> initializeImageConfig()));
     }
 
+    /**
+     * 执行动画
+     */
     private void initializeImageConfig() {
         Animation animation = AnimationUtils.loadAnimation(getV(), R.anim.splash);
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -235,23 +236,12 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void downLoaderImg(String url, LogoImg logoImg, LogoImgDao logoImgDao) {
         String imageCacheSavePath = UImage.getImageCacheSavePath(getV(), url);
-        DrawableTypeRequest request = (DrawableTypeRequest) Glide.with(getV())
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.NONE);
-        request.into(new SimpleTarget<GlideBitmapDrawable>() {
-            @Override
-            public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
-                if (resource != null && resource.getBitmap() != null) {
-                    getV().pend(Observable.just(resource)
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(glideBitmapDrawable -> {
-                                boolean save = UImage.save(glideBitmapDrawable.getBitmap(), imageCacheSavePath, Bitmap.CompressFormat.JPEG, true);
-                                logoImg.setSavePath(imageCacheSavePath);
-                                logoImgDao.update(logoImg);
-                                Log.e(TAG, " svae = " + save + " 保存 = " + imageCacheSavePath);
-                            }));
-                }
+        DownloadThread.get(0, url, imageCacheSavePath, (id, progress, isCompleted, file) -> {
+            if (isCompleted) {
+                logoImg.setSavePath(imageCacheSavePath);
+                logoImgDao.update(logoImg);
+                Log.e(TAG, " save 成功 " + imageCacheSavePath);
             }
-        });
+        }).setClient(AsyncOkHttpClient.getOkHttpClient()).start();
     }
 }

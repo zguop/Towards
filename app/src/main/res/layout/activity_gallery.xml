@@ -19,6 +19,7 @@
     </data>
 
     <RelativeLayout
+        android:background="@color/bg_grey"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.finish()}"
-                android:src="@drawable/icon_back2"
+                android:src="@drawable/svg_ic_undo"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
@@ -57,7 +58,7 @@
                 android:id="@+id/fab_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_download"
+                android:src="@drawable/svg_ic_download"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"

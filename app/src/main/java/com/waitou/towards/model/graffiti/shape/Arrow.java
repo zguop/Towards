@@ -26,6 +26,7 @@ public class Arrow extends Shape {
         drawAL(startX, startY, stopX, stopY, canvas);
     }
 
+
     @Override
     public void move(float x, float y, int actionMasked) {
         switch (actionMasked) {

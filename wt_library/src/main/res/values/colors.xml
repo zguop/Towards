@@ -11,12 +11,18 @@
     <color name="colorPowder">#FF4081</color>
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="home_title1">#f97fb2</color>
+    <!--主题1反差色-->
+    <color name="color_00bf7e">#00BF7E</color>
 
     <!--主题2-->
     <color name="colorRed">#CE3D3A</color>
     <color name="home_title2">#EC7172</color>
+    <!--主题2反差色-->
+    <color name="color_31c2c5">#31C2C5</color>
 
     <!--主题3-->
     <color name="colorBlue">#1090da</color>
     <color name="home_title3">#59adde</color>
+    <!--主题3反差色-->
+    <color name="color_ef6f26">#EF6F25</color>
 </resources>

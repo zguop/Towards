@@ -90,7 +90,7 @@ public class UImage {
         } else if (url.endsWith(JPG)) {
             return UCodec.md5(url) + JPG;
         } else {
-            return UCodec.md5(url);
+            return UCodec.md5(url) + JPG;
         }
     }
 

@@ -3,6 +3,7 @@ package com.waitou.towards.model.graffiti;
 import android.os.Bundle;
 
 import com.waitou.towards.R;
+import com.waitou.towards.databinding.ActivityGraffitiBinding;
 import com.waitou.wt_library.base.XActivity;
 
 /**
@@ -10,7 +11,12 @@ import com.waitou.wt_library.base.XActivity;
  * 随手涂鸦
  */
 
-public class GraffitiActivity extends XActivity {
+public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraffitiBinding> {
+
+    @Override
+    public GraffitiPresenter createPresenter() {
+        return new GraffitiPresenter();
+    }
 
     @Override
     public boolean initXView() {
@@ -24,11 +30,10 @@ public class GraffitiActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        getBinding().setPresenter(getP());
     }
 
     @Override
     public void reloadData() {
-
     }
 }

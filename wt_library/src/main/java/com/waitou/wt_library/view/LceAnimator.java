@@ -97,11 +97,11 @@ public class LceAnimator {
             AnimatorSet set = new AnimatorSet();
             ObjectAnimator contentFadeIn = ObjectAnimator.ofFloat(contentView, "alpha", 0f, 1f);
             ObjectAnimator contentTranslateIn = ObjectAnimator.ofFloat(contentView, "translationY",
-                    UDimens.dip2px(loadingView.getContext(), translateDp), 0);
+                    UDimens.dip2px(translateDp), 0);
 
             ObjectAnimator loadingFadeOut = ObjectAnimator.ofFloat(loadingView, "alpha", 1f, 0f);
             ObjectAnimator loadingTranslateOut = ObjectAnimator.ofFloat(loadingView, "translationY", 0,
-                    -UDimens.dip2px(loadingView.getContext(), translateDp));
+                    -UDimens.dip2px(translateDp));
 
             set.playTogether(contentFadeIn, contentTranslateIn, loadingFadeOut, loadingTranslateOut);
             set.setDuration(500);

@@ -1,7 +1,8 @@
 package com.waitou.towards.model.graffiti.shape;
 
 import android.graphics.Paint;
-import android.util.SparseArray;
+
+import com.waitou.towards.enums.GraffitiToolEnum;
 
 /**
  * Created by waitou on 17/3/19.
@@ -10,55 +11,54 @@ import android.util.SparseArray;
 
 public class ShapeFactory {
 
-    private SparseArray<Shape> sSparseArray = new SparseArray<>();
+    private Paint mShapePaint; //工具笔
+    private Paint mEraserPaint;//橡皮擦
+    private Paint mDashedPaint;//虚线笔
 
-    private Paint mPaint;
-
-    public ShapeFactory(Paint paint) {
-        this.mPaint = paint;
+    public ShapeFactory() {
+        mShapePaint = new Paint();
+        mEraserPaint = new Paint();
+        mDashedPaint = new Paint();
     }
 
     public Shape create(int type) {
-        Shape shape = sSparseArray.get(type);
-        if (shape != null) {
-            return shape;
-        }
-        switch (type) {
-            case 0:
-                shape = new Pencil(mPaint);
+        Shape shape = null;
+        GraffitiToolEnum toolEnum = GraffitiToolEnum.valueOf(type);
+        switch (toolEnum) {
+            case pencil:
+                shape = new Pencil(mShapePaint);
                 break;
-            case 1:
-                shape = new Circle(mPaint);
+            case circle:
+                shape = new Circle(mShapePaint);
                 break;
-            case 2:
-                shape = new DashedLine(mPaint);
+            case dashedLine:
+                shape = new DashedLine(mDashedPaint);
                 break;
-            case 3:
-                shape = new Ellipse(mPaint);
+            case ellipse:
+                shape = new Ellipse(mShapePaint);
                 break;
-            case 4:
-                shape = new Eraser(mPaint);
+            case eraser:
+                shape = new Eraser(mEraserPaint);
                 break;
-            case 5:
-                shape = new Line(mPaint);
+            case line:
+                shape = new Line(mShapePaint);
                 break;
-            case 6:
-                shape = new Rectangle(mPaint);
+            case rectangle:
+                shape = new Rectangle(mShapePaint);
                 break;
-            case 7:
-                shape = new Text(mPaint);
+            case text:
+                shape = new Text(mShapePaint);
                 break;
-            case 8:
-                shape = new Triangle(mPaint);
+            case triangle:
+                shape = new Triangle(mShapePaint);
                 break;
-            case 9:
-                shape = new Arrow(mPaint);
+            case arrow:
+                shape = new Arrow(mShapePaint);
                 break;
-            case 10:
-                shape = new BiArrow(mPaint);
+            case biarrow:
+                shape = new BiArrow(mShapePaint);
                 break;
         }
-        sSparseArray.put(type, shape);
         return shape;
     }
 }

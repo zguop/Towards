@@ -20,12 +20,12 @@ public class Ellipse extends Shape {
     public Ellipse(Paint paint) {
         super(paint);
         mRectF = new RectF();
+        strokeWidth = mPaint.getStrokeWidth();
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawOval(mRectF, mPaint);
-         strokeWidth = mPaint.getStrokeWidth();
     }
 
     @Override

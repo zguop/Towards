@@ -16,6 +16,6 @@ public class Eraser extends Pencil {
         super(paint);
         mPaint.setAlpha(0);
         mPaint.setColor(Color.TRANSPARENT);
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
     }
 }

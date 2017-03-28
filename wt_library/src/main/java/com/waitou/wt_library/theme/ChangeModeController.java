@@ -248,9 +248,7 @@ public class ChangeModeController {
      */
     private void refreshUI(Activity ctx) {
         refreshStatusBar(ctx);
-        for (SkinView skinView : mSkinViewList) {
-            skinView.apply();
-        }
+        mSkinViewList.forEach(SkinView::apply);
     }
 
     /**
@@ -276,7 +274,7 @@ public class ChangeModeController {
                     ViewGroup.LayoutParams.MATCH_PARENT);
             ((ViewGroup) decorView).addView(view, layoutParam);
             ValueAnimator objectAnimator = ValueAnimator.ofFloat(1f, 0f);//view, "alpha",
-            objectAnimator.setDuration(500);
+            objectAnimator.setDuration(1500);
             objectAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {

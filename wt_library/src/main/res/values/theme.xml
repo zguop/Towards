@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--styles 颜色-->
+    <!--字体色-->
     <attr name="skin_kind_color_not" format="color|reference"/>
+    <!--首页标题色-->
     <attr name="skin_home_title_not" format="color|reference"/>
+    <!--dialog背景色-->
+    <attr name="skin_dialog_bg_not" format="color|reference"/>
+    <!--主题反差色-->
+    <attr name="skin_contrast_color_not" format="color|reference"/>
 </resources>

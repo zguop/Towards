@@ -17,7 +17,7 @@ import java.util.List;
 
 public class UActivity {
 
-    static LinkedList<Activity> mActivityList = new LinkedList<>();
+    private static LinkedList<Activity> mActivityList = new LinkedList<>();
 
     public static LinkedList<Activity> getActivityList() {
         if (mActivityList == null) {
@@ -28,9 +28,7 @@ public class UActivity {
 
     public static void finishAllActivity() {
         if (mActivityList != null) {
-            for (Activity activity : mActivityList) {
-                activity.finish();
-            }
+            mActivityList.forEach(Activity::finish);
         }
     }
 

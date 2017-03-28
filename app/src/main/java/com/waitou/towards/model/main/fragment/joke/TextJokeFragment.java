@@ -41,8 +41,8 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
     public void initData(Bundle savedInstanceState) {
         initTootBar();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { //6.0以下xml中默认颜色 高亮 代码重新设置一遍
-            mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
-            mToolbarJokeTitle.item2.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_joke_title_not));
+            mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_general_text_not));
+            mToolbarJokeTitle.item2.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_general_text_not));
         }
         XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), getP().getFragment(0), getP().getFragment(1));
         getBinding().setAdapter(adapter);

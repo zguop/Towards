@@ -24,7 +24,7 @@
             android:paddingRight="16dp"
             android:paddingTop="8dp"
             android:text="推荐段子"
-            android:textColor="@color/skin_joke_title_not"
+            android:textColor="@color/skin_general_text_not"
             android:textSize="14dp"/>
 
         <android.support.v7.widget.AppCompatRadioButton
@@ -40,7 +40,7 @@
             android:paddingRight="16dp"
             android:paddingTop="8dp"
             android:text="最热趣图"
-            android:textColor="@color/skin_joke_title_not"
+            android:textColor="@color/skin_general_text_not"
             android:textSize="14dp"/>
     </RadioGroup>
 

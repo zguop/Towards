@@ -21,7 +21,6 @@
         android:id="@+id/x_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_grey"
         android:fadeScrollbars="true"
         android:scrollbars="none"
         app:adapter="@{adapter}"

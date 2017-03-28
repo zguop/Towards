@@ -19,7 +19,7 @@ public class DashedLine extends Shape {
 
     public DashedLine(Paint paint) {
         super(paint);
-        PathEffect effects = new DashPathEffect(new float[]{5, 5, 5, 5}, 1);
+        PathEffect effects = new DashPathEffect(new float[]{5, 20}, 2);
         mPaint.setPathEffect(effects);
     }
 

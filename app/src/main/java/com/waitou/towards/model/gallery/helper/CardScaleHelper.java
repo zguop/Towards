@@ -105,7 +105,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt(mContext, 2 * (mPagePadding + mShowLeftCardWidth));
+            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt( 2 * (mPagePadding + mShowLeftCardWidth));
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });
