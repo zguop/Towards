@@ -1,11 +1,10 @@
 package com.waitou.towards.model.graffiti;
 
+import android.Manifest;
 import android.databinding.ObservableInt;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
-import com.tarek360.instacapture.InstaCapture;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.enums.GraffitiToolEnum;
@@ -13,15 +12,12 @@ import com.waitou.towards.util.AlertToast;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Subscriber;
 
 /**
  * Created by waitou on 17/3/27.
@@ -69,22 +65,16 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     }
     /*--------------- 选择工具 end---------------*/
 
-    public void save(GraffitiView layout) {
-        InstaCapture.getInstance(getV()).captureRx().subscribe(new Subscriber<Bitmap>() {
-            @Override public void onCompleted() {
-                //TODO..
-            }
-
-            @Override public void onError(Throwable e) {
-                //TODO..
-            }
-
-            @Override public void onNext(Bitmap bitmap) {
-                //TODO..
-                UImage.saveImageToGallery(getV(), bitmap, true);
-                AlertToast.show(" 保存 --- " );
-            }
-        });
-
+    public void save(GraffitiView graffitiView) {
+        getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(permission -> {
+                    if (permission.granted) {
+                        graffitiView.save();
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        AlertToast.show("保存图片需要授权该权限！"); //拒绝了权限
+                    } else {
+                        AlertToast.show("请到应用设置中开启权限哦！");//永久拒绝了权限
+                    }
+                }));
     }
 }

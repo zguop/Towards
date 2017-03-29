@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -14,6 +12,9 @@ import android.view.SurfaceView;
 import com.waitou.towards.model.graffiti.shape.Perch;
 import com.waitou.towards.model.graffiti.shape.Shape;
 import com.waitou.towards.model.graffiti.shape.ShapeFactory;
+import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.UDimens;
+import com.waitou.wt_library.kit.UImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +27,18 @@ import java.util.List;
 public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mSurfaceHolder;
-    private Canvas        mCanvas;
+    private ShapeFactory  mFactory;
+    private Shape         mShape;
+    private Bitmap        mBitmap;
 
-    private boolean      isCreate;
-    private ShapeFactory mFactory;
-    private Shape        mShape;
-    private List<Shape> mShapes = new ArrayList<>();
-    private int shapeIndex;
+    private boolean isCreate;
+    private int     shapeIndex;
+    private int     type;
+    private int     width;
+    private int     color;
 
-    private int    type;
-    private int    width;
-    private int    color;
-    private Bitmap mBitmap;
+    private List<Shape>   mShapes    = new ArrayList<>();
+    private List<Integer> mCleanBuff = new ArrayList<>();
 
     public GraffitiView(Context context) {
         this(context, null);
@@ -51,8 +52,6 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         super(context, attrs, defStyleAttr);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
-        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
-        setZOrderMediaOverlay(true);
         //设置屏幕保持常亮
         setKeepScreenOn(true);
         //创建形状工厂
@@ -77,19 +76,37 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         mShape.setPaintColor(color);
     }
 
-    public void draw(boolean isCanvasShape) {
+    /**
+     * 核心绘制方法
+     */
+    private void doDraw(Canvas canvas) {
+        canvas.drawColor(Color.WHITE);
+        if (mBitmap != null) {
+            canvas.drawBitmap(mBitmap, 0, 0, null);
+        }
+        int stamp = 0;
+        if (mCleanBuff.size() > 0) {
+            stamp = mCleanBuff.get(mCleanBuff.size() - 1);
+        }
+        for (int i = stamp; i < shapeIndex; i++) {
+            mShapes.get(i).draw(canvas);
+        }
+        if (mShape != null) {
+            mShape.draw(canvas);
+        }
+    }
+
+    /**
+     * 获取SurfaceView画布进行绘制
+     */
+    private void draw() {
+        Canvas canvas = null;
         try {
-            mCanvas = mSurfaceHolder.lockCanvas();
-            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            for (int i = 0; i < shapeIndex; i++) {
-                mShapes.get(i).draw(mCanvas);
-            }
-            if (isCanvasShape && mShape != null) {
-                mShape.draw(mCanvas);
-            }
+            canvas = mSurfaceHolder.lockCanvas();
+            doDraw(canvas);
         } finally {
-            if (mCanvas != null) {
-                mSurfaceHolder.unlockCanvasAndPost(mCanvas);
+            if (canvas != null) {
+                mSurfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
     }
@@ -108,7 +125,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
      */
     private void canvasMove(float x, float y) {
         mShape.move(x, y, MotionEvent.ACTION_MOVE);
-        draw(true);
+        draw();
     }
 
     /**
@@ -116,8 +133,9 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
      */
     private void canvasUp(float x, float y) {
         mShape.move(x, y, MotionEvent.ACTION_MOVE);
-        draw(true);
+        draw();
         addShape(mShape);
+        mShape = null;
     }
 
     /**
@@ -128,9 +146,12 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
             if (shapeIndex >= mShapes.size()) {
                 return;
             }
+            if (mShapes.get(shapeIndex) instanceof Perch) {
+                mCleanBuff.add(shapeIndex);
+            }
             shapeIndex++;
             if (isCreate) {
-                draw(false);
+                draw();
             }
         }
     }
@@ -144,8 +165,11 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
                 return;
             }
             shapeIndex--;
+            if (mShapes.get(shapeIndex) instanceof Perch) {
+                mCleanBuff.remove(mCleanBuff.size() - 1);
+            }
             if (isCreate) {
-                draw(false);
+                draw();
             }
         }
     }
@@ -160,10 +184,11 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
             if (!(shape instanceof Perch)) {
                 Perch perch = new Perch(null);
                 addShape(perch);
+                mCleanBuff.add(shapeIndex);
             }
         }
         if (isCreate) {
-            draw(false);
+            draw();
         }
     }
 
@@ -202,6 +227,21 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         return true;
     }
 
+    /**
+     * 保存为图片
+     */
+    public void save() {
+        if (shapeIndex > 0 && !(mShapes.get(mShapes.size() - 1) instanceof Perch) || mBitmap != null) {
+            Bitmap bitmap = Bitmap.createBitmap(UDimens.getDeviceWidth(getContext()), UDimens.getDeviceHeight(getContext()), Bitmap.Config.ARGB_8888);
+            Canvas bitCanvas = new Canvas(bitmap);
+            doDraw(bitCanvas);
+            UImage.saveImageToGallery(getContext(), bitmap);
+            bitmap.recycle();
+            AlertToast.show("图片成功保存到相册O(∩_∩)O~");
+        } else {
+            AlertToast.show("先绘制点什么吧!╮(╯▽╰)╭");
+        }
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -210,7 +250,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        draw(false);
+        draw();
     }
 
     @Override

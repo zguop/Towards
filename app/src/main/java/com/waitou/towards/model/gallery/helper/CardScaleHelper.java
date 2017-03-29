@@ -10,6 +10,8 @@ import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UImage;
 
+import static com.waitou.wt_library.kit.UImage.scale;
+
 
 public class CardScaleHelper {
     private RecyclerView mRecyclerView;
@@ -89,11 +91,12 @@ public class CardScaleHelper {
         }
     }
 
-    public void saveImageToGallery(boolean isScreen) {
+    public void saveImageToGallery() {
         View positionView = getPositionView();
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
-            UImage.saveImageToGallery(mContext, positionView.getDrawingCache(), isScreen);
+            Bitmap scale = scale(positionView.getDrawingCache(), UDimens.getDeviceWidth(mContext), UDimens.getDeviceHeight(mContext));
+            UImage.saveImageToGallery(mContext, scale);
             AlertToast.show("图片成功保存到相册O(∩_∩)O~");
             positionView.setDrawingCacheEnabled(false);
         }
@@ -105,7 +108,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt( 2 * (mPagePadding + mShowLeftCardWidth));
+            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt(2 * (mPagePadding + mShowLeftCardWidth));
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });

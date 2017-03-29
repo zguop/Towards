@@ -1344,10 +1344,7 @@ public class UImage {
      * 将bitmap保存到系统图库
      */
     @SuppressLint("SimpleDateFormat")
-    public static void saveImageToGallery(Context context, Bitmap bmp, boolean isScreen) {
-        if (isScreen) {
-            bmp = scale(bmp, UDimens.getDeviceWidth(context), UDimens.getDeviceHeight(context));
-        }
+    public static void saveImageToGallery(Context context, Bitmap bmp) {
         java.io.File picDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         if (!picDir.exists()) {
             if (picDir.mkdir()) {

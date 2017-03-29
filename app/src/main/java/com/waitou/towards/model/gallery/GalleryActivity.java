@@ -87,7 +87,7 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
                 .compose(getRxPermissions().ensureEach(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        if (mCardScaleHelper != null) mCardScaleHelper.saveImageToGallery(true);
+                        if (mCardScaleHelper != null) mCardScaleHelper.saveImageToGallery();
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         AlertToast.show("保存图片需要授权该权限！"); //拒绝了权限
                     } else {
