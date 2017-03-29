@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
+import com.tarek360.instacapture.InstaCapture;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.enums.GraffitiToolEnum;
@@ -19,6 +20,8 @@ import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Subscriber;
 
 /**
  * Created by waitou on 17/3/27.
@@ -67,8 +70,21 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     /*--------------- 选择工具 end---------------*/
 
     public void save(GraffitiView layout) {
-        Bitmap bitmap = UImage.view2Bitmap(layout);
-        UImage.saveImageToGallery(getV(), bitmap, true);
-        AlertToast.show(" 保存 --- " );
+        InstaCapture.getInstance(getV()).captureRx().subscribe(new Subscriber<Bitmap>() {
+            @Override public void onCompleted() {
+                //TODO..
+            }
+
+            @Override public void onError(Throwable e) {
+                //TODO..
+            }
+
+            @Override public void onNext(Bitmap bitmap) {
+                //TODO..
+                UImage.saveImageToGallery(getV(), bitmap, true);
+                AlertToast.show(" 保存 --- " );
+            }
+        });
+
     }
 }

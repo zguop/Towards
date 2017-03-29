@@ -2,16 +2,15 @@ package com.waitou.towards.model.graffiti;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.waitou.towards.R;
 import com.waitou.towards.model.graffiti.shape.Perch;
 import com.waitou.towards.model.graffiti.shape.Shape;
 import com.waitou.towards.model.graffiti.shape.ShapeFactory;
@@ -52,6 +51,8 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         super(context, attrs, defStyleAttr);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
+        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
+        setZOrderMediaOverlay(true);
         //设置屏幕保持常亮
         setKeepScreenOn(true);
         //创建形状工厂
@@ -79,10 +80,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     public void draw(boolean isCanvasShape) {
         try {
             mCanvas = mSurfaceHolder.lockCanvas();
-            mCanvas.drawColor(Color.WHITE);
-            if (mBitmap != null) {
-                mCanvas.drawBitmap(mBitmap, 0, 0, null);
-            }
+            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             for (int i = 0; i < shapeIndex; i++) {
                 mShapes.get(i).draw(mCanvas);
             }
@@ -120,7 +118,6 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         mShape.move(x, y, MotionEvent.ACTION_MOVE);
         draw(true);
         addShape(mShape);
-        Log.d("aa", " shapeIndex = " + shapeIndex + " canvasUp size =  " + mShapes.size());
     }
 
     /**
@@ -161,7 +158,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         if (mShapes.size() > 0) {
             Shape shape = mShapes.get(mShapes.size() - 1);
             if (!(shape instanceof Perch)) {
-                Perch perch = new Perch(null, mBitmap);
+                Perch perch = new Perch(null);
                 addShape(perch);
             }
         }
@@ -170,17 +167,10 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         }
     }
 
-
-    public void insertBitmap() {
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        draw(false);
-    }
-
     /**
      * 检测删除回退前进在开始绘制后没有用的数据
      */
     private void removeRedundantShape() {
-        Log.d("aa", " removeRedundantShape shapeIndex = " + shapeIndex + " size = " + mShapes.size());
         if (shapeIndex != mShapes.size()) {
             mShapes = mShapes.subList(0, shapeIndex);
         }
