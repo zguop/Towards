@@ -10,7 +10,7 @@ public enum GraffitiToolEnum {
 
     pencil(0, R.drawable.svg_ic_line, "涂鸦"),//笔
     eraser(1, R.drawable.svg_ic_line, "橡皮擦"),//橡皮
-    text(2, R.drawable.svg_ic_line, "文字"),//文本
+    text(2, R.drawable.svg_ic_line, "文字暂不可用"),//文本
     line(3, R.drawable.svg_ic_line, "直线"),
     rectangle(4, R.drawable.svg_ic_line, "矩形"),//矩形
     circle(5, R.drawable.svg_ic_line, "圆形"), //圆

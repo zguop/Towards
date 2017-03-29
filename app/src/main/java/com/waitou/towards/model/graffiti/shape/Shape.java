@@ -15,11 +15,13 @@ public abstract class Shape {
 
     public Shape(Paint paint) {
         this.mPaint = paint;
-        mPaint.setDither(true); //设置防抖动 绘制出来比较柔和
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE); //设置画笔为空心
-        mPaint.setStrokeJoin(Paint.Join.ROUND); // 设置画笔圆角
-        mPaint.setStrokeCap(Paint.Cap.ROUND);   //设置画笔转弯连接处的风格
+        if (mPaint != null) {
+            mPaint.setDither(true); //设置防抖动 绘制出来比较柔和
+            mPaint.setAntiAlias(true);
+            mPaint.setStyle(Paint.Style.STROKE); //设置画笔为空心
+            mPaint.setStrokeJoin(Paint.Join.ROUND); // 设置画笔圆角
+            mPaint.setStrokeCap(Paint.Cap.ROUND);   //设置画笔转弯连接处的风格
+        }
     }
 
     /**

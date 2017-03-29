@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/svg_ic_graffiti"
+        android:shortcutDisabledMessage="@string/not_available"
+        android:shortcutId="graffiti"
+        android:shortcutLongLabel="@string/graffiti_tips_long"
+        android:shortcutShortLabel="@string/graffiti_tips_short">
+
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.waitou.towards.model.graffiti.GraffitiActivity"
+            android:targetPackage="com.waitou.towards.model.graffiti"/>
+        <categories android:name="android.shortcut.conversation"/>
+    </shortcut>
+
+</shortcuts>

@@ -61,4 +61,8 @@ public class ShapeFactory {
         }
         return shape;
     }
+
+    public Paint getShapePaint(){
+        return mShapePaint;
+    }
 }

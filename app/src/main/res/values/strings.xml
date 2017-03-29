@@ -14,4 +14,9 @@
 
     <string name="footer_bar_behavior">com.waitou.towards.util.behavior.FooterBarBehavior</string>
     <string name="quick_hide_behavior">com.waitou.towards.util.behavior.QuickHideBehavior</string>
+
+
+    <string name="graffiti_tips_short">随手涂鸦 脑洞大开</string>
+    <string name="graffiti_tips_long">随手涂鸦,支持9种图形,撤销,回退,清屏,应该有的功能全部都有!!</string>
+    <string name="not_available">只是让你们看看的</string>
 </resources>

@@ -1,15 +1,18 @@
 package com.waitou.towards.model.graffiti;
 
 import android.databinding.ObservableInt;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.enums.GraffitiToolEnum;
+import com.waitou.towards.util.AlertToast;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
@@ -62,4 +65,10 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         mToolDialog.dismiss();
     }
     /*--------------- 选择工具 end---------------*/
+
+    public void save(GraffitiView layout) {
+        Bitmap bitmap = UImage.view2Bitmap(layout);
+        UImage.saveImageToGallery(getV(), bitmap, true);
+        AlertToast.show(" 保存 --- " );
+    }
 }
