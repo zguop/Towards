@@ -60,6 +60,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
         }
     }
 
+
     @Override
     public int getItemCount() {
         return mCollection.size();

@@ -13,6 +13,7 @@ import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +83,7 @@ public class ChangeModeController {
     }
 
     public void init(final AppCompatActivity activity) {
+
         LayoutInflaterCompat.setFactory(LayoutInflater.from(activity), (parent, name, context, attrs) -> {
             List<SkinAttr> skinAttrsList = getSkinAttrs(attrs, context);
             //如果属性为null 并且名字没有包含. 说明不是自定义的view
@@ -248,7 +250,9 @@ public class ChangeModeController {
      */
     private void refreshUI(Activity ctx) {
         refreshStatusBar(ctx);
-        mSkinViewList.forEach(SkinView::apply);
+        for (SkinView skinView : mSkinViewList) {
+            skinView.apply();
+        }
     }
 
     /**
@@ -274,7 +278,7 @@ public class ChangeModeController {
                     ViewGroup.LayoutParams.MATCH_PARENT);
             ((ViewGroup) decorView).addView(view, layoutParam);
             ValueAnimator objectAnimator = ValueAnimator.ofFloat(1f, 0f);//view, "alpha",
-            objectAnimator.setDuration(1500);
+            objectAnimator.setDuration(1000);
             objectAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -312,6 +316,7 @@ public class ChangeModeController {
         BACKGROUD("background") {
             @Override
             public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
+                Log.d("aa" ,attrName + " attrValueResName = " + attrValueResName + " attrValueTypeName = " + attrValueTypeName);
                 Context context = view.getContext();
                 view.setBackground(ThemeUtils.getDrawable(context, getResId(context, attrName)));
             }

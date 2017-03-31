@@ -12,6 +12,7 @@ import com.waitou.wt_library.kit.UDimens;
 
 /**
  * Created by waitou on 17/3/27.
+ * 存放列表的dialog
  */
 
 public class ListOfDialog extends BaseDialog {
@@ -36,8 +37,8 @@ public class ListOfDialog extends BaseDialog {
 
     public ListOfDialog setMaxContentView(int itemCount, int itemHeight) {
         ViewGroup.LayoutParams layoutParams = mRecyclerViewBinding.getRoot().getLayoutParams();
-        int screenHeight = UDimens.getDeviceHeight(getContext());
-        int screenWidth = UDimens.getDeviceWidth(getContext());
+        int screenHeight = UDimens.getDeviceHeight();
+        int screenWidth = UDimens.getDeviceWidth();
         int min = Math.min(screenHeight, screenWidth); //取屏幕最小值 减去dialog 头部 底部的高度 再多减去大概高度
         int maxHeight = min - UDimens.dip2pxInt(140) - UDimens.dip2pxInt(itemHeight);
         int planHeight = itemCount * UDimens.dip2pxInt(itemHeight);// 原本高度

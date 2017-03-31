@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,9 +14,6 @@ import android.view.SurfaceView;
 import com.waitou.towards.model.graffiti.shape.Perch;
 import com.waitou.towards.model.graffiti.shape.Shape;
 import com.waitou.towards.model.graffiti.shape.ShapeFactory;
-import com.waitou.towards.util.AlertToast;
-import com.waitou.wt_library.kit.UDimens;
-import com.waitou.wt_library.kit.UImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.List;
 public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mSurfaceHolder;
-    private ShapeFactory  mFactory;
     private Shape         mShape;
     private Bitmap        mBitmap;
 
@@ -52,10 +50,10 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         super(context, attrs, defStyleAttr);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
+        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
+        setZOrderMediaOverlay(true);
         //设置屏幕保持常亮
         setKeepScreenOn(true);
-        //创建形状工厂
-        mFactory = new ShapeFactory();
     }
 
     public void setShape(int type) {
@@ -71,7 +69,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     }
 
     private void createTool() {
-        mShape = mFactory.create(type);
+        mShape = ShapeFactory.create(type);
         mShape.setStrokeWidth(width);
         mShape.setPaintColor(color);
     }
@@ -79,8 +77,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     /**
      * 核心绘制方法
      */
-    private void doDraw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+    public void doDraw(Canvas canvas) {
         if (mBitmap != null) {
             canvas.drawBitmap(mBitmap, 0, 0, null);
         }
@@ -103,6 +100,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         Canvas canvas = null;
         try {
             canvas = mSurfaceHolder.lockCanvas();
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             doDraw(canvas);
         } finally {
             if (canvas != null) {
@@ -182,7 +180,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         if (mShapes.size() > 0) {
             Shape shape = mShapes.get(mShapes.size() - 1);
             if (!(shape instanceof Perch)) {
-                Perch perch = new Perch(null);
+                Perch perch = new Perch();
                 addShape(perch);
                 mCleanBuff.add(shapeIndex);
             }
@@ -228,19 +226,10 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     }
 
     /**
-     * 保存为图片
+     * 检查是否绘制过图片
      */
-    public void save() {
-        if (shapeIndex > 0 && !(mShapes.get(mShapes.size() - 1) instanceof Perch) || mBitmap != null) {
-            Bitmap bitmap = Bitmap.createBitmap(UDimens.getDeviceWidth(getContext()), UDimens.getDeviceHeight(getContext()), Bitmap.Config.ARGB_8888);
-            Canvas bitCanvas = new Canvas(bitmap);
-            doDraw(bitCanvas);
-            UImage.saveImageToGallery(getContext(), bitmap);
-            bitmap.recycle();
-            AlertToast.show("图片成功保存到相册O(∩_∩)O~");
-        } else {
-            AlertToast.show("先绘制点什么吧!╮(╯▽╰)╭");
-        }
+    public boolean checkSave() {
+        return shapeIndex > 0 && !(mShapes.get(mShapes.size() - 1) instanceof Perch);
     }
 
     @Override

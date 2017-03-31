@@ -1,6 +1,5 @@
 package com.waitou.wt_library.kit;
 
-import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.waitou.wt_library.BaseApplication;
@@ -28,27 +27,27 @@ public class UDimens {
     /**
      * 获取屏幕高度
      */
-    public static int getDeviceHeight(Context context) {
-        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+    public static int getDeviceHeight() {
+        DisplayMetrics dm = BaseApplication.getApp().getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 
     /**
      * 获取屏幕宽度
      */
-    public static int getDeviceWidth(Context context) {
-        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+    public static int getDeviceWidth() {
+        DisplayMetrics dm = BaseApplication.getApp().getResources().getDisplayMetrics();
         return dm.widthPixels;
     }
 
     /**
      * 获取状态栏的高度
      */
-    public static int getStatusHeight(Context context) {
+    public static int getStatusHeight() {
         int result = 10;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = BaseApplication.getApp().getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelOffset(resourceId);
+            result = BaseApplication.getApp().getResources().getDimensionPixelOffset(resourceId);
         }
         return result;
     }

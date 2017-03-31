@@ -1,7 +1,6 @@
 package com.waitou.towards.model.graffiti.shape;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 /**
@@ -15,10 +14,6 @@ public class Rectangle extends Shape {
     private float startY;
     private float stopX;
     private float stopY;
-
-    public Rectangle(Paint paint) {
-        super(paint);
-    }
 
     @Override
     public void draw(Canvas canvas) {

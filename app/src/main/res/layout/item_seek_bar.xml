@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.xw.repo.BubbleSeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bsb_max="100"
+            app:bsb_min="0"
+            app:bsb_second_track_color="?attr/colorPrimary"
+            app:bsb_section_count="5"
+            app:bsb_section_text_position="bottom_sides"
+            app:bsb_show_progress_in_float="true"
+            app:bsb_show_section_mark="true"
+            app:bsb_show_section_text="true"
+            app:bsb_show_thumb_text="true"
+            app:bsb_track_color="?attr/skin_kind_color_not"/>
+
+    </LinearLayout>
+</layout>

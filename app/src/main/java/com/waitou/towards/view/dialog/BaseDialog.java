@@ -50,7 +50,7 @@ public class BaseDialog extends Dialog {
     /**
      * 填充新布局到内容区域
      */
-    protected void setDialogContentView(View view) {
+    public void setDialogContentView(View view) {
         if (mBaseBinding.contentView.getChildCount() > 0) {
             mBaseBinding.contentView.removeAllViews();
         }

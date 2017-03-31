@@ -1,7 +1,5 @@
 package com.waitou.towards.model.graffiti.shape;
 
-import android.graphics.Paint;
-
 import com.waitou.towards.enums.GraffitiToolEnum;
 
 /**
@@ -11,58 +9,44 @@ import com.waitou.towards.enums.GraffitiToolEnum;
 
 public class ShapeFactory {
 
-    private Paint mShapePaint; //工具笔
-    private Paint mEraserPaint;//橡皮擦
-    private Paint mDashedPaint;//虚线笔
-
-    public ShapeFactory() {
-        mShapePaint = new Paint();
-        mEraserPaint = new Paint();
-        mDashedPaint = new Paint();
-    }
-
-    public Shape create(int type) {
+    public static Shape create(int type) {
         Shape shape = null;
         GraffitiToolEnum toolEnum = GraffitiToolEnum.valueOf(type);
         switch (toolEnum) {
             case pencil:
-                shape = new Pencil(mShapePaint);
+                shape = new Pencil();
                 break;
             case circle:
-                shape = new Circle(mShapePaint);
+                shape = new Circle();
                 break;
             case dashedLine:
-                shape = new DashedLine(mDashedPaint);
+                shape = new DashedLine();
                 break;
             case ellipse:
-                shape = new Ellipse(mShapePaint);
+                shape = new Ellipse();
                 break;
             case eraser:
-                shape = new Eraser(mEraserPaint);
+                shape = new Eraser();
                 break;
             case line:
-                shape = new Line(mShapePaint);
+                shape = new Line();
                 break;
             case rectangle:
-                shape = new Rectangle(mShapePaint);
+                shape = new Rectangle();
                 break;
             case text:
-                shape = new Text(mShapePaint);
+                shape = new Text();
                 break;
             case triangle:
-                shape = new Triangle(mShapePaint);
+                shape = new Triangle();
                 break;
             case arrow:
-                shape = new Arrow(mShapePaint);
+                shape = new Arrow();
                 break;
             case biarrow:
-                shape = new BiArrow(mShapePaint);
+                shape = new BiArrow();
                 break;
         }
         return shape;
-    }
-
-    public Paint getShapePaint(){
-        return mShapePaint;
     }
 }

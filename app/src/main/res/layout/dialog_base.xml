@@ -88,7 +88,7 @@
                     android:id="@+id/btn_divider"
                     android:layout_width="@dimen/px_1"
                     android:layout_height="match_parent"
-                    android:background="?attr/skin_contrast_color_not"
+                    android:background="?attr/colorPrimary"
                     tools:visibility="visible"/>
 
                 <TextView
@@ -97,7 +97,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="?attr/skin_contrast_color_not"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/dp_16"
                     android:visibility="gone"
                     tools:text="确定"

@@ -44,20 +44,13 @@
         <activity
             android:name=".model.gallery.GalleryActivity"
             android:screenOrientation="portrait"/>
-        <!--更改主题页面-->
-        <activity
-            android:name=".model.theme.ThemeActivity"
-            android:screenOrientation="portrait"/>
-
         <!--随手涂鸦-->
         <activity
             android:name=".model.graffiti.GraffitiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
-
         <activity
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
-
         <!--FileProvider配置-->
         <provider
             android:name="android.support.v4.content.FileProvider"

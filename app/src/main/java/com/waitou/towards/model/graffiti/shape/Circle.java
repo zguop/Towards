@@ -1,7 +1,6 @@
 package com.waitou.towards.model.graffiti.shape;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 /**
@@ -16,10 +15,6 @@ public class Circle extends Shape {
     private float stopX;
     private float stopY;
     private float mRadius;
-
-    public Circle(Paint paint) {
-        super(paint);
-    }
 
     @Override
     public void draw(Canvas canvas) {

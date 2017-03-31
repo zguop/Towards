@@ -2,6 +2,7 @@ package com.waitou.towards.model.graffiti;
 
 import android.os.Bundle;
 
+import com.jaeger.library.StatusBarUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityGraffitiBinding;
 import com.waitou.wt_library.base.XActivity;
@@ -30,6 +31,7 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        StatusBarUtil.setTranslucent(this,100);
         getBinding().setPresenter(getP());
     }
 

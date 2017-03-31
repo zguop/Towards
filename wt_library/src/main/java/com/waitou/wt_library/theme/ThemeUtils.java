@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
 
@@ -42,7 +43,7 @@ public class ThemeUtils {
     }
 
     /**
-     * 获取attrResId指向的颜色ColorStateList
+     * 获取attrResId指向的颜色ColorStateList AppCompatResources 删除了cache支持代码¬
      *
      * @return ColorStateList
      */
@@ -50,12 +51,11 @@ public class ThemeUtils {
         if (context == null) {
             return null;
         }
-
         return AppCompatResources.getColorStateList(context, resId);
     }
 
     /**
-     * 获取attrResId指向的Drawable
+     * 获取attrResId指向的Drawable  AppCompatResources.getDrawable 走cache的,不支持
      *
      * @return Drawable
      */
@@ -63,7 +63,7 @@ public class ThemeUtils {
         if (context == null) {
             return null;
         }
-        return AppCompatResources.getDrawable(context, resId);
+        return ContextCompat.getDrawable(context, resId);
     }
 
     /**

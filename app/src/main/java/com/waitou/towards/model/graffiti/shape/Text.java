@@ -1,7 +1,6 @@
 package com.waitou.towards.model.graffiti.shape;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 /**
@@ -14,8 +13,7 @@ public class Text extends Shape {
     private float startX;
     private float startY;
 
-    public Text(Paint paint) {
-        super(paint);
+    public Text() {
         mPaint.setTextSize(mPaint.getStrokeWidth());
     }
 

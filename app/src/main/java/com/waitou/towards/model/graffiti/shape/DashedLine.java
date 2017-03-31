@@ -2,7 +2,6 @@ package com.waitou.towards.model.graffiti.shape;
 
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.view.MotionEvent;
 
@@ -17,8 +16,7 @@ public class DashedLine extends Shape {
     private float stopX;
     private float stopY;
 
-    public DashedLine(Paint paint) {
-        super(paint);
+    public DashedLine() {
         PathEffect effects = new DashPathEffect(new float[]{5, 20}, 2);
         mPaint.setPathEffect(effects);
     }

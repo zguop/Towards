@@ -23,6 +23,12 @@
             app:shape="@{presenter.toolType}"
             app:strokeWidth="@{presenter.toolWidth}"/>
 
+        <com.waitou.towards.model.graffiti.GraffitiPicView
+            android:id="@+id/pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:scale="@{presenter.scale}"/>
+
         <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +44,7 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.save(graffiti)}"
+                android:onClick="@{() -> presenter.save(graffiti,pic)}"
                 android:src="@drawable/svg_ic_save"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
@@ -107,6 +113,7 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.selectColorDialog()}"
                 android:src="@drawable/svg_ic_color"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
@@ -117,6 +124,7 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.seekToolWidthDialog()}"
                 android:src="@drawable/svg_ic_b"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
@@ -133,6 +141,64 @@
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
                 app:fab_label="更改工具"
+                app:fab_size="mini"/>
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            app:menu_colorNormal="?attr/colorPrimary"
+            app:menu_colorPressed="?attr/colorPrimary"
+            app:menu_colorRipple="#8c8e91"
+            app:menu_fab_size="mini"
+            app:menu_icon="@drawable/svg_ic_operation_pic"
+            app:menu_labels_position="right">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_rotating"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="旋转"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.scaleSmallPic()}"
+                android:src="@drawable/svg_ic_narrow_mirror"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="缩小"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.scaleBigPic()}"
+                android:src="@drawable/svg_ic_big_mirror"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="放大"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_o"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="重置"
                 app:fab_size="mini"/>
 
         </com.github.clans.fab.FloatingActionMenu>

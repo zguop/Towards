@@ -17,8 +17,7 @@ public class Ellipse extends Shape {
     private float strokeWidth;
     private RectF mRectF;
 
-    public Ellipse(Paint paint) {
-        super(paint);
+    public Ellipse() {
         mRectF = new RectF();
         strokeWidth = mPaint.getStrokeWidth();
     }

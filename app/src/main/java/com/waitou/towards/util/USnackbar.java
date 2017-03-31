@@ -660,7 +660,7 @@ public class USnackbar {
             int[] locations = new int[2];
             targetView.getLocationOnScreen(locations);
             int snackbarHeight = calculateSnackBarHeight();
-            int screenHeight = UDimens.getDeviceHeight(getSnackbar().getView().getContext());
+            int screenHeight = UDimens.getDeviceHeight();
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
@@ -690,7 +690,7 @@ public class USnackbar {
             int[] locations = new int[2];
             targetView.getLocationOnScreen(locations);
             int snackbarHeight = calculateSnackBarHeight();
-            int screenHeight = UDimens.getDeviceHeight(getSnackbar().getView().getContext());
+            int screenHeight = UDimens.getDeviceHeight();
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
