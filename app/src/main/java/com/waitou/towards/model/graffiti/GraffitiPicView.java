@@ -2,21 +2,18 @@ package com.waitou.towards.model.graffiti;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.waitou.towards.R;
 import com.waitou.wt_library.kit.UDimens;
 
 /**
  * Created by waitou on 17/3/30.
+ * 图片层
  */
 
 public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callback {
@@ -25,7 +22,17 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
     private boolean       isCreate;
     private Bitmap        canvasBitmap;
     private Matrix        mMatrix;
-    private float         mScale;
+    private float         scale; //缩放的倍数
+    private int           rotate; //旋转的角度
+    private float         transX;
+    private float         transY;
+
+    private float bitmapWidth;
+    private float bitmapHeight;
+    private float scaleWidth;
+    private float scaleHeight;
+    private int   mDeviceWidth;
+    private int   mDeviceHeight;
 
     public GraffitiPicView(Context context) {
         this(context, null);
@@ -39,34 +46,22 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
         super(context, attrs, defStyleAttr);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
-
-        canvasBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-
+        mDeviceWidth = UDimens.getDeviceWidth();
+        mDeviceHeight = UDimens.getDeviceHeight();
         mMatrix = new Matrix();
-        judgePosition();
-//        mMatrix.setRotate(180, canvasBitmap.getWidth() / 2, canvasBitmap.getHeight() / 2);
-//        mMatrix.setTranslate(canvasBitmap.getWidth() , canvasBitmap.getHeight() );
     }
 
-    private void judgePosition() {
-        int deviceWidth = UDimens.getDeviceWidth();
-        int deviceHeight = UDimens.getDeviceHeight();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            deviceHeight -= UDimens.getStatusHeight();
-        }
-
-        int width = canvasBitmap.getWidth();
-        int height = canvasBitmap.getHeight();
-        float transX = 0;
-        float transY = 0;
-        if (width < deviceWidth) {
-            transX = (deviceWidth - width) / 2;
-        }
-
-        if (height < deviceHeight) {
-            transY = (deviceHeight - height) / 2;
-        }
+    /**
+     * 核心matrix转换方法
+     */
+    private void resizeMatrix() {
+        mMatrix.reset();
         mMatrix.setTranslate(transX, transY);
+        mMatrix.postScale(scale, scale);
+        mMatrix.preRotate(rotate, bitmapWidth / 2, bitmapHeight / 2);
+        if (isCreate) {
+            draw();
+        }
     }
 
     /**
@@ -91,9 +86,35 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        canvasBitmap = bitmap;
+        if (canvasBitmap != null) {
+            bitmapWidth = canvasBitmap.getWidth();
+            bitmapHeight = canvasBitmap.getHeight();
+            resizeMatrix();
+        }
+    }
+
     public void setScale(float scale) {
-        this.mScale = scale;
-        Log.d("aa" , " scale = " + scale);
+        this.scale = scale;
+        scaleWidth = bitmapWidth * this.scale;
+        scaleHeight = bitmapHeight * this.scale;
+        resizeMatrix();
+    }
+
+    public void setRotate(int rotate) {
+        this.rotate = rotate;
+        resizeMatrix();
+    }
+
+    public void setTransX(int transX) {
+        this.transX = transX;
+        resizeMatrix();
+    }
+
+    public void setTransY(int transY) {
+        this.transY = transY;
+        resizeMatrix();
     }
 
     public boolean checkSave() {
@@ -107,7 +128,7 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        draw();
+        resizeMatrix();
     }
 
     @Override

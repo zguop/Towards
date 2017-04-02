@@ -264,6 +264,43 @@ public class Kits {
         }
 
         /**
+         * 取得当前日期的年份，以yyyy格式返回.
+         *
+         * @return 当年 yyyy
+         */
+        public static String getCurrentYear() {
+            return getFormatDateTime(new java.util.Date(), "yyyy");
+        }
+
+        /**
+         * 取得当前日期的月份，以MM格式返回.
+         *
+         * @return 当前月份 MM
+         */
+        public static String getCurrentMonth() {
+            return getFormatDateTime(new java.util.Date(), "MM");
+        }
+
+
+        /**
+         * @return 当前月份有多少天；
+         */
+        public static int getDaysOfCurMonth() {
+            int curYear = Integer.parseInt(getCurrentYear()); // 当前年份
+            int curMonth = Integer.parseInt(getCurrentMonth());// 当前月份
+            int mArray[] = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,
+                    31};
+            // 判断闰年的情况 ，2月份有29天；
+            if ((curYear % 400 == 0)
+                    || ((curYear % 100 != 0) && (curYear % 4 == 0))) {
+                mArray[1] = 29;
+            }
+            return mArray[curMonth - 1];
+            // 如果要返回下个月的天数，注意处理月份12的情况，防止数组越界；
+            // 如果要返回上个月的天数，注意处理月份1的情况，防止数组越界；
+        }
+
+        /**
          * 时间是否大于选择的时间
          *
          * @param hour   时

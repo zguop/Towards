@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="presenter"
             type="com.waitou.towards.model.graffiti.GraffitiPresenter"/>
@@ -27,7 +29,11 @@
             android:id="@+id/pic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:scale="@{presenter.scale}"/>
+            app:bitmap="@{presenter.bitmapField}"
+            app:rotate="@{presenter.rotate}"
+            app:scale="@{presenter.scale}"
+            app:transX="@{presenter.leftMoveRight}"
+            app:transY="@{presenter.topMoveBottom}"/>
 
         <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
@@ -103,6 +109,7 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.uploadPic()}"
                 android:src="@drawable/svg_ic_pic"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
@@ -145,7 +152,6 @@
 
         </com.github.clans.fab.FloatingActionMenu>
 
-
         <com.github.clans.fab.FloatingActionMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -162,7 +168,57 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_top_arrow"
+                app:enabled="@{presenter.enable}"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="上移"
+                app:fab_size="mini"
+                app:move="@{presenter.moveTop}"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_bottom_arrow"
+                app:enabled="@{presenter.enable}"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="下移"
+                app:fab_size="mini"
+                app:move="@{presenter.moveBottom}"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_left_arrow"
+                app:enabled="@{presenter.enable}"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="左移"
+                app:fab_size="mini"
+                app:move="@{presenter.moveLeft}"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_right_arrow"
+                app:enabled="@{presenter.enable}"
+                app:fab_colorNormal="?attr/colorPrimary"
+                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="右移"
+                app:fab_size="mini"
+                app:move="@{presenter.moveRight}"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.rotatePic()}"
                 android:src="@drawable/svg_ic_rotating"
+                app:enabled="@{presenter.enable}"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
@@ -174,6 +230,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.scaleSmallPic()}"
                 android:src="@drawable/svg_ic_narrow_mirror"
+                app:enabled="@{presenter.enable}"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
@@ -185,6 +242,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.scaleBigPic()}"
                 android:src="@drawable/svg_ic_big_mirror"
+                app:enabled="@{presenter.enable}"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
@@ -194,7 +252,9 @@
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.reset()}"
                 android:src="@drawable/svg_ic_o"
+                app:enabled="@{presenter.enable}"
                 app:fab_colorNormal="?attr/colorPrimary"
                 app:fab_colorPressed="?attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"

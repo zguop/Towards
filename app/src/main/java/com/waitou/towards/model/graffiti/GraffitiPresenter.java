@@ -1,13 +1,20 @@
 package com.waitou.towards.model.graffiti;
 
 import android.Manifest;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ObservableFloat;
 import android.databinding.ObservableInt;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MotionEventCompat;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
@@ -26,6 +33,12 @@ import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by waitou on 17/3/27.
@@ -35,17 +48,29 @@ import java.util.List;
 public class GraffitiPresenter extends XPresent<GraffitiActivity> implements BaseViewAdapter.Presenter {
 
     //工具选择的type
-    public ObservableInt   toolType  = new ObservableInt(0);
+    public ObservableInt           toolType      = new ObservableInt(0);
     //画笔粗细控制
-    public ObservableInt   toolWidth = new ObservableInt(14);
+    public ObservableInt           toolWidth     = new ObservableInt(14);
     //画笔颜色
-    public ObservableInt   toolColor = new ObservableInt(Color.BLUE);
+    public ObservableInt           toolColor     = new ObservableInt(Color.parseColor("#99ff0000"));
     //图片缩放
-    public ObservableFloat scale     = new ObservableFloat(1.0f);
+    public ObservableFloat         scale         = new ObservableFloat(1.0f);
+    //图片旋转
+    public ObservableInt           rotate        = new ObservableInt(0);
+    //左移右移
+    public ObservableInt           leftMoveRight = new ObservableInt(0);
+    //上移下移
+    public ObservableInt           topMoveBottom = new ObservableInt(0);
+    //上传的图片
+    public ObservableField<Bitmap> bitmapField   = new ObservableField<>();
+    //图片是否可以操作
+    public ObservableBoolean       enable        = new ObservableBoolean(checkBitmap());
+
 
     private SingleTypeAdapter<GraffitiToolInfo> mGraffitiToolAdapter;
     private BaseDialog                          mToolDialog;
     private BaseDialog                          mSeekBarDialog;
+
 
     /*--------------- 选择工具 ---------------*/
     public void selectToolShowDialog() {
@@ -104,13 +129,78 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     }
     /*--------------- 颜色选择end ---------------*/
 
+    public void uploadPic() {
+        if (checkBitmap()) {
+            reset();
+        }
+        bitmapField.set(BitmapFactory.decodeResource(getV().getResources(), R.drawable.logo));
+        enable.set(checkBitmap());
+    }
 
     public void scaleBigPic() {
         this.scale.set(scale.get() + 0.05f);
     }
 
     public void scaleSmallPic() {
-        this.scale.set(scale.get() - 0.05f);
+        float scale = this.scale.get() - 0.05f;
+        if (scale < 0.1) {
+            return;
+        }
+        this.scale.set(scale);
+    }
+
+    public void rotatePic() {
+        this.rotate.set((rotate.get() + 90) % 360);
+    }
+
+    public void reset() {
+        this.scale.set(1f);
+        this.rotate.set(0);
+        this.leftMoveRight.set(0);
+        this.topMoveBottom.set(0);
+    }
+
+    public Action1<Integer> moveRight() {
+        return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() + 1));
+    }
+
+    public Action1<Integer> moveLeft() {
+        return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() - 1));
+    }
+
+    public Action1<Integer> moveTop() {
+        return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() - 1));
+    }
+
+    public Action1<Integer> moveBottom() {
+        return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() + 1));
+    }
+
+    private boolean checkBitmap() {
+        return bitmapField.get() != null;
+    }
+
+    private Subscription subscribe;
+
+    private void interval(int actionMasked, Action1<Long> action) {
+        if (actionMasked == MotionEvent.ACTION_DOWN) {
+            subscribe = Observable.interval(0, 10, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .onBackpressureDrop()
+                    .subscribe(action);
+        }
+        if (actionMasked == MotionEvent.ACTION_UP) {
+            if (subscribe != null) {
+                subscribe.unsubscribe();
+            }
+        }
+    }
+
+    @BindingAdapter("move")
+    public static void onTouch(View view, Action1<Integer> action) {
+        view.setOnTouchListener((v, event) -> {
+            action.call(MotionEventCompat.getActionMasked(event));
+            return false;
+        });
     }
 
     /*--------------- 图片保存 ---------------*/

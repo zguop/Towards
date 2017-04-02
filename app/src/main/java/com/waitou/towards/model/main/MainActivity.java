@@ -1,5 +1,7 @@
 package com.waitou.towards.model.main;
 
+import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +11,10 @@ import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
 import com.waitou.towards.R;
+import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.ActivityMainBinding;
 import com.waitou.towards.databinding.NavHeaderMainBinding;
 import com.waitou.towards.model.activity.RecommendedActivity;
-import com.waitou.towards.model.event.ThemeEvent;
 import com.waitou.towards.model.gallery.GalleryActivity;
 import com.waitou.towards.model.graffiti.GraffitiActivity;
 import com.waitou.towards.model.main.fragment.CircleFragment;
@@ -20,27 +22,39 @@ import com.waitou.towards.model.main.fragment.FigureFragment;
 import com.waitou.towards.model.main.fragment.PersonFragment;
 import com.waitou.towards.model.main.fragment.home.HomeFragment;
 import com.waitou.towards.model.main.fragment.joke.TextJokeFragment;
-import com.waitou.towards.model.theme.ThemeActivity;
+import com.waitou.towards.view.dialog.BaseDialog;
+import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.base.XFragmentAdapter;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.router.Router;
-import com.waitou.wt_library.rx.RxBus;
 import com.waitou.wt_library.theme.ChangeModeController;
+import com.waitou.wt_library.theme.ThemeEnum;
 import com.waitou.wt_library.theme.ThemeUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class MainActivity extends XActivity<XPresent, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener {
 
-    private HomeFragment     mHomeFragment;
-    private TextJokeFragment mTextJokeFragment;
-    private FigureFragment   mFigureFragment;
-    private CircleFragment   mCircleFragment;
-    private PersonFragment   mPersonFragment;
+    private HomeFragment                 mHomeFragment;
+    private TextJokeFragment             mTextJokeFragment;
+    private FigureFragment               mFigureFragment;
+    private CircleFragment               mCircleFragment;
+    private PersonFragment               mPersonFragment;
+    private SingleTypeAdapter<ThemeInfo> mThemeAdapter;
+    private BaseDialog                   mThemeDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        ChangeModeController.get().init(this);
+//        ChangeModeController.get().init(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -61,7 +75,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
         XFragmentAdapter adapter = new XFragmentAdapter(getSupportFragmentManager(), getHomeFragment(), getTextJokeFragment(), getFigureFragment(), getCircleFragment(), getPersonFragment());
         getBinding().setAdapter(adapter);
         getBinding().mainTab.setupWithViewPager(getBinding().fContent);
-        NavHeaderMainBinding binding = NavHeaderMainBinding.inflate(getLayoutInflater(), null, false);
+        NavHeaderMainBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, null, false);
         binding.setDrawableId(R.drawable.nav_header_img);
         StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         getBinding().navView.addHeaderView(binding.getRoot());
@@ -80,12 +94,6 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
             }
             return true;
         });
-        pend(RxBus.getDefault().toObservable(ThemeEvent.class).
-                subscribe(event -> {
-                    if (event.getInfo() != null) {
-                        ChangeModeController.get().changeNight(MainActivity.this, event.getInfo().themeEnum);
-                    }
-                }));
     }
 
     @Override
@@ -111,29 +119,74 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_tuijian:
-                Router.newIntent().from(this).to(RecommendedActivity.class).launch();
-                break;
-            case R.id.nav_all:
-                break;
-            case R.id.nav_meizi:
-                Router.newIntent().from(this).to(GalleryActivity.class).launch();
-                break;
-            case R.id.nav_graffiti:
-                Router.newIntent().from(this).to(GraffitiActivity.class).launch();
-                break;
-            case R.id.nav_collect:
-                break;
-            case R.id.nav_theme:
-                Router.newIntent().from(this).to(ThemeActivity.class).launch();
-                break;
-            case R.id.nav_about:
-                break;
-        }
         getBinding().mainDrawerLayout.closeDrawer(GravityCompat.START);
+        pend(Observable.timer(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    switch (item.getItemId()) {
+                        case R.id.nav_tuijian:
+                            Router.newIntent().from(this).to(RecommendedActivity.class).launch();
+                            break;
+                        case R.id.nav_all:
+                            break;
+                        case R.id.nav_meizi:
+                            Router.newIntent().from(this).to(GalleryActivity.class).launch();
+                            break;
+                        case R.id.nav_graffiti:
+                            Router.newIntent().from(this).to(GraffitiActivity.class).launch();
+                            break;
+                        case R.id.nav_collect:
+                            break;
+                        case R.id.nav_theme:
+                            changeNight();
+                            break;
+                        case R.id.nav_about:
+                            break;
+                    }
+                }));
         return true;
     }
+
+    /**
+     * 主题更换
+     */
+    private void changeNight() {
+        if (mThemeAdapter == null) {
+            mThemeAdapter = new SingleTypeAdapter<>(this, R.layout.item_theme);
+            List<ThemeInfo> themeInfoList = new ArrayList<>();
+            ThemeEnum theme = ChangeModeController.get().getThemeModel();
+            for (ThemeEnum themeModel : ThemeEnum.values()) {
+                ThemeInfo themeInfo = new ThemeInfo();
+                themeInfo.themeEnum = themeModel;
+                themeInfo.focus = theme.getColorId() == themeInfo.themeEnum.getColorId();
+                themeInfoList.add(themeInfo);
+            }
+            mThemeAdapter.set(themeInfoList);
+            mThemeAdapter.setPresenter((SingleTypeAdapter.Presenter<ThemeInfo>) themeInfo -> {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                    themeInfoList.stream()
+                            .filter(info -> info.focus)
+                            .forEach(info -> info.setFocus(false));
+                } else {
+                    pend(Observable.from(themeInfoList)
+                            .filter(info -> info.focus)
+                            .subscribe(info -> info.setFocus(false)));
+                }
+                themeInfo.setFocus(true);
+//                ChangeModeController.get().changeNight(MainActivity.this, themeInfo.themeEnum);
+                mThemeDialog.dismiss();
+                mThemeDialog = null;
+            });
+        }
+        if (mThemeDialog == null) {
+            mThemeDialog = new ListOfDialog(this)
+                    .setLayoutManager(LayoutManagerUtli.getGridLayoutManager(this, 3))
+                    .setAdapter(mThemeAdapter)
+                    .setTitle("更换主题")
+                    .setCancel("取消", null);
+        }
+        mThemeDialog.show();
+    }
+
 
     /*--------------- 初始化fragment ---------------*/
     private HomeFragment getHomeFragment() {
@@ -173,7 +226,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     protected void onDestroy() {
-        ChangeModeController.get().cancel();
+//        ChangeModeController.get().cancel();
         super.onDestroy();
     }
 }

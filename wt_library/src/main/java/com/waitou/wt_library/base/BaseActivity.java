@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,24 +26,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     private VDelegate             mVDelegate;
     private CompositeSubscription mPendingSubscriptions;
 
-    /**
-     * 屏幕高宽 子类需复写 isScreenDisplayMetrics 进行获取
-     */
-    protected int mScreenHeight;
-    protected int mScreenWidth;
-
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
         UActivity.getActivityList().add(this);
-        if (isScreenDisplayMetrics()) {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            mScreenHeight = displayMetrics.heightPixels;
-            mScreenWidth = displayMetrics.widthPixels;
-        }
     }
 
     protected VDelegate getUiDelegate() {
@@ -52,13 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mVDelegate = VDelegateBase.create(this);
         }
         return mVDelegate;
-    }
-
-    /**
-     * 是否获取屏幕高宽值 可选
-     */
-    protected boolean isScreenDisplayMetrics() {
-        return false;
     }
 
     /**

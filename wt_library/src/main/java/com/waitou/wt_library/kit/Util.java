@@ -1,5 +1,8 @@
 package com.waitou.wt_library.kit;
 
+import android.app.Activity;
+import android.view.WindowManager;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
@@ -31,5 +34,25 @@ public class Util {
                 }
             }
         }
+    }
+
+
+    /**
+     * 动态设置窗口全屏
+     */
+    public static void setWindowFullScreen(Activity activity, boolean fullScreen) {
+        if (activity == null || activity.getWindow() == null) {
+            return;
+        }
+        WindowManager.LayoutParams params = activity.getWindow().getAttributes();
+        if (fullScreen) {
+            params.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            params.flags |= WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        } else {
+            params.flags |= WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN;
+            params.flags |= WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+        activity.getWindow().setAttributes(params);
     }
 }

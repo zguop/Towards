@@ -2,10 +2,10 @@ package com.waitou.towards.model.graffiti;
 
 import android.os.Bundle;
 
-import com.jaeger.library.StatusBarUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityGraffitiBinding;
 import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.kit.Util;
 
 /**
  * Created by waitou on 17/3/19.
@@ -31,7 +31,7 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        StatusBarUtil.setTranslucent(this,100);
+        Util.setWindowFullScreen(this, true);
         getBinding().setPresenter(getP());
     }
 

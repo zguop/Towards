@@ -19,11 +19,6 @@ import com.waitou.wt_library.rx.RxBus;
 
 public class UtilsBindingAdapter {
 
-    @BindingAdapter("onClick")
-    public static void onClick(View view, View.OnClickListener clickListener) {
-        view.setOnClickListener(clickListener);
-    }
-
     @BindingAdapter({"code", "post"})
     public static void post(View view, int code, Object o) {
         view.setOnClickListener(v -> RxBus.getDefault().post(code, o));
