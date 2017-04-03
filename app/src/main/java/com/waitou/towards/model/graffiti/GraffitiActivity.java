@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityGraffitiBinding;
+import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.kit.Util;
 
@@ -37,5 +38,19 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
 
     @Override
     public void reloadData() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getBinding().graffiti.checkSave() || getBinding().pic.checkSave()) {
+            new BaseDialog(this)
+                    .setContent("确定要退出么")
+                    .setCancel("取消", null)
+                    .setOk("确定", this::finish)
+                    .setDCanceledOnTouchOutside(false)
+                    .show();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

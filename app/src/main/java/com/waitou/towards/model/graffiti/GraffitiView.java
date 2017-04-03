@@ -1,7 +1,6 @@
 package com.waitou.towards.model.graffiti;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -27,13 +26,11 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
 
     private SurfaceHolder mSurfaceHolder;
     private Shape         mShape;
-    private Bitmap        mBitmap;
-
-    private boolean isCreate;
-    private int     shapeIndex;
-    private int     type;
-    private int     width;
-    private int     color;
+    private boolean       isCreate;
+    private int           shapeIndex;
+    private int           type;
+    private int           width;
+    private int           color;
 
     private List<Shape>   mShapes    = new ArrayList<>();
     private List<Integer> mCleanBuff = new ArrayList<>();
@@ -78,9 +75,6 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
      * 核心绘制方法
      */
     public void doDraw(Canvas canvas) {
-        if (mBitmap != null) {
-            canvas.drawBitmap(mBitmap, 0, 0, null);
-        }
         int stamp = 0;
         if (mCleanBuff.size() > 0) {
             stamp = mCleanBuff.get(mCleanBuff.size() - 1);

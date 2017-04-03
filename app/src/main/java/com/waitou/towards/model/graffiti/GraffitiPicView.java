@@ -9,8 +9,6 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.waitou.wt_library.kit.UDimens;
-
 /**
  * Created by waitou on 17/3/30.
  * 图片层
@@ -26,13 +24,8 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
     private int           rotate; //旋转的角度
     private float         transX;
     private float         transY;
-
-    private float bitmapWidth;
-    private float bitmapHeight;
-    private float scaleWidth;
-    private float scaleHeight;
-    private int   mDeviceWidth;
-    private int   mDeviceHeight;
+    private float         bitmapWidth;
+    private float         bitmapHeight;
 
     public GraffitiPicView(Context context) {
         this(context, null);
@@ -46,8 +39,6 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
         super(context, attrs, defStyleAttr);
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
-        mDeviceWidth = UDimens.getDeviceWidth();
-        mDeviceHeight = UDimens.getDeviceHeight();
         mMatrix = new Matrix();
     }
 
@@ -97,8 +88,6 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
 
     public void setScale(float scale) {
         this.scale = scale;
-        scaleWidth = bitmapWidth * this.scale;
-        scaleHeight = bitmapHeight * this.scale;
         resizeMatrix();
     }
 

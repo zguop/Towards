@@ -66,13 +66,14 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     //图片是否可以操作
     public ObservableBoolean       enable        = new ObservableBoolean(checkBitmap());
 
-
     private SingleTypeAdapter<GraffitiToolInfo> mGraffitiToolAdapter;
     private BaseDialog                          mToolDialog;
     private BaseDialog                          mSeekBarDialog;
 
 
-    /*--------------- 选择工具 ---------------*/
+    /**
+     * 选择工具
+     */
     public void selectToolShowDialog() {
         if (mGraffitiToolAdapter == null) {
             mGraffitiToolAdapter = new SingleTypeAdapter<>(getV(), R.layout.item_select_tool);
@@ -95,13 +96,17 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         mToolDialog.show();
     }
 
+    /**
+     * 选择工具的点击回调方法
+     */
     public void selectToolItemClick(int position) {
         toolType.set(position);
         mToolDialog.dismiss();
     }
-    /*--------------- 选择工具 end---------------*/
 
-    /*--------------- 画笔宽度 ---------------*/
+    /**
+     * 调整画笔宽度
+     */
     public void seekToolWidthDialog() {
         if (mSeekBarDialog == null) {
             mSeekBarDialog = new BaseDialog(getV());
@@ -121,14 +126,18 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
             mSeekBarDialog.dismiss();
         }
     };
-    /*--------------- 画笔宽度 end ---------------*/
 
-    /*--------------- 颜色选择 ---------------*/
+    /**
+     * 选择颜色
+     */
     public void selectColorDialog() {
         new ColorPickerDialog(getV(), toolColor.get(), color -> toolColor.set(color)).show();
     }
-    /*--------------- 颜色选择end ---------------*/
 
+
+    /**
+     * 上传图片
+     */
     public void uploadPic() {
         if (checkBitmap()) {
             reset();
@@ -137,10 +146,16 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         enable.set(checkBitmap());
     }
 
+    /**
+     * 放大图片
+     */
     public void scaleBigPic() {
         this.scale.set(scale.get() + 0.05f);
     }
 
+    /**
+     * 缩小图片
+     */
     public void scaleSmallPic() {
         float scale = this.scale.get() - 0.05f;
         if (scale < 0.1) {
@@ -149,10 +164,16 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         this.scale.set(scale);
     }
 
+    /**
+     * 旋转图片 90
+     */
     public void rotatePic() {
         this.rotate.set((rotate.get() + 90) % 360);
     }
 
+    /**
+     * 重置图片属性
+     */
     public void reset() {
         this.scale.set(1f);
         this.rotate.set(0);
@@ -160,18 +181,30 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         this.topMoveBottom.set(0);
     }
 
+    /**
+     * 图片向右移动
+     */
     public Action1<Integer> moveRight() {
         return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() + 1));
     }
 
+    /**
+     * 图片向左移动
+     */
     public Action1<Integer> moveLeft() {
         return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() - 1));
     }
 
+    /**
+     * 图片向上移动
+     */
     public Action1<Integer> moveTop() {
         return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() - 1));
     }
 
+    /**
+     * 图片向下移动
+     */
     public Action1<Integer> moveBottom() {
         return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() + 1));
     }
@@ -203,7 +236,9 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         });
     }
 
-    /*--------------- 图片保存 ---------------*/
+    /**
+     * 图片保存
+     */
     public void save(GraffitiView graffitiView, GraffitiPicView graffitiPicView) {
         getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(permission -> {
