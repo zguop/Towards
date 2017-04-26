@@ -9,7 +9,9 @@ import android.support.annotation.LayoutRes;
 
 public interface UIView<P> extends IView<P> {
 
-    boolean initXView();
+    boolean defaultXView();
+
+    boolean defaultLoading();
 
     @LayoutRes
     int getContentViewId();

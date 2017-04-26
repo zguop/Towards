@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="android.widget.ImageView.ScaleType"/>
+
+        <variable
+            name="item"
+            type="com.waitou.photo_library.bean.PhotoInfo"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.photo_library.activity.PhotoWallPresenter"/>
+
+        <variable
+            name="position"
+            type="int"/>
+
+        <variable
+            name="count"
+            type="int"/>
+
+    </data>
+
+    <com.waitou.wt_library.view.SquareRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:marginBottom="@{position == count - 1 ? 45 : 0}">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/colorWhite"
+            android:contentDescription="@null"
+            android:onClick="@{() -> presenter.onPhotoItemClick(item, position)}"
+            android:scaleType="@{position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? ScaleType.CENTER_INSIDE : ScaleType.CENTER_CROP}"
+            app:fileImageUrl="@{item.photoPath}"
+            app:placeholder="@{position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? @drawable/svg_ic_camera : @drawable/svg_ic_photo_bg}"/>
+
+        <View
+            android:id="@+id/mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000"
+            android:visibility="@{presenter.selectionList.contains(item) ? View.VISIBLE : View.GONE}"
+            tools:visibility="visible"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
+            android:onCheckedChanged="@{(cb, isChecked) -> presenter.onItemCheckBoxChange(cb, isChecked, item, mask)}"
+            android:visibility="@{!presenter.mPhotoPickerFinal.isMultiMode() || position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? View.GONE : View.VISIBLE}"
+            app:buttonTintList="@{com.waitou.wt_library.R.attr.skin_contrast_color_not}"
+            app:checked="@{presenter.selectionList.contains(item)}"/>
+
+    </com.waitou.wt_library.view.SquareRelativeLayout>
+</layout>

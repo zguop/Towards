@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -77,7 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPendingSubscriptions != null && mPendingSubscriptions.hasSubscriptions()) {
+        if (mPendingSubscriptions != null) {
+            Log.d("aa", getClass().getSimpleName() + " 清楚rxjava");
             mPendingSubscriptions.clear();
         }
         if (UActivity.getActivityList().contains(this)) {

@@ -1,4 +1,4 @@
-package com.waitou.towards.util;
+package com.waitou.wt_library.kit;
 
 import android.content.Context;
 import android.widget.Toast;

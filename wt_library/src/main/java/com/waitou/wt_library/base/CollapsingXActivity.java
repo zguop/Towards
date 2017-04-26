@@ -19,7 +19,7 @@ public abstract class CollapsingXActivity<P extends UIPresent, D extends ViewDat
     private D d;
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 
@@ -47,19 +47,19 @@ public abstract class CollapsingXActivity<P extends UIPresent, D extends ViewDat
     protected abstract void initCollData(Bundle savedInstanceState);
 
 
-    /*--------------- toolbar的初始化 initXView 返回true 使用默认布局---------------*/
+    /*--------------- toolbar的初始化 defaultXView 返回true 使用默认布局---------------*/
     @Override
-    protected void initMenuActionBar(String title) {
+    protected void initMenuActionBar(CharSequence title) {
         getBinding().toolbar.initMenuActionBar(title);
     }
 
     @Override
-    protected void initMenuActionBar(String title, String menuText, View.OnClickListener listener) {
+    protected void initMenuActionBar(CharSequence title, CharSequence menuText, View.OnClickListener listener) {
         getBinding().toolbar.initMenuActionBar(title, menuText, listener);
     }
 
     @Override
-    protected void initIconActionBar(String title, int menuIcon, View.OnClickListener listener) {
+    protected void initIconActionBar(CharSequence title, int menuIcon, View.OnClickListener listener) {
         getBinding().toolbar.initIconActionBar(title, menuIcon, listener);
     }
 
@@ -69,7 +69,7 @@ public abstract class CollapsingXActivity<P extends UIPresent, D extends ViewDat
     }
 
     @Override
-    protected void setTitle(String title) {
+    protected void setToolbarTitle(CharSequence title) {
         getBinding().toolbar.setTitle(title);
     }
 

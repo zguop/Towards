@@ -68,7 +68,6 @@ public class WTBanner extends RelativeLayout {
                 mCircleIndicator.setViewPager(mViewPager, canLoop);
             }
         }
-
         this.isSetAdapter = true;
     }
 

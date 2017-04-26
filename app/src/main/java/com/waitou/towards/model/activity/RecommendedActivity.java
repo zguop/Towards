@@ -32,7 +32,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter,Activity
     }
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return true;
     }
 

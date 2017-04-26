@@ -1,4 +1,4 @@
-package com.waitou.towards.util.bindingadapter;
+package com.waitou.wt_library.kit;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
@@ -7,11 +7,13 @@ import android.widget.ImageView;
 import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.imageloader.ILoader;
 
+import java.io.File;
+
 /**
  * Created by waitou on 17/1/3.
  */
 
-public class GlideBindingAdapter {
+public class UGlideBinding {
 
     /**
      * CenterCrop,FitCenter
@@ -79,6 +81,16 @@ public class GlideBindingAdapter {
     @BindingAdapter({"cropImageUrl"})
     public static void loadCenterCropImageFromUrl(ImageView view, String url) {
         ILFactory.getLoader().loadCenterCropNet(view, url, null);
+    }
+
+    @BindingAdapter({"fileImageUrl", "placeholder"})
+    public static void loadFileImage(ImageView view, String file, Drawable loading) {
+        ILFactory.getLoader().loadFile(view, new File(file), new ILoader.Options(loading, null));
+    }
+
+    @BindingAdapter({"fileImageUrl"})
+    public static void loadFileImage(ImageView view, String file) {
+        ILFactory.getLoader().loadFile(view, new File(file), null);
     }
 
     @BindingAdapter("load")

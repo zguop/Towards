@@ -24,11 +24,6 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
     private SingleTypeAdapter<Displayable> mAdapter;
 
     @Override
-    public boolean initXView() {
-        return true;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.include_pull_recycler;
     }

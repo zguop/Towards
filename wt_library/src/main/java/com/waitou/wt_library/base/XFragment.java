@@ -21,7 +21,6 @@ import com.waitou.wt_library.recycler.XPullRecyclerView;
 
 public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends BaseFragment implements UIView<P> {
 
-
     private FragmentXBinding  mXBinding;
     private LayoutInflater    mInflater;
     private AppCompatActivity mAppCompatActivity;
@@ -34,14 +33,16 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.mInflater = inflater;
-        if (initXView()) {
+        if (defaultXView()) {
             mXBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_x, container, false);
             initReloadData(mXBinding.xContentLayout.getErrorView());
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
                 mXBinding.xContentLayout.addContentView(d.getRoot());
             }
-            showLoading();
+            if (defaultLoading()) {
+                showLoading();
+            }
         } else {
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
@@ -55,7 +56,7 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
                 getP().attachV(this);
             }
         }
-        return initXView() ? mXBinding.getRoot() : d.getRoot();
+        return defaultXView() ? mXBinding.getRoot() : d.getRoot();
     }
 
     @Override
@@ -81,6 +82,16 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     @Override
     public void setPresenter(P presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public boolean defaultXView() {
+        return true;
+    }
+
+    @Override
+    public boolean defaultLoading() {
+        return true;
     }
 
     @Override

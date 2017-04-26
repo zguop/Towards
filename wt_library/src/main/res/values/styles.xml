@@ -21,6 +21,9 @@
         <item name="skin_home_title_not">@color/home_title1</item>
         <item name="skin_dialog_bg_not">@color/color_00bf7e</item>
         <item name="skin_contrast_color_not">@color/color_00bf7e</item>
+        <item name="skin_transparent_theme_color">@color/color_powder_80</item>
+        <item name="skin_text_dark_color">@color/color_373737</item>
+        <item name="skin_text_gray_color">@color/color_a7a7a7</item>
 
     </style>
 
@@ -34,6 +37,10 @@
         <item name="skin_home_title_not">@color/home_title2</item>
         <item name="skin_dialog_bg_not">@color/color_31c2c5</item>
         <item name="skin_contrast_color_not">@color/color_31c2c5</item>
+        <item name="skin_transparent_theme_color">@color/color_red_80</item>
+        <item name="skin_text_dark_color">@color/color_373737</item>
+        <item name="skin_text_gray_color">@color/color_a7a7a7</item>
+
 
     </style>
 
@@ -42,16 +49,32 @@
         <item name="colorPrimary">@color/colorBlue</item>
         <item name="colorPrimaryDark">@color/colorBlue</item>
         <item name="colorAccent">@color/colorBlue</item>
-
+        <!--白色字体-->
         <item name="skin_kind_color_not">@color/colorWhite</item>
+        <!--相近暗淡色-->
         <item name="skin_home_title_not">@color/home_title3</item>
+        <!--dialog背景色-->
         <item name="skin_dialog_bg_not">@color/color_ef6f26</item>
+        <!--相反色-->
         <item name="skin_contrast_color_not">@color/color_ef6f26</item>
+        <!--主题透明度色-->
+        <item name="skin_transparent_theme_color">@color/color_blue_80</item>
+        <!--字体暗色-->
+        <item name="skin_text_dark_color">@color/color_373737</item>
+        <!--灰色字体-->
+        <item name="skin_text_gray_color">@color/color_a7a7a7</item>
     </style>
 
 
     <style name="Transparent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+
+
+    <style name="pop_style_fade">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 </resources>

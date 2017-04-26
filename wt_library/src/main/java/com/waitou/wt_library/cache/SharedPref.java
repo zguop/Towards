@@ -19,7 +19,6 @@ import java.util.Set;
  * Created by waitou on 17/1/4.
  * SharedPreferences存储工具
  */
-
 public class SharedPref {
 
     private static SharedPref        sInstance;

@@ -33,7 +33,7 @@ public class USDCard {
      * @return SD卡路径
      */
     public static String getSDCardPath() {
-        if (!isSDCardEnable()) return "sdcard unable!";
+        if (!isSDCardEnable()) return null;
         String cmd = "cat /proc/mounts";
         Runtime run = Runtime.getRuntime();
         BufferedReader bufferedReader = null;
@@ -61,12 +61,24 @@ public class USDCard {
     }
 
     /**
+     * /storage/emulated/0/Pictures/
+     *
+     * @return 获取路径
+     */
+    public static String getSDCardPublicPath(String type) {
+        File file = Environment.getExternalStoragePublicDirectory(type);
+        UFile.createOrExistsDir(file);
+        return file.getPath() + File.separator;
+    }
+
+
+    /**
      * 获取SD卡data路径
      *
      * @return SD卡data路径
      */
     public static String getDataPath() {
-        if (!isSDCardEnable()) return "sdcard unable!";
+        if (!isSDCardEnable()) return null;
         return Environment.getExternalStorageDirectory().getPath() + File.separator + "data" + File.separator;
     }
 
@@ -77,7 +89,7 @@ public class USDCard {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static String getFreeSpace() {
-        if (!isSDCardEnable()) return "sdcard unable!";
+        if (!isSDCardEnable()) return null;
         StatFs stat = new StatFs(getSDCardPath());
         long blockSize, availableBlocks;
         availableBlocks = stat.getAvailableBlocksLong();

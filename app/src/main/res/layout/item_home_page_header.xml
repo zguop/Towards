@@ -5,7 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/white">
+        android:background="@color/colorWhite">
 
         <TextView
             android:layout_width="2dp"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:textColor="@color/color666666"
+            android:textColor="@color/color_666666"
             android:textSize="15dp"
             tools:text="Android"/>
 
@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:drawableRight="@drawable/icon_right_arrow"
-            android:textColor="@color/color666666"
+            android:textColor="@color/color_666666"
             android:textSize="15dp"
             tools:text="asdasdsa"/>
 

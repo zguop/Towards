@@ -1,11 +1,16 @@
 package com.waitou.wt_library.kit;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.WindowManager;
+
+import com.waitou.wt_library.base.BaseActivity;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
+
+import rx.Subscription;
 
 /**
  * Created by waitou on 17/3/24.
@@ -34,6 +39,13 @@ public class Util {
                 }
             }
         }
+    }
+
+    /**
+     * 检测context 将 Subscription添加到队列
+     */
+    public static void contextAddSubscription(Context context, Subscription subscription) {
+        if (context instanceof BaseActivity) ((BaseActivity) context).pend(subscription);
     }
 
 

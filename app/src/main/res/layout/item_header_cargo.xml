@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="@{presenter.txName}"
-            android:textColor="@color/color666666"
+            android:textColor="@color/color_666666"
             android:textSize="17sp"
             android:textStyle="bold"/>
 

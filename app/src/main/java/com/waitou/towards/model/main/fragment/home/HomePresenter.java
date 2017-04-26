@@ -14,7 +14,7 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
-import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.browser.WebUtil;
 import com.waitou.wt_library.cache.SharedPref;

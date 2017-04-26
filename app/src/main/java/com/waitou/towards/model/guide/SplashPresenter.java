@@ -23,6 +23,7 @@ import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.EmptyErrorVerify;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.UString;
@@ -131,7 +132,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         }
 
         List<String> imgUrl; //stream操作 java8的 一大新特性
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) { //6.0以下xml中默认颜色 高亮 代码重新设置一遍
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             imgUrl = showLogoList.stream()
                     .filter(logoImg -> !logoImg.getIsShowLogoUrl())
                     .map(LogoImg::getSavePath)
@@ -182,7 +183,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void loadFileImg(String savePath) {
         File file = new File(savePath);
-        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>() {
+        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(UDimens.getDeviceWidth(), UDimens.getDeviceHeight()) {
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);

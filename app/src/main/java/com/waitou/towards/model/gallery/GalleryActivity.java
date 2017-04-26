@@ -14,7 +14,7 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityGalleryBinding;
 import com.waitou.towards.model.gallery.helper.CardAdapter;
 import com.waitou.towards.model.gallery.helper.CardScaleHelper;
-import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.base.CollapsingXActivity;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 

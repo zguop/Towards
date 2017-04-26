@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.waitou.photo_library.activity.PhotoPreviewPresenter"/>
+
+        <import type="android.view.animation.AnimationUtils"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="isPreview"
+            type="boolean"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.waitou.photo_library.view.FixedViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:currentItem="@={presenter.position}"
+            app:offscreenPageLimit="@{2}"/>
+
+        <RelativeLayout
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="?attr/skin_transparent_theme_color"
+            android:visibility="@{presenter.barVisibility ? View.VISIBLE : View.GONE}"
+            app:animation="@{AnimationUtils.loadAnimation(context,presenter.barVisibility ? com.waitou.photo_library.R.anim.top_in : com.waitou.photo_library.R.anim.top_out)}">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:onClick="@{() -> presenter.onBack(false)}"
+                android:scaleType="centerInside"
+                android:src="@drawable/back_white"
+                android:tint="?attr/skin_kind_color_not"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/back"
+                android:gravity="center_vertical"
+                android:text="@{@string/item_page_count(presenter.position + 1,presenter.mPhotoList.size())}"
+                android:textColor="?attr/skin_kind_color_not"
+                android:textSize="16dp"
+                tools:text="8/33"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> presenter.onBack(true)}"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@{@string/photo_preview_complete(presenter.selectPhotoList.size(),presenter.mPhotoPickerFinal.getSelectLimit())}"
+                android:textColor="?attr/skin_kind_color_not"
+                android:textSize="16dp"
+                android:visibility="@{isPreview ? View.GONE : View.VISIBLE}"
+                tools:text="(0)完成"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/skin_transparent_theme_color"
+            android:visibility="@{!isPreview  &amp;&amp; presenter.barVisibility ? View.VISIBLE : View.GONE}"
+            app:animation="@{AnimationUtils.loadAnimation(context,presenter.barVisibility ? com.waitou.photo_library.R.anim.fade_in : com.waitou.photo_library.R.anim.fade_out)}">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:checked="@{presenter.selectPhotoList.contains(presenter.mPhotoList.get(presenter.position))}"
+                android:gravity="center"
+                android:onCheckedChanged="@{(cb, isChecked) -> presenter.onCheckBoxChange(cb, isChecked)}"
+                android:text="选中"
+                android:textColor="?attr/skin_kind_color_not"
+                android:textSize="16dp"
+                app:buttonTintList="@{com.waitou.wt_library.R.attr.skin_contrast_color_not}"
+                tools:checked="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

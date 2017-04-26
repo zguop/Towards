@@ -66,6 +66,11 @@ public class Router {
         return this;
     }
 
+    public Router putInt(@Nullable String key, int value) {
+        getBundleData().putInt(key, value);
+        return this;
+    }
+
     public Router putShort(@Nullable String key, short value) {
         getBundleData().putShort(key, value);
         return this;
@@ -73,6 +78,11 @@ public class Router {
 
     public Router putFloat(@Nullable String key, float value) {
         getBundleData().putFloat(key, value);
+        return this;
+    }
+
+    public Router putBoolean(@Nullable String key, boolean value) {
+        getBundleData().putBoolean(key, value);
         return this;
     }
 
@@ -151,7 +161,7 @@ public class Router {
                     from.startActivityForResult(intent, requestCode);
                 }
 
-                if (isFinish){
+                if (isFinish) {
                     from.finish();
                 }
 

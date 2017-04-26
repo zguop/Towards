@@ -73,7 +73,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies['gradle-retrolambda']
     compile rootProject.ext.dependencies['cardview-v7']
-    compile rootProject.ext.dependencies["statusbar"]
     compile rootProject.ext.dependencies["smarttablayout"]
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["flexbox"]
@@ -88,7 +87,7 @@ dependencies {
     //工程依赖 app --> wt_library --> net_library
 
 
-    debugCompile project(path: ':wt_library', configuration: 'debug')
-    releaseCompile project(path: ':wt_library', configuration: 'release')
+    debugCompile project(path: ':photo_library', configuration: 'debug')
+    releaseCompile project(path: ':photo_library', configuration: 'release')
 
 }

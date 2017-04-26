@@ -24,11 +24,6 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
     private MultiTypeAdapter<JokeInfo> mAdapter;
 
     @Override
-    public boolean initXView() {
-        return true;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.include_pull_recycler;
     }

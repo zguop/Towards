@@ -47,6 +47,7 @@
         <!--随手涂鸦-->
         <activity
             android:name=".model.graffiti.GraffitiActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
             android:name=".model.activity.RecommendedActivity"

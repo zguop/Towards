@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.photo_library.activity.PhotoWallPresenter"/>
+
+        <variable
+            name="isMultiMode"
+            type="boolean"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey">
+
+        <com.waitou.wt_library.recycler.XRecyclerView
+            android:id="@+id/x_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
+
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="#99ffffff">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="?attr/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableRight="@drawable/svg_ic_oblique_triangle"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> presenter.createPopupFolder(footer)}"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@{presenter.folderName}"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="15dp"
+                tools:text="全部图片"/>
+
+            <TextView
+                android:id="@+id/preview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:enabled="@{presenter.preview != 0}"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> presenter.onPreview()}"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@{@string/photo_preview_size(presenter.preview)}"
+                android:textColor="?attr/colorPrimary"
+                android:visibility="@{presenter.mPhotoPickerFinal.isMultiMode() ? View.VISIBLE : View.GONE}"
+                tools:text="预览(0)"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/preview"
+                android:background="?attr/colorPrimary"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

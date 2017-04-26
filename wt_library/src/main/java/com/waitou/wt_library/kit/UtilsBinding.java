@@ -1,13 +1,18 @@
-package com.waitou.towards.util.bindingadapter;
+package com.waitou.wt_library.kit;
 
+import android.content.res.ColorStateList;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingListener;
 import android.databinding.InverseBindingMethod;
 import android.databinding.InverseBindingMethods;
+import android.support.annotation.AttrRes;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.waitou.wt_library.rx.RxBus;
+import com.waitou.wt_library.theme.ThemeUtils;
 
 
 /**
@@ -17,7 +22,7 @@ import com.waitou.wt_library.rx.RxBus;
         @InverseBindingMethod(type = ViewPager.class, attribute = "currentItem"),
 })
 
-public class UtilsBindingAdapter {
+public class UtilsBinding {
 
     @BindingAdapter({"code", "post"})
     public static void post(View view, int code, Object o) {
@@ -34,14 +39,22 @@ public class UtilsBindingAdapter {
 
     @BindingAdapter(value = {"currentItemAttrChanged"}, requireAll = false)
     public static void setPageCurrent(ViewPager viewPager, final InverseBindingListener inverseBindingListener) {
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                if (inverseBindingListener != null) {
+        if (inverseBindingListener != null) {
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
                     inverseBindingListener.onChange();
                 }
-            }
-        });
+            });
+        }
+
+    }
+
+    @BindingAdapter("buttonTintList")
+    public static void setButtonTintList(CompoundButton compoundButton, @AttrRes int attr) {
+        int themeAttr = ThemeUtils.getThemeAttrId(compoundButton.getContext(), attr);
+        ColorStateList colorStateList = ThemeUtils.getColorStateList(compoundButton.getContext(), themeAttr);
+        CompoundButtonCompat.setButtonTintList(compoundButton, colorStateList);
     }
 
 

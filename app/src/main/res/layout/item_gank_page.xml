@@ -30,13 +30,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/colorWhite"
         app:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color33white"
             android:onClick="@{(view) -> presenter.onLinkClick(view,0,item.url,item.desc)}"
             android:orientation="vertical"
             android:paddingLeft="16dp"
@@ -83,7 +82,7 @@
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:text="@{item.desc}"
-                android:textColor="@color/color666666"
+                android:textColor="@color/color_666666"
                 android:textSize="18dp"/>
 
             <ImageView
@@ -103,7 +102,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@{presenter.setGankPageTime(item.publishedAt)}"
-                    android:textColor="@color/color666666"
+                    android:textColor="@color/color_666666"
                     android:textSize="13dp"
                     tools:text="段子"/>
 
@@ -116,7 +115,7 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="10dp"
                     android:text="分享"
-                    android:textColor="@color/color666666"
+                    android:textColor="@color/color_666666"
                     android:textSize="11dp"/>
             </LinearLayout>
         </LinearLayout>

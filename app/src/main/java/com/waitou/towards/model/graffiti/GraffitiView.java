@@ -220,7 +220,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     }
 
     /**
-     * 检查是否绘制过图片
+     * 检查是否绘制过
      */
     public boolean checkSave() {
         return shapeIndex > 0 && !(mShapes.get(mShapes.size() - 1) instanceof Perch);

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
 
@@ -24,7 +25,7 @@ public interface ILoader {
 
     void loadCenterCropNet(ImageView target, String url, Options options);
 
-    void loadNet(Context context, String url, Options options, LoadCallback callback);
+    void loadNet(Context context, String url, Options options, Target<?> target);
 
     void loadTransformNet(Context context, String url, Options options, Transformation transformation, LoadCallback callback);
 
@@ -33,6 +34,8 @@ public interface ILoader {
     void loadAssets(ImageView target, String assetName, Options options);
 
     void loadFile(ImageView target, File file, Options options);
+
+    void loadFile(Context context, File file, Options options ,Target<?> target);
 
     void clearMemoryCache(Context context);
 

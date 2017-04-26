@@ -11,8 +11,8 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
-import com.waitou.towards.util.AlertToast;
 import com.waitou.wt_library.base.XFragment;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
@@ -28,14 +28,7 @@ import java.util.List;
 
 public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRecyclerViewBinding> {
 
-    private MultiTypeAdapter<Displayable>                    mAdapter; //整体页面适配器
-    private SingleViewPagerAdapter<BannerPageInfo>           mBannerAdapter;//轮播图适配器
-    private SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> mFunctionInfoAdapter; //功能图标适配器
-
-    @Override
-    public boolean initXView() {
-        return true;
-    }
+    private MultiTypeAdapter<Displayable> mAdapter; //整体页面适配器
 
     @Override
     public int getContentViewId() {
@@ -67,30 +60,17 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
     }
 
     public void onBannerSuccess(List<BannerPageInfo> bannerPageInfo) {
-        if (mBannerAdapter == null) {
-            mBannerAdapter = new SingleViewPagerAdapter<>(getActivity(), bannerPageInfo, R.layout.item_banner_image);
-            mBannerAdapter.setPresenter(getP());
-            mAdapter.add(0, new BannerAdapterInfo(mBannerAdapter), 0);
-        } else {
-            mBannerAdapter.set(bannerPageInfo);
-        }
+        SingleViewPagerAdapter<BannerPageInfo> bannerAdapter = new SingleViewPagerAdapter<>(getActivity(), bannerPageInfo, R.layout.item_banner_image);
+        bannerAdapter.setPresenter(getP());
+        mAdapter.add(0, new BannerAdapterInfo(bannerAdapter), 0);
     }
 
     public void onFunctionSuccess(List<HomeFunctionInfo.FunctionInfo> homeFunctionInfo) {
-        if (mFunctionInfoAdapter == null) {
-            mFunctionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
-            mFunctionInfoAdapter.set(homeFunctionInfo);
-            mFunctionInfoAdapter.setPresenter(getP());
-            RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(mFunctionInfoAdapter, LayoutManagerUtli.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));
-            mAdapter.add(recyclerAdapterInfo, 1);
-        } else {
-            mFunctionInfoAdapter.set(homeFunctionInfo);
-        }
-    }
-
-    public void onError(Throwable throwable) {
-        AlertToast.show(throwable.getMessage());
-        showError();
+        SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> functionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
+        functionInfoAdapter.set(homeFunctionInfo);
+        functionInfoAdapter.setPresenter(getP());
+        RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(functionInfoAdapter, LayoutManagerUtli.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));
+        mAdapter.add(recyclerAdapterInfo, 1);
     }
 
     public void onSuccess(List<List<GankResultsTypeInfo>> gankIoDayInfo) {
@@ -104,5 +84,10 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
             mAdapter.add(new CanInfo(), 3);
         }
         mAdapter.add(new CanInfo(), 4);
+    }
+
+    public void onError(Throwable throwable) {
+        AlertToast.show(throwable.getMessage());
+        showError();
     }
 }

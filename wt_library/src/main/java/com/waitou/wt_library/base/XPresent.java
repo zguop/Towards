@@ -23,6 +23,11 @@ public abstract class XPresent<V extends IView> implements UIPresent<V> {
 
     @Override
     public void detachV() {
-//        v = null;
+        v = null;
+    }
+
+    @Override
+    public void start() {
+
     }
 }

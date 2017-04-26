@@ -1,14 +1,6 @@
 package com.waitou.wt_library.kit;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.view.View;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -486,92 +478,5 @@ public class UConvert {
             e.printStackTrace();
             return null;
         }
-    }
-
-    /**
-     * bitmap转byteArr
-     *
-     * @param bitmap bitmap对象
-     * @param format 格式
-     * @return 字节数组
-     */
-    public static byte[] bitmap2Bytes(Bitmap bitmap, Bitmap.CompressFormat format) {
-        if (bitmap == null) return null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(format, 100, baos);
-        return baos.toByteArray();
-    }
-
-    /**
-     * byteArr转bitmap
-     *
-     * @param bytes 字节数组
-     * @return bitmap
-     */
-    public static Bitmap bytes2Bitmap(byte[] bytes) {
-        return (bytes == null || bytes.length == 0) ? null : BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
-
-    /**
-     * drawable转bitmap
-     *
-     * @param drawable drawable对象
-     * @return bitmap
-     */
-    public static Bitmap drawable2Bitmap(Drawable drawable) {
-        return drawable == null ? null : ((BitmapDrawable) drawable).getBitmap();
-    }
-
-    /**
-     * bitmap转drawable
-     *
-     * @param res    resources对象
-     * @param bitmap bitmap对象
-     * @return drawable
-     */
-    public static Drawable bitmap2Drawable(Resources res, Bitmap bitmap) {
-        return bitmap == null ? null : new BitmapDrawable(res, bitmap);
-    }
-
-    /**
-     * drawable转byteArr
-     *
-     * @param drawable drawable对象
-     * @param format   格式
-     * @return 字节数组
-     */
-    public static byte[] drawable2Bytes(Drawable drawable, Bitmap.CompressFormat format) {
-        return drawable == null ? null : bitmap2Bytes(drawable2Bitmap(drawable), format);
-    }
-
-    /**
-     * byteArr转drawable
-     *
-     * @param res   resources对象
-     * @param bytes 字节数组
-     * @return drawable
-     */
-    public static Drawable bytes2Drawable(Resources res, byte[] bytes) {
-        return res == null ? null : bitmap2Drawable(res, bytes2Bitmap(bytes));
-    }
-
-    /**
-     * view转Bitmap
-     *
-     * @param view 视图
-     * @return bitmap
-     */
-    public static Bitmap view2Bitmap(View view) {
-        if (view == null) return null;
-        Bitmap ret = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(ret);
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null) {
-            bgDrawable.draw(canvas);
-        } else {
-            canvas.drawColor(Color.WHITE);
-        }
-        view.draw(canvas);
-        return ret;
     }
 }

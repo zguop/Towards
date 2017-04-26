@@ -16,7 +16,7 @@ public class CircleFragment extends XFragment<XPresent, FragmentHomeBinding> {
 
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return true;
     }
 

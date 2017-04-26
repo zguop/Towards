@@ -9,20 +9,42 @@
     <!--lib_theme-->
     <!--主题1-->
     <color name="colorPowder">#FF4081</color>
-    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="home_title1">#f97fb2</color>
     <!--主题1反差色-->
     <color name="color_00bf7e">#00BF7E</color>
+    <color name="color_powder_80">#80FF4081</color>
 
     <!--主题2-->
     <color name="colorRed">#CE3D3A</color>
     <color name="home_title2">#EC7172</color>
     <!--主题2反差色-->
     <color name="color_31c2c5">#31C2C5</color>
+    <color name="color_red_80">#80CE3D3A</color>
 
     <!--主题3-->
     <color name="colorBlue">#1090da</color>
     <color name="home_title3">#59adde</color>
     <!--主题3反差色-->
     <color name="color_ef6f26">#EF6F25</color>
+    <color name="color_blue_80">#801090da</color>
+
+
+    <!--文本内容颜色-->
+    <color name="color_666666">#666666</color>
+    <!--辅助灰色-->
+    <color name="color_AFAFAF">#AFAFAF</color>
+    <!--纯黑-->
+    <color name="color_Black">#000000</color>
+    <!--透明色-->
+    <color name="transparent">#00000000</color>
+    <!--标题文字颜色,重点的文字-->
+    <color name="color_373737">#373737</color>
+    <!--按下的灰色-->
+    <color name="color_e7e7e7">#E7E7E7</color>
+    <!--背景色-->
+    <color name="bg_grey">#F3F4F5</color>
+
+    <color name="color_a7a7a7">#cccccc</color>
+
 </resources>

@@ -21,7 +21,7 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
     }
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 

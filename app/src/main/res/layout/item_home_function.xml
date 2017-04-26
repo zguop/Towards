@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/colorWhite"
         android:onClick="@{(view) -> presenter.onLinkClick(view,item.type,item.link,item.typeName)}"
         android:orientation="vertical"
         android:paddingBottom="8dp"
@@ -40,7 +40,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
             android:text="@{item.typeName}"
-            android:textColor="@color/color666666"
+            android:textColor="@color/color_666666"
             android:textSize="14sp"/>
 
     </LinearLayout>

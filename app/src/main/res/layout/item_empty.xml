@@ -13,7 +13,7 @@
             android:lineSpacingExtra="4dp"
             android:padding="18dp"
             android:text="@string/item_empty_str"
-            android:textColor="@color/color666666"
+            android:textColor="@color/color_666666"
             android:textSize="15sp"/>
 
     </FrameLayout>

@@ -19,7 +19,7 @@ import com.waitou.wt_library.router.Router;
 public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBinding> {
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 

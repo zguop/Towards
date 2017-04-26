@@ -21,34 +21,35 @@ import com.waitou.wt_library.recycler.XPullRecyclerView;
 public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> extends BaseActivity implements UIView<P> {
 
     private ActivityXBinding mXBinding;
-    private RxPermissions mRxPermissions;
-    private P presenter;
-    private D d;
+    private RxPermissions    mRxPermissions;
+    private P                presenter;
+    private D                d;
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (initXView()) {
+        if (defaultXView()) {
             mXBinding = DataBindingUtil.setContentView(this, R.layout.activity_x);
             initReloadData(mXBinding.xContentLayout.getErrorView().findViewById(R.id.error));
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.inflate(getLayoutInflater(), getContentViewId(), null, false);
                 mXBinding.xContentLayout.addContentView(d.getRoot());
             }
+            if (defaultLoading()) {
+                showLoading();
+            }
         } else {
             if (getContentViewId() > 0) {
                 d = DataBindingUtil.setContentView(this, getContentViewId());
             }
         }
-
         if (getP() == null) {
             setPresenter(createPresenter());
             if (getP() != null) {
                 getP().attachV(this);
             }
         }
-
         initData(savedInstanceState);
     }
 
@@ -64,8 +65,8 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         return presenter;
     }
 
-    public RxPermissions getRxPermissions(){
-        if(mRxPermissions == null){
+    public RxPermissions getRxPermissions() {
+        if (mRxPermissions == null) {
             mRxPermissions = new RxPermissions(this);
             mRxPermissions.setLogging(BuildConfig.DEBUG);
         }
@@ -91,20 +92,30 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         this.presenter = presenter;
     }
 
+    @Override
+    public boolean defaultXView() {
+        return true;
+    }
+
+    @Override
+    public boolean defaultLoading() {
+        return false;
+    }
+
     protected void initReloadData(View view) {
         view.findViewById(R.id.error).setOnClickListener(v -> reloadData());
     }
 
-    /*--------------- toolbar的初始化 initXView 返回true 使用默认布局---------------*/
-    protected void initMenuActionBar(String title) {
+    /*--------------- toolbar的初始化 defaultXView 返回true 使用默认布局---------------*/
+    protected void initMenuActionBar(CharSequence title) {
         mXBinding.toolbar.initMenuActionBar(title);
     }
 
-    protected void initMenuActionBar(String title, String menuText, View.OnClickListener listener) {
+    protected void initMenuActionBar(CharSequence title, CharSequence menuText, View.OnClickListener listener) {
         mXBinding.toolbar.initMenuActionBar(title, menuText, listener);
     }
 
-    protected void initIconActionBar(String title, int menuIcon, View.OnClickListener listener) {
+    protected void initIconActionBar(CharSequence title, int menuIcon, View.OnClickListener listener) {
         mXBinding.toolbar.initIconActionBar(title, menuIcon, listener);
     }
 
@@ -112,8 +123,12 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.toolbar.setBackListener(resId, listener);
     }
 
-    protected void setTitle(String title) {
+    protected void setToolbarTitle(CharSequence title) {
         mXBinding.toolbar.setTitle(title);
+    }
+
+    protected void setToolbarRightText(CharSequence rightText) {
+        mXBinding.toolbar.setRightText(rightText);
     }
 
     protected void fromCustomMenuView(ViewDataBinding dataBinding, int bindingKey) {

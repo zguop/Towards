@@ -62,9 +62,9 @@ import static com.waitou.wt_library.kit.Util.closeIO;
 
 public class UImage {
 
-    private static final String JPG              = ".jpg";
-    private static final String PNG              = ".png";
-    private static final String fileProviderName =
+    public static final String JPG                = ".jpg";
+    public static final String PNG                = ".png";
+    public static final String FILE_PROVIDER_NAME =
             BuildConfig.DEBUG ?
                     "com.waitou.towards.debug.android.file_provider" : "com.waitou.towards.android.file_provider";
 
@@ -1345,16 +1345,11 @@ public class UImage {
      */
     @SuppressLint("SimpleDateFormat")
     public static void saveImageToGallery(Context context, Bitmap bmp) {
-        java.io.File picDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        if (!picDir.exists()) {
-            if (picDir.mkdir()) {
-                LogUtil.i("picDir创建成功");
-            }
-        }
+        String picDir = USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
         String fileName = "IMAGE_" + timeStamp + JPG;
         // 首先保存图片
-        java.io.File file = new java.io.File(picDir.getPath() + java.io.File.separator + fileName);
+        File file = new File(picDir + java.io.File.separator + fileName);
         try {
             FileOutputStream fos = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -1366,15 +1361,12 @@ public class UImage {
 
         // 其次把文件插入到系统图库
         ContentValues values = new ContentValues();
-
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
-
         context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
         // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, FileProvider.getUriForFile(context, fileProviderName, file)));
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, FileProvider.getUriForFile(context, FILE_PROVIDER_NAME, file)));
     }
 
     /**

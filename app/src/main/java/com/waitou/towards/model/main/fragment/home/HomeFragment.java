@@ -27,7 +27,7 @@ public class HomeFragment extends XFragment<HomePresenter, IncludeViewPagerBindi
     private ViewSmartLayoutBinding mLayoutBinding;
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 

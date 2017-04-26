@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="item"
+            type="com.waitou.photo_library.bean.PhotoFolderInfo"/>
+
+
+        <variable
+            name="presenter"
+            type="com.waitou.photo_library.activity.PhotoWallPresenter"/>
+
+        <variable
+            name="position"
+            type="int"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> presenter.onItemClick(position,item)}">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                app:fileImageUrl="@{item.cover.photoPath}"
+                tools:background="#f00"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.folderName}"
+                    android:textColor="@color/color_373737"
+                    android:textSize="18dp"
+                    tools:text="全部图片"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@{@string/photo_size(item.photoList.size() - 1)}"
+                    android:textColor="@color/color_AFAFAF"
+                    tools:text="10张"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_folder_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/svg_ic_check_select"
+                android:visibility="@{position == presenter.selectedIndex ? View.VISIBLE : View.GONE}"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="?attr/colorPrimary"/>
+    </RelativeLayout>
+</layout>

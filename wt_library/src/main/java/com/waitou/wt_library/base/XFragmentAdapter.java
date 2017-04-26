@@ -46,5 +46,4 @@ public class XFragmentAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragmentList.size();
     }
-
 }

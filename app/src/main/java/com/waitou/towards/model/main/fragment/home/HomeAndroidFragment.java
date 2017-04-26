@@ -25,11 +25,6 @@ public class HomeAndroidFragment extends XFragment<HomePresenter, IncludePullRec
     public static final String TYPE_ANDROID = "Android";
 
     @Override
-    public boolean initXView() {
-        return true;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.include_pull_recycler;
     }

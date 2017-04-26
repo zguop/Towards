@@ -3,6 +3,7 @@ package com.waitou.wt_library.view;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -12,7 +13,7 @@ import com.waitou.wt_library.R;
 /**
  * https://gist.github.com/tylerchesley/5d15d859be4f3ce31213
  */
-public class TintImageView extends ImageView {
+public class TintImageView extends AppCompatImageView {
 
     private ColorStateList tint;
 

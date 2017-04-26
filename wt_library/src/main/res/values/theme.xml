@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--styles 颜色-->
-    <!--字体色-->
+    <!--字体亮色-->
     <attr name="skin_kind_color_not" format="color|reference"/>
     <!--首页标题色-->
     <attr name="skin_home_title_not" format="color|reference"/>
@@ -9,4 +9,10 @@
     <attr name="skin_dialog_bg_not" format="color|reference"/>
     <!--主题反差色-->
     <attr name="skin_contrast_color_not" format="color|reference"/>
+    <!--主题透明度颜色-->
+    <attr name="skin_transparent_theme_color" format="color|reference"/>
+    <!--字体暗色-->
+    <attr name="skin_text_dark_color" format="color|reference"/>
+    <!--灰色字体-->
+    <attr name="skin_text_gray_color" format="color|reference"/>
 </resources>

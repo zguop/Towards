@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/skin_contrast_color_not" android:state_pressed="true"/>
+    <item android:color="?attr/skin_contrast_color_not" android:state_selected="true"/>
+    <item android:color="?attr/skin_text_gray_color" android:state_enabled="false"/>
+    <item android:color="?attr/colorPrimary"/>
+</selector>

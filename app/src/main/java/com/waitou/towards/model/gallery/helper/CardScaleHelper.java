@@ -6,9 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UImage;
+import com.waitou.wt_library.kit.Util;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 import static com.waitou.wt_library.kit.UImage.scale;
 
@@ -62,7 +68,9 @@ public class CardScaleHelper {
         initWidth();
         mLinearSnapHelper.attachToRecyclerView(mRecyclerView);
         //第一次进入延迟调用 等待RecyclerView列表初始化完成
-        mRecyclerView.postDelayed(this::notifyBackgroundChange, 800);
+        Util.contextAddSubscription(mContext
+                ,Observable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                        .subscribe(aLong -> notifyBackgroundChange()));
     }
 
     private void notifyBackgroundChange() {

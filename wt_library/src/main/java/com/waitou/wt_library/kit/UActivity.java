@@ -28,7 +28,9 @@ public class UActivity {
 
     public static void finishAllActivity() {
         if (mActivityList != null) {
-            mActivityList.forEach(Activity::finish);
+            for (Activity activity : mActivityList) {
+                activity.finish();
+            }
         }
     }
 
@@ -46,9 +48,7 @@ public class UActivity {
         int aliveNum = 0;
         LinkedList<Activity> activities = getActivityList();
         for (int i = 0; i < activities.size(); i++) {
-            if (activities.get(i).isFinishing()) {
-                continue;
-            } else {
+            if (!activities.get(i).isFinishing()) {
                 aliveNum++;
             }
         }

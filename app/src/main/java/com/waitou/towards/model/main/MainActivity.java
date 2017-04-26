@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
+import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.ActivityMainBinding;
@@ -54,12 +55,12 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        ChangeModeController.get().init(this);
+        ChangeModeController.get().init(this);
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 
@@ -127,6 +128,14 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                             Router.newIntent().from(this).to(RecommendedActivity.class).launch();
                             break;
                         case R.id.nav_all:
+                            pend(PhotoPickerFinal
+                                    .get()
+                                    .isMultiMode(false)
+                                    .with(this)
+                                    .setSelectLimit(3)
+                                    .executePhoto(photoInfos -> {
+
+                                    }));
                             break;
                         case R.id.nav_meizi:
                             Router.newIntent().from(this).to(GalleryActivity.class).launch();
@@ -135,11 +144,24 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                             Router.newIntent().from(this).to(GraffitiActivity.class).launch();
                             break;
                         case R.id.nav_collect:
+                            PhotoPickerFinal.get()
+                                    .with(this)
+                                    .setStrPhotoList("http://img.hb.aicdn.com/621034b37c53ffc81f5d6a23ae1226d5c67e2b9628267-BYuZLo_fw658"
+                                            , "http://img.hb.aicdn.com/e8cbd6ac1b44cf290debbf1ebcdfac6bdf20487f46146-uz70dU_fw658"
+                                            , "http://img.hb.aicdn.com/0d6adb99906f5dc5107962b8446623ea17b1be4d37679-oKTIYt_fw658"
+                                            , "http://img.hb.aicdn.com/d63edb11718f59390c92b17fe9399215c4f7c96c28643-CXnznk_fw658")
+                                    .executePreViewPhoto();
                             break;
                         case R.id.nav_theme:
                             changeNight();
                             break;
                         case R.id.nav_about:
+                            pend(PhotoPickerFinal
+                                    .get()
+                                    .setSelectLimit(3)
+                                    .executePhoto(photoInfos -> {
+
+                                    }));
                             break;
                     }
                 }));
@@ -172,7 +194,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                             .subscribe(info -> info.setFocus(false)));
                 }
                 themeInfo.setFocus(true);
-//                ChangeModeController.get().changeNight(MainActivity.this, themeInfo.themeEnum);
+                ChangeModeController.get().changeNight(MainActivity.this, themeInfo.themeEnum);
                 mThemeDialog.dismiss();
                 mThemeDialog = null;
             });
@@ -226,7 +248,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     protected void onDestroy() {
-//        ChangeModeController.get().cancel();
+        ChangeModeController.get().cancel();
         super.onDestroy();
     }
 }

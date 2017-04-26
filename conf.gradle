@@ -42,7 +42,10 @@ ext {
             "stetho"             : 'com.facebook.stetho:stetho:1.4.2', //chrome来查看android数据库
             "greendao"           : 'org.greenrobot:greendao:3.2.0',//GreenDao 数据库
             "bubbleseekbar"      : 'com.xw.repo:bubbleseekbar:3.2-lite',
+            "photoView"          : 'com.github.chrisbanes:PhotoView:2.0.0',
+            "crop"               : 'com.isseiaoki:simplecropview:1.1.4',//图片裁剪
     ]
 
     // "databinding-adapter": 'com.github.markzhai:databinding-rv-adapter:1.0.1',
 }
+

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:orientation="horizontal"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="5dp"
         app:cardElevation="2dp">
 
@@ -33,7 +33,7 @@
                 android:lineSpacingMultiplier="1.2"
                 android:padding="16dp"
                 android:text="@{item.content}"
-                android:textColor="@color/color666666"
+                android:textColor="@color/color_666666"
                 android:textSize="15dp"/>
 
             <LinearLayout
@@ -48,7 +48,7 @@
                     android:gravity="center_vertical"
                     android:padding="10dp"
                     android:text='@{Date.getYmdhms(item.unixtime)}'
-                    android:textColor="@color/color666666"
+                    android:textColor="@color/color_666666"
                     android:textSize="13dp"/>
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:text="分享"
-                    android:textColor="@color/color666666"
+                    android:textColor="@color/color_666666"
                     android:textSize="11dp"/>
             </LinearLayout>
         </LinearLayout>

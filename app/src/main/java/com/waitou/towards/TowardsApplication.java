@@ -2,7 +2,7 @@ package com.waitou.towards;
 
 import com.facebook.stetho.Stetho;
 import com.waitou.net_library.http.HttpUtil;
-import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.cache.SharedPref;
 import com.waitou.wt_library.imageloader.ILFactory;

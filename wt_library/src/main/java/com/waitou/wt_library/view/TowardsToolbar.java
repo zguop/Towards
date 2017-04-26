@@ -44,7 +44,7 @@ public class TowardsToolbar extends Toolbar {
      *
      * @param title 标题
      */
-    public void initMenuActionBar(String title) {
+    public void initMenuActionBar(CharSequence title) {
         initMenuActionBar(title, null, null);
     }
 
@@ -55,7 +55,7 @@ public class TowardsToolbar extends Toolbar {
      * @param menuText 菜单文字
      * @param listener 菜单点击事件
      */
-    public void initMenuActionBar(String title, String menuText, OnClickListener listener) {
+    public void initMenuActionBar(CharSequence title, CharSequence menuText, OnClickListener listener) {
         if (mBinding != null) {
             if (mBinding.leftImg.getDrawable() == null) {
                 setBackListener(R.drawable.back_white, v -> ((AppCompatActivity) getContext()).onBackPressed());
@@ -80,7 +80,7 @@ public class TowardsToolbar extends Toolbar {
      * @param menuIcon 菜单图片id
      * @param listener 菜单点击事件
      */
-    public void initIconActionBar(String title, int menuIcon, OnClickListener listener) {
+    public void initIconActionBar(CharSequence title, int menuIcon, OnClickListener listener) {
         if (mBinding != null) {
             if (mBinding.leftImg.getDrawable() == null) {
                 setBackListener(R.drawable.back_white, v -> ((AppCompatActivity) getContext()).onBackPressed());
@@ -116,9 +116,18 @@ public class TowardsToolbar extends Toolbar {
      *
      * @param title 标题
      */
-    public void setTitle(String title) {
+    public void setTitle(CharSequence title) {
         if (title != null) {
             mBinding.title.setText(title);
+        }
+    }
+
+    /**
+     * 设置右侧菜单文字
+     */
+    public void setRightText(CharSequence rightText) {
+        if (mBinding.textMenu.getVisibility() == VISIBLE && rightText != null) {
+            mBinding.textMenu.setText(rightText);
         }
     }
 

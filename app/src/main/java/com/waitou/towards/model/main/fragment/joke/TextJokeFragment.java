@@ -23,7 +23,7 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
     private ToolbarJokeTitleBinding mToolbarJokeTitle;
 
     @Override
-    public boolean initXView() {
+    public boolean defaultXView() {
         return false;
     }
 

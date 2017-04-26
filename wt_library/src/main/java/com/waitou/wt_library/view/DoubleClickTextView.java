@@ -36,7 +36,7 @@ public class DoubleClickTextView extends AppCompatTextView {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return true;
+            return false;
         }
 
         @Override
@@ -44,7 +44,7 @@ public class DoubleClickTextView extends AppCompatTextView {
             if (mDoubleClickListener != null) {
                 mDoubleClickListener.onDoubleClick(DoubleClickTextView.this);
             }
-            return true;
+            return false;
         }
     }
 

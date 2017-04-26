@@ -15,6 +15,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.waitou.net_library.http.AsyncOkHttpClient;
 
 import java.io.File;
@@ -48,28 +49,8 @@ public class GlideLoader implements ILoader {
     }
 
     @Override
-    public void loadNet(Context context, String url, Options options, final LoadCallback callback) {
-        DrawableTypeRequest request = load(getRequestManager(context).load(url), options);
-        request.into(new SimpleTarget<GlideBitmapDrawable>() {
-
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                if (callback != null) {
-                    callback.onLoadFailed(e);
-                }
-            }
-
-            @Override
-            public void onResourceReady(GlideBitmapDrawable resource, GlideAnimation<? super GlideBitmapDrawable> glideAnimation) {
-                if (resource != null && resource.getBitmap() != null) {
-                    if (callback != null) {
-                        callback.onLoadReady(resource.getBitmap());
-                    }
-                }
-            }
-
-        });
+    public void loadNet(Context context, String url, Options options, Target<?> target) {
+        load(getRequestManager(context).load(url), options).into(target);
     }
 
     @Override
@@ -109,6 +90,11 @@ public class GlideLoader implements ILoader {
     @Override
     public void loadFile(ImageView target, File file, Options options) {
         load(getRequestManager(target.getContext()).load(file), options).into(target);
+    }
+
+    @Override
+    public void loadFile(Context context, File file, Options options, Target<?> target) {
+        load(getRequestManager(context).load(file), options).into(target);
     }
 
     @Override

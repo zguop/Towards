@@ -20,7 +20,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.databinding.ItemSeekBarBinding;
 import com.waitou.towards.enums.GraffitiToolEnum;
-import com.waitou.towards.util.AlertToast;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
@@ -222,7 +222,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
                     .subscribe(action);
         }
         if (actionMasked == MotionEvent.ACTION_UP) {
-            if (subscribe != null) {
+            if (subscribe != null && !subscribe.isUnsubscribed()) {
                 subscribe.unsubscribe();
             }
         }
