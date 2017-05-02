@@ -140,7 +140,7 @@ public class PhotoPickerFinal {
             rx = RxBus.getDefault().toObservable(PhotoEvent.class)
                     .subscribe(photoEvent -> action.call(photoEvent.getSelectionList()));
         }
-        if (mActivityWeakReference.get() != null) {
+        if (mActivityWeakReference != null && mActivityWeakReference.get() != null) {
             Router.newIntent().from(mActivityWeakReference.get()).to(PhotoWallActivity.class).launch();
         }
         return rx;
@@ -150,7 +150,7 @@ public class PhotoPickerFinal {
      * 进入到图片预览页面
      */
     public void executePreViewPhoto() {
-        if (mActivityWeakReference.get() != null) {
+        if (mActivityWeakReference != null && mActivityWeakReference.get() != null) {
             Router.newIntent()
                     .from(mActivityWeakReference.get())
                     .to(PhotoPreviewActivity.class)

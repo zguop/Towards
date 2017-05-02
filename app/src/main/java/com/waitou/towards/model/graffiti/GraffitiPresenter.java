@@ -8,7 +8,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableFloat;
 import android.databinding.ObservableInt;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -16,14 +15,20 @@ import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.waitou.photo_library.PhotoPickerFinal;
+import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.databinding.ItemSeekBarBinding;
 import com.waitou.towards.enums.GraffitiToolEnum;
-import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
@@ -31,6 +36,7 @@ import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.xw.repo.BubbleSeekBar;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +45,8 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.waitou.wt_library.kit.UDimens.getDeviceWidth;
 
 /**
  * Created by waitou on 17/3/27.
@@ -134,16 +142,29 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         new ColorPickerDialog(getV(), toolColor.get(), color -> toolColor.set(color)).show();
     }
 
-
     /**
      * 上传图片
      */
     public void uploadPic() {
-        if (checkBitmap()) {
-            reset();
-        }
-        bitmapField.set(BitmapFactory.decodeResource(getV().getResources(), R.drawable.logo));
-        enable.set(checkBitmap());
+        getV().pend(PhotoPickerFinal.get()
+                .with(getV())
+                .isMultiMode(false)
+                .isCrop(true)
+                .executePhoto(info -> {
+                    PhotoInfo photoInfo = info.get(0);
+                    Glide.with(getV())
+                            .load(new File(photoInfo.photoPath))
+                            .asBitmap()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(new SimpleTarget<Bitmap>(photoInfo.photoWidth, photoInfo.photoHeight) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                    reset();
+                                    bitmapField.set(resource);
+                                    enable.set(checkBitmap());
+                                }
+                            });
+                }));
     }
 
     /**
@@ -243,7 +264,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        Bitmap bitmap = Bitmap.createBitmap(UDimens.getDeviceWidth(), UDimens.getDeviceHeight(), Bitmap.Config.ARGB_8888);
+                        Bitmap bitmap = Bitmap.createBitmap(getDeviceWidth(), UDimens.getDeviceHeight(), Bitmap.Config.ARGB_8888);
                         Canvas bitCanvas = new Canvas(bitmap);
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
                             graffitiPicView.doDraw(bitCanvas);

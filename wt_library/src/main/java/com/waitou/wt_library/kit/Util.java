@@ -2,6 +2,7 @@ package com.waitou.wt_library.kit;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Looper;
 import android.view.WindowManager;
 
 import com.waitou.wt_library.base.BaseActivity;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.util.List;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 
 /**
  * Created by waitou on 17/3/24.
@@ -48,6 +51,16 @@ public class Util {
         if (context instanceof BaseActivity) ((BaseActivity) context).pend(subscription);
     }
 
+    /**
+     * 安全的线程操作
+     */
+    public static void safelyTask(Action0 action0) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            action0.call();
+        } else {
+            AndroidSchedulers.mainThread().createWorker().schedule(action0);
+        }
+    }
 
     /**
      * 动态设置窗口全屏

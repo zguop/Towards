@@ -75,7 +75,7 @@ public class PhotoPreviewFragment extends XFragment<XPresent, FragmentPhotoDetai
                         }
                     });
                 } else {
-                    Glide.with(getActivity()).load(new File(url)).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(getBinding().image.getWidth(), getBinding().image.getHeight()) {
+                    Glide.with(getActivity()).load(new File(url)).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new SimpleTarget<GlideDrawable>(getBinding().image.getWidth(), getBinding().image.getHeight()) {
                         @Override
                         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                             showContent();

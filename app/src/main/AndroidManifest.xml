@@ -48,7 +48,9 @@
         <activity
             android:name=".model.graffiti.GraffitiActivity"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden">
+
+        </activity>
         <activity
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>

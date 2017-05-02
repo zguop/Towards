@@ -1,18 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.waitou.photo_library.activity.PhotoCropPresenter"/>
+    </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.isseiaoki.simplecropview.CropImageView
-            android:id="@+id/crop_view"
+            android:id="@+id/crop"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="0dp"/>
+            android:padding="15dp"
+            app:cropMode="@{presenter.mCropMode}"
+            app:scv_background_color="?attr/skin_transparent_theme_color"
+            app:scv_frame_color="?attr/skin_contrast_color_not"
+            app:scv_frame_stroke_weight="1dp"
+            app:scv_guide_color="?attr/skin_contrast_color_not"
+            app:scv_guide_show_mode="show_always"
+            app:scv_guide_stroke_weight="0.5dp"
+            app:scv_handle_color="?attr/skin_contrast_color_not"
+            app:scv_handle_show_mode="show_always"
+            app:scv_handle_size="8dp"
+            app:scv_min_frame_size="50dp"
+            app:scv_overlay_color="#AA1C1C1C"
+            app:scv_touch_padding="8dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?attr/skin_transparent_theme_color"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> presenter.setCropMode()}"
+                android:src="@drawable/svg_ic_crop_rectangular"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> presenter.setCircleCropMode()}"
+                android:src="@drawable/svg_ic_crop_circle"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> presenter.setLeftRotateImage(crop)}"
+                android:src="@drawable/svg_ic_crop_left"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{() -> presenter.setRightRotateImage(crop)}"
+                android:src="@drawable/svg_ic_crop_right"/>
+
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -31,6 +31,7 @@ import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.photo_library.util.MediaScanner;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.FolderPopUpWindow;
+import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.Kits;
@@ -38,6 +39,7 @@ import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.USDCard;
+import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.router.Router;
@@ -48,6 +50,7 @@ import java.util.Date;
 
 /**
  * Created by waitou on 17/4/3.
+ * 图片选择
  */
 
 public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements LoaderManager.LoaderCallbacks<Cursor>, BaseViewAdapter.Presenter {
@@ -82,7 +85,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         } else {
             Bundle bundle = new Bundle();
             bundle.putString("path", path);
-            loaderManager.initLoader(UFile.isFile(path) ? LOADER_PHOTO : LOADER_CATEGORY, bundle, this);
+            loaderManager.initLoader(LOADER_PHOTO, bundle, this);
         }
     }
 
@@ -106,36 +109,34 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null) {
-            try {
-                switch (loader.getId()) {
-                    case LOADER_ALL:
-                        loaderAll(data);
-                        break;
-                    case LOADER_CATEGORY:
-                        break;
-                    case LOADER_PHOTO:
-                        loaderPhoto(data);
-                        break;
-                }
-            } finally {
-                data.close();
+            switch (loader.getId()) {
+                case LOADER_ALL:
+                    loaderAll(data);
+                    break;
+                case LOADER_CATEGORY:
+                    break;
+                case LOADER_PHOTO:
+                    loaderPhoto(data);
+                    break;
             }
         }
+        getV().getSupportLoaderManager().destroyLoader(loader.getId());
     }
 
     private void loaderPhoto(Cursor data) {
         while (data.moveToNext()) {
             selectionList.add(createPhotoInfo(data));
-            getV().submit();
         }
+        getV().submit();
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-    }
+    public void onLoaderReset(Loader<Cursor> loader) {}
 
+    /**
+     * 加载所有图片信息
+     */
     private void loaderAll(Cursor data) {
-        photoFolderInfoList.clear();
         ArrayList<PhotoInfo> allPhotoList = new ArrayList<>();   //所有图片的集合,不分文件夹
         PhotoInfo headPhotoInfo = new PhotoInfo();
         headPhotoInfo.photoPath = "";
@@ -330,8 +331,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         } else {
             if (mPhotoPickerFinal.isCrop()) {
                 //进入裁剪页面
-
-
+                startCrop(info.photoPath);
             } else {
                 selectionList.add(info);
                 getV().submit();
@@ -342,18 +342,19 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     /**
      * 拍照后的图片路径
      */
-    private File   scanPath;
-    private String scanType;
+    private File scanPath;
+    private File deletePath;
+    private static final String SCAN_TYPE = "image/jpeg";
+    private ProgressDialogFragment mDialogFragment;
 
     /**
      * 打开相机进行拍照
      */
-    public void takePicture() {
+    private void takePicture() {
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
         scanPath = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + Kits.Date.getFormatDateTime(new Date(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
-        scanType = "image/jpg";
         LogUtil.e(" takePicture path = " + scanPath);
         Uri uri;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
@@ -366,13 +367,43 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     }
 
     /**
-     * 相机选择后回调
+     * 相机选择 图片裁剪回调
      */
-    void takePictureResult() {
-        if (scanPath.isFile()) {
-            MediaScanner.scan(scanPath.getPath(), scanType);
-            imageDataSource(scanPath.getPath());
+    void takePictureResult(File path) {
+        //相机回调 单选 需要裁剪 进入裁剪页面
+        if (path == null && !mPhotoPickerFinal.isMultiMode() && mPhotoPickerFinal.isCrop()) {
+            startCrop(scanPath.getPath());
+            deletePath = scanPath;
+            return;
         }
+        //删除掉相机拍摄进入裁剪之前的照片
+        if (deletePath != null) {
+            UFile.deleteFile(deletePath);
+            deletePath = null;
+        }
+        //不等于null 裁剪回调
+        if (path != null) {
+            this.scanPath = path;
+        }
+        //扫描图片 通过cursor获取图片对象信息返回
+        if (scanPath.isFile()) {
+            showProgress();
+            MediaScanner.scan(scanPath.getPath(), SCAN_TYPE, () ->
+                    Util.safelyTask(() ->
+                            imageDataSource(scanPath.getPath())
+                    )
+            );
+        }
+    }
+
+    /**
+     * 回调后获取图片信息略有延迟,显示dialog蒙层
+     */
+    private void showProgress() {
+        if (mDialogFragment == null) {
+            mDialogFragment = new ProgressDialogFragment();
+        }
+        mDialogFragment.show(getV().getFragmentManager(), ProgressDialogFragment.TAG);
     }
 
     /**
@@ -393,6 +424,18 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
                 .putParcelableArrayList(PhotoValue.EXTRA_PHOTO_ITEMS, selectionList)
                 .putInt(PhotoValue.EXTRA_SELECTED_PHOTO_POSITION, position)
                 .requestCode(PhotoWallActivity.PREVIEW_REQUEST_CODE)
+                .launch();
+    }
+
+    /**
+     * 进入图片裁剪页面
+     */
+    private void startCrop(String photoPath) {
+        Router.newIntent()
+                .from(getV())
+                .to(PhotoCropActivity.class)
+                .putString(PhotoValue.EXTRA_URL, photoPath)
+                .requestCode(PhotoWallActivity.CROP_REQUEST_CODE)
                 .launch();
     }
 }

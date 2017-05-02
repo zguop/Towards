@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
@@ -132,9 +133,10 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                                     .get()
                                     .isMultiMode(false)
                                     .with(this)
-                                    .setSelectLimit(3)
                                     .executePhoto(photoInfos -> {
-
+                                        for (int i = 0; i < photoInfos.size(); i++) {
+                                            Log.d("aa", " photo = " + photoInfos.get(i).photoPath);
+                                        }
                                     }));
                             break;
                         case R.id.nav_meizi:
@@ -158,6 +160,7 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                         case R.id.nav_about:
                             pend(PhotoPickerFinal
                                     .get()
+                                    .isMultiMode(true)
                                     .setSelectLimit(3)
                                     .executePhoto(photoInfos -> {
 

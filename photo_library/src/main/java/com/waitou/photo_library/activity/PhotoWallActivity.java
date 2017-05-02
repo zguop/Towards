@@ -18,6 +18,7 @@ import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.recycler.divider.GridSpacingItemDecoration;
 import com.waitou.wt_library.rx.RxBus;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
 
     public static final int PHOTO_REQUEST_CODE   = 0;
     public static final int PREVIEW_REQUEST_CODE = 1;
+    public static final int CROP_REQUEST_CODE    = 2;
 
     private SingleTypeAdapter<PhotoInfo> mPhotoGridAdapter;
     private PhotoPickerFinal             mPhotoPickerFinal;
@@ -96,7 +98,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PHOTO_REQUEST_CODE: //相机拍照回调
-                    getP().takePictureResult();
+                    getP().takePictureResult(null);
                     break;
                 case PREVIEW_REQUEST_CODE://预览图片回调
                     getP().selectionList.clear();
@@ -105,6 +107,10 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
                     if (data.getBooleanExtra(PhotoValue.EXTRA_IS_COMMIT, false)) {
                         submit();
                     }
+                    break;
+                case CROP_REQUEST_CODE:
+                    File photoInfo = (File) data.getSerializableExtra(PhotoValue.EXTRA_CROP_PHOTO);
+                    getP().takePictureResult(photoInfo);
                     break;
             }
         }

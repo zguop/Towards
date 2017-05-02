@@ -10,9 +10,9 @@
         android:shortcutShortLabel="@string/graffiti_tips_short">
 
         <intent
-            android:action="android.intent.action.MAIN"
+            android:action="android.intent.action.VIEW"
             android:targetClass="com.waitou.towards.model.graffiti.GraffitiActivity"
-            android:targetPackage="com.waitou.towards.model.graffiti"/>
+            android:targetPackage="com.waitou.towards"/>
         <categories android:name="android.shortcut.conversation"/>
     </shortcut>
 

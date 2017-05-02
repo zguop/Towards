@@ -16,8 +16,8 @@ public class PhotoValue {
     public static       String EXTRA_IS_COMMIT               = "is_commit";
     //预览图片只是查看图片,并不能进行选择
     public static final String EXTRA_IS_PREVIEW              = "is_preview";
-
-
+    //裁剪后的图片info
+    public static final String EXTRA_CROP_PHOTO              = "extra_crop_photo";
 
 
 }
