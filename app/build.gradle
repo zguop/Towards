@@ -11,8 +11,8 @@ android {
         applicationId "com.waitou.towards"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        versionCode 2
+        versionName "2.0.0"
         resConfigs "zh" //还好强大的gradle支持语言的配置，比如国内应用只支持中文
         //支持dataBinding
         dataBinding {

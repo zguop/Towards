@@ -389,9 +389,9 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         if (scanPath.isFile()) {
             showProgress();
             MediaScanner.scan(scanPath.getPath(), SCAN_TYPE, () ->
-                    Util.safelyTask(() ->
+                    getV().pend(Util.safelyTask(() ->
                             imageDataSource(scanPath.getPath())
-                    )
+                    ))
             );
         }
     }

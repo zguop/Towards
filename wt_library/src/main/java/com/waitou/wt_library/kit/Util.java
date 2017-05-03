@@ -11,6 +11,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -54,11 +55,11 @@ public class Util {
     /**
      * 安全的线程操作
      */
-    public static void safelyTask(Action0 action0) {
+    public static Subscription safelyTask(Action0 action0) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            action0.call();
+            return Observable.empty().subscribe(o -> action0.call());
         } else {
-            AndroidSchedulers.mainThread().createWorker().schedule(action0);
+            return AndroidSchedulers.mainThread().createWorker().schedule(action0);
         }
     }
 

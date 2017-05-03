@@ -5,8 +5,6 @@ ext {
             buildToolsVersion: "25.0.1",
             minSdkVersion    : 21,
             targetSdkVersion : 25,
-            versionCode      : 1,
-            versionName      : '1.0.0',
             VSupportSdk      : '25.1.0',
             retrofitVersion  : '2.2.0'
     ]
