@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.waitou.wt_library.R;
-import com.waitou.wt_library.cache.SharedPref;
+import com.waitou.wt_library.kit.USharedPref;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -222,7 +222,7 @@ public class ChangeModeController {
      * 获取当前的主题model
      */
     public ThemeEnum getThemeModel() {
-        int themeId = SharedPref.get().getInteger(PRE_THEME_MODEL);
+        int themeId = USharedPref.get().getInteger(PRE_THEME_MODEL);
         return ThemeEnum.valueOf(themeId);
     }
 
@@ -230,7 +230,7 @@ public class ChangeModeController {
      * 设置当前主题
      */
     public void setTheme(Activity ctx) {
-        int theme = SharedPref.get().getInteger(PRE_THEME_MODEL);
+        int theme = USharedPref.get().getInteger(PRE_THEME_MODEL);
         ThemeEnum themeEnum = ThemeEnum.valueOf(theme);
         ctx.setTheme(themeEnum.getTheme());
     }
@@ -242,7 +242,7 @@ public class ChangeModeController {
         ctx.setTheme(themeEnum.getTheme());
         showAnimation(ctx);
         refreshUI(ctx);
-        SharedPref.get().put(PRE_THEME_MODEL, themeEnum.getTheme());
+        USharedPref.get().put(PRE_THEME_MODEL, themeEnum.getTheme());
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.waitou.wt_library.cache;
+package com.waitou.wt_library.kit;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,23 +19,23 @@ import java.util.Set;
  * Created by waitou on 17/1/4.
  * SharedPreferences存储工具
  */
-public class SharedPref {
+public class USharedPref {
 
-    private static SharedPref        sInstance;
+    private static USharedPref       sInstance;
     private static SharedPreferences mPreferences;
     private        Context           mContext;
 
-    private SharedPref(Context context) {
+    private USharedPref(Context context) {
         this.mContext = context;
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static SharedPref get() {
+    public static USharedPref get() {
         return sInstance;
     }
 
     public static void init(Context context) {
-        sInstance = new SharedPref(context);
+        sInstance = new USharedPref(context);
     }
 
     public void put(String key, Object value) {

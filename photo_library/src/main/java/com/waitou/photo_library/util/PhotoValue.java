@@ -2,6 +2,7 @@ package com.waitou.photo_library.util;
 
 /**
  * Created by waitou on 17/4/14.
+ * 常量
  */
 
 public class PhotoValue {

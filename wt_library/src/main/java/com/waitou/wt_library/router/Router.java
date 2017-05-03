@@ -24,7 +24,7 @@ public class Router {
     private int     exitAnim    = RES_NONE;
     private boolean isFinish    = false;
 
-    public static final int RES_NONE = -1;
+    private static final int RES_NONE = -1;
 
     private static RouterCallback callback;
 

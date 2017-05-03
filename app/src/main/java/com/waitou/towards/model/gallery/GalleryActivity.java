@@ -96,7 +96,6 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
                 }));
     }
 
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private static void transparentStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -107,6 +106,4 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
-
-
 }

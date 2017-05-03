@@ -14,19 +14,17 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
-import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.browser.WebUtil;
-import com.waitou.wt_library.cache.SharedPref;
-import com.waitou.wt_library.kit.Kits;
-import com.waitou.wt_library.kit.UMath;
+import com.waitou.wt_library.kit.USharedPref;
+import com.waitou.wt_library.kit.AlertToast;
+import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import rx.Observable;
@@ -66,37 +64,37 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
                     if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
-                        int dayOfWeek = Kits.Date.getDayOfWeek(new Date()) - 1;
+                        int dayOfWeek = UDate.getWeekIndex(UDate.getNowDate()) - 1;
                         getHomeCommendFragment().onBannerSuccess(pair.first.result.get(dayOfWeek));
                     }
                     if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
                         getHomeCommendFragment().onFunctionSuccess(pair.second.result.function);
                     }
-                    return Kits.Date.getCurrentDate().split("-");
+                    return UDate.getNowString(UDate.FORMAT_DATE);
                 })
                 .observeOn(Schedulers.io())
                 .flatMap(currentDate -> {
-                    String everyday = SharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
-                    String currentEveryday = Kits.Date.getCurrentDate();
+                    String everyday = USharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
                     boolean isReload = false;
-                    if (!everyday.equals(currentEveryday)) { //第二天
-                        if (!Kits.Date.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
-                            currentDate[2] = UMath.sub(currentDate[2], "1").toString(); //请求前一天数据
+                    if (!everyday.equals(currentDate)) { //第二天
+                        if (!UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
+                            currentDate = UDate.getYesterday(currentDate, UDate.FORMAT_DATE); //请求前一天数据
                         } else {
                             isReload = true; //第二天 大于十二点三十 更新数据
                         }
                     }
                     //如果请求的数据是null 请求前一天数据
-                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], isReload)
+                    final String[] finalCurrentDate = {currentDate};
+                    return getGankIoDay(currentDate, isReload)
                             .flatMap(info -> {
-                                LogUtil.e("aa", "loadHomeData is null = " + info.isNull);
+                                LogUtil.e("aa", "loadHomeData is null = " + info.isNull); //请求数据如果为null 尝试再次请求前一天数据
                                 if (info.isNull) {
-                                    currentDate[2] = UMath.sub(currentDate[2], "1").toString();
-                                    return getGankIoDay(currentDate[0], currentDate[1], currentDate[2], false);
+                                    finalCurrentDate[0] = UDate.getYesterday(finalCurrentDate[0], UDate.FORMAT_DATE);
+                                    return getGankIoDay(finalCurrentDate[0], false);//请求前一天数据
                                 }
                                 return Observable.just(info);
                             }).doOnNext(info ->
-                                    SharedPref.get().put(ExtraValue.EVERYDAY_DATA, currentDate[0] + "-" + currentDate[1] + "-" + currentDate[2])
+                                    USharedPref.get().put(ExtraValue.EVERYDAY_DATA, finalCurrentDate[0])
                             );
                 })
                 .flatMap(gankResultsInfo -> {
@@ -156,10 +154,11 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         }
     }
 
-    private Observable<GankResultsInfo> getGankIoDay(String year, String month, String day, boolean isReload) {
-        return Repository.getRepository().getGankIoDay(year, month, day, isReload)
+    private Observable<GankResultsInfo> getGankIoDay(String date, boolean isReload) {
+        String[] current = date.split("-");
+        return Repository.getRepository().getGankIoDay(current[0], current[1], current[2], isReload)
                 .map(reply -> {
-                    LogUtil.e("aa", " day = " + day + " loadHomeData " + reply.toString());
+                    LogUtil.e("aa", " day = " + date + " loadHomeData " + reply.toString());
                     return reply.getData();
                 });
     }
@@ -210,7 +209,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
 
     public String setGankPageTime(String publishedAt) {
         String date = publishedAt.replace('T', ' ').replace('Z', ' ');
-        return Kits.Date.friendlyTime(date);
+        return UDate.getFriendlyTimeSpanByNow(date);
     }
 
     /*--------------- fragment ---------------*/

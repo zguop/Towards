@@ -4,7 +4,7 @@ import com.facebook.stetho.Stetho;
 import com.waitou.net_library.http.HttpUtil;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.BaseApplication;
-import com.waitou.wt_library.cache.SharedPref;
+import com.waitou.wt_library.kit.USharedPref;
 import com.waitou.wt_library.imageloader.ILFactory;
 
 
@@ -20,7 +20,7 @@ public class TowardsApplication extends BaseApplication {
         //初始化网络环境
         HttpUtil.init(this);
         //初始化sp工具
-        SharedPref.init(this);
+        USharedPref.init(this);
         //初始化吐司工具
         AlertToast.init(this);
         //glide加载初始化

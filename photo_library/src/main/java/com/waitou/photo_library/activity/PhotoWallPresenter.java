@@ -34,7 +34,7 @@ import com.waitou.photo_library.view.FolderPopUpWindow;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.AlertToast;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UFile;
 import com.waitou.wt_library.kit.UImage;
@@ -46,7 +46,6 @@ import com.waitou.wt_library.router.Router;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by waitou on 17/4/3.
@@ -131,7 +130,8 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {}
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 
     /**
      * 加载所有图片信息
@@ -354,7 +354,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        scanPath = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + Kits.Date.getFormatDateTime(new Date(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
+        scanPath = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + UDate.date2String(UDate.getNowDate(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
         LogUtil.e(" takePicture path = " + scanPath);
         Uri uri;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {

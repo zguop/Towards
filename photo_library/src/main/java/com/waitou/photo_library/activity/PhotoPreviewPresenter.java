@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by waitou on 17/4/14.
+ * 预览图片
  */
 
 public class PhotoPreviewPresenter extends XPresent<PhotoPreviewActivity> {

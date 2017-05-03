@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by waitou on 17/4/13.
+ * 回调的图片事件
  */
 
 public class PhotoEvent {

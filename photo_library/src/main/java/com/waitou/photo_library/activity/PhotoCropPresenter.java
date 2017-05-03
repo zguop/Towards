@@ -7,6 +7,7 @@ import com.waitou.wt_library.base.XPresent;
 
 /**
  * Created by waitou on 17/4/20.
+ * 图片裁剪
  */
 
 public class PhotoCropPresenter extends XPresent<PhotoCropActivity> {

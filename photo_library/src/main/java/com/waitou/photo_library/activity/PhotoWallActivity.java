@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 /**
  * Created by waitou on 17/4/3.
+ * 选择图片页面
  */
 
 public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPhotoWallBinding> {
@@ -61,7 +62,6 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         getBinding().xList.setAdapter(mPhotoGridAdapter);
         getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, UDimens.dip2pxInt(2), false));
         reloadData();
-
     }
 
     public void submit() {

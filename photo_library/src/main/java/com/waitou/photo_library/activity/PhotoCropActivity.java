@@ -17,13 +17,12 @@ import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.kit.AlertToast;
-import com.waitou.wt_library.kit.Kits;
+import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.USDCard;
 
 import java.io.File;
-import java.util.Date;
 
 /**
  * Created by waitou on 17/4/20.
@@ -55,7 +54,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
         initMenuActionBar("裁剪", "完成", v -> {
             if (isCanSave) {
                 showProgress();
-                File saveFile = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + Kits.Date.getFormatDateTime(new Date(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
+                File saveFile = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + UDate.date2String(UDate.getNowDate(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
                 getBinding().crop.startCrop(Uri.fromFile(saveFile), new CropCallback() {
                     @Override
                     public void onSuccess(Bitmap cropped) {

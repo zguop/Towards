@@ -9,8 +9,7 @@
             name="item"
             type="com.waitou.towards.bean.JokeInfo"/>
 
-        <import type="com.waitou.wt_library.kit.Kits.Date"/>
-
+        <import type="com.waitou.wt_library.kit.UDate"/>
 
     </data>
 
@@ -59,7 +58,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="@{Date.getYmdhms(item.unixtime)}"
+                    android:text="@{UDate.millis2String(item.unixtime * 1000L)}"
                     android:textColor="@color/color_AFAFAF"
                     android:textSize="13dp"
                     tools:text="段子"/>
