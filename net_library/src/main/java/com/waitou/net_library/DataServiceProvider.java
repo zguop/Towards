@@ -6,7 +6,7 @@ import com.waitou.net_library.http.HttpUtil;
 import java.util.HashMap;
 
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -36,7 +36,7 @@ public class DataServiceProvider {
         return new Retrofit.Builder()
                 .baseUrl(HttpUtil.setCurrentUrl(baseUrl))
                 .client(AsyncOkHttpClient.getOkHttpClient())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
@@ -81,7 +81,7 @@ public class DataServiceProvider {
         retrofit = new Retrofit.Builder()
                 .baseUrl(HttpUtil.setCurrentUrl(address))
                 .client(AsyncOkHttpClient.getOkHttpClient())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

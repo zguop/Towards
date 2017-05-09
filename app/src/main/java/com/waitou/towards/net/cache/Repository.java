@@ -7,13 +7,13 @@ import com.waitou.towards.net.DataLoader;
 
 import java.util.List;
 
-import io.rx_cache.DynamicKey;
-import io.rx_cache.DynamicKeyGroup;
-import io.rx_cache.EvictDynamicKey;
-import io.rx_cache.Reply;
-import io.rx_cache.internal.RxCache;
+import io.reactivex.Observable;
+import io.rx_cache2.DynamicKey;
+import io.rx_cache2.DynamicKeyGroup;
+import io.rx_cache2.EvictDynamicKey;
+import io.rx_cache2.Reply;
+import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import rx.Observable;
 
 /**
  * Created by waitou on 17/3/8.

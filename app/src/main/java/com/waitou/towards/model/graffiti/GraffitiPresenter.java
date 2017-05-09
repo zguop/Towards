@@ -41,10 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 import static com.waitou.wt_library.kit.UDimens.getDeviceWidth;
 
@@ -205,28 +205,28 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     /**
      * 图片向右移动
      */
-    public Action1<Integer> moveRight() {
+    public Consumer<Integer> moveRight() {
         return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() + 1));
     }
 
     /**
      * 图片向左移动
      */
-    public Action1<Integer> moveLeft() {
+    public Consumer<Integer> moveLeft() {
         return integer -> interval(integer, aLong -> this.leftMoveRight.set(this.leftMoveRight.get() - 1));
     }
 
     /**
      * 图片向上移动
      */
-    public Action1<Integer> moveTop() {
+    public Consumer<Integer> moveTop() {
         return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() - 1));
     }
 
     /**
      * 图片向下移动
      */
-    public Action1<Integer> moveBottom() {
+    public Consumer<Integer> moveBottom() {
         return integer -> interval(integer, aLong -> this.topMoveBottom.set(this.topMoveBottom.get() + 1));
     }
 
@@ -234,25 +234,29 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         return bitmapField.get() != null;
     }
 
-    private Subscription subscribe;
+    private Disposable Disposable;
 
-    private void interval(int actionMasked, Action1<Long> action) {
+    private void interval(int actionMasked, Consumer<Long> action) {
         if (actionMasked == MotionEvent.ACTION_DOWN) {
-            subscribe = Observable.interval(0, 10, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            Disposable = Flowable.interval(0, 10, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .onBackpressureDrop()
                     .subscribe(action);
         }
         if (actionMasked == MotionEvent.ACTION_UP) {
-            if (subscribe != null && !subscribe.isUnsubscribed()) {
-                subscribe.unsubscribe();
+            if (Disposable != null && !Disposable.isDisposed()) {
+                Disposable.dispose();
             }
         }
     }
 
     @BindingAdapter("move")
-    public static void onTouch(View view, Action1<Integer> action) {
+    public static void onTouch(View view, Consumer<Integer> action) {
         view.setOnTouchListener((v, event) -> {
-            action.call(MotionEventCompat.getActionMasked(event));
+            try {
+                action.accept(MotionEventCompat.getActionMasked(event));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return false;
         });
     }

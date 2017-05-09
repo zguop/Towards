@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.waitou.wt_library.kit.UActivity;
 import com.waitou.wt_library.theme.ChangeModeController;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -24,8 +24,9 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private VDelegate             mVDelegate;
-    private CompositeSubscription mPendingSubscriptions;
+    private VDelegate           mVDelegate;
+    private CompositeDisposable mCompositeDisposable;
+
 
     @SuppressWarnings("unchecked")
     @Override
@@ -33,6 +34,32 @@ public abstract class BaseActivity extends AppCompatActivity {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
         UActivity.getActivityList().add(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUiDelegate().resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getUiDelegate().pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mCompositeDisposable != null) {
+            Log.d("aa", getClass().getSimpleName() + " 清楚rxjava");
+            mCompositeDisposable.clear();
+        }
+        if (UActivity.getActivityList().contains(this)) {
+            UActivity.getActivityList().remove(this);
+        }
+        getUiDelegate().destroy();
+        mVDelegate = null;
     }
 
     protected VDelegate getUiDelegate() {
@@ -45,12 +72,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 向队列中添加一个Subscription
      */
-    public void pend(Subscription subscription) {
-        if (mPendingSubscriptions == null) {
-            mPendingSubscriptions = new CompositeSubscription();
+    public void pend(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
         }
-        if (subscription != null) {
-            mPendingSubscriptions.add(subscription);
+        if (disposable != null) {
+            mCompositeDisposable.add(disposable);
         }
     }
 
@@ -62,30 +89,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         return getLayoutInflater().inflate(resId, container, false);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getUiDelegate().resume();
-    }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getUiDelegate().pause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPendingSubscriptions != null) {
-            Log.d("aa", getClass().getSimpleName() + " 清楚rxjava");
-            mPendingSubscriptions.clear();
-        }
-        if (UActivity.getActivityList().contains(this)) {
-            UActivity.getActivityList().remove(this);
-        }
-        getUiDelegate().destroy();
-        mVDelegate = null;
-    }
 }

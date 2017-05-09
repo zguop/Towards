@@ -40,8 +40,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static android.os.Build.VERSION_CODES.N;
 
 
 public class MainActivity extends XActivity<XPresent, ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener {
@@ -187,12 +189,12 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
             }
             mThemeAdapter.set(themeInfoList);
             mThemeAdapter.setPresenter((SingleTypeAdapter.Presenter<ThemeInfo>) themeInfo -> {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                if (Build.VERSION.SDK_INT > N) {
                     themeInfoList.stream()
                             .filter(info -> info.focus)
                             .forEach(info -> info.setFocus(false));
                 } else {
-                    pend(Observable.from(themeInfoList)
+                    pend(Observable.fromIterable(themeInfoList)
                             .filter(info -> info.focus)
                             .subscribe(info -> info.setFocus(false)));
                 }

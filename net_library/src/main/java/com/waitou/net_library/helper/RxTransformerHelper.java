@@ -6,10 +6,10 @@ import android.util.Log;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.net_library.model.BaseResponse;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by waitou on 17/1/4.
@@ -21,8 +21,8 @@ public class RxTransformerHelper {
     /**
      * 过滤器，result业务过滤 返回数据源
      */
-    public static <T> Observable.Transformer<BaseResponse<T>, T> applySchedulersResult(Context context, ErrorVerify errorVerify) {
-        return  observable -> observable
+    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResult(Context context, ErrorVerify errorVerify) {
+        return observable -> observable
                 .compose(applySchedulersAndAllFilter(context, errorVerify))
                 .map(tBaseResponse -> tBaseResponse.result);
     }
@@ -30,8 +30,8 @@ public class RxTransformerHelper {
     /**
      * 过滤器， 业务过滤
      */
-    public static <T> Observable.Transformer<T, T> applySchedulersAndAllFilter(Context context, ErrorVerify errorVerify) {
-        return tObservable -> tObservable
+    public static <T> ObservableTransformer<T, T> applySchedulersAndAllFilter(Context context, ErrorVerify errorVerify) {
+        return upstream -> upstream
                 .compose(applySchedulers())
                 .onErrorReturn(throwable -> {
                     //rx异常先处理
@@ -50,7 +50,7 @@ public class RxTransformerHelper {
     /**
      * 优先使用这个，可以继续使用操作符 线程转换
      */
-    public static <T> Observable.Transformer<T, T> applySchedulers() {
+    public static <T> ObservableTransformer<T, T> applySchedulers() {
         return observable -> observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -59,14 +59,14 @@ public class RxTransformerHelper {
     /**
      * 数据不为null
      */
-    public static <T> Func1<T, Boolean> verifyNotEmpty() {
+    public static <T> Predicate<T> verifyNotEmpty() {
         return t -> t != null;
     }
 
     /**
      * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功 自行判断
      */
-    public static <T> Func1<T, Boolean> verifyBusiness(ErrorVerify errorVerify) {
+    public static <T> Predicate<T> verifyBusiness(ErrorVerify errorVerify) {
         return t -> {
             if (t instanceof BaseResponse) {
                 BaseResponse baseResponse = (BaseResponse) t;

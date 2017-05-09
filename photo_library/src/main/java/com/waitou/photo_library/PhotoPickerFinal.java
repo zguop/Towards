@@ -16,8 +16,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscription;
-import rx.functions.Action1;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by waitou on 17/4/12.
@@ -43,7 +43,7 @@ public class PhotoPickerFinal {
     }
 
     private WeakReference<Activity> mActivityWeakReference;
-    private Subscription            rx;
+    private Disposable              rx;
     private boolean isMultiMode  = true; //图片选择模式 默认多选
     private int     selectLimit  = 9; //可以选择图片数据 默认9张
     private boolean isShowCamera = true;   //显示相机
@@ -132,13 +132,13 @@ public class PhotoPickerFinal {
      *
      * @param action 选择后的图片回调
      */
-    public Subscription executePhoto(Action1<List<PhotoInfo>> action) {
-        if (rx != null && !rx.isUnsubscribed()) {
-            rx.unsubscribe();
+    public Disposable executePhoto(Consumer<List<PhotoInfo>> action) {
+        if (rx != null && !rx.isDisposed()) {
+            rx.dispose();
         }
         if (action != null) {
             rx = RxBus.getDefault().toObservable(PhotoEvent.class)
-                    .subscribe(photoEvent -> action.call(photoEvent.getSelectionList()));
+                    .subscribe(photoEvent -> action.accept(photoEvent.getSelectionList()));
         }
         if (mActivityWeakReference != null && mActivityWeakReference.get() != null) {
             Router.newIntent().from(mActivityWeakReference.get()).to(PhotoWallActivity.class).launch();

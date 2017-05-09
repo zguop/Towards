@@ -16,9 +16,9 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.browser.WebUtil;
-import com.waitou.wt_library.kit.USharedPref;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDate;
+import com.waitou.wt_library.kit.USharedPref;
 import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
@@ -27,9 +27,10 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by waitou on 17/3/5.
@@ -60,9 +61,13 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * 加载HomeCommendFragment首页数据
      */
     void loadHomeData() {
-        getV().pend(Observable.zip(DataLoader.getGithubApi().getBannerPage(), DataLoader.getGithubApi().getHomeData(), Pair::create)
+
+        Disposable disposable = Observable.zip(DataLoader.getGithubApi().getBannerPage().subscribeOn(Schedulers.io())
+                , DataLoader.getGithubApi().getHomeData().subscribeOn(Schedulers.io())
+                , Pair::create)
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
+
                     if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
                         int dayOfWeek = UDate.getWeekIndex(UDate.getNowDate()) - 1;
                         getHomeCommendFragment().onBannerSuccess(pair.first.result.get(dayOfWeek));
@@ -139,7 +144,8 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     }
                 })
                 .subscribe(lists -> getHomeCommendFragment().onSuccess(lists)
-                        , throwable -> getHomeCommendFragment().onError(throwable)));
+                        , throwable -> getHomeCommendFragment().onError(throwable));
+        getV().pend(disposable);
     }
 
     private void addWelfareImg(List<GankResultsTypeInfo> list) {
@@ -167,7 +173,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * 加载干货数据
      */
     void loadCargoData(String type, int page) {
-        getV().pend(Repository.getRepository().getGankIoData(type, page)
+        Disposable disposable = Repository.getRepository().getGankIoData(type, page)
                 .map(reply -> {
                     LogUtil.e("aa", " type = " + type + " loadCargoData " + reply.toString());
                     return reply.getData();
@@ -189,7 +195,8 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                                 mCargoFragment.showError(page == 1);
                             }
                             AlertToast.show(throwable.toString());
-                        }));
+                        });
+        getV().pend(disposable);
     }
 
     public void showBottomSheet() {

@@ -8,14 +8,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityGalleryBinding;
 import com.waitou.towards.model.gallery.helper.CardAdapter;
 import com.waitou.towards.model.gallery.helper.CardScaleHelper;
-import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.base.CollapsingXActivity;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.recycler.LayoutManagerUtli;
 
 import java.util.List;

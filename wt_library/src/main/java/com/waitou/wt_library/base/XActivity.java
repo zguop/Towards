@@ -7,7 +7,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.waitou.net_library.BuildConfig;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.ActivityXBinding;

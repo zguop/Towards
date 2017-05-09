@@ -11,10 +11,10 @@ import com.waitou.towards.bean.JokeInfo;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
-import rx.Observable;
 
 /**
  * Created by waitou on 17/1/3.

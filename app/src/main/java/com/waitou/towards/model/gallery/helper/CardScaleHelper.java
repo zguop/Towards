@@ -13,8 +13,8 @@ import com.waitou.wt_library.kit.Util;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.waitou.wt_library.kit.UImage.scale;
 
@@ -69,7 +69,7 @@ public class CardScaleHelper {
         mLinearSnapHelper.attachToRecyclerView(mRecyclerView);
         //第一次进入延迟调用 等待RecyclerView列表初始化完成
         Util.contextAddSubscription(mContext
-                ,Observable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                , Observable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                         .subscribe(aLong -> notifyBackgroundChange()));
     }
 

@@ -11,10 +11,10 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 
 /**
  * Created by waitou on 17/3/24.
@@ -48,18 +48,24 @@ public class Util {
     /**
      * 检测context 将 Subscription添加到队列
      */
-    public static void contextAddSubscription(Context context, Subscription subscription) {
-        if (context instanceof BaseActivity) ((BaseActivity) context).pend(subscription);
+    public static void contextAddSubscription(Context context, Disposable disposable) {
+        if (context instanceof BaseActivity) ((BaseActivity) context).pend(disposable);
     }
 
     /**
      * 安全的线程操作
      */
-    public static Subscription safelyTask(Action0 action0) {
+    public static Disposable safelyTask(Action action0) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            return Observable.empty().subscribe(o -> action0.call());
+            return Observable.empty().subscribe(o -> action0.run());
         } else {
-            return AndroidSchedulers.mainThread().createWorker().schedule(action0);
+            return AndroidSchedulers.mainThread().scheduleDirect(() -> {
+                try {
+                    action0.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 

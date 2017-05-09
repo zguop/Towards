@@ -35,8 +35,9 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
 
 /**
  * Created by waitou on 17/3/23.
@@ -82,7 +83,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                         }
                     }
                 })
-                .flatMap(Observable::from)
+                .flatMap(Observable::fromIterable)
                 .filter(s -> {
                     if (!logoImgList.isEmpty()) {
                         for (LogoImg logoImg : logoImgList) {

@@ -1,10 +1,9 @@
 package com.waitou.wt_library.rx;
 
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+import io.reactivex.Flowable;
+import io.reactivex.processors.FlowableProcessor;
+import io.reactivex.processors.PublishProcessor;
 
 /**
  * Created by waitou on 17/1/11.
@@ -19,11 +18,10 @@ public class RxBus {
      */
     private static volatile RxBus defaultInstance;
 
-    private final Subject<Object, Object> bus;
+    private final FlowableProcessor<Object> bus;
 
-    // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
     private RxBus() {
-        bus = new SerializedSubject<>(PublishSubject.create());
+        bus = PublishProcessor.create().toSerialized();
     }
 
     public static RxBus getDefault() {
@@ -57,7 +55,7 @@ public class RxBus {
     /**
      * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
      */
-    public <T> Observable<T> toObservable(Class<T> eventType) {
+    public <T> Flowable<T> toObservable(Class<T> eventType) {
         return bus.ofType(eventType);
     }
 
@@ -65,7 +63,7 @@ public class RxBus {
      * 根据专递的code 和 eventType 类型返回特定类型 eventType的观察者
      * 对于注册了 code为 0 ， class为voidMessage的观察者，那么就接收不到code为0之外的voidMessage。
      */
-    public <T> Observable<T> toObservable(final int code, final Class<T> eventType) {
+    public <T> Flowable<T> toObservable(final int code, final Class<T> eventType) {
         return bus.ofType(RxBusBaseEvent.class)
                 .filter(event -> event.getCode() == code && eventType.isInstance(event.getObject()))
                 .map(RxBusBaseEvent::getObject)

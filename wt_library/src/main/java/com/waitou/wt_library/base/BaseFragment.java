@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * author   itxp
@@ -22,8 +22,8 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private VDelegate             mVDelegate;
-    private CompositeSubscription mPendingSubscriptions;
+    private VDelegate           mVDelegate;
+    private CompositeDisposable mCompositeDisposable;
 
     /**
      * 屏幕高宽 子类需复写 isScreenDisplayMetrics 进行获取
@@ -40,8 +40,6 @@ public abstract class BaseFragment extends Fragment {
      * 数据是否已经加载完毕
      */
     protected boolean isLoadDataCompleted;
-
-    protected boolean isFragmentVisibleHint;
 
     /**
      * fragment是否要被恢复可见的标识
@@ -128,12 +126,12 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 向队列中添加一个 subscription
      */
-    public void pend(Subscription subscription) {
-        if (mPendingSubscriptions == null) {
-            mPendingSubscriptions = new CompositeSubscription();
+    public void pend(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
         }
-        if (subscription != null) {
-            mPendingSubscriptions.add(subscription);
+        if (disposable != null) {
+            mCompositeDisposable.add(disposable);
         }
     }
 
@@ -148,8 +146,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPendingSubscriptions != null && mPendingSubscriptions.hasSubscriptions()) {
-            mPendingSubscriptions.clear();
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
         }
         getVDelegate().destroy();
         mVDelegate = null;
