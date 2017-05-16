@@ -23,7 +23,7 @@ ext {
             "rxandroid"          : "io.reactivex.rxjava2:rxandroid:2.0.1",
             "rxbinding"          : "com.jakewharton.rxbinding2:rxbinding:2.0.0",
             "rxpermissions"      : 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar',
-            "gradle-retrolambda" : "me.tatarka:gradle-retrolambda:3.3.0-beta4", //retrolambda
+            "gradle-retrolambda" : "me.tatarka:gradle-retrolambda:3.6.1", //retrolambda
             "okhttp3"            : "com.squareup.okhttp3:okhttp:3.5.0",
             "avi-loading"        : "com.wang.avi:library:1.0.2",
             "glide"              : "com.github.bumptech.glide:glide:3.7.0",
