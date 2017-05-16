@@ -82,7 +82,7 @@ public class SingleTypeAdapter<T> extends BaseViewAdapter<T> {
     }
 
     @LayoutRes
-    protected int getLayoutRes() {
+    private int getLayoutRes() {
         return mLayoutRes;
     }
 }

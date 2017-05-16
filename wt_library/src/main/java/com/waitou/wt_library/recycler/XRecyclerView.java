@@ -15,7 +15,7 @@ import android.view.View;
 import com.waitou.wt_library.recycler.divider.HorizontalDividerItemDecoration;
 import com.waitou.wt_library.recycler.divider.VerticalDividerItemDecoration;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -399,7 +399,7 @@ public class XRecyclerView extends RecyclerView {
         if (adapter != null) {
             return adapter.getHeaderViewList();
         }
-        return Collections.EMPTY_LIST;
+        return new ArrayList<>();
     }
 
     public int getFooterCount() {
@@ -414,7 +414,7 @@ public class XRecyclerView extends RecyclerView {
         if (adapter != null) {
             return adapter.getFooterViewList();
         }
-        return Collections.EMPTY_LIST;
+        return new ArrayList<>();
     }
 
     /**
@@ -577,8 +577,7 @@ public class XRecyclerView extends RecyclerView {
         return onRefreshAndLoadMoreListener;
     }
 
-
-    enum LayoutManagerType {
+    private enum LayoutManagerType {
         LINEAR, GRID, STAGGERED_GRID
     }
 

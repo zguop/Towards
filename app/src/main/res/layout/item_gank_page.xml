@@ -107,6 +107,7 @@
                     tools:text="段子"/>
 
                 <TextView
+                    android:onClick="@{() -> presenter.share(item)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/joke_share"

@@ -35,7 +35,7 @@ public class ThemeUtils {
      */
     public static int getAttrResId(String attrValue) {
         if (TextUtils.isEmpty(attrValue)) {
-            return -1;
+            return 0;
         }
 
         String resIdStr = attrValue.substring(1);

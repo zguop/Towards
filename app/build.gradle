@@ -3,6 +3,14 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'towards'
+            keyPassword 'towards123'
+            storeFile file('towards_store.jks')
+            storePassword 'towards123'
+        }
+    }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
     publishNonDefault true
@@ -19,6 +27,8 @@ android {
             enabled = true
         }
         multiDexEnabled true
+
+
     }
 
     buildTypes {
@@ -30,14 +40,12 @@ android {
             //去除无用资源
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             manifestPlaceholders = [packageName1: "com.waitou.towards"]
+            signingConfig signingConfigs.config
         }
-
         debug {
             minifyEnabled false
             manifestPlaceholders = [packageName1: "com.waitou.towards.debug"]
-
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def apkFile = new File(
@@ -52,7 +60,6 @@ android {
                     }
                 }
             }
-
         }
     }
 
@@ -77,17 +84,15 @@ dependencies {
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["flexbox"]
     compile rootProject.ext.dependencies["fab"]
-    compile rootProject.ext.dependencies["bottomsheet"]
     compile rootProject.ext.dependencies["stetho"]
     compile rootProject.ext.dependencies["rxcache"]
     compile rootProject.ext.dependencies["jolyglot_gson"]
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["bubbleseekbar"]
-
+    compile rootProject.ext.dependencies["vlayout"]
     //工程依赖 app --> wt_library --> net_library
-
-
     debugCompile project(path: ':photo_library', configuration: 'debug')
     releaseCompile project(path: ':photo_library', configuration: 'release')
-
+    debugCompile project(path: ':three_library', configuration: 'debug')
+    releaseCompile project(path: ':three_library', configuration: 'release')
 }

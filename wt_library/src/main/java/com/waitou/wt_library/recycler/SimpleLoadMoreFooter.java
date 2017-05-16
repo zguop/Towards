@@ -41,7 +41,7 @@ public class SimpleLoadMoreFooter extends RelativeLayout implements LoadMoreUIHa
     @Override
     public void onLoading() {
         setVisibility(VISIBLE);
-        tvMsg.setText("加载中");
+        tvMsg.setText("加载中...");
         progressBar.setVisibility(VISIBLE);
     }
 

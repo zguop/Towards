@@ -34,6 +34,7 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);
+        mAdapter.setPresenter(getP());
         getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
         getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();

@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
+import com.waitou.three_library.share.ShareInfo;
+import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
@@ -26,6 +29,7 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -55,6 +59,23 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
             return;
         }
         WebUtil.turnWeb(getV().getActivity(), url, title);
+    }
+
+    /**
+     * 调起分享
+     */
+    public void share(GankResultsTypeInfo item) {
+        ShareInfo shareInfo = new ShareInfo();
+        shareInfo.title = item.type;
+        shareInfo.content = item.desc;
+        shareInfo.imageUrl = item.images != null && !item.images.isEmpty() ? item.images.get(0) : "";
+        shareInfo.targetUrl = item.url;
+        UShare.share(getV().getActivity(), shareInfo, new Consumer<SHARE_MEDIA>() {
+            @Override
+            public void accept(SHARE_MEDIA media) {
+                AlertToast.show("分享成功");
+            }
+        });
     }
 
     /**

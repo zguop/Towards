@@ -9,6 +9,10 @@
             name="item"
             type="com.waitou.towards.bean.JokeInfo"/>
 
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.main.fragment.joke.TextJokePresenter"/>
+
         <import type="com.waitou.wt_library.kit.UDate"/>
 
     </data>
@@ -64,7 +68,7 @@
                     tools:text="段子"/>
 
                 <TextView
-                    android:id="@+id/share"
+                    android:onClick="@{() -> presenter.share(item)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/joke_share"

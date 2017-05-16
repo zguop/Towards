@@ -7,11 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
 import com.waitou.photo_library.PhotoPickerFinal;
+import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.ActivityMainBinding;
@@ -131,15 +131,6 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
                             Router.newIntent().from(this).to(RecommendedActivity.class).launch();
                             break;
                         case R.id.nav_all:
-                            pend(PhotoPickerFinal
-                                    .get()
-                                    .isMultiMode(false)
-                                    .with(this)
-                                    .executePhoto(photoInfos -> {
-                                        for (int i = 0; i < photoInfos.size(); i++) {
-                                            Log.d("aa", " photo = " + photoInfos.get(i).photoPath);
-                                        }
-                                    }));
                             break;
                         case R.id.nav_meizi:
                             Router.newIntent().from(this).to(GalleryActivity.class).launch();

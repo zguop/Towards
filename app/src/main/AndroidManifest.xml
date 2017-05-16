@@ -2,12 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.waitou.towards">
 
-    <!--网络权限-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--写sd卡权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--读sd卡权限-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- 允许程序访问有关GSM网络信息-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 

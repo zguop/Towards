@@ -2,19 +2,27 @@ package com.waitou.towards.model.main.fragment.joke;
 
 import android.os.Bundle;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
+import com.waitou.three_library.share.ShareInfo;
+import com.waitou.three_library.share.UShare;
+import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
+import com.waitou.wt_library.kit.AlertToast;
+import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
+
+import java.util.function.Consumer;
 
 /**
  * Created by waitou on 17/3/5.
  * 笑话presenter
  */
 
-class TextJokePresenter extends XPresent<TextJokeFragment> {
+public class TextJokePresenter extends XPresent<TextJokeFragment> implements BaseViewAdapter.Presenter {
 
     private JokeContentFragment mFragmentJoke;
     private JokeContentFragment mFragmentPic;
@@ -36,6 +44,18 @@ class TextJokePresenter extends XPresent<TextJokeFragment> {
             mFragmentPic.setArguments(bundle);
         }
         return type == 0 ? mFragmentJoke : mFragmentPic;
+    }
+
+    public void share(JokeInfo item) {
+        ShareInfo shareInfo = new ShareInfo();
+        shareInfo.content = item.content;
+        shareInfo.imageUrl = item.url;
+        UShare.share(getV().getActivity(), shareInfo, new Consumer<SHARE_MEDIA>() {
+            @Override
+            public void accept(SHARE_MEDIA media) {
+                AlertToast.show("分享成功");
+            }
+        });
     }
 
     /**

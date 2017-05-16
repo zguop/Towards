@@ -67,8 +67,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 数据是否为空
-     *
-     * @return
      */
     private boolean isEmpty() {
         return getDataCount() == 0;
@@ -76,10 +74,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 添加headview
-     *
-     * @param pos
-     * @param view
-     * @return
      */
     public boolean addHeadView(int pos, View view) {
         if (view == null || headerViewList.contains(view)) return false;
@@ -91,9 +85,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 添加headView
-     *
-     * @param view
-     * @return
      */
     public boolean addHeadView(View view) {
         return addHeadView(getHeaderSize(), view);
@@ -101,10 +92,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 添加footView
-     *
-     * @param pos
-     * @param view
-     * @return
      */
     public boolean addFootView(int pos, View view) {
         if (view == null || footerViewList.contains(view)) return false;
@@ -121,12 +108,9 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 删除headView
-     *
-     * @param view
-     * @return
      */
     public boolean removeHeadView(View view) {
-        if (view == null && !headerViewList.contains(view)) return false;
+        if (view == null || !headerViewList.contains(view)) return false;
 
         int pos = headerViewList.indexOf(view);
         boolean result = headerViewList.remove(view);
@@ -154,9 +138,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 删除footView
-     *
-     * @param view
-     * @return
      */
     public boolean removeFootView(View view) {
         boolean result = false;
@@ -175,7 +156,7 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int index = 0;
+        int index;
         if (viewType < ITEM_TYPE_HEADER + getHeaderSize()) {
             index = viewType + ITEM_TYPE_HEADER;
             return new XHeadFootViewHolder(headerViewList.get(index));
@@ -225,9 +206,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 判断当前位置是否是header or footer
-     *
-     * @param position
-     * @return
      */
     public boolean isHeaderOrFooter(int position) {
         return position < getHeaderSize() || position >= getHeaderSize() + getDataCount();
@@ -239,8 +217,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 获取headView的数量
-     *
-     * @return
      */
     public int getHeaderSize() {
         return headerViewList != null ? headerViewList.size() : 0;
@@ -248,8 +224,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 获取footerView的数量
-     *
-     * @return
      */
     public int getFooterSize() {
         return footerViewList != null ? footerViewList.size() : 0;
@@ -269,8 +243,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 获取headViews
-     *
-     * @return
      */
     public List<View> getHeaderViewList() {
         return headerViewList;
@@ -278,8 +250,6 @@ public class XRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     /**
      * 获取footViews
-     *
-     * @return
      */
     public List<View> getFooterViewList() {
         return footerViewList;

@@ -48,7 +48,6 @@ public class XPullRecyclerView extends FrameLayout implements XRecyclerView.Stat
 
     private void setupAttrs(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.XPullRecyclerView);
-
         backgroundColor = typedArray.getColor(R.styleable.XPullRecyclerView_recyclerBackgroundColor, Color.WHITE);
         padding = (int) typedArray.getDimension(R.styleable.XPullRecyclerView_recyclerPadding, -1.0f);
         paddingLeft = (int) typedArray.getDimension(R.styleable.XPullRecyclerView_recyclerPaddingLeft, 0.0f);
@@ -58,7 +57,6 @@ public class XPullRecyclerView extends FrameLayout implements XRecyclerView.Stat
         scrollbarStyle = typedArray.getInt(R.styleable.XPullRecyclerView_recyclerScrollbarStyle, 2);
         clipToPadding = typedArray.getBoolean(R.styleable.XPullRecyclerView_recyclerClipToPadding, false);
         scrollbarNone = typedArray.getBoolean(R.styleable.XPullRecyclerView_recyclerScrollbarNone, false);
-
         typedArray.recycle();
     }
 
@@ -97,32 +95,9 @@ public class XPullRecyclerView extends FrameLayout implements XRecyclerView.Stat
 
         recyclerView.stateCallback(this);
 
+
         super.onFinishInflate();
     }
-
-//    @Override
-//    public void setDisplayState(int displayState) {
-//        XRecyclerAdapter adapter = recyclerView.getAdapter();
-//        if (adapter != null && adapter.getItemCount() > 0) {
-//            super.setDisplayState(STATE_CONTENT);
-//            return;
-//        }
-//        super.setDisplayState(displayState);
-//    }
-//
-//    public void setDisplayState(int state, boolean isForce) {
-//        if (isForce) {
-//            super.setDisplayState(state);
-//            return;
-//        }
-//        setDisplayState(state);
-//    }
-//
-//    @Override
-//    public void showEmpty() {
-//        setDisplayState(STATE_EMPTY, true);
-//    }
-//
 
     public void showError(boolean isReload) {
         if (isReload) {
@@ -133,16 +108,6 @@ public class XPullRecyclerView extends FrameLayout implements XRecyclerView.Stat
             recyclerView.loadMoreError("网络异常，请更换网络或稍后再试");
         }
     }
-
-//    @Override
-//    public void showError() {
-//        setDisplayState(STATE_ERROR, true);
-//    }
-//
-//    @Override
-//    public void showLoading() {
-//        setDisplayState(STATE_LOADING, true);
-//    }
 
     @Override
     public void notifyContent() {

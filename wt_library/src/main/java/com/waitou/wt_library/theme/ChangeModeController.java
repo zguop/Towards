@@ -13,7 +13,6 @@ import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +82,6 @@ public class ChangeModeController {
     }
 
     public void init(final AppCompatActivity activity) {
-
         LayoutInflaterCompat.setFactory(LayoutInflater.from(activity), (parent, name, context, attrs) -> {
             List<SkinAttr> skinAttrsList = getSkinAttrs(attrs, context);
             //如果属性为null 并且名字没有包含. 说明不是自定义的view
@@ -196,14 +194,16 @@ public class ChangeModeController {
             String attributeValue = attrs.getAttributeValue(i);
             if (attributeValue.startsWith("?") || attributeValue.startsWith("@")) {
                 int id = ThemeUtils.getAttrResId(attributeValue);
-                String entryName = context.getResources().getResourceEntryName(id);
-                if (entryName.equals(COLOR_PRIMARY) || entryName.equals(COLOR_PRIMARY_DARK) || entryName.equals(COLOR_ACCENT) || entryName.startsWith(ATTR_PREFIX)) {
-                    if (skinAttrsList == null) {
-                        skinAttrsList = new ArrayList<>();
+                if(id != 0){
+                    String entryName = context.getResources().getResourceEntryName(id);
+                    if (entryName.equals(COLOR_PRIMARY) || entryName.equals(COLOR_PRIMARY_DARK) || entryName.equals(COLOR_ACCENT) || entryName.startsWith(ATTR_PREFIX)) {
+                        if (skinAttrsList == null) {
+                            skinAttrsList = new ArrayList<>();
+                        }
+                        String typeName = context.getResources().getResourceTypeName(id);
+                        skinAttr = new SkinAttr(attrType, entryName, attributeName, typeName);
+                        skinAttrsList.add(skinAttr);
                     }
-                    String typeName = context.getResources().getResourceTypeName(id);
-                    skinAttr = new SkinAttr(attrType, entryName, attributeName, typeName);
-                    skinAttrsList.add(skinAttr);
                 }
             }
         }
@@ -316,7 +316,6 @@ public class ChangeModeController {
         BACKGROUD("background") {
             @Override
             public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
-                Log.d("aa" ,attrName + " attrValueResName = " + attrValueResName + " attrValueTypeName = " + attrValueTypeName);
                 Context context = view.getContext();
                 view.setBackground(ThemeUtils.getDrawable(context, getResId(context, attrName)));
             }

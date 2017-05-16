@@ -41,6 +41,7 @@ dependencies {
     compile rootProject.ext.dependencies["rxpermissions"]
     compile rootProject.ext.dependencies["rxbinding"]
     compile rootProject.ext.dependencies["canary-debug"]
+    compile rootProject.ext.dependencies["bottomsheet"]
     compile rootProject.ext.dependencies["statusbar"]
     compile(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'

@@ -2,7 +2,7 @@
 完全按照自己的想法开发，借鉴于github许多开源项目UI。目前正在慢慢开发中，不定时上传代码。
 
 
-使用的到的技术     DataBinding + mvp + rxJava + retrofit + rxCache
+使用的到的技术     DataBinding + mvp + rxJava2 + retrofit + rxCache
 
 大量dataBinding例子
 
@@ -10,7 +10,9 @@
 
 部分界面截图：
 
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_3236.gif) ![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_9871.gif) ![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489736672_1472.gif)
+![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_3236.gif) 
+![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_9871.gif)
+![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489736672_1472.gif)
 
 
 下载链接：

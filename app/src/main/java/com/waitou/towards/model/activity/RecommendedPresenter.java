@@ -1,7 +1,5 @@
 package com.waitou.towards.model.activity;
 
-import android.os.SystemClock;
-
 import com.waitou.wt_library.base.XPresent;
 
 
@@ -12,12 +10,7 @@ import com.waitou.wt_library.base.XPresent;
 public class RecommendedPresenter extends XPresent<RecommendedActivity> implements RecommendedContract.IRecommendedPresenter {
 
     public void start() {
-        new Thread(() -> {
-            getV().showLoading();
-            SystemClock.sleep(2000);
-            getV().showContent();
 
-        }).start();
     }
 
     @Override
