@@ -18,7 +18,8 @@ public class BaseApplication extends Application {
         mApp = this;
 
         /*---------------  内存泄漏的检测 ---------------*/
-        if (LeakCanary.isInAnalyzerProcess(this)) {
+
+        if (!BuildConfig.DEBUG || LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
         LeakCanary.install(this);

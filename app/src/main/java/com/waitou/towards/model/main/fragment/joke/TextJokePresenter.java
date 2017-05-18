@@ -1,8 +1,8 @@
 package com.waitou.towards.model.main.fragment.joke;
 
 import android.os.Bundle;
+import android.util.Log;
 
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.three_library.share.ShareInfo;
@@ -13,9 +13,8 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.AlertToast;
+import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
-
-import java.util.function.Consumer;
 
 /**
  * Created by waitou on 17/3/5.
@@ -50,11 +49,10 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
         ShareInfo shareInfo = new ShareInfo();
         shareInfo.content = item.content;
         shareInfo.imageUrl = item.url;
-        UShare.share(getV().getActivity(), shareInfo, new Consumer<SHARE_MEDIA>() {
-            @Override
-            public void accept(SHARE_MEDIA media) {
-                AlertToast.show("分享成功");
-            }
+        shareInfo.type = UString.isNotEmpty(shareInfo.imageUrl) ? ShareInfo.TEXT_AND_IMAGE : ShareInfo.TEXT;
+        UShare.share(getV().getActivity(), shareInfo, media -> {
+            AlertToast.show("分享成功");
+            Log.d("aa", " 分享成功");
         });
     }
 

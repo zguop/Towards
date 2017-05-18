@@ -83,6 +83,11 @@
  public void set*(...);
 }
 
+-keep public class android.support.design.widget.BottomNavigationView { *; }
+-keep public class android.support.design.internal.BottomNavigationMenuView { *; }
+-keep public class android.support.design.internal.BottomNavigationPresenter { *; }
+-keep public class android.support.design.internal.BottomNavigationItemView { *; }
+
 # -----------------------------------------------------------------
 
 #vlayout
@@ -133,6 +138,20 @@ public static java.lang.String TABLENAME;
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+#Bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+-dontwarn sun.misc.**
+
+#Gson
+-keepattributes *Annotation*
+-keep class sun.misc.Unsafe { *; }
+-keep class com.idea.fifaalarmclock.entity.***
+-keep class com.google.gson.stream.** { *; }
+
+#rxcahce
+-keep class io.rx_cache2.* { *; }
 
 
 

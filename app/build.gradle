@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
+apply plugin: 'kotlin-android'
+
 
 android {
     signingConfigs {
@@ -21,14 +23,14 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 2
         versionName "2.0.0"
-        resConfigs "zh" //还好强大的gradle支持语言的配置，比如国内应用只支持中文
+        resConfigs "zh"
         //支持dataBinding
         dataBinding {
             enabled = true
         }
         multiDexEnabled true
 
-
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
     }
 
     buildTypes {
@@ -40,12 +42,17 @@ android {
             //去除无用资源
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [packageName1: "com.waitou.towards"]
+            manifestPlaceholders = [packageName1: "com.waitou.towards",
+                                    appName     : "大杂烩"]
             signingConfig signingConfigs.config
         }
         debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
             minifyEnabled false
-            manifestPlaceholders = [packageName1: "com.waitou.towards.debug"]
+            manifestPlaceholders = [packageName1: "com.waitou.towards.debug",
+                                    appName     : "大杂烩测试"]
+            signingConfig signingConfigs.config
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def apkFile = new File(
@@ -60,6 +67,7 @@ android {
                     }
                 }
             }
+
         }
     }
 
@@ -73,7 +81,6 @@ android {
         daoPackage 'com.waitou.towards.greendao'
         targetGenDir 'src/main/java'
     }
-
 }
 
 dependencies {
@@ -90,6 +97,8 @@ dependencies {
     compile rootProject.ext.dependencies["greendao"]
     compile rootProject.ext.dependencies["bubbleseekbar"]
     compile rootProject.ext.dependencies["vlayout"]
+    compile rootProject.ext.dependencies["kotlin"]
+
     //工程依赖 app --> wt_library --> net_library
     debugCompile project(path: ':photo_library', configuration: 'debug')
     releaseCompile project(path: ':photo_library', configuration: 'release')

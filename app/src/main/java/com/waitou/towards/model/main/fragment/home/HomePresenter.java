@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.cocosw.bottomsheet.BottomSheet;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
@@ -29,7 +28,6 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -54,7 +52,6 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      */
     public void onLinkClick(View view, int type, String url, String title) {
         if (UString.isEmpty(url)) {
-            Log.e("aa", " url缺失了..");
             AlertToast.show("url缺失了..");
             return;
         }
@@ -70,11 +67,11 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         shareInfo.content = item.desc;
         shareInfo.imageUrl = item.images != null && !item.images.isEmpty() ? item.images.get(0) : "";
         shareInfo.targetUrl = item.url;
-        UShare.share(getV().getActivity(), shareInfo, new Consumer<SHARE_MEDIA>() {
-            @Override
-            public void accept(SHARE_MEDIA media) {
-                AlertToast.show("分享成功");
-            }
+        shareInfo.type = ShareInfo.WEB0;
+        UShare.share(getV().getActivity(), shareInfo, media -> {
+            AlertToast.show("分享成功");
+            Log.d("aa", " 分享成功");
+
         });
     }
 
@@ -88,7 +85,6 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 , Pair::create)
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
-
                     if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
                         int dayOfWeek = UDate.getWeekIndex(UDate.getNowDate()) - 1;
                         getHomeCommendFragment().onBannerSuccess(pair.first.result.get(dayOfWeek));
@@ -103,10 +99,10 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     String everyday = USharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
                     boolean isReload = false;
                     if (!everyday.equals(currentDate)) { //第二天
-                        if (!UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
-                            currentDate = UDate.getYesterday(currentDate, UDate.FORMAT_DATE); //请求前一天数据
-                        } else {
+                        if (UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
                             isReload = true; //第二天 大于十二点三十 更新数据
+                        } else {
+                            currentDate = UDate.getYesterday(currentDate, UDate.FORMAT_DATE); //请求前一天数据
                         }
                     }
                     //如果请求的数据是null 请求前一天数据

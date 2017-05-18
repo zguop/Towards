@@ -1,5 +1,6 @@
 package com.waitou.towards.model.main;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,8 +11,8 @@ import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
+import com.umeng.socialize.UMShareAPI;
 import com.waitou.photo_library.PhotoPickerFinal;
-import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.ThemeInfo;
 import com.waitou.towards.databinding.ActivityMainBinding;
@@ -111,7 +112,6 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
         return getBinding().mainDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
-
     @Override
     public void onBackPressed() {
         if (toggle()) {
@@ -205,6 +205,11 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
         mThemeDialog.show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
 
     /*--------------- 初始化fragment ---------------*/
     private HomeFragment getHomeFragment() {
@@ -244,7 +249,8 @@ public class MainActivity extends XActivity<XPresent, ActivityMainBinding> imple
 
     @Override
     protected void onDestroy() {
-        ChangeModeController.get().cancel();
         super.onDestroy();
+        ChangeModeController.get().cancel();
+        UMShareAPI.get(this).release();
     }
 }

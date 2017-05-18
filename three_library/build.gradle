@@ -31,7 +31,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile rootProject.ext.dependencies["bugly_crashreport"]
+    compile rootProject.ext.dependencies["bugly_nativecrashreport"]
     debugCompile project(path: ':wt_library', configuration: 'debug')
     releaseCompile project(path: ':wt_library', configuration: 'release')
 }
