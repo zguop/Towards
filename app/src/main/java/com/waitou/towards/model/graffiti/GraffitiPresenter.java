@@ -88,9 +88,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
             mGraffitiToolAdapter.setPresenter(this);
             List<GraffitiToolInfo> toolInfoList = new ArrayList<>();
             for (GraffitiToolEnum toolEnum : GraffitiToolEnum.values()) {
-                GraffitiToolInfo info = new GraffitiToolInfo();
-                info.drawable = ContextCompat.getDrawable(getV(), toolEnum.getRedId());
-                info.tool = toolEnum.getTool();
+                GraffitiToolInfo info = new GraffitiToolInfo(ContextCompat.getDrawable(getV(), toolEnum.getRedId()),toolEnum.getTool());
                 toolInfoList.add(info);
             }
             mGraffitiToolAdapter.set(toolInfoList);
