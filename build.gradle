@@ -17,6 +17,7 @@ buildscript {
     }
 }
 
+
 /*subprojects：subprojects和allprojects一样，也是父Project的一个属性，
 该属性会返回所有子项目。在父项目的build.gradle脚本里，给subprojects传一个包含配置信息的闭包，
 可以配置所有子项目共有的设置，比如共同的插件、repositories、依赖版本以及依赖配置*/

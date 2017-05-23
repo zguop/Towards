@@ -49,6 +49,7 @@ ext {
             "bugly_nativecrashreport": 'com.tencent.bugly:nativecrashreport:latest.release',
             "vlayout"                : 'com.alibaba.android:vlayout:1.0.5@aar',//vlayout
             "kotlin"                 : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlin_version}",
+            "databinding_kapt"       : "com.android.databinding:compiler:2.3.2", //dataBinding kotlin 报错的问题解决
     ]
 
     // "databinding-adapter": 'com.github.markzhai:databinding-rv-adapter:1.0.1',

@@ -4,6 +4,7 @@ apply plugin: 'org.greenrobot.greendao'//GreenDao
 apply plugin: 'kotlin-android'
 
 
+
 android {
     signingConfigs {
         config {
@@ -81,6 +82,11 @@ android {
         daoPackage 'com.waitou.towards.greendao'
         targetGenDir 'src/main/java'
     }
+
+}
+//dataBinding kotlin
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -98,6 +104,7 @@ dependencies {
     compile rootProject.ext.dependencies["bubbleseekbar"]
     compile rootProject.ext.dependencies["vlayout"]
     compile rootProject.ext.dependencies["kotlin"]
+    kapt rootProject.ext.dependencies["databinding_kapt"]
 
     //工程依赖 app --> wt_library --> net_library
     debugCompile project(path: ':photo_library', configuration: 'debug')
