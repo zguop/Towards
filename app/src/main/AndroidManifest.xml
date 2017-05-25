@@ -11,8 +11,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
@@ -48,6 +48,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <!--影视推荐-->
+        <activity
+            android:name=".model.movie.MovieRecommendActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>

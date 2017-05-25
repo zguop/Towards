@@ -3,7 +3,6 @@ package com.waitou.towards.model.main.fragment.home;
 import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
 import android.util.Log;
-import android.view.View;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.waitou.net_library.helper.RxTransformerHelper;
@@ -14,14 +13,13 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.common.ExtraValue;
+import com.waitou.towards.common.NativeEnum;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.browser.WebUtil;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.USharedPref;
-import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
@@ -50,12 +48,8 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     /**
      * banner item 点击
      */
-    public void onLinkClick(View view, int type, String url, String title) {
-        if (UString.isEmpty(url)) {
-            AlertToast.show("url缺失了..");
-            return;
-        }
-        WebUtil.turnWeb(getV().getActivity(), url, title);
+    public void onLinkClick(int type, String value) {
+        NativeEnum.go(getV().getActivity(), type, value);
     }
 
     /**

@@ -33,5 +33,9 @@ public class HomeFunctionInfo {
         @SerializedName("link")
         @Expose
         public String link;
+
+        @SerializedName("value")
+        @Expose
+        public String value;
     }
 }

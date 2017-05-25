@@ -63,7 +63,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     private static final int      LOADER_ALL       = 0;         //加载所有图片
     private static final int      LOADER_CATEGORY  = 1;    //分类加载图片
     private static final int      LOADER_PHOTO     = 2;
-    private final        String[] IMAGE_PROJECTION = {     //查询图片需要的数据列
+    private static final String[] IMAGE_PROJECTION = {     //查询图片需要的数据列
             MediaStore.Images.Media.DISPLAY_NAME,   //图片的显示名称  aaa.jpg
             MediaStore.Images.Media.DATA,           //图片的真实路径  /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
             MediaStore.Images.Media.SIZE,           //图片的大小，long型  132492

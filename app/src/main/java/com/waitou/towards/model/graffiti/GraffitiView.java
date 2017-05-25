@@ -31,7 +31,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     private int           type;
     private int           width;
     private int           color;
-
+    
     private List<Shape>   mShapes    = new ArrayList<>();
     private List<Integer> mCleanBuff = new ArrayList<>();
 

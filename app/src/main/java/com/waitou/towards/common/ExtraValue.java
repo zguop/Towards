@@ -21,4 +21,21 @@ public class ExtraValue {
     public static final String EVERYDAY_DATA     = "everyday_data";
     public static final String HOME_COMMEND_DATA = "home_commend_data";
 
+
+
+    /*--------------- nativeType ---------------*/
+
+    public static final int TYPE_H5 = 0;
+
+    public static final int TYPE_MOVIE_RECOMMEND = 3;
+
+    public static final int TYPE_DEFAULT = 100;
+
+
+    /*--------------- pathValue ---------------*/
+    public static final String PATH_MOVIE_RECOMMEND = "path_movie_recommend";
+
+    public static final String PATH_H5 = "path_h5";
+
+
 }

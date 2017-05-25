@@ -21,7 +21,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="@{(view) -> presenter.onLinkClick(view,item.linkType,item.link,item.name)}"
+        android:onClick="@{() -> presenter.onLinkClick(item.linkType,item.link)}"
         android:scaleType="fitXY"
         app:imageUrl="@{item.banner}"/>
 

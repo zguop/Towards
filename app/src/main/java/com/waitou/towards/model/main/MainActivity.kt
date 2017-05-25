@@ -3,7 +3,6 @@ package com.waitou.towards.model.main
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Build
-import android.os.Build.VERSION_CODES.N
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -85,6 +84,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
         }
     }
 
+
     override fun reloadData() {}
 
     /**
@@ -119,6 +119,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
                         R.id.nav_theme -> changeNight()
                         R.id.nav_about -> pend(PhotoPickerFinal
                                 .get()
+                                .with(this)
                                 .isMultiMode(true)
                                 .setSelectLimit(3)
                                 .executePhoto {
@@ -145,7 +146,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
             }
             mThemeAdapter!!.set(themeInfoList)
             mThemeAdapter!!.setPresenter(SingleTypeAdapter.Presenter<ThemeInfo> { themeInfo ->
-                if (Build.VERSION.SDK_INT > N) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                     themeInfoList.stream()
                             .filter { info -> info.focus }
                             .forEach { info -> info.focus = false }

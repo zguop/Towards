@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{(view) -> presenter.onLinkClick(view,0,item.url,item.desc)}"
+            android:onClick="@{() -> presenter.onLinkClick(0,item.url)}"
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
