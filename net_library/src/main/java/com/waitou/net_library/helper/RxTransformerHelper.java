@@ -1,10 +1,12 @@
 package com.waitou.net_library.helper;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.net_library.model.BaseResponse;
+import com.waitou.net_library.model.MovieBaseResponse;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -74,6 +76,13 @@ public class RxTransformerHelper {
                 if (!success && errorVerify != null) {
                     LogUtil.e("返回错误码：" + baseResponse.errorCode + "\t\t\t错误信息：" + baseResponse.reason);
                     errorVerify.call(baseResponse.errorCode, baseResponse.reason);
+                }
+                return success;
+            } else if (t instanceof MovieBaseResponse) {
+                MovieBaseResponse movieBaseResponse = (MovieBaseResponse) t;
+                boolean success = movieBaseResponse.code == 200;
+                if (!success && errorVerify != null) {
+                    errorVerify.call(movieBaseResponse.code + "", TextUtils.isEmpty(movieBaseResponse.msg) ? "服务器开小差" : movieBaseResponse.msg);
                 }
                 return success;
             }

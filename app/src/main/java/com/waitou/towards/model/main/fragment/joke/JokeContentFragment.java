@@ -7,7 +7,7 @@ import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.wt_library.base.XFragment;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.XRecyclerView;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 
@@ -35,7 +35,7 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);
         mAdapter.setPresenter(getP());
-        getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
+        getBinding().setManager(LayoutManagerUtil.getVerticalLayoutManager(getActivity()));
         getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);

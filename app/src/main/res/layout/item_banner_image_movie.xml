@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="position"
+            type="int"/>
+
+        <variable
+            name="item"
+            type="com.waitou.towards.bean.MovieInfo"/>
+
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.movie.MovieRecommendPresenter"/>
+
+    </data>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:imageUrl="@{item.pic}"/>
+
+</layout>
+

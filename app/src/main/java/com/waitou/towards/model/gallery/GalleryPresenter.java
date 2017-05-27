@@ -14,7 +14,7 @@ import com.waitou.wt_library.recycler.XRecyclerView;
 public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecyclerView.OnRefreshAndLoadMoreListener {
 
     void loadData(int page) {
-        DataLoader.getGankApi().getGirlPics(page)
+        getV().pend(DataLoader.getGankApi().getGirlPics(page)
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(getV(), new SimpleErrorVerify() {
                     @Override
                     public void netError(Throwable throwable) {
@@ -23,7 +23,7 @@ public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecy
                     }
                 }))
                 .map(listGankIoDayInfo -> listGankIoDayInfo.results)
-                .subscribe(galleryInfo -> getV().onSuccess(galleryInfo));
+                .subscribe(galleryInfo -> getV().onSuccess(galleryInfo)));
     }
 
     @Override

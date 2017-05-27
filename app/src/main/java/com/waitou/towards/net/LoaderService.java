@@ -8,6 +8,8 @@ import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.JokeInfo;
+import com.waitou.towards.bean.MovieResInfo;
+import com.waitou.net_library.model.MovieBaseResponse;
 
 import java.util.List;
 
@@ -65,5 +67,10 @@ public interface LoaderService {
     @GET("data/{type}/10/{page}")
     Observable<GankIoDayInfo<List<GankResultsTypeInfo>>> getGankIoData(@Path("type") String type, @Path("page") int page);
 
+
+
+    /*--------------- 影视 movie ---------------*/
+    @GET("homePageApi/homePage.do")
+    Observable<MovieBaseResponse<MovieResInfo>> getHomeMoviePage();
 
 }

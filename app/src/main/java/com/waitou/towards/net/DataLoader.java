@@ -18,7 +18,11 @@ public class DataLoader {
         return DataServiceProvider.getInstance().provide(HttpUtil.GITHUB_API, LoaderService.class);
     }
 
-    public static LoaderService getGankApi(){
-        return DataServiceProvider.getInstance().provide(HttpUtil.GANK_BASE_URL,LoaderService.class);
+    public static LoaderService getGankApi() {
+        return DataServiceProvider.getInstance().provide(HttpUtil.GANK_BASE_URL, LoaderService.class);
+    }
+
+    public static LoaderService getMovieApi() {
+        return DataServiceProvider.getInstance().provide(HttpUtil.SVIPMOVIE_API, LoaderService.class);
     }
 }

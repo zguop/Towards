@@ -24,6 +24,7 @@
         <item name="skin_transparent_theme_color">@color/color_powder_80</item>
         <item name="skin_text_dark_color">@color/color_373737</item>
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
+        <item name="skin_Background_drawable">@drawable/theme_bg2</item>
 
     </style>
 
@@ -32,7 +33,6 @@
         <item name="colorPrimary">@color/colorRed</item>
         <item name="colorPrimaryDark">@color/colorRed</item>
         <item name="colorAccent">@color/colorRed</item>
-
         <item name="skin_kind_color_not">@color/colorWhite</item>
         <item name="skin_home_title_not">@color/home_title2</item>
         <item name="skin_dialog_bg_not">@color/color_31c2c5</item>
@@ -40,6 +40,7 @@
         <item name="skin_transparent_theme_color">@color/color_red_80</item>
         <item name="skin_text_dark_color">@color/color_373737</item>
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
+        <item name="skin_Background_drawable">@drawable/theme_bg1</item>
 
 
     </style>
@@ -63,6 +64,8 @@
         <item name="skin_text_dark_color">@color/color_373737</item>
         <!--灰色字体-->
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
+        <!--背景图片-->
+        <item name="skin_Background_drawable">@drawable/theme_bg3</item>
     </style>
 
 
@@ -70,7 +73,6 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
-
 
 
     <style name="pop_style_fade">

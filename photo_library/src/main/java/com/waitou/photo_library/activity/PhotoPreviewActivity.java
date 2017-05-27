@@ -1,16 +1,11 @@
 package com.waitou.photo_library.activity;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoInfo;
@@ -18,6 +13,7 @@ import com.waitou.photo_library.databinding.ActivityPhotoPreviewBinding;
 import com.waitou.photo_library.fragment.PhotoPreviewFragment;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.kit.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +42,7 @@ public class PhotoPreviewActivity extends XActivity<PhotoPreviewPresenter, Activ
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        transparentStatusBar(this);
+        Util.transparentStatusBar(this);
         Intent intent = getIntent();
         int position = intent.getIntExtra(PhotoValue.EXTRA_SELECTED_PHOTO_POSITION, 0);
         ArrayList<PhotoInfo> selectPhoto = intent.getParcelableArrayListExtra(PhotoValue.EXTRA_PHOTO_ITEMS);
@@ -92,20 +88,5 @@ public class PhotoPreviewActivity extends XActivity<PhotoPreviewPresenter, Activ
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
-    }
-
-    /**
-     * 使状态栏透明
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void transparentStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
     }
 }

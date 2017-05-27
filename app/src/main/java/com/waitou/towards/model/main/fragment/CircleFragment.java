@@ -3,7 +3,7 @@ package com.waitou.towards.model.main.fragment;
 import android.os.Bundle;
 
 import com.waitou.towards.R;
-import com.waitou.towards.bean.Homeinfo;
+import com.waitou.towards.bean.TitleInfo;
 import com.waitou.towards.databinding.FragmentHomeBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XPresent;
@@ -27,7 +27,7 @@ public class CircleFragment extends XFragment<XPresent, FragmentHomeBinding> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        Homeinfo homeinfo = new Homeinfo();
+        TitleInfo homeinfo = new TitleInfo("sss");
         getBinding().setItem(homeinfo);
     }
 

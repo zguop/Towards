@@ -28,7 +28,9 @@ public class HttpUtil {
     //干货api
     public static final String GANK_BASE_URL   = "gank.io/api/";
     //首页轮播api
-    public final static String GITHUB_API = "raw.githubusercontent.com/zguop/Waitou_Json/";
+    public final static String GITHUB_API      = "raw.githubusercontent.com/zguop/Waitou_Json/";
+    //影视api
+    public static final String SVIPMOVIE_API   = "api.svipmovie.com/front/";
 
     public final static String PIXIV_DAILY_URL = "http://www.pixiv.net/ranking.php?mode=daily&format=json";//&p=1
 

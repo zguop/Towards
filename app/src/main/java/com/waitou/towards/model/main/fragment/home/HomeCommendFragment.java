@@ -13,7 +13,7 @@ import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.kit.AlertToast;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
@@ -44,7 +44,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
         mAdapter.addViewTypeToLayoutMap(3, R.layout.item_empty);
         mAdapter.addViewTypeToLayoutMap(4, R.layout.item_bottom);
         mAdapter.setPresenter(getP());
-        getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
+        getBinding().setManager(LayoutManagerUtil.getVerticalLayoutManager(getActivity()));
         getBinding().setAdapter(mAdapter);
     }
 
@@ -69,7 +69,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
         SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> functionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
         functionInfoAdapter.set(homeFunctionInfo);
         functionInfoAdapter.setPresenter(getP());
-        RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(functionInfoAdapter, LayoutManagerUtli.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));
+        RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(functionInfoAdapter, LayoutManagerUtil.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));
         mAdapter.add(recyclerAdapterInfo, 1);
     }
 

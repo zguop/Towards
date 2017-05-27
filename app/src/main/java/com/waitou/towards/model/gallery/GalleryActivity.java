@@ -16,7 +16,7 @@ import com.waitou.towards.model.gallery.helper.CardAdapter;
 import com.waitou.towards.model.gallery.helper.CardScaleHelper;
 import com.waitou.wt_library.base.CollapsingXActivity;
 import com.waitou.wt_library.kit.AlertToast;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
         goneToolBar();
         transparentStatusBar(this);
         mAdapter = new CardAdapter<>(this, R.layout.item_gallery);
-        getCollBinding().setManager(LayoutManagerUtli.getHorizontalLayoutManager(this));
+        getCollBinding().setManager(LayoutManagerUtil.getHorizontalLayoutManager(this));
         getCollBinding().setAdapter(mAdapter);
         getCollBinding().setPresenter(getP());
         rxClick();
@@ -97,7 +97,7 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static void transparentStatusBar(Activity activity) {
+    private void transparentStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

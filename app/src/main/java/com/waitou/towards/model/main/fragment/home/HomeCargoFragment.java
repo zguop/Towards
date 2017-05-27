@@ -8,7 +8,7 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.towards.databinding.ItemHeaderCargoBinding;
 import com.waitou.wt_library.base.XFragment;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.XRecyclerView;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 
@@ -32,7 +32,7 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
     public void initData(Bundle savedInstanceState) {
         mAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_gank_page);
         mAdapter.setPresenter(getP());
-        getBinding().setManager(LayoutManagerUtli.getVerticalLayoutManager(getActivity()));
+        getBinding().setManager(LayoutManagerUtil.getVerticalLayoutManager(getActivity()));
         getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);

@@ -27,7 +27,7 @@ import com.waitou.towards.view.dialog.ListOfDialog
 import com.waitou.wt_library.base.XActivity
 import com.waitou.wt_library.base.XFragmentAdapter
 import com.waitou.wt_library.base.XPresent
-import com.waitou.wt_library.recycler.LayoutManagerUtli
+import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
 import com.waitou.wt_library.theme.ChangeModeController
@@ -163,7 +163,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
         }
         if (mThemeDialog == null) {
             mThemeDialog = ListOfDialog(this)
-                    .setLayoutManager(LayoutManagerUtli.getGridLayoutManager(this, 3))
+                    .setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3))
                     .setAdapter(mThemeAdapter)
                     .setTitle("更换主题")
                     .setCancel("取消", null)

@@ -47,4 +47,8 @@
 
     <color name="color_a7a7a7">#cccccc</color>
 
+    <color name="color_50_black">#50000000</color>
+    <color name="color_30_white">#30FFFFFF</color>
+
+
 </resources>

@@ -13,7 +13,7 @@ import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.recycler.divider.GridSpacingItemDecoration;
 import com.waitou.wt_library.rx.RxBus;
@@ -58,7 +58,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         getBinding().setIsMultiMode(mPhotoPickerFinal.isMultiMode());
         mPhotoGridAdapter = new SingleTypeAdapter<>(this, R.layout.item_photo);
         mPhotoGridAdapter.setPresenter(getP());
-        getBinding().xList.setLayoutManager(LayoutManagerUtli.getGridLayoutManager(this, 3));
+        getBinding().xList.setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3));
         getBinding().xList.setAdapter(mPhotoGridAdapter);
         getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, UDimens.dip2pxInt(2), false));
         reloadData();

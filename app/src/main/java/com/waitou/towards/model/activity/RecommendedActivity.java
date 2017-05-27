@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityRecommendedBinding;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.PullRecyclerView;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
 
 
 //        VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
-        getBinding().list.setLayoutManager(LayoutManagerUtli.getVerticalLayoutManager(this));
+        getBinding().list.setLayoutManager(LayoutManagerUtil.getVerticalLayoutManager(this));
         adapter = new Adapter();
         getBinding().list.setAdapter(adapter);
 

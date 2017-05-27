@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.waitou.towards.bean.Homeinfo"/>
+            type="com.waitou.towards.bean.TitleInfo"/>
     </data>
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F00"
-            android:text="@{item.ss}"/>
+            android:text="@{item.title}"/>
 
     </LinearLayout>
 

@@ -9,7 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
  * Created by waitou on 17/2/20.
  */
 
-public class LayoutManagerUtli {
+public class LayoutManagerUtil {
 
     public static LinearLayoutManager getVerticalLayoutManager(Context context) {
         LinearLayoutManager manager = new LinearLayoutManager(context);

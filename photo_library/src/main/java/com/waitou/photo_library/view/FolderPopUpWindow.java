@@ -16,7 +16,7 @@ import android.widget.PopupWindow;
 
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.PopFolderBinding;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 
 /**
  * Created by waitou on 17/4/8.
@@ -31,7 +31,7 @@ public class FolderPopUpWindow extends PopupWindow implements ViewTreeObserver.O
     public FolderPopUpWindow(Context context, RecyclerView.Adapter adapter) {
         super(context);
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.pop_folder, null, false);
-        mBinding.list.setLayoutManager(LayoutManagerUtli.getVerticalLayoutManager(context));
+        mBinding.list.setLayoutManager(LayoutManagerUtil.getVerticalLayoutManager(context));
         mBinding.list.setAdapter(adapter);
         mBinding.parent.setOnClickListener(this);
         mBinding.margin.setOnClickListener(this);

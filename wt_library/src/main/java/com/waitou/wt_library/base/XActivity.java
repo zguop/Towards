@@ -148,11 +148,11 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         mXBinding.xContentLayout.showEmpty();
     }
 
-    protected void showError() {
+    public void showError() {
         showError(true);
     }
 
-    protected void showError(boolean isReload) {
+    public void showError(boolean isReload) {
         if (isReload) {
             mXBinding.xContentLayout.showError();
         } else {

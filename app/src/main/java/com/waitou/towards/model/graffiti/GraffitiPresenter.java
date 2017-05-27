@@ -31,7 +31,7 @@ import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UImage;
-import com.waitou.wt_library.recycler.LayoutManagerUtli;
+import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.xw.repo.BubbleSeekBar;
@@ -95,7 +95,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         }
         if (mToolDialog == null) {
             mToolDialog = new ListOfDialog(getV())
-                    .setLayoutManager(LayoutManagerUtli.getGridLayoutManager(getV(), 3))
+                    .setLayoutManager(LayoutManagerUtil.getGridLayoutManager(getV(), 3))
                     .setAdapter(mGraffitiToolAdapter)
                     .setTitle("工具选择");
         }

@@ -15,4 +15,6 @@
     <attr name="skin_text_dark_color" format="color|reference"/>
     <!--灰色字体-->
     <attr name="skin_text_gray_color" format="color|reference"/>
+    <!--主题背景-->
+    <attr name="skin_Background_drawable" format="reference"/>
 </resources>
