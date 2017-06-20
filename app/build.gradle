@@ -112,3 +112,4 @@ dependencies {
     debugCompile project(path: ':three_library', configuration: 'debug')
     releaseCompile project(path: ':three_library', configuration: 'release')
 }
+

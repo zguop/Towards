@@ -11,13 +11,13 @@ import com.waitou.towards.bean.BannerAdapterInfo
 import com.waitou.towards.bean.MovieInfo
 import com.waitou.towards.bean.MovieResInfo
 import com.waitou.towards.bean.TitleInfo
-import com.waitou.towards.databinding.ActivityMovieRecommendBinding
+import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
-import com.waitou.wt_library.kit.AlertToast
 import com.waitou.wt_library.kit.UDimens
 import com.waitou.wt_library.kit.Util
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter
+import com.waitou.wt_library.router.Router
 import com.waitou.wt_library.theme.ThemeUtils
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
 
@@ -25,7 +25,7 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
  * Created by waitou on 17/5/25.
  * 影视推荐
  */
-class MovieRecommendActivity : XActivity<MovieRecommendPresenter, ActivityMovieRecommendBinding>() {
+class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovieBinding>() {
 
     private var adapter: MultiTypeAdapter<Displayable>? = null
 
@@ -33,16 +33,16 @@ class MovieRecommendActivity : XActivity<MovieRecommendPresenter, ActivityMovieR
         return true
     }
 
-    override fun createPresenter(): MovieRecommendPresenter {
-        return MovieRecommendPresenter()
+    override fun createPresenter(): MovieTelevisionPresenter {
+        return MovieTelevisionPresenter()
     }
 
     override fun getContentViewId(): Int {
-        return R.layout.activity_movie_recommend
+        return R.layout.activity_movie
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        initMenuActionBar("影视精选", "专题", { AlertToast.show("专题") })
+        initMenuActionBar("影视精选", "专题", { Router.newIntent().from(this).to(MovieProjectActivity::class.java).launch() })
         (xBinding.xContentLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
         Util.transparentStatusBar(this)
         xBinding.toolbar.layoutParams.height = UDimens.dip2pxInt(73f)
@@ -52,11 +52,11 @@ class MovieRecommendActivity : XActivity<MovieRecommendPresenter, ActivityMovieR
         adapter!!.addViewTypeToLayoutMap(0, R.layout.item_banner_search)
         adapter!!.addViewTypeToLayoutMap(1, R.layout.item_movie_title)
         adapter!!.addViewTypeToLayoutMap(2, R.layout.item_movie_piture)
-        binding.manager = LayoutManagerUtil.getVerticalLayoutManager(this)
+        binding.manager = LayoutManagerUtil.getVerticalLayoutManager(this)!!
         binding.adapter = adapter
         binding.xList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private val argbEvaluator = ArgbEvaluator()
-            private val height = UDimens.dip2pxInt(200f)
+            private val height = UDimens.dip2pxInt(175f)
             private val startColor = 0x00ffffff
             private val endColor = ThemeUtils.getThemeAttrColor(this@MovieRecommendActivity, R.attr.colorPrimary)
             private var mDy = 0
@@ -78,11 +78,16 @@ class MovieRecommendActivity : XActivity<MovieRecommendPresenter, ActivityMovieR
         reloadData()
     }
 
+//    inline fun <T> with(t: T, body: T.() -> Unit) {
+//        t.body()
+//    }
+
     override fun reloadData() {
         p.start()
     }
 
     fun onSuccess(it: MovieResInfo?) {
+        adapter!!.clear()
         showContent()
         val typeList = it!!.list
         for (info in typeList!!) {

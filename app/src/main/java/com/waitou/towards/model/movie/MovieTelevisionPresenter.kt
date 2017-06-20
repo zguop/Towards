@@ -10,7 +10,7 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
 /**
  * Created by waitou on 17/5/25.
  */
-class MovieRecommendPresenter : XPresent<MovieRecommendActivity>(), BaseViewAdapter.Presenter, SingleViewPagerAdapter.Presenter {
+class MovieTelevisionPresenter : XPresent<MovieRecommendActivity>(), BaseViewAdapter.Presenter, SingleViewPagerAdapter.Presenter {
 
     override fun start() {
         v.pend(DataLoader.getMovieApi().homeMoviePage

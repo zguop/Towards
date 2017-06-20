@@ -185,17 +185,24 @@ public class ChangeModeController {
     private List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {
         List<SkinAttr> skinAttrsList = null;
         SkinAttr skinAttr;
+        //遍历所有属性
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
+            //获取到当前的属性名字，
             String attributeName = attrs.getAttributeName(i);
+            //改方法获取到枚举中定义好的需要更改的属性进行匹配
             SkinAttrType attrType = getSupportAttrType(attributeName);
             if (attrType == null) {
                 continue;
             }
+            //获取当前属性对应的值 并解析，如果是使用?attr/ 或者是 @color/属性
             String attributeValue = attrs.getAttributeValue(i);
             if (attributeValue.startsWith("?") || attributeValue.startsWith("@")) {
+                //获取到该资源的id
                 int id = ThemeUtils.getAttrResId(attributeValue);
-                if(id != 0){
+                if (id != 0) {
+                    //通过资源id 获取到资源的名称
                     String entryName = context.getResources().getResourceEntryName(id);
+                    //如果匹配 资源名称 表示都是使用了换肤的 属性则保存起来
                     if (entryName.equals(COLOR_PRIMARY) || entryName.equals(COLOR_PRIMARY_DARK) || entryName.equals(COLOR_ACCENT) || entryName.startsWith(ATTR_PREFIX)) {
                         if (skinAttrsList == null) {
                             skinAttrsList = new ArrayList<>();

@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="com.waitou.towards.model.movie.MovieRecommendPresenter"/>
+            type="com.waitou.towards.model.movie.MovieTelevisionPresenter"/>
 
     </data>
 

@@ -52,6 +52,10 @@
         <activity
             android:name=".model.movie.MovieRecommendActivity"
             android:screenOrientation="portrait"/>
+        <!--专题推荐-->
+        <activity
+            android:name=".model.movie.MovieProjectActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".model.activity.RecommendedActivity"

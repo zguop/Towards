@@ -1,11 +1,12 @@
 # Towards
-完全按照自己的想法开发，借鉴于github许多开源项目UI。目前正在慢慢开发中，不定时上传代码。
+完全按照自己的想法开发，借鉴于github许多开源项目UI。不定时上传代码。
 
 
 使用的到的技术  kotlin + DataBinding + mvp + rxJava2 + retrofit + rxCache
 
 大量dataBinding例子
 
+目前kotlin 使用 model -- movie 包下
 
 
 部分界面截图：
