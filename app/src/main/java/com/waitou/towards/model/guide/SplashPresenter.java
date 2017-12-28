@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import io.reactivex.Observable;
@@ -135,8 +137,18 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<String> imgUrl; //stream操作 java8的 一大新特性
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             imgUrl = showLogoList.stream()
-                    .filter(logoImg -> !logoImg.getIsShowLogoUrl())
-                    .map(LogoImg::getSavePath)
+                    .filter(new Predicate<LogoImg>() {
+                        @Override
+                        public boolean test(LogoImg logoImg) {
+                            return !logoImg.getIsShowLogoUrl();
+                        }
+                    })
+                    .map(new Function<LogoImg, String>() {
+                        @Override
+                        public String apply(LogoImg logoImg) {
+                            return logoImg.getSavePath();
+                        }
+                    })
                     .collect(Collectors.toList());
         } else {
             imgUrl = new ArrayList<>();

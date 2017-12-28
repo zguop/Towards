@@ -80,6 +80,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
                 });
             }
         });
+
         getBinding().setPresenter(getP());
         String photoPath = getIntent().getStringExtra(PhotoValue.EXTRA_URL);
         getBinding().crop.startLoad(FileProvider.getUriForFile(this, UImage.FILE_PROVIDER_NAME, new File(photoPath)), new LoadCallback() {

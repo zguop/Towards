@@ -16,6 +16,8 @@ public class ExtraValue {
     //MainPresenter
     public static final String MAIN_PRESENTER    = "main_presenter";
 
+    public static final String MOVIE_PROJECT = "movie_project";
+
 
     /*--------------- SharedPreferences ---------------*/
     public static final String EVERYDAY_DATA     = "everyday_data";

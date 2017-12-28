@@ -21,8 +21,19 @@ import com.waitou.wt_library.theme.ThemeUtils;
 @InverseBindingMethods({
         @InverseBindingMethod(type = ViewPager.class, attribute = "currentItem"),
 })
-
 public class UtilsBinding {
+
+    @BindingAdapter(value = {"currentItemAttrChanged"}, requireAll = false)
+    public static void setPageCurrent(ViewPager viewPager, final InverseBindingListener inverseBindingListener) {
+        if (inverseBindingListener != null) {
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    inverseBindingListener.onChange();
+                }
+            });
+        }
+    }
 
     @BindingAdapter({"code", "post"})
     public static void post(View view, int code, Object o) {
@@ -35,19 +46,6 @@ public class UtilsBinding {
     @BindingAdapter("post")
     public static void post(View view, Object o) {
         view.setOnClickListener(v -> RxBus.getDefault().post(o));
-    }
-
-    @BindingAdapter(value = {"currentItemAttrChanged"}, requireAll = false)
-    public static void setPageCurrent(ViewPager viewPager, final InverseBindingListener inverseBindingListener) {
-        if (inverseBindingListener != null) {
-            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-                    inverseBindingListener.onChange();
-                }
-            });
-        }
-
     }
 
     @BindingAdapter("buttonTintList")

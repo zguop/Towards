@@ -11,6 +11,7 @@ import com.waitou.towards.bean.BannerAdapterInfo
 import com.waitou.towards.bean.MovieInfo
 import com.waitou.towards.bean.MovieResInfo
 import com.waitou.towards.bean.TitleInfo
+import com.waitou.towards.common.ExtraValue
 import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
 import com.waitou.wt_library.kit.UDimens
@@ -28,6 +29,7 @@ import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
 class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovieBinding>() {
 
     private var adapter: MultiTypeAdapter<Displayable>? = null
+    private var movieResInfo: MovieResInfo? = null
 
     override fun defaultLoading(): Boolean {
         return true
@@ -42,7 +44,15 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        initMenuActionBar("影视精选", "专题", { Router.newIntent().from(this).to(MovieProjectActivity::class.java).launch() })
+        initMenuActionBar("影视精选", "专题", {
+            if (movieResInfo != null) {
+                Router.newIntent()
+                        .from(this)
+                        .to(MovieProjectActivity::class.java)
+                        .putSerializable(ExtraValue.MOVIE_PROJECT, movieResInfo)
+                        .launch()
+            }
+        })
         (xBinding.xContentLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
         Util.transparentStatusBar(this)
         xBinding.toolbar.layoutParams.height = UDimens.dip2pxInt(73f)
@@ -87,6 +97,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
     }
 
     fun onSuccess(it: MovieResInfo?) {
+        movieResInfo = it
         adapter!!.clear()
         showContent()
         val typeList = it!!.list

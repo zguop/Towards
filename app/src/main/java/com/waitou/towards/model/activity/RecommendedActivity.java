@@ -31,8 +31,6 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
-
 //        VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
         getBinding().list.setLayoutManager(LayoutManagerUtil.getVerticalLayoutManager(this));
         adapter = new Adapter();
