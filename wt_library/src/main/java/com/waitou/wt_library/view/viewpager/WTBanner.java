@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.waitou.wt_library.R;
+import com.waitou.wt_library.kit.UDimens;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -50,6 +51,9 @@ public class WTBanner extends RelativeLayout {
     private void init(Context context) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.view_banner, this, true);
         mViewPager = (WTViewPager) rootView.findViewById(R.id.viewpager);
+        mViewPager.setPageTransformer(true,new AlphaAndScalePageTransformer());
+        mViewPager.setPageMargin(UDimens.dip2pxInt(15));
+        mViewPager.setOffscreenPageLimit(3);
         mCircleIndicator = (CircleIndicator) rootView.findViewById(R.id.indicator);
     }
 

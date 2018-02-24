@@ -13,8 +13,10 @@ import com.waitou.wt_library.kit.Util;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 import static com.waitou.wt_library.kit.UImage.scale;
 
@@ -37,6 +39,7 @@ public class CardScaleHelper {
     private int mLastPos = -1;
 
     private CardLinearSnapHelper mLinearSnapHelper = new CardLinearSnapHelper();
+    private Disposable mSubscribe;
 
 
     public void attachToRecyclerView(final RecyclerView recyclerView) {
@@ -79,6 +82,14 @@ public class CardScaleHelper {
         }
         mLastPos = getCurrentItemPos();
         startSwitchBackground();
+
+        //如果消费者无法处理数据，则 onBackpressureDrop 就把该数据丢弃了。
+        if(mSubscribe == null){
+            mSubscribe = Flowable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                    .onBackpressureDrop() //如果消费者无法处理数据，则 onBackpressureDrop 就把该数据丢弃了。
+                    .subscribe(aLong -> mRecyclerView.smoothScrollToPosition(mCurrentItemPos++));
+            Util.contextAddSubscription(mContext,mSubscribe);
+        }
     }
 
     private View getPositionView() {

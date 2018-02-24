@@ -53,4 +53,5 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
         getBinding().logoIv.startAnimation(animation);
     }
 
+
 }
