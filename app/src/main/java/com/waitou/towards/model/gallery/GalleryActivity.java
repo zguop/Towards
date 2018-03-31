@@ -94,6 +94,7 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
                         AlertToast.show("请到应用设置中开启权限哦！");//永久拒绝了权限
                     }
                 }));
+
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

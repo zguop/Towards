@@ -9,7 +9,7 @@ import android.view.View;
 
 public class AlphaAndScalePageTransformer implements ViewPager.PageTransformer {
 
-    final float SCALE_MAX = 0.8f;
+    private final float SCALE_MAX = 0.8f;
 
     @Override
     public void transformPage(View page, float position) {

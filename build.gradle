@@ -3,15 +3,16 @@ apply from: "conf.gradle"
 println 'apply'
 
 buildscript {
+    ext.kotlin_version = '1.2.31'
     repositories {
-        maven { url 'https://jitpack.io' }
+        google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//GreenDao
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-5"
-
+        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" //GreenDao
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,16 +24,10 @@ buildscript {
 可以配置所有子项目共有的设置，比如共同的插件、repositories、依赖版本以及依赖配置*/
 subprojects {
     repositories {
+        google()
         jcenter()
         maven { url "https://jitpack.io" }
-    }
-    buildscript {
-        repositories {
-            jcenter()
-        }
-        dependencies {
-            classpath rootProject.ext.dependencies['gradle-retrolambda']
-        }
+        flatDir { dirs 'libs' }
     }
 }
 

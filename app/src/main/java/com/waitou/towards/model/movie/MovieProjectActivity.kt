@@ -32,7 +32,7 @@ class MovieProjectActivity : XActivity<MovieProjectPresenter, ActivityMovieBindi
         initMenuActionBar("专题推荐")
         movieResInfo = intent.getSerializableExtra(ExtraValue.MOVIE_PROJECT) as MovieResInfo?
         adapter = SingleTypeAdapter(this, R.layout.item_project_movie)
-        binding.manager = LayoutManagerUtil.getGridLayoutManager(this, 2)
+        binding.manager = LayoutManagerUtil.getGridLayoutManager(this, 2)!!
         binding.adapter = adapter
         reloadData()
     }

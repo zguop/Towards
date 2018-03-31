@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.waitou.wt_library.R;
 
@@ -32,7 +31,7 @@ public class TintImageView extends AppCompatImageView {
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TintImageView, defStyle, 0);
-        tint = a.getColorStateList(R.styleable.TintImageView_tint);
+        tint = a.getColorStateList(R.styleable.TintImageView_img_tint);
         a.recycle();
     }
 

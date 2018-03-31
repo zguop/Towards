@@ -22,7 +22,7 @@ public class BaseApplication extends Application {
         if (!BuildConfig.DEBUG || LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        LeakCanary.install(this);
+      //  LeakCanary.install(this);
     }
 
     public static BaseApplication getApp() {

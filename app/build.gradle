@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'org.greenrobot.greendao'//GreenDao
 apply plugin: 'kotlin-android'
+apply plugin: 'org.greenrobot.greendao'//GreenDao
+apply plugin: 'kotlin-kapt'
 
 
 
@@ -15,9 +15,6 @@ android {
         }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
-    publishNonDefault true
-    defaultPublishConfig "debug"
     defaultConfig {
         applicationId "com.waitou.towards"
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -32,6 +29,18 @@ android {
         multiDexEnabled true
 
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "towards_v${variant.versionName}_${variant.buildType.name}.apk"
+            }
+        }
+
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+
     }
 
     buildTypes {
@@ -54,21 +63,6 @@ android {
             manifestPlaceholders = [packageName1: "com.waitou.towards.debug",
                                     appName     : "大杂烩测试"]
             signingConfig signingConfigs.config
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def apkFile = new File(
-                            output.outputFile.getParent(),
-                            "towards_v${variant.versionName}_${variant.buildType.name}.apk")
-                    output.outputFile = apkFile
-                    //删除unaligned
-                    if (output.zipAlign != null) {
-                        output.zipAlign.doLast {
-                            output.zipAlign.inputFile.delete()
-                        }
-                    }
-                }
-            }
-
         }
     }
 
@@ -84,32 +78,33 @@ android {
     }
 
 }
-//dataBinding kotlin
+
 kapt {
     generateStubs = true
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile rootProject.ext.dependencies['gradle-retrolambda']
-    compile rootProject.ext.dependencies['cardview-v7']
-    compile rootProject.ext.dependencies["smarttablayout"]
-    compile rootProject.ext.dependencies["circleimageview"]
-    compile rootProject.ext.dependencies["flexbox"]
-    compile rootProject.ext.dependencies["fab"]
-    compile rootProject.ext.dependencies["stetho"]
-    compile rootProject.ext.dependencies["rxcache"]
-    compile rootProject.ext.dependencies["jolyglot_gson"]
-    compile rootProject.ext.dependencies["greendao"]
-    compile rootProject.ext.dependencies["bubbleseekbar"]
-    compile rootProject.ext.dependencies["vlayout"]
-    compile rootProject.ext.dependencies["kotlin"]
-    kapt rootProject.ext.dependencies["databinding_kapt"]
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies['cardview-v7']
+    implementation rootProject.ext.dependencies["smarttablayout"]
+    implementation rootProject.ext.dependencies["circleimageview"]
+    implementation rootProject.ext.dependencies["flexbox"]
+    implementation rootProject.ext.dependencies["fab"]
+    implementation rootProject.ext.dependencies["stetho"]
+    implementation rootProject.ext.dependencies["rxcache"]
+    implementation rootProject.ext.dependencies["jolyglot_gson"]
+    implementation rootProject.ext.dependencies["greendao"]
+    implementation rootProject.ext.dependencies["bubbleseekbar"]
+    implementation rootProject.ext.dependencies["vlayout"]
 
-    //工程依赖 app --> wt_library --> net_library
-    debugCompile project(path: ':photo_library', configuration: 'debug')
-    releaseCompile project(path: ':photo_library', configuration: 'release')
-    debugCompile project(path: ':three_library', configuration: 'debug')
-    releaseCompile project(path: ':three_library', configuration: 'release')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.databinding:compiler:3.1.0"
+
+    api project(':photo_library')
+    api project(':three_library')
+
+}
+repositories {
+    mavenCentral()
 }
 

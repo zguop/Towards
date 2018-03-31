@@ -1,11 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
-    publishNonDefault true
-    defaultPublishConfig "debug"
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
@@ -29,10 +25,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.dependencies["photoView"]
-    compile rootProject.ext.dependencies["crop"]
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies["photoView"]
+    api rootProject.ext.dependencies["crop"]
+    api project(':wt_library')
 
-    debugCompile project(path: ':wt_library', configuration: 'debug')
-    releaseCompile project(path: ':wt_library', configuration: 'release')
 }

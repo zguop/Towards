@@ -41,7 +41,6 @@ public abstract class WTPagerAdapter<T> extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         mRealPosition = toRealPosition(position);
         View view = mViews.get(mRealPosition);
-
         if (view == null) {
             view = newView(container.getContext(), mRealPosition);
             mViews.put(mRealPosition, view);

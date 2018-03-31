@@ -1,11 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
-    publishNonDefault true
-    defaultPublishConfig "debug"
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
@@ -30,24 +26,21 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.dependencies["support-v4"]
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["design"]
-    compile rootProject.ext.dependencies["annotations"]
-    compile rootProject.ext.dependencies["recyclerview-v7"]
-    compile rootProject.ext.dependencies["glide"]
-    compile rootProject.ext.dependencies["avi-loading"]
-    compile rootProject.ext.dependencies["rxpermissions"]
-    compile rootProject.ext.dependencies["rxbinding"]
-    compile rootProject.ext.dependencies["bottomsheet"]
-    compile rootProject.ext.dependencies["statusbar"]
-    compile rootProject.ext.dependencies["canary-debug"]
-    compile(rootProject.ext.dependencies['okhttp3-integration']) {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies["support-v4"]
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["annotations"]
+    api rootProject.ext.dependencies["recyclerview-v7"]
+    api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["avi-loading"]
+    api rootProject.ext.dependencies["rxpermissions"]
+    api rootProject.ext.dependencies["rxbinding"]
+    api rootProject.ext.dependencies["bottomsheet"]
+    api rootProject.ext.dependencies["statusbar"]
+    implementation rootProject.ext.dependencies["canary-debug"]
+    implementation(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'
     }
-
-    debugCompile project(path: ':net_library', configuration: 'debug')
-    releaseCompile project(path: ':net_library', configuration: 'release')
-
+    api project(':net_library')
 }
