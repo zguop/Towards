@@ -15,7 +15,6 @@ gen/
 *.log
 .navigation/
 .idea/
-gradle.properties
 .bash_profile
 reports
 
