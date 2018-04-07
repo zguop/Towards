@@ -1,82 +1,37 @@
-apply plugin: 'com.android.application'
+globleConfigure()
 apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
 apply plugin: 'kotlin-kapt'
-
-
-
 android {
-    signingConfigs {
-        config {
-            keyAlias 'towards'
-            keyPassword 'towards123'
-            storeFile file('towards_store.jks')
-            storePassword 'towards123'
-        }
-    }
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId "com.waitou.towards"
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 2
-        versionName "2.0.0"
         resConfigs "zh"
         //支持dataBinding
         dataBinding {
             enabled = true
         }
-        multiDexEnabled true
-
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
-
         applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = "towards_v${variant.versionName}_${variant.buildType.name}.apk"
             }
         }
-
-        lintOptions {
-            checkReleaseBuilds false
-            abortOnError false
-        }
-
     }
-
     buildTypes {
         release {
-            //混淆
-            minifyEnabled true
-            //ZipAlign优化
-            zipAlignEnabled true
-            //去除无用资源
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [packageName1: "com.waitou.towards",
                                     appName     : "大杂烩"]
-            signingConfig signingConfigs.config
         }
         debug {
-            applicationIdSuffix '.debug'
-            versionNameSuffix '-DEBUG'
-            minifyEnabled false
             manifestPlaceholders = [packageName1: "com.waitou.towards.debug",
                                     appName     : "大杂烩测试"]
-            signingConfig signingConfigs.config
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     greendao {
         schemaVersion 1//数据库版本号
         daoPackage 'com.waitou.towards.greendao'
         targetGenDir 'src/main/java'
     }
-
 }
 
 kapt {
@@ -103,8 +58,5 @@ dependencies {
     api project(':photo_library')
     api project(':three_library')
 
-}
-repositories {
-    mavenCentral()
 }
 

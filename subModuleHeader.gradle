@@ -1,0 +1,98 @@
+ext.moduleName = getName()
+ext.isModuleIndependent = moduleName == singleModuleKey.toString()
+
+/**
+ * 通用的依赖
+ */
+def applyPlugin = {
+    if (isModuleIndependent) {
+        apply plugin: 'com.android.application'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+}
+
+def commonConfigure = {
+    android.with {
+        compileSdkVersion rootProject.ext.android.compileSdkVersion
+        publishNonDefault true
+        defaultPublishConfig "debug"
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        defaultConfig.with {
+            minSdkVersion rootProject.ext.android.minSdkVersion
+            targetSdkVersion rootProject.ext.android.targetSdkVersion
+            versionCode rootProject.ext.android.versionCode
+            versionName rootProject.ext.android.versionName
+            multiDexEnabled true
+        }
+        buildTypes.with {
+            release.with {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+        sourceSets.with {
+            main.with {
+                jniLibs.srcDirs = ['libs']
+            }
+        }
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+    }
+}
+
+def appConfigure = {
+    if (isModuleIndependent) {
+        android.with {
+            signingConfigs {
+                config {
+                    keyAlias 'towards'
+                    keyPassword 'towards123'
+                    storeFile file('towards_store.jks')
+                    storePassword 'towards123'
+                }
+            }
+
+            buildTypes.with {
+                release.with {
+                    //签名配置
+                    signingConfig = signingConfigs.config
+                    //混淆打开
+                    minifyEnabled true
+                    proguardFiles getDefaultProguardFile('proguard-android.txt'), project.file('proguard-rules.pro')
+                    //ZipAlign优化
+                    zipAlignEnabled true
+                    //移除无用的resource文件
+                    shrinkResources true
+                }
+                debug.with {
+                    //签名配置
+                    signingConfig = signingConfigs.config
+                    applicationIdSuffix ".debug"
+                }
+            }
+
+            dexOptions.with {
+                javaMaxHeapSize "12g"
+                jumboMode true
+                preDexLibraries false
+            }
+        }
+    }
+}
+
+ext.globleConfigure = {
+    try {
+        applyPlugin()
+        commonConfigure()
+        appConfigure()
+        println "配置完成---------------${moduleName}-------------------"
+    } catch (Exception e) {
+        throw new Exception("android app configure 配置出错，详情e：" + e.getMessage())
+    }
+}

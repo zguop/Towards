@@ -64,7 +64,6 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
         reloadData();
 
 
-
     }
 
     @Override
