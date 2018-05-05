@@ -1,20 +1,16 @@
 package com.waitou.three_library;
 
+import android.app.Application;
+import android.content.Intent;
 import android.os.Process;
-import android.text.TextUtils;
 
 import com.tencent.bugly.crashreport.CrashReport;
+import com.to.aboomy.tinker_lib.ProcessUtil;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.BaseApplicationLike;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-import static com.umeng.socialize.utils.ContextUtil.getPackageName;
 
 /**
  * author   itxp
@@ -23,6 +19,10 @@ import static com.umeng.socialize.utils.ContextUtil.getPackageName;
  */
 
 public class ThreeApplicationLike extends BaseApplicationLike{
+
+    public ThreeApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    }
 
     @Override
     protected void initInMainProcess() {
@@ -49,39 +49,10 @@ public class ThreeApplicationLike extends BaseApplicationLike{
      */
     private void initBugly() {
         //增加上报进程控制
-        String packageName = getPackageName();
-        String processName = getProcessName(Process.myPid());
+        String packageName = BaseApplication.getApp().getPackageName();
+        String processName = ProcessUtil.getProcessName(Process.myPid());
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(BaseApplication.getApp());
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         CrashReport.initCrashReport(BaseApplication.getApp(), "5df0981fd3", !BuildConfig.DEBUG, strategy);
-    }
-
-    /**
-     * 获取进程号对应的进程名
-     *
-     * @param pid 进程号
-     * @return 进程名
-     */
-    private String getProcessName(int pid) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
-            String processName = reader.readLine();
-            if (!TextUtils.isEmpty(processName)) {
-                processName = processName.trim();
-            }
-            return processName;
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-        return null;
     }
 }

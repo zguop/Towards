@@ -1,7 +1,7 @@
 globleConfigure()
 apply plugin: 'kotlin-android'
-apply plugin: 'org.greenrobot.greendao'//GreenDao
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.greenrobot.greendao'//GreenDao
 android {
     defaultConfig {
         applicationId "com.waitou.towards"
@@ -39,7 +39,7 @@ kapt {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies['cardview-v7']
     implementation rootProject.ext.dependencies["smarttablayout"]
     implementation rootProject.ext.dependencies["circleimageview"]
@@ -55,8 +55,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation "com.android.databinding:compiler:3.1.2"
 
-    api project(':photo_library')
-    api project(':three_library')
+    implementation project(':photo_library')
+    implementation project(':three_library')
 
 }
 

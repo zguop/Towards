@@ -3,6 +3,7 @@ package com.waitou.towards;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,10 @@ import java.lang.reflect.Field;
  */
 
 public class TowardsApplicationLike extends ThreeApplicationLike {
+
+    public TowardsApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    }
 
     @Override
     protected void initInMainProcess() {

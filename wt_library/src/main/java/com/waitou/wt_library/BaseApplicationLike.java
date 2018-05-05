@@ -1,10 +1,8 @@
 package com.waitou.wt_library;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.to.aboomy.tinker_lib.TinkerApplicationLike;
