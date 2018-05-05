@@ -2,13 +2,14 @@ apply plugin: 'com.tencent.tinker.patch'
 
 def bakPath = file("${project.rootDir}/tinkerTemp/")
 
-def getTinkerIdValue(){
+def getTinkerIdValue() {
     "${rootProject.ext.hotfix.tinkerId}"
 }
 
 tinkerPatch {
 
-    oldApk = "${bakPath}/base-file/app.apk"
+    oldApk = "${bakPath}/${getTinkerIdValue()}/app.apk"
+
     /**
      * 不忽略tinker的警告,有则终止patch文件的生成
      */
@@ -26,12 +27,12 @@ tinkerPatch {
         /**
          * 可选参数,在编译新的apk的时候,指定old apk 打包时所使用的混下混淆文件
          */
-        applyMapping = "${bakPath}/base-file/mapping.txt"
+        applyMapping = "${bakPath}/${getTinkerIdValue()}/mapping.txt"
 
         /**
          * 可选参数,在编译新的apk的时候,指定old apk 的资源文件
          */
-        applyResourceMapping = "${bakPath}/base-file/R.txt"
+        applyResourceMapping = "${bakPath}/${getTinkerIdValue()}/R.txt"
 
         /**
          * 指定tinkerId
@@ -73,7 +74,7 @@ tinkerPatch {
         pattern = ["lib/*/*.so"]
     }
 
-    res{
+    res {
         /**
          * 指定tinker可以修改的资源路径
          */
@@ -121,12 +122,14 @@ android.applicationVariants.all { variant ->
     def taskName = variant.name
     tasks.all {
         if ("assemble${taskName.capitalize()}".equalsIgnoreCase(it.name)) {
-
             it.doLast {
+                def destPath = file("${bakPath}/${getTinkerIdValue()}/")
                 copy {
-                    def destPath = file("${bakPath}/${getTinkerIdValue()}/")
                     from variant.outputs.first().outputFile
                     into destPath
+                    rename {'app.apk'}
+                }
+                copy {
                     from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
                     into destPath
                     from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"

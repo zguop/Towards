@@ -48,7 +48,6 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
 
     public void navigateToMain() {
         Router.newIntent().from(this).to(MainActivity.class).finish().launch();
-        AlertToast.show("补丁生效了");
     }
 
     public void animateBackgroundImage(Animation animation) {
