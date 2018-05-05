@@ -7,5 +7,4 @@ dependencies {
     implementation rootProject.ext.dependencies["okhttp3"]
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["rxjava"]
-    //每个build.gradle 版本不同的依赖处理
 }

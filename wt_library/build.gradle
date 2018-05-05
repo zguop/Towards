@@ -22,4 +22,6 @@ dependencies {
         exclude group: 'glide-parent'
     }
     api project(':net_library')
+    api project(':tinker_lib')
+
 }

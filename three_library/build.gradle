@@ -8,6 +8,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies["bugly_crashreport"]
     implementation rootProject.ext.dependencies["bugly_nativecrashreport"]
+
     api project(':wt_library')
 
 }

@@ -37,7 +37,7 @@ def commonConfigure = {
                 jniLibs.srcDirs = ['libs']
             }
         }
-        lintOptions.with {
+        lintOptions {
             checkReleaseBuilds false
             abortOnError false
         }

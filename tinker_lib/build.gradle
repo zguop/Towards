@@ -1,0 +1,7 @@
+globleConfigure()
+dependencies {
+    //生成application时使用 provided 参与编译不参与打包
+    compileOnly rootProject.ext.dependencies['tinker_anno']
+    //tinker's main Android lib
+    api rootProject.ext.dependencies['tinker_lib']
+}

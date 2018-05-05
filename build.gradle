@@ -19,6 +19,9 @@ buildscript {
 
 allprojects {
     apply from: "$rootProject.projectDir/subModuleHeader.gradle"
+    repositories {
+        flatDir { dirs 'libs' }
+    }
 }
 
 subprojects {
@@ -26,7 +29,6 @@ subprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
-        flatDir { dirs 'libs' }
     }
 }
 

@@ -2,30 +2,25 @@ package com.waitou.wt_library;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
+import com.to.aboomy.tinker_lib.TinkerApplicationBase;
 
 /**
  * Created by waitou on 16/12/23.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends TinkerApplicationBase {
 
-    private static BaseApplication mApp;
+    private static Application mApp;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mApp = this;
-
-        /*---------------  内存泄漏的检测 ---------------*/
-
-        if (!BuildConfig.DEBUG || LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-      //  LeakCanary.install(this);
+    protected BaseApplication() {
+        super(BaseApplicationLike.class.getName());
     }
 
-    public static BaseApplication getApp() {
+    public static void setApplication(Application application) {
+        BaseApplication.mApp = application;
+    }
+
+    public static Application getApp() {
         return mApp;
     }
 }
