@@ -13,8 +13,8 @@ import com.to.aboomy.tinker_lib.TinkerApplicationLike;
  */
 public class BaseApplicationLike extends TinkerApplicationLike {
 
-    public BaseApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    public BaseApplicationLike(Application application, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     @Override

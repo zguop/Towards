@@ -7,6 +7,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityLogoBinding;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.router.Router;
 
@@ -47,6 +48,7 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
 
     public void navigateToMain() {
         Router.newIntent().from(this).to(MainActivity.class).finish().launch();
+        AlertToast.show("补丁生效了");
     }
 
     public void animateBackgroundImage(Animation animation) {

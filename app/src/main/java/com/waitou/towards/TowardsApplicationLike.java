@@ -27,8 +27,8 @@ import java.lang.reflect.Field;
 
 public class TowardsApplicationLike extends ThreeApplicationLike {
 
-    public TowardsApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    public TowardsApplicationLike(Application application, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     @Override

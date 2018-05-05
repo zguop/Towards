@@ -25,6 +25,9 @@ def commonConfigure = {
             versionCode rootProject.ext.android.versionCode
             versionName rootProject.ext.android.versionName
             multiDexEnabled true
+            javaCompileOptions {
+                annotationProcessorOptions.includeCompileClasspath = true
+            }
         }
         buildTypes.with {
             release.with {

@@ -20,8 +20,8 @@ import com.waitou.wt_library.BaseApplicationLike;
 
 public class ThreeApplicationLike extends BaseApplicationLike{
 
-    public ThreeApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    public ThreeApplicationLike(Application application, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     @Override
