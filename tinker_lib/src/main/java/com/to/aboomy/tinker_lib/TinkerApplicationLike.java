@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -40,6 +41,20 @@ public class TinkerApplicationLike extends DefaultApplicationLike {
         initInOtherProcess(process);
     }
 
+    @Override
+    public void onBaseContextAttached(Context base) {
+        super.onBaseContextAttached(base);
+        MultiDex.install(base);
+        TinkerManager.setTinkerApplicationLike(this);
+        TinkerManager.installTinker(this);
+        Tinker.with(getApplication());
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    protected void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback) {
+        getApplication().registerActivityLifecycleCallbacks(callback);
+    }
+
     /**
      * 有些sdk只需要在主进程初始化
      */
@@ -52,18 +67,5 @@ public class TinkerApplicationLike extends DefaultApplicationLike {
      */
     protected void initInOtherProcess(String process) {
 
-    }
-
-    @Override
-    public void onBaseContextAttached(Context base) {
-        super.onBaseContextAttached(base);
-        TinkerManager.setTinkerApplicationLike(this);
-        TinkerManager.installTinker(this);
-        Tinker.with(getApplication());
-    }
-
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback) {
-        getApplication().registerActivityLifecycleCallbacks(callback);
     }
 }

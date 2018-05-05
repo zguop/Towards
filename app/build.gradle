@@ -52,11 +52,14 @@ dependencies {
     implementation rootProject.ext.dependencies["bubbleseekbar"]
     implementation rootProject.ext.dependencies["vlayout"]
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.databinding:compiler:3.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
+    implementation "com.android.databinding:compiler:3.1.2"
 
     api project(':photo_library')
     api project(':three_library')
 
 }
+
+apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
+
 

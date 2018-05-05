@@ -1,5 +1,6 @@
 package com.waitou.wt_library;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.to.aboomy.tinker_lib.TinkerApplicationBase;
@@ -10,6 +11,7 @@ import com.to.aboomy.tinker_lib.TinkerApplicationBase;
 
 public class BaseApplication extends TinkerApplicationBase {
 
+    @SuppressLint("StaticFieldLeak")
     private static Application mApp;
 
     protected BaseApplication() {

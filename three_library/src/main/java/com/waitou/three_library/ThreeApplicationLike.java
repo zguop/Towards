@@ -8,24 +8,28 @@ import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.waitou.wt_library.BaseApplication;
+import com.waitou.wt_library.BaseApplicationLike;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static com.umeng.socialize.utils.ContextUtil.getPackageName;
+
 /**
- * Created by waitou on 17/5/16.
+ * author   itxp
+ * date     2018/5/5 20:49
+ * des
  */
 
-public class ThreeApplication extends BaseApplication {
+public class ThreeApplicationLike extends BaseApplicationLike{
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void initInMainProcess() {
+        super.initInMainProcess();
         initUMShare();
         initBugly();
     }
-
 
     /**
      * 友盟分享
@@ -37,7 +41,7 @@ public class ThreeApplication extends BaseApplication {
         //app key 测试文档中的
         PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-        UMShareAPI.get(this);
+        UMShareAPI.get(BaseApplication.getApp());
     }
 
     /**
@@ -47,9 +51,9 @@ public class ThreeApplication extends BaseApplication {
         //增加上报进程控制
         String packageName = getPackageName();
         String processName = getProcessName(Process.myPid());
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(BaseApplication.getApp());
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
-        CrashReport.initCrashReport(this, "5df0981fd3", !BuildConfig.DEBUG, strategy);
+        CrashReport.initCrashReport(BaseApplication.getApp(), "5df0981fd3", !BuildConfig.DEBUG, strategy);
     }
 
     /**

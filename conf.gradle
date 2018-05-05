@@ -12,6 +12,12 @@ ext {
             versionName      : "2.0.0"
     ]
 
+    hotfix = [
+            // 注意，tinkerId是用来区分基准包的。一个版本的包只能有一个tinkerId。
+            tinkerId: "${android.versionName}",
+            platform: "all",
+    ]
+
     dependencies = [
             "appcompat-v7"           : "com.android.support:appcompat-v7:${VSupportSdk}",
             "support-v4"             : "com.android.support:support-v4:${VSupportSdk}",
@@ -49,6 +55,8 @@ ext {
             "vlayout"                : 'com.alibaba.android:vlayout:1.0.5@aar',//vlayout
             "tinker_lib"             : "com.tencent.tinker:tinker-android-lib:${tinkerVersion}",
             "tinker_anno"            : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
+            "multidex"               : "com.android.support:multidex:1.0.1",
+
     ]
 
     // "databinding-adapter": 'com.github.markzhai:databinding-rv-adapter:1.0.1',

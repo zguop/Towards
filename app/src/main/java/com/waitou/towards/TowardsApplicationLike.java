@@ -9,8 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
 import com.waitou.net_library.http.HttpUtil;
-import com.waitou.three_library.ThreeApplication;
+import com.waitou.three_library.ThreeApplicationLike;
 import com.waitou.towards.model.main.MainActivity;
+import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.USharedPref;
@@ -23,21 +24,21 @@ import java.lang.reflect.Field;
  * application
  */
 
-public class TowardsApplication extends ThreeApplication {
+public class TowardsApplicationLike extends ThreeApplicationLike {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void initInMainProcess() {
+        super.initInMainProcess();
         //初始化网络环境
-        HttpUtil.init(this);
+        HttpUtil.init(BaseApplication.getApp());
         //初始化sp工具
-        USharedPref.init(this);
+        USharedPref.init(BaseApplication.getApp());
         //初始化吐司工具
-        AlertToast.init(this);
+        AlertToast.init(BaseApplication.getApp());
         //glide加载初始化
-        ILFactory.getLoader().init(this);
+        ILFactory.getLoader().init(BaseApplication.getApp());
         //通过chrome来查看android数据库 chrome://inspect/#devices
-        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(BaseApplication.getApp());
         //所以activity都会回调的生命周期方法
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override

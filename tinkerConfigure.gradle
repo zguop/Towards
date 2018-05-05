@@ -1,0 +1,177 @@
+apply plugin: 'com.tencent.tinker.patch'
+
+def bakPath = file("${project.rootDir}/tinkerTemp/")
+
+def getTinkerIdValue(){
+    "${rootProject.ext.hotfix.tinkerId}"
+}
+
+tinkerPatch {
+
+    oldApk = "${bakPath}/base-file/app.apk"
+    /**
+     * 不忽略tinker的警告,有则终止patch文件的生成
+     */
+    ignoreWarning = false
+    /**
+     * 使用签名,在运行过程中,需要验证apk包与补丁包的签名是否一致
+     */
+    useSign = true
+    /**
+     * 指定是否启用tinker
+     */
+    tinkerEnable = true
+
+    buildConfig {
+        /**
+         * 可选参数,在编译新的apk的时候,指定old apk 打包时所使用的混下混淆文件
+         */
+        applyMapping = "${bakPath}/base-file/mapping.txt"
+
+        /**
+         * 可选参数,在编译新的apk的时候,指定old apk 的资源文件
+         */
+        applyResourceMapping = "${bakPath}/base-file/R.txt"
+
+        /**
+         * 指定tinkerId
+         */
+        tinkerId = getTinkerIdValue()
+
+        /**
+         * 如果我们有多个dex,编译补丁时可能会由于类的移动导致变更增多。
+         * 若打开keepDexApply模式，补丁包将根据基准包的类分布来编译。
+         * 有bug，谨用！！！！！
+         */
+        keepDexApply = false
+    }
+
+    dex {
+
+        /**
+         * 只能是'row' 'jar'
+         * 对于'row'模式,将会保持输入dex格式
+         * 对于'jar'模式,将会把输入dex重新压缩封装到jar
+         * 如果你的minSdkVersion小于14,必须选择'jar'模式,而且它更节省存储空间,但是验证MD5时对比'raw'模式耗时
+         * 一般情况下选择jar模式即可
+         */
+        dexMode = "jar"
+
+        /**
+         * 指定tinker处理的dex目录
+         */
+        pattern = ["classes*.dex",
+                   "assets/secondary-dex-?.jar"]
+
+        /**
+         * 指定加载patch文件时用到的类,这里可以添加不随着tinker发生变化的信息。
+         */
+        loader = []
+    }
+
+    lib {
+        pattern = ["lib/*/*.so"]
+    }
+
+    res{
+        /**
+         * 指定tinker可以修改的资源路径
+         */
+        pattern = ["res/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+
+        /**
+         * 支持*、?通配符，必须使用'/'分割。若满足ignoreChange的pattern，在编译时会忽略该文件的新增、删除与修改。
+         * 最极端的情况，ignoreChange与上面的pattern一致，即会完全忽略所有资源的修改。
+         */
+        ignoreChange = ["assets/sample_meta.txt"]
+
+        /**对于修改的资源，如果大于largeModSize，我们将使用bsdiff算法。这可以降低补丁包的大小，但是会增加合成时的复杂度。默认大小为100kb*/
+        largeModSize = 200
+
+    }
+
+    packageConfig {
+        /** configField("key", "value"), 默认自动从基准安装包与新安装包的Manifest中读取tinkerId,并自动写入configField。
+         * 在这里，你可以定义其他的信息，在运行时可以通过TinkerLoadResult.getPackageConfigByName得到相应的数值。
+         * 但是建议直接通过修改代码来实现，例如BuildConfig。*/
+//        configField("patchMessage", "补丁主要修复了XXXbug")
+    }
+
+    sevenZip {
+        zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
+    }
+}
+
+/**
+ * 主要作用 配置中是否配置了多渠道
+ */
+List<String> flavors = new ArrayList<>()
+project.android.productFlavors.each { flavor ->
+    flavors.add(flavor.name)
+}
+boolean hasFlavors = flavors.size() > 0
+
+/**
+ * bak apk and mapping
+ */
+android.applicationVariants.all { variant ->
+    /**
+     * task type, you want to bak
+     */
+    def taskName = variant.name
+    tasks.all {
+        if ("assemble${taskName.capitalize()}".equalsIgnoreCase(it.name)) {
+
+            it.doLast {
+                copy {
+                    def destPath = file("${bakPath}/${getTinkerIdValue()}/")
+                    from variant.outputs.first().outputFile
+                    into destPath
+                    from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                    into destPath
+                    from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
+                    into destPath
+                }
+            }
+        }
+    }
+}
+project.afterEvaluate {
+    //sample use for build all flavor for one time
+    if (hasFlavors) {
+        task(tinkerPatchAllFlavorRelease) {
+            group = 'tinker'
+            def originOldPath = getTinkerBuildFlavorDirectory()
+            for (String flavor : flavors) {
+                def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Release")
+                dependsOn tinkerTask
+                def preAssembleTask = tasks.getByName("process${flavor.capitalize()}ReleaseManifest")
+                preAssembleTask.doFirst {
+                    String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 15)
+                    project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release.apk"
+                    project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-mapping.txt"
+                    project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-release-R.txt"
+
+                }
+
+            }
+        }
+
+        task(tinkerPatchAllFlavorDebug) {
+            group = 'tinker'
+            def originOldPath = getTinkerBuildFlavorDirectory()
+            for (String flavor : flavors) {
+                def tinkerTask = tasks.getByName("tinkerPatch${flavor.capitalize()}Debug")
+                dependsOn tinkerTask
+                def preAssembleTask = tasks.getByName("process${flavor.capitalize()}DebugManifest")
+                preAssembleTask.doFirst {
+                    String flavorName = preAssembleTask.name.substring(7, 8).toLowerCase() + preAssembleTask.name.substring(8, preAssembleTask.name.length() - 13)
+                    project.tinkerPatch.oldApk = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug.apk"
+                    project.tinkerPatch.buildConfig.applyMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-mapping.txt"
+                    project.tinkerPatch.buildConfig.applyResourceMapping = "${originOldPath}/${flavorName}/${project.name}-${flavorName}-debug-R.txt"
+                }
+
+            }
+        }
+    }
+}

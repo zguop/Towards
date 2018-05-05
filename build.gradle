@@ -2,7 +2,6 @@
 apply from: "conf.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
     repositories {
         google()
         jcenter()
@@ -11,7 +10,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "com.tencent.tinker:tinker-patch-gradle-plugin:${tinkerVersion}"
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

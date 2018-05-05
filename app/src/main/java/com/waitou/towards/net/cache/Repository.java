@@ -1,6 +1,6 @@
 package com.waitou.towards.net.cache;
 
-import com.waitou.towards.TowardsApplication;
+import com.waitou.towards.TowardsApplicationLike;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.net.DataLoader;
@@ -26,7 +26,7 @@ public class Repository {
 
     private Repository() {
         mCacheProviders = new RxCache.Builder()
-                .persistence(TowardsApplication.getApp().getCacheDir(), new GsonSpeaker())
+                .persistence(TowardsApplicationLike.getApp().getCacheDir(), new GsonSpeaker())
                 .using(CacheProviders.class);
     }
 
