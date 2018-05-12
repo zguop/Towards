@@ -9,7 +9,7 @@ ext {
             minSdkVersion    : 21,
             targetSdkVersion : 27,
             versionCode      : 2,
-            versionName      : "2.0.3"
+            versionName      : "2.0.5"
     ]
 
     hotfix = [
@@ -56,6 +56,8 @@ ext {
             "tinker_lib"             : "com.tencent.tinker:tinker-android-lib:${tinkerVersion}",
             "tinker_anno"            : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
             "multidex"               : "com.android.support:multidex:1.0.1",
+            "gson"                   : "com.google.code.gson:gson:2.8.0",
+
 
     ]
 

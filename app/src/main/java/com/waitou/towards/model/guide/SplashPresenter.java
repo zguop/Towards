@@ -21,7 +21,7 @@ import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.towards.net.EmptyErrorVerify;
+import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UFile;

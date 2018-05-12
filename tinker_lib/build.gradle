@@ -5,4 +5,5 @@ dependencies {
     //tinker's main Android lib
     api rootProject.ext.dependencies['tinker_lib']
     implementation rootProject.ext.dependencies['multidex']
+    implementation project(":net_library")
 }

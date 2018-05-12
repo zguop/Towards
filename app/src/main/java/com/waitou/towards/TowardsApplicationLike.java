@@ -5,19 +5,36 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
+import com.to.aboomy.tinker_lib.TinkerManager;
+import com.to.aboomy.tinker_lib.patch.PatchInfo;
+import com.to.aboomy.tinker_lib.patch.ServerUtils;
+import com.to.aboomy.tinker_lib.patch.VersionInfo;
+import com.waitou.net_library.DataServiceProvider;
+import com.waitou.net_library.helper.EmptyErrorVerify;
+import com.waitou.net_library.helper.RxGlobalRequestHelp;
+import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.HttpUtil;
 import com.waitou.three_library.ThreeApplicationLike;
+import com.waitou.towards.common.thread.DownloadThread;
 import com.waitou.towards.model.main.MainActivity;
+import com.waitou.towards.net.LoaderService;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.USharedPref;
+import com.waitou.wt_library.kit.UString;
+import com.waitou.wt_library.kit.Util;
 
+import java.io.File;
 import java.lang.reflect.Field;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 
 /**
@@ -27,8 +44,8 @@ import java.lang.reflect.Field;
 
 public class TowardsApplicationLike extends ThreeApplicationLike {
 
-    public TowardsApplicationLike(Application application, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    public TowardsApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     @Override
@@ -83,6 +100,40 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
                 }
             }
         });
+
+        tinkerPatch();
+    }
+
+    private void tinkerPatch() {
+        Observable<PatchInfo> observable = DataServiceProvider.getInstance().provide(HttpUtil.GITHUB_API, LoaderService
+                .class).checkPatch().compose(RxTransformerHelper.applySchedulersResult(getApplication(), new EmptyErrorVerify
+                ()));
+
+        Consumer<PatchInfo> consumer = patchInfo -> {
+            File patchFile = ServerUtils.getServerFile(getApplication(), patchInfo.versionName);
+            if (patchFile.exists()) {
+                if (patchFile.delete()) {
+                    Log.i("aa", patchFile.getName() + " delete");
+                }
+            }
+            VersionInfo v = VersionInfo.getInstance();
+            if(!v.isUpdate(patchInfo.patchVersion,patchInfo.versionName)){
+                return;
+            }
+            if(UString.isEmpty(patchInfo.downloadUrl)){
+                return;
+            }
+            DownloadThread.get(0, patchInfo.downloadUrl, patchFile.getAbsolutePath()
+                    , (id, progress, isCompleted, file) ->
+                            Util.safelyTask(() -> {
+                                Log.e("aa","loader patch");
+                                TinkerManager.loadPatch(file.getPath());
+                            })
+            );
+        };
+
+        RxGlobalRequestHelp.request(observable,consumer);
+
     }
 
     private void fixInputMethodManagerLeak(Context destContext) {

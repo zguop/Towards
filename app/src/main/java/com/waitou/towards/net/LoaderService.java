@@ -1,6 +1,8 @@
 package com.waitou.towards.net;
 
+import com.to.aboomy.tinker_lib.patch.PatchInfo;
 import com.waitou.net_library.model.BaseResponse;
+import com.waitou.net_library.model.MovieBaseResponse;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.GankIoDayInfo;
@@ -9,12 +11,12 @@ import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.bean.MovieResInfo;
-import com.waitou.net_library.model.MovieBaseResponse;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
@@ -72,5 +74,10 @@ public interface LoaderService {
     /*--------------- 影视 movie ---------------*/
     @GET("homePageApi/homePage.do")
     Observable<MovieBaseResponse<MovieResInfo>> getHomeMoviePage();
+
+
+    @POST("master/wt_logo.json")
+    Observable<BaseResponse<PatchInfo>> checkPatch();
+
 
 }

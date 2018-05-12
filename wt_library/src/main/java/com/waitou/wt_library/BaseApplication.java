@@ -6,7 +6,7 @@ import android.app.Application;
 /**
  * Created by waitou on 16/12/23.
  */
-public class BaseApplication {
+public class BaseApplication{
 
     @SuppressLint("StaticFieldLeak")
     private static Application mApp;

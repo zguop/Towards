@@ -4,7 +4,8 @@ dependencies {
     api rootProject.ext.dependencies["retrofit"]
     implementation rootProject.ext.dependencies["adapter-rxjava"]
     implementation rootProject.ext.dependencies["converter-gson"]
-    implementation rootProject.ext.dependencies["okhttp3"]
+    api rootProject.ext.dependencies["okhttp3"]
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["rxjava"]
+    api rootProject.ext.dependencies["gson"]
 }

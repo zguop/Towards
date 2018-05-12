@@ -1,6 +1,4 @@
-package com.waitou.towards.net;
-
-import com.waitou.net_library.helper.ErrorVerify;
+package com.waitou.net_library.helper;
 
 /**
  * Created by waitou on 17/2/17.

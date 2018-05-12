@@ -22,13 +22,14 @@ import com.to.aboomy.tinker_lib.Log.MyLogImp;
 
 public class TinkerApplicationLike extends DefaultApplicationLike {
 
-    public TinkerApplicationLike(Application application, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, ShareConstants.TINKER_ENABLE_ALL, false, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
+    public TinkerApplicationLike(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+        super(application,  ShareConstants.TINKER_ENABLE_ALL, false, applicationStartElapsedTime, applicationStartMillisTime, tinkerResultIntent);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e("aa","onCreate");
         //Application 的 onCreate 在各个进程中都会被调用,所以需要区分进程初始化
         String mainProcessName = getApplication().getApplicationInfo().processName;//主进程
         String processName = ProcessUtil.getProcessName(android.os.Process.myPid());//当前进程
@@ -46,6 +47,7 @@ public class TinkerApplicationLike extends DefaultApplicationLike {
     @Override
     public void onBaseContextAttached(Context base) {
         super.onBaseContextAttached(base);
+        Log.e("aa","onBaseContextAttached");
         MultiDex.install(base);
         TinkerManager.setTinkerApplicationLike(this);
         TinkerManager.initFastCrashProtect();
