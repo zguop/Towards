@@ -2,7 +2,7 @@ package com.waitou.towards.net;
 
 import com.waitou.net_library.helper.ErrorVerify;
 import com.waitou.towards.R;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 
 /**
  * Created by waitou on 17/1/11.

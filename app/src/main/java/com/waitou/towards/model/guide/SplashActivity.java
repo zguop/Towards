@@ -7,7 +7,6 @@ import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityLogoBinding;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.router.Router;
 

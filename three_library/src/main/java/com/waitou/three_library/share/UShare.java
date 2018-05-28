@@ -9,7 +9,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.waitou.three_library.R;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UString;
 
 import io.reactivex.functions.Consumer;

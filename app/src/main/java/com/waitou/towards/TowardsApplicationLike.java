@@ -28,7 +28,7 @@ import com.waitou.towards.model.main.MainActivity;
 import com.waitou.towards.net.LoaderService;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.imageloader.ILFactory;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.kit.Util;
 

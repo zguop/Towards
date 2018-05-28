@@ -11,7 +11,7 @@ import com.waitou.photo_library.databinding.ActivityPhotoWallBinding;
 import com.waitou.photo_library.event.PhotoEvent;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;

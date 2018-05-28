@@ -11,7 +11,7 @@ import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 
 import java.util.List;
 

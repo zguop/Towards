@@ -18,7 +18,7 @@ import com.waitou.towards.common.NativeEnum;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;

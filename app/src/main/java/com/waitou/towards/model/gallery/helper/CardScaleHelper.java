@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.Util;

@@ -12,7 +12,7 @@ import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 

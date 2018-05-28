@@ -15,7 +15,7 @@ import com.waitou.towards.databinding.ActivityGalleryBinding;
 import com.waitou.towards.model.gallery.helper.CardAdapter;
 import com.waitou.towards.model.gallery.helper.CardScaleHelper;
 import com.waitou.wt_library.base.CollapsingXActivity;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 
 import java.util.List;

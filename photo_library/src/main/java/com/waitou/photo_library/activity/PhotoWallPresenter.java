@@ -33,7 +33,7 @@ import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.FolderPopUpWindow;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.kit.UDate;
 import com.waitou.wt_library.kit.UDimens;
 import com.waitou.wt_library.kit.UFile;

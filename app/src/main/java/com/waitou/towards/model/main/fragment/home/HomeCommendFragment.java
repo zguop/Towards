@@ -12,7 +12,7 @@ import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
 import com.waitou.wt_library.base.XFragment;
-import com.waitou.wt_library.kit.AlertToast;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
