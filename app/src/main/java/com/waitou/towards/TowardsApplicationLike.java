@@ -10,23 +10,25 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
+import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.tinker_lib.TinkerManager;
 import com.to.aboomy.tinker_lib.patch.PatchInfo;
 import com.to.aboomy.tinker_lib.patch.ServerUtils;
 import com.to.aboomy.tinker_lib.patch.VersionInfo;
+import com.to.aboomy.utils_lib.USharedPref;
 import com.waitou.net_library.DataServiceProvider;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxGlobalRequestHelp;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.HttpUtil;
 import com.waitou.three_library.ThreeApplicationLike;
+import com.waitou.towards.common.ThemeImpl;
 import com.waitou.towards.common.thread.DownloadThread;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.towards.net.LoaderService;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.imageloader.ILFactory;
 import com.waitou.wt_library.kit.AlertToast;
-import com.waitou.wt_library.kit.USharedPref;
 import com.waitou.wt_library.kit.UString;
 import com.waitou.wt_library.kit.Util;
 
@@ -100,8 +102,14 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
                 }
             }
         });
-
+        initThemeLib();
         tinkerPatch();
+    }
+
+    private void initThemeLib() {
+        ChangeModeController changeModeController = ChangeModeController.get();
+        ThemeImpl themeImpl = new ThemeImpl();
+        changeModeController.initConfig(themeImpl);
     }
 
     private void tinkerPatch() {
@@ -117,22 +125,22 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
                 }
             }
             VersionInfo v = VersionInfo.getInstance();
-            if(!v.isUpdate(patchInfo.patchVersion,patchInfo.versionName)){
+            if (!v.isUpdate(patchInfo.patchVersion, patchInfo.versionName)) {
                 return;
             }
-            if(UString.isEmpty(patchInfo.downloadUrl)){
+            if (UString.isEmpty(patchInfo.downloadUrl)) {
                 return;
             }
             DownloadThread.get(0, patchInfo.downloadUrl, patchFile.getAbsolutePath()
                     , (id, progress, isCompleted, file) ->
                             Util.safelyTask(() -> {
-                                Log.e("aa","loader patch");
+                                Log.e("aa", "loader patch");
                                 TinkerManager.loadPatch(file.getPath());
                             })
             );
         };
 
-        RxGlobalRequestHelp.request(observable,consumer);
+        RxGlobalRequestHelp.request(observable, consumer);
 
     }
 

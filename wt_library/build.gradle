@@ -23,5 +23,9 @@ dependencies {
     }
     api project(':net_library')
     api project(':tinker_lib')
+    api project(':utils_lib')
+
+
+    implementation project(':theme_lib')
 
 }

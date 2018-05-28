@@ -6,12 +6,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
 import com.waitou.towards.databinding.ToolbarJokeTitleBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XFragmentAdapter;
-import com.waitou.wt_library.theme.ThemeUtils;
 
 /**
  * Created by waitou on 16/12/23.

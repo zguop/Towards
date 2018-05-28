@@ -2,9 +2,8 @@ package com.waitou.towards.bean
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-
+import com.to.aboomy.theme_lib.config.ThemeModule
 import com.waitou.towards.BR
-import com.waitou.wt_library.theme.ThemeEnum
 
 /**
  * Created by waitou on 17/2/8.
@@ -12,7 +11,7 @@ import com.waitou.wt_library.theme.ThemeEnum
 
 class ThemeInfo : BaseObservable() {
 
-    var themeEnum: ThemeEnum? = null
+    var themeModule: ThemeModule? = null
 
     @Bindable
     var focus: Boolean = false

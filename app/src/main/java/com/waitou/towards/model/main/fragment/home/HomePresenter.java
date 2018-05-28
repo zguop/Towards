@@ -5,6 +5,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.to.aboomy.utils_lib.USharedPref;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
@@ -19,7 +20,6 @@ import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.kit.AlertToast;
 import com.waitou.wt_library.kit.UDate;
-import com.waitou.wt_library.kit.USharedPref;
 import com.waitou.wt_library.kit.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;

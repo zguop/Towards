@@ -17,9 +17,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.towards.R;
-import com.waitou.wt_library.theme.SkinCompatSupportable;
-import com.waitou.wt_library.theme.ThemeUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -28,7 +28,7 @@ import java.lang.reflect.Field;
  * Created by waitou on 17/1/19.
  */
 
-public class ExBottomNavigationView extends BottomNavigationView implements SkinCompatSupportable{
+public class ExBottomNavigationView extends BottomNavigationView implements SkinCompatSupportable {
     // used for animation
     private int     mShiftAmount;
     private float   mScaleUpFactor;

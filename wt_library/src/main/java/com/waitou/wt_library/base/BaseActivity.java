@@ -9,8 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.to.aboomy.theme_lib.ChangeModeController;
 import com.waitou.wt_library.kit.UActivity;
-import com.waitou.wt_library.theme.ChangeModeController;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -77,6 +77,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (disposable != null) {
             mCompositeDisposable.add(disposable);
         }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        if (onBackPressedOverride()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    /**
+     * 子类处理返回逻辑的时候，最好不要重写onBackPressed。替代的重写该方法。
+     * 但是子类点击back的时候如果不返回，则可以重写onBackPressed。
+     *
+     * @return true:onBackPressed被占用。false：不占用onBackPressed。
+     */
+    protected boolean onBackPressedOverride() {
+        return false;
     }
 
     protected ViewDataBinding bindingInflate(@LayoutRes int resId, ViewGroup container) {

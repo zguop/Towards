@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ProgressBar;
 
+import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.photo_library.R;
-import com.waitou.wt_library.theme.ThemeUtils;
 
 /**
  * Created by waitou on 17/4/27.

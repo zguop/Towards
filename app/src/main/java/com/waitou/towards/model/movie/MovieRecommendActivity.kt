@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.to.aboomy.theme_lib.config.ThemeUtils
 import com.waitou.net_library.model.Displayable
 import com.waitou.towards.R
 import com.waitou.towards.bean.BannerAdapterInfo
@@ -19,7 +20,6 @@ import com.waitou.wt_library.kit.Util
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter
 import com.waitou.wt_library.router.Router
-import com.waitou.wt_library.theme.ThemeUtils
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
 
 /**

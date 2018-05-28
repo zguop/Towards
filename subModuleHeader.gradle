@@ -64,12 +64,12 @@ def appConfigure = {
                     //签名配置
                     signingConfig = signingConfigs.config
                     //混淆打开
-                    minifyEnabled true
+                    minifyEnabled false
                     proguardFiles getDefaultProguardFile('proguard-android.txt'), project.file('proguard-rules.pro')
                     //ZipAlign优化
-                    zipAlignEnabled true
+                    zipAlignEnabled false
                     //移除无用的resource文件
-                    shrinkResources true
+                    shrinkResources false
                 }
                 debug.with {
                     //签名配置

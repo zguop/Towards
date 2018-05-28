@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.waitou.wt_library.theme.ThemeUtils"/>
+        <import type="com.to.aboomy.theme_lib.config.ThemeUtils"/>
         <import type="com.waitou.towards.enums.HomeTitleEnum"/>
 
         <variable

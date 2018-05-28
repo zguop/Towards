@@ -1,5 +1,6 @@
 package com.waitou.towards.model.main
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Build
@@ -8,6 +9,8 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import com.jaeger.library.StatusBarUtil
+import com.to.aboomy.theme_lib.ChangeModeController
+import com.to.aboomy.theme_lib.config.ThemeUtils
 import com.umeng.socialize.UMShareAPI
 import com.waitou.photo_library.PhotoPickerFinal
 import com.waitou.towards.R
@@ -30,9 +33,6 @@ import com.waitou.wt_library.base.XPresent
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
-import com.waitou.wt_library.theme.ChangeModeController
-import com.waitou.wt_library.theme.ThemeEnum
-import com.waitou.wt_library.theme.ThemeUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
@@ -99,6 +99,8 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
             binding.mainDrawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe({ killAll() })
         }
     }
 
@@ -135,13 +137,13 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
      */
     private fun changeNight() {
         if (mThemeAdapter == null) {
-            mThemeAdapter = SingleTypeAdapter<ThemeInfo>(this, R.layout.item_theme)
+            mThemeAdapter = SingleTypeAdapter(this, R.layout.item_theme)
             val themeInfoList = ArrayList<ThemeInfo>()
             val theme = ChangeModeController.get().themeModel
-            for (themeModel in ThemeEnum.values()) {
+            for (themeModel in ChangeModeController.get().themes) {
                 val themeInfo = ThemeInfo()
-                themeInfo.themeEnum = themeModel
-                themeInfo.focus = theme.colorId == themeInfo.themeEnum!!.colorId
+                themeInfo.themeModule = themeModel
+                themeInfo.focus = theme.colorId == themeInfo.themeModule?.colorId
                 themeInfoList.add(themeInfo)
             }
             mThemeAdapter!!.set(themeInfoList)
@@ -156,7 +158,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
                             .subscribe { info -> info.focus = false })
                 }
                 themeInfo.focus = true
-                ChangeModeController.get().changeNight(this@MainActivity, themeInfo.themeEnum)
+                ChangeModeController.get().changeNight(this@MainActivity, themeInfo.themeModule)
                 mThemeDialog!!.dismiss()
                 mThemeDialog = null
             })
@@ -177,9 +179,19 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         ChangeModeController.get().cancel()
         UMShareAPI.get(this).release()
+    }
+
+    /**
+     * 杀死进程
+     */
+    private fun killAll() {
+        android.os.Process.killProcess(android.os.Process.myPid())
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        manager.killBackgroundProcesses(packageName)
     }
 }

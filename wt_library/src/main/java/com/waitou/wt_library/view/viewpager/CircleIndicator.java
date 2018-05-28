@@ -14,9 +14,9 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.wt_library.R;
-import com.waitou.wt_library.theme.SkinCompatSupportable;
-import com.waitou.wt_library.theme.ThemeUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -260,10 +260,9 @@ public static java.lang.String TABLENAME;
 -keep class com.amap.api.fence.**{*;}
 -keep class com.autonavi.aps.amapapi.model.**{*;}
 
-
-
-
-
+# tinker
+-keepattributes SourceFile,LineNumberTable
+-keep class com.tencent.tinker.**{*;}
 
 
 

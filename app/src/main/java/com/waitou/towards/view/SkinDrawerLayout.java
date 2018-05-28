@@ -6,15 +6,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 
 import com.jaeger.library.StatusBarUtil;
+import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.towards.R;
-import com.waitou.wt_library.theme.SkinCompatSupportable;
-import com.waitou.wt_library.theme.ThemeUtils;
 
 /**
  * Created by waitou on 17/3/5.
  */
 
-public class SkinDrawerLayout extends DrawerLayout implements SkinCompatSupportable{
+public class SkinDrawerLayout extends DrawerLayout implements SkinCompatSupportable {
 
     public SkinDrawerLayout(Context context) {
         this(context, null);
