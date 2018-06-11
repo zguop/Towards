@@ -12,11 +12,11 @@ import com.waitou.photo_library.event.PhotoEvent;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UDimens;
+import com.to.aboomy.utils_lib.USize;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.recycler.divider.GridSpacingItemDecoration;
-import com.waitou.wt_library.rx.RxBus;
+import com.to.aboomy.rx_lib.RxBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         mPhotoGridAdapter.setPresenter(getP());
         getBinding().xList.setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3));
         getBinding().xList.setAdapter(mPhotoGridAdapter);
-        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, UDimens.dip2pxInt(2), false));
+        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, USize.dip2pxInt(2), false));
         reloadData();
     }
 

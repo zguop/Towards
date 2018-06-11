@@ -57,6 +57,7 @@ dependencies {
 
     implementation project(':photo_library')
     implementation project(':three_library')
+    implementation project(':zxing_lib')
 
 }
 

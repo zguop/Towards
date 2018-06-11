@@ -1,4 +1,4 @@
 globleConfigure()
 dependencies {
-
+    implementation rootProject.ext.dependencies["annotations"]
 }

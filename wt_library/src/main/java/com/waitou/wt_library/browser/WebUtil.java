@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.waitou.net_library.log.LogUtil;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UString;
+import com.to.aboomy.utils_lib.UString;
 
 
 /**

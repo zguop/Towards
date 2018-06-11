@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.waitou.towards.R;
-import com.waitou.wt_library.kit.UDimens;
+import com.to.aboomy.utils_lib.USize;
 
 /**
  * Created by waitou on 17/3/30.
@@ -46,7 +46,7 @@ public class ColorPickerDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FrameLayout frameLayout = new FrameLayout(context);
-        ColorPickerView colorPickerView = new ColorPickerView(context, UDimens.dip2pxInt(280), UDimens.dip2pxInt(240));
+        ColorPickerView colorPickerView = new ColorPickerView(context, USize.dip2pxInt(280), USize.dip2pxInt(240));
         frameLayout.addView(colorPickerView);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
@@ -93,7 +93,7 @@ public class ColorPickerDialog extends Dialog {
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mPaint.setShader(s);
             mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(UDimens.dip2px(30));//圆环大小
+            mPaint.setStrokeWidth(USize.dip2px(30));//圆环大小
             r = width / 2 * 0.7f - mPaint.getStrokeWidth() * 0.5f;
 
             //中心圆参数   
@@ -110,12 +110,12 @@ public class ColorPickerDialog extends Dialog {
             //黑白渐变参数   
             mRectColors = new int[]{0xFF000000, mCenterPaint.getColor(), 0xFFFFFFFF};
             mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mRectPaint.setStrokeWidth(UDimens.dip2px(5));
+            mRectPaint.setStrokeWidth(USize.dip2px(5));
             rectLeft = -r - mPaint.getStrokeWidth() * 0.5f;
             rectTop = r + mPaint.getStrokeWidth() * 0.5f +
                     mLinePaint.getStrokeMiter() * 0.5f + 15;
             rectRight = r + mPaint.getStrokeWidth() * 0.5f;
-            rectBottom = rectTop + UDimens.dip2px(30);
+            rectBottom = rectTop + USize.dip2px(30);
         }
 
         @SuppressLint("DrawAllocation")

@@ -13,7 +13,7 @@ import com.waitou.photo_library.databinding.ActivityPhotoPreviewBinding;
 import com.waitou.photo_library.fragment.PhotoPreviewFragment;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.Util;
+import com.to.aboomy.utils_lib.Util;
 
 import java.util.ArrayList;
 import java.util.List;

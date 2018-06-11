@@ -1,1 +1,1 @@
-include ':app', ':net_library', ':wt_library', ':photo_library', ':three_library', ':tinker_lib', ':theme_lib', ':utils_lib'
+include ':app', ':net_library', ':wt_library', ':photo_library', ':three_library', ':tinker_lib', ':theme_lib', ':utils_lib', ':rx_lib', ':zxing_lib'

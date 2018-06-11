@@ -13,7 +13,7 @@
             name="presenter"
             type="com.waitou.towards.model.main.fragment.joke.TextJokePresenter"/>
 
-        <import type="com.waitou.wt_library.kit.UDate"/>
+        <import type="com.to.aboomy.utils_lib.UDate"/>
 
     </data>
 

@@ -7,7 +7,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityLogoBinding;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.Util;
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.router.Router;
 
 

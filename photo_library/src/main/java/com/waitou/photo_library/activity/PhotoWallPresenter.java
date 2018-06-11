@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
+import com.to.aboomy.rx_lib.RxUtil;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.R;
@@ -34,12 +35,12 @@ import com.waitou.photo_library.view.FolderPopUpWindow;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UDate;
-import com.waitou.wt_library.kit.UDimens;
-import com.waitou.wt_library.kit.UFile;
+import com.to.aboomy.utils_lib.UDate;
+import com.to.aboomy.utils_lib.USize;
+import com.to.aboomy.utils_lib.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.USDCard;
-import com.waitou.wt_library.kit.Util;
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.router.Router;
@@ -253,7 +254,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     @BindingAdapter({"marginBottom"})
     public static void marginBottom(View view, int dp) {
         RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
-        params.bottomMargin = UDimens.dip2pxInt(dp);
+        params.bottomMargin = USize.dip2pxInt(dp);
         view.setLayoutParams(params);
     }
 
@@ -389,7 +390,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         if (scanPath.isFile()) {
             showProgress();
             MediaScanner.scan(scanPath.getPath(), SCAN_TYPE, () ->
-                    getV().pend(Util.safelyTask(() ->
+                    getV().pend(RxUtil.safelyTask(() ->
                             imageDataSource(scanPath.getPath())
                     ))
             );

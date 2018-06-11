@@ -6,7 +6,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityGraffitiBinding;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.Util;
+import com.to.aboomy.utils_lib.Util;
 
 /**
  * Created by waitou on 17/3/19.

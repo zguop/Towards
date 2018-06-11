@@ -34,7 +34,7 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/colorPrimary"
+                        android:background="?android:attr/colorPrimary"
                         android:minHeight="?android:attr/actionBarSize"
                         app:contentInsetLeft="0dp"
                         app:contentInsetStart="0dp"
@@ -59,7 +59,7 @@
                     android:layout_gravity="bottom|end"
                     android:layout_marginBottom="76dp"
                     android:layout_marginRight="16dp"
-                    app:backgroundTint="?attr/colorPrimary"
+                    app:backgroundTint="?android:attr/colorPrimary"
                     app:layout_behavior="@string/quick_hide_behavior"
                     app:srcCompat="@android:drawable/ic_dialog_email"/>
 
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     app:enableShiftingMode="@{false}"
-                    app:itemBackground="?attr/colorPrimary"
+                    app:itemBackground="?android:attr/colorPrimary"
                     app:itemIconTint="@color/skin_bottom_bar_not"
                     app:itemTextColor="@color/skin_bottom_bar_not"
                     app:layout_behavior="@string/footer_bar_behavior"

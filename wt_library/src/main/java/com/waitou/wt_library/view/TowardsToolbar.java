@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.ToolbarContentBinding;
@@ -129,6 +130,19 @@ public class TowardsToolbar extends Toolbar {
         if (mBinding.textMenu.getVisibility() == VISIBLE && rightText != null) {
             mBinding.textMenu.setText(rightText);
         }
+    }
+
+    /**
+     * 设置右边图标
+     */
+    public ImageView setRightIcon(int resId, View.OnClickListener listener) {
+        ImageView rightImg = findViewById(R.id.icon_menu);
+        rightImg.setVisibility(View.VISIBLE);
+        rightImg.setImageResource(resId);
+        if (listener != null) {
+            rightImg.setOnClickListener(listener);
+        }
+        return rightImg;
     }
 
     /**

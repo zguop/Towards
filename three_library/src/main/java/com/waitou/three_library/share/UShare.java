@@ -10,7 +10,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.waitou.three_library.R;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UString;
+import com.to.aboomy.utils_lib.UString;
 
 import io.reactivex.functions.Consumer;
 

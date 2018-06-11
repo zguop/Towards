@@ -1,0 +1,4 @@
+globleConfigure()
+dependencies {
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+}

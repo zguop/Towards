@@ -1,6 +1,6 @@
 package com.waitou.towards.common.thread;
 
-import com.waitou.wt_library.kit.UFile;
+import com.to.aboomy.utils_lib.UFile;
 
 import java.io.File;
 import java.io.FileOutputStream;

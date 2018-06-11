@@ -7,7 +7,7 @@ import com.waitou.towards.bean.MovieResInfo
 import com.waitou.towards.common.ExtraValue
 import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
-import com.waitou.wt_library.kit.UString
+import com.to.aboomy.utils_lib.UString
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 

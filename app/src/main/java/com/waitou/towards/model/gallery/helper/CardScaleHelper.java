@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UDimens;
+import com.to.aboomy.utils_lib.USize;
 import com.waitou.wt_library.kit.UImage;
-import com.waitou.wt_library.kit.Util;
 
 import java.util.concurrent.TimeUnit;
 
@@ -71,9 +70,8 @@ public class CardScaleHelper {
         initWidth();
         mLinearSnapHelper.attachToRecyclerView(mRecyclerView);
         //第一次进入延迟调用 等待RecyclerView列表初始化完成
-        Util.contextAddSubscription(mContext
-                , Observable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                        .subscribe(aLong -> notifyBackgroundChange()));
+        Disposable subscribe = Observable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(aLong -> notifyBackgroundChange());
     }
 
     private void notifyBackgroundChange() {
@@ -84,11 +82,10 @@ public class CardScaleHelper {
         startSwitchBackground();
 
         //如果消费者无法处理数据，则 onBackpressureDrop 就把该数据丢弃了。
-        if(mSubscribe == null){
+        if (mSubscribe == null) {
             mSubscribe = Flowable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                     .onBackpressureDrop() //如果消费者无法处理数据，则 onBackpressureDrop 就把该数据丢弃了。
                     .subscribe(aLong -> mRecyclerView.smoothScrollToPosition(mCurrentItemPos++));
-            Util.contextAddSubscription(mContext,mSubscribe);
         }
     }
 
@@ -114,7 +111,7 @@ public class CardScaleHelper {
         View positionView = getPositionView();
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
-            Bitmap scale = scale(positionView.getDrawingCache(), UDimens.getDeviceWidth(), UDimens.getDeviceHeight());
+            Bitmap scale = scale(positionView.getDrawingCache(), USize.getDeviceWidth(), USize.getDeviceHeight());
             UImage.saveImageToGallery(mContext, scale);
             AlertToast.show("图片成功保存到相册O(∩_∩)O~");
             positionView.setDrawingCacheEnabled(false);
@@ -127,7 +124,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - UDimens.dip2pxInt(2 * (mPagePadding + mShowLeftCardWidth));
+            mCardWidth = mCardGalleryWidth - USize.dip2pxInt(2 * (mPagePadding + mShowLeftCardWidth));
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });

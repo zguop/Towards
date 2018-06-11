@@ -26,7 +26,7 @@ public class RxGlobalRequestHelp {
         }
         final int taskKey = sIncreasingRequestCode++;
         final Action unSubscribe = () -> {
-          Log.e("aa","RxGlobalRequestHelp remove");
+            Log.e("aa", "RxGlobalRequestHelp remove");
             if (TASK_MAP.get(taskKey) != null) {
                 TASK_MAP.get(taskKey).dispose();
                 TASK_MAP.remove(taskKey);
@@ -37,5 +37,4 @@ public class RxGlobalRequestHelp {
                 .doOnError(throwable -> unSubscribe.run())
                 .subscribe(onNext));
     }
-
 }

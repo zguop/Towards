@@ -8,11 +8,9 @@ import android.databinding.InverseBindingMethods;
 import android.support.annotation.AttrRes;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.CompoundButtonCompat;
-import android.view.View;
 import android.widget.CompoundButton;
 
 import com.to.aboomy.theme_lib.config.ThemeUtils;
-import com.waitou.wt_library.rx.RxBus;
 
 
 /**
@@ -35,18 +33,6 @@ public class UtilsBinding {
         }
     }
 
-    @BindingAdapter({"code", "post"})
-    public static void post(View view, int code, Object o) {
-        view.setOnClickListener(v -> RxBus.getDefault().post(code, o));
-    }
-
-    /**
-     * view 点击 发送一个post
-     */
-    @BindingAdapter("post")
-    public static void post(View view, Object o) {
-        view.setOnClickListener(v -> RxBus.getDefault().post(o));
-    }
 
     @BindingAdapter("buttonTintList")
     public static void setButtonTintList(CompoundButton compoundButton, @AttrRes int attr) {

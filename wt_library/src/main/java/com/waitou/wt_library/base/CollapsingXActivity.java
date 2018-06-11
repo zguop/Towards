@@ -80,8 +80,8 @@ public abstract class CollapsingXActivity<P extends UIPresent, D extends ViewDat
 
     @Override
     protected void goneToolBar() {
-        getUiDelegate().gone(getBinding().appbar);
-        getUiDelegate().gone(getBinding().toolbar);
+        getBinding().appbar.setVisibility(View.GONE);
+        getBinding().toolbar.setVisibility(View.GONE);
     }
 
     /*--------------- 界面状态 ---------------*/

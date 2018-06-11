@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.AsyncOkHttpClient;
 import com.waitou.towards.R;
@@ -21,20 +22,17 @@ import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UDimens;
-import com.waitou.wt_library.kit.UFile;
+import com.to.aboomy.utils_lib.USize;
+import com.to.aboomy.utils_lib.UFile;
 import com.waitou.wt_library.kit.UImage;
-import com.waitou.wt_library.kit.UString;
+import com.to.aboomy.utils_lib.UString;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import io.reactivex.Observable;
@@ -58,7 +56,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         //查询所有数据
         List<LogoImg> logoImgList = logoImgDao.loadAll();
         //去请求网络上的logo图片
-        getV().pend(DataLoader.getGithubApi().getLogoList()
+        pend(DataLoader.getGithubApi().getLogoList()
                 .compose(RxTransformerHelper.applySchedulersResult(getV(), new EmptyErrorVerify()))
                 .filter(strings -> strings != null && strings.size() > 0)
                 .doOnNext(strings -> {
@@ -137,18 +135,8 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<String> imgUrl; //stream操作 java8的 一大新特性
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             imgUrl = showLogoList.stream()
-                    .filter(new Predicate<LogoImg>() {
-                        @Override
-                        public boolean test(LogoImg logoImg) {
-                            return !logoImg.getIsShowLogoUrl();
-                        }
-                    })
-                    .map(new Function<LogoImg, String>() {
-                        @Override
-                        public String apply(LogoImg logoImg) {
-                            return logoImg.getSavePath();
-                        }
-                    })
+                    .filter(logoImg -> !logoImg.getIsShowLogoUrl())
+                    .map(LogoImg::getSavePath)
                     .collect(Collectors.toList());
         } else {
             imgUrl = new ArrayList<>();
@@ -196,7 +184,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void loadFileImg(String savePath) {
         File file = new File(savePath);
-        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(UDimens.getDeviceWidth(), UDimens.getDeviceHeight()) {
+        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(USize.getDeviceWidth(), USize.getDeviceHeight()) {
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
@@ -219,7 +207,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void initImageResource(Drawable drawable) {
         this.drawable.set(drawable);
-        getV().pend(Observable.timer(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+        pend(Observable.timer(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(aLong -> initializeImageConfig()));
     }
 

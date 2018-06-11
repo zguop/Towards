@@ -1,5 +1,6 @@
 package com.waitou.wt_library.base;
 
+import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
     private P                presenter;
     private D                d;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +136,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
     }
 
     protected void goneToolBar() {
-        getUiDelegate().gone(mXBinding.toolbar);
+        mXBinding.toolbar.setVisibility(View.GONE);
     }
 
     /*--------------- 界面状态 ---------------*/

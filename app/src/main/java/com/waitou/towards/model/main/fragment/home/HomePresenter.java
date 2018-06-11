@@ -19,8 +19,8 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UDate;
-import com.waitou.wt_library.kit.Util;
+import com.to.aboomy.utils_lib.UDate;
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 

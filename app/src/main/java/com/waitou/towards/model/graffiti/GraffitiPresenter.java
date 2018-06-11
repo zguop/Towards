@@ -29,7 +29,7 @@ import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
 import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UDimens;
+import com.to.aboomy.utils_lib.USize;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
@@ -46,7 +46,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-import static com.waitou.wt_library.kit.UDimens.getDeviceWidth;
+import static com.to.aboomy.utils_lib.USize.getDeviceWidth;
 
 /**
  * Created by waitou on 17/3/27.
@@ -266,7 +266,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        Bitmap bitmap = Bitmap.createBitmap(getDeviceWidth(), UDimens.getDeviceHeight(), Bitmap.Config.ARGB_8888);
+                        Bitmap bitmap = Bitmap.createBitmap(getDeviceWidth(), USize.getDeviceHeight(), Bitmap.Config.ARGB_8888);
                         Canvas bitCanvas = new Canvas(bitmap);
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
                             graffitiPicView.doDraw(bitCanvas);

@@ -14,7 +14,7 @@ import com.waitou.photo_library.databinding.FragmentPhotoDetailBinding;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UString;
+import com.to.aboomy.utils_lib.UString;
 
 import java.io.File;
 

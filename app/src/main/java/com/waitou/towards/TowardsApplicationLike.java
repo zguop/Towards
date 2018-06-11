@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
+import com.to.aboomy.rx_lib.RxUtil;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.tinker_lib.TinkerManager;
 import com.to.aboomy.tinker_lib.patch.PatchInfo;
 import com.to.aboomy.tinker_lib.patch.ServerUtils;
 import com.to.aboomy.tinker_lib.patch.VersionInfo;
-import com.to.aboomy.utils_lib.USharedPref;
+import com.to.aboomy.utils_lib.UActivity;
+import com.to.aboomy.utils_lib.UString;
+import com.to.aboomy.utils_lib.UtilsContextWrapper;
 import com.waitou.net_library.DataServiceProvider;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxGlobalRequestHelp;
@@ -28,9 +31,6 @@ import com.waitou.towards.model.main.MainActivity;
 import com.waitou.towards.net.LoaderService;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.imageloader.ILFactory;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.waitou.wt_library.kit.UString;
-import com.waitou.wt_library.kit.Util;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -53,12 +53,10 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
     @Override
     protected void initInMainProcess() {
         super.initInMainProcess();
+        //utils工具类的初始化
+        UtilsContextWrapper.init(BaseApplication.getApp());
         //初始化网络环境
         HttpUtil.init(BaseApplication.getApp());
-        //初始化sp工具
-        USharedPref.init(BaseApplication.getApp());
-        //初始化吐司工具
-        AlertToast.init(BaseApplication.getApp());
         //glide加载初始化
         ILFactory.getLoader().init(BaseApplication.getApp());
         //通过chrome来查看android数据库 chrome://inspect/#devices
@@ -67,7 +65,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+                UActivity.getActivityList().add(activity);
             }
 
             @Override
@@ -97,6 +95,9 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
+                if (UActivity.getActivityList().contains(activity)) {
+                    UActivity.getActivityList().remove(activity);
+                }
                 if (activity instanceof MainActivity) {
                     fixInputMethodManagerLeak(activity);
                 }
@@ -133,7 +134,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
             }
             DownloadThread.get(0, patchInfo.downloadUrl, patchFile.getAbsolutePath()
                     , (id, progress, isCompleted, file) ->
-                            Util.safelyTask(() -> {
+                            RxUtil.safelyTask(() -> {
                                 Log.e("aa", "loader patch");
                                 TinkerManager.loadPatch(file.getPath());
                             })

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.to.aboomy.theme_lib.ChangeModeController;
-import com.waitou.wt_library.kit.UActivity;
+import com.waitou.wt_library.imageloader.ILFactory;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -23,28 +23,25 @@ import io.reactivex.disposables.Disposable;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private VDelegate           mVDelegate;
     private CompositeDisposable mCompositeDisposable;
-
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
-        UActivity.getActivityList().add(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getUiDelegate().resume();
+        ILFactory.getLoader().resume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getUiDelegate().pause();
+        ILFactory.getLoader().pause(this);
     }
 
     @Override
@@ -53,18 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
         }
-        if (UActivity.getActivityList().contains(this)) {
-            UActivity.getActivityList().remove(this);
-        }
-        getUiDelegate().destroy();
-        mVDelegate = null;
-    }
-
-    protected VDelegate getUiDelegate() {
-        if (mVDelegate == null) {
-            mVDelegate = VDelegateBase.create(this);
-        }
-        return mVDelegate;
     }
 
     /**
@@ -78,8 +63,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mCompositeDisposable.add(disposable);
         }
     }
-
-
 
     @Override
     public void onBackPressed() {

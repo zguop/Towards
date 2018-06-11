@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
+import android.view.View
 import com.jaeger.library.StatusBarUtil
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.to.aboomy.theme_lib.config.ThemeUtils
+import com.to.aboomy.zxing_lib.QRActivity
 import com.umeng.socialize.UMShareAPI
 import com.waitou.photo_library.PhotoPickerFinal
 import com.waitou.towards.R
@@ -66,6 +68,9 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
     override fun initData(savedInstanceState: Bundle?) {
         binding.toolbar.fromCustomMenuView(homeFragment.getHomeToolbar(this), R.id.home)
         binding.toolbar.setBackListener(R.drawable.icon_menu) { binding.mainDrawerLayout.openDrawer(GravityCompat.START) }
+        binding.toolbar.setRightIcon(R.drawable.svg_ic_qr_scan,{
+            Router.newIntent().from(this).to(QRActivity::class.java).launch()
+        })
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
         binding.adapter = adapter
         binding.mainTab.setupWithViewPager(binding.fContent)
@@ -78,7 +83,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
             when (item.itemId) {
                 R.id.menu_home -> getBinding().toolbar.fromCustomMenuView(homeFragment.getHomeToolbar(this), R.id.home)
                 R.id.menu_joke -> getBinding().toolbar.fromCustomMenuView(textJokeFragment.jokeToolBar, R.id.menu_joke)
-                R.id.menu_circle -> uiDelegate.gone(getBinding().toolbar)
+                R.id.menu_circle -> getBinding().toolbar.visibility = View.GONE
             }
             true
         }

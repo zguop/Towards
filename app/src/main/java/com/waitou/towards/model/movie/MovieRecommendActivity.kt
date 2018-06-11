@@ -15,8 +15,8 @@ import com.waitou.towards.bean.TitleInfo
 import com.waitou.towards.common.ExtraValue
 import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
-import com.waitou.wt_library.kit.UDimens
-import com.waitou.wt_library.kit.Util
+import com.to.aboomy.utils_lib.USize
+import com.to.aboomy.utils_lib.Util
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter
 import com.waitou.wt_library.router.Router
@@ -55,8 +55,8 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
         })
         (xBinding.xContentLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
         Util.transparentStatusBar(this)
-        xBinding.toolbar.layoutParams.height = UDimens.dip2pxInt(73f)
-        xBinding.toolbar.setPadding(0, UDimens.dip2pxInt(25f), 0, 0)
+        xBinding.toolbar.layoutParams.height = USize.dip2pxInt(73f)
+        xBinding.toolbar.setPadding(0, USize.dip2pxInt(25f), 0, 0)
         xBinding.appbar.visibility = View.GONE
         adapter = MultiTypeAdapter<Displayable>(this)
         adapter!!.addViewTypeToLayoutMap(0, R.layout.item_banner_search)
@@ -66,7 +66,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
         binding.adapter = adapter
         binding.xList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private val argbEvaluator = ArgbEvaluator()
-            private val height = UDimens.dip2pxInt(175f)
+            private val height = USize.dip2pxInt(175f)
             private val startColor = 0x00ffffff
             private val endColor = ThemeUtils.getThemeAttrColor(this@MovieRecommendActivity, R.attr.colorPrimary)
             private var mDy = 0

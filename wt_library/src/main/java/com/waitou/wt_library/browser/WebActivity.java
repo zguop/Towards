@@ -20,7 +20,7 @@ import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.BaseActivity;
 import com.waitou.wt_library.databinding.ActivityWebBinding;
 import com.waitou.wt_library.kit.UNetWork;
-import com.waitou.wt_library.kit.UString;
+import com.to.aboomy.utils_lib.UString;
 
 /**
  * Created by waitou on 17/3/17.

@@ -22,7 +22,6 @@ import io.reactivex.disposables.Disposable;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private VDelegate           mVDelegate;
     private CompositeDisposable mCompositeDisposable;
 
     /**
@@ -103,12 +102,6 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    protected VDelegate getVDelegate() {
-        if (mVDelegate == null) {
-            mVDelegate = VDelegateBase.create(getContext());
-        }
-        return mVDelegate;
-    }
 
     /**
      * fragment的懒加载
@@ -149,7 +142,5 @@ public abstract class BaseFragment extends Fragment {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
         }
-        getVDelegate().destroy();
-        mVDelegate = null;
     }
 }
