@@ -1,8 +1,24 @@
+/*
+ * Copyright © Yan Zhenjie
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.to.aboomy.zxing_lib;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -14,18 +30,18 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * auth aboom
- * date 2018/5/23
+ * <p>Camera config.</p>
+ * Created by Yan Zhenjie on 2017/5/10.
  */
-public class CameraConfiguration {
+public final class CameraConfiguration {
 
     private static final String TAG = "CameraConfiguration";
 
     private static final int MIN_PREVIEW_PIXELS = 480 * 320;
     private static final double MAX_ASPECT_DISTORTION = 0.15;
     private final Context context;
-    private       Point   screenResolution;
-    private       Point   cameraResolution;
+    private Point screenResolution;
+    private Point cameraResolution;
 
     public CameraConfiguration(Context context) {
         this.context = context;
@@ -35,9 +51,6 @@ public class CameraConfiguration {
     public void initFromCameraParameters(Camera camera) {
         Camera.Parameters parameters = camera.getParameters();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        if(manager == null){
-            throw new NullPointerException("initFromCameraParameters windowManager is null");
-        }
         Display display = manager.getDefaultDisplay();
 
         screenResolution = getDisplaySize(display);
@@ -57,7 +70,11 @@ public class CameraConfiguration {
 
     private Point getDisplaySize(final Display display) {
         final Point point = new Point();
-        display.getSize(point);
+        if (Build.VERSION.SDK_INT >= 13)
+            display.getSize(point);
+        else {
+            point.set(display.getWidth(), display.getHeight());
+        }
         return point;
     }
 

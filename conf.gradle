@@ -57,6 +57,7 @@ ext {
             "tinker_anno"            : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
             "multidex"               : "com.android.support:multidex:1.0.1",
             "gson"                   : "com.google.code.gson:gson:2.8.0",
+            "zxing"                  : "com.google.zxing:core:3.3.0",
 
 
     ]

@@ -5,7 +5,10 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.to.aboomy.utils_lib.AlertToast;
+import com.to.aboomy.utils_lib.UDate;
 import com.to.aboomy.utils_lib.USharedPref;
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
@@ -18,9 +21,6 @@ import com.waitou.towards.common.NativeEnum;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UDate;
-import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
 
@@ -73,7 +73,6 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * 加载HomeCommendFragment首页数据
      */
     void loadHomeData() {
-
         Disposable disposable = Observable.zip(DataLoader.getGithubApi().getBannerPage().subscribeOn(Schedulers.io())
                 , DataLoader.getGithubApi().getHomeData().subscribeOn(Schedulers.io())
                 , Pair::create)

@@ -16,7 +16,7 @@ import android.widget.Toast;
  * auth aboom
  * date 2018/5/23
  */
-public class QRActivity extends AppCompatActivity {
+public class QRActivity extends AppCompatActivity implements ScanCallback {
 
     private CameraPreView mCameraPreView;
     private boolean       isOpen;
@@ -36,8 +36,10 @@ public class QRActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isOpen && mCameraPreView != null)
+        if (isOpen && mCameraPreView != null) {
+            mCameraPreView.setScanCallback(this);
             mCameraPreView.start();
+        }
     }
 
     @Override
@@ -75,5 +77,10 @@ public class QRActivity extends AppCompatActivity {
                 Toast.makeText(this, "摄像头权限被拒绝！", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onScanResult(String content) {
+
     }
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright © Yan Zhenjie
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.to.aboomy.zxing_lib;
 
 import android.content.Context;
@@ -7,10 +22,10 @@ import android.view.SurfaceHolder;
 import java.io.IOException;
 
 /**
- * auth aboom
- * date 2018/5/23
+ * <p>Camera manager.</p>
+ * Created by Yan Zhenjie on 2017/5/10.
  */
-public class CameraManager {
+public final class CameraManager {
 
     private final CameraConfiguration mConfiguration;
 
@@ -49,6 +64,7 @@ public class CameraManager {
                 }
             }
         }
+
     }
 
     /**
@@ -131,12 +147,12 @@ public class CameraManager {
     /**
      * set Camera Flash
      */
-    public void setFlash() {
-        if (mCamera != null) {
+    public void setFlash(){
+        if(mCamera != null){
             Camera.Parameters parameters = mCamera.getParameters();
-            if (parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_TORCH)) {
+            if(parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_TORCH)){
                 parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            } else {
+            }else {
                 parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             }
             mCamera.setParameters(parameters);
@@ -146,15 +162,15 @@ public class CameraManager {
     /**
      * set Camera Flash
      */
-    public void setFlash(boolean open) {
-        if (mCamera != null) {
+    public void setFlash(boolean open){
+        if(mCamera != null){
             Camera.Parameters parameters = mCamera.getParameters();
-            if (!open) {
-                if (parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_TORCH)) {
+            if(!open){
+                if(parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_TORCH)){
                     parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
                 }
-            } else {
-                if (parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_OFF)) {
+            }else {
+                if(parameters.getFlashMode().endsWith(Camera.Parameters.FLASH_MODE_OFF)){
                     parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                 }
             }
