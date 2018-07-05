@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="( ⊙ o ⊙ )！我的底线出现了"
-            android:textColor="?attr/colorPrimary"/>
+            android:textColor="?android:attr/colorPrimary"/>
 
         <View
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/bottom"
-            android:background="?attr/colorPrimary"/>
+            android:background="?android:attr/colorPrimary"/>
 
         <View
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/bottom"
-            android:background="?attr/colorPrimary"/>
+            android:background="?android:attr/colorPrimary"/>
     </RelativeLayout>
 
 </layout>

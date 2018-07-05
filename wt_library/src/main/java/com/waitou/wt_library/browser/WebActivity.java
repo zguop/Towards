@@ -47,7 +47,7 @@ public class WebActivity extends BaseActivity {
         mTitleStr = intent.getStringExtra(PLATFORM_WEB_TITLE);
 
         /*--------------- 初始化标题 ---------------*/
-        mWebBinding.toolbar.initMenuActionBar(UString.checkNotNull(mTitleStr, ""));
+        mWebBinding.toolbar.initializeHeader(UString.checkNotNull(mTitleStr, ""));
         /*--------------- 设置webView ---------------*/
         mWebBinding.web.getSettings().setJavaScriptEnabled(true);//设置使用够执行JS脚本
         mWebBinding.web.getSettings().setBuiltInZoomControls(false);//设置使支持缩放

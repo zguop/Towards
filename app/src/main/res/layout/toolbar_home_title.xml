@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.to.aboomy.theme_lib.config.ThemeUtils"/>
+
         <import type="com.waitou.towards.enums.HomeTitleEnum"/>
 
         <variable
@@ -17,25 +18,21 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingBottom="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp"
+        android:scaleType="centerInside"
+        android:tint="@color/skin_tab_icon_not"
+        app:imageResource="@{HomeTitleEnum.valueOf(position)}"
+        app:imageTintList="@{ThemeUtils.getColorStateList(context,colorId)}"/>
 
-        <ImageView
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:background="?attr/selectableItemBackground"
-            android:paddingBottom="5dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="5dp"
-            android:scaleType="centerInside"
-            android:tint="@color/skin_tab_icon_not"
-            app:imageResource="@{HomeTitleEnum.valueOf(position)}"
-            app:imageTintList="@{ThemeUtils.getColorStateList(context,colorId)}"/>
-
-    </FrameLayout>
 </layout>
 

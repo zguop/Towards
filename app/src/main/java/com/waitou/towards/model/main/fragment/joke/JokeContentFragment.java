@@ -29,7 +29,7 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         mType = getArguments().getInt(ExtraValue.JOKE_CONTENT_TYPE);
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/title_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/qr_black_title_bg"
+        android:orientation="vertical">
+
+        <include layout="@layout/qr_include_title"/>
+
+    </LinearLayout>
+
+    <cn.bertsir.zbar.view.ScanView
+        android:id="@+id/scan_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:qr_scan_tips="@string/qr_scan_trumpet_tips"
+        tools:qr_scan_title="@string/qr_scan_security_tips"/>
+
+</RelativeLayout>

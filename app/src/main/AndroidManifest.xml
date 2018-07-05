@@ -62,6 +62,10 @@
         <activity
             android:name=".model.activity.RecommendedActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".model.QrScanActivity"
+            android:screenOrientation="portrait"/>
         <!--FileProvider配置-->
         <provider
             android:name="android.support.v4.content.FileProvider"

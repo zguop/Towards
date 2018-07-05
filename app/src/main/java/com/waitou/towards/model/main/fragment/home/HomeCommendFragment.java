@@ -2,6 +2,7 @@ package com.waitou.towards.model.main.fragment.home;
 
 import android.os.Bundle;
 
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerAdapterInfo;
@@ -12,7 +13,6 @@ import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
 import com.waitou.wt_library.base.XFragment;
-import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
@@ -36,7 +36,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_banner);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_wrap_recycler_view);
@@ -50,6 +50,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
 
     @Override
     protected void fragmentVisibleHint() {
+        showLoading();
         getP().loadHomeData();
     }
 

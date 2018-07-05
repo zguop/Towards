@@ -9,12 +9,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.to.aboomy.utils_lib.UString;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.FragmentPhotoDetailBinding;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.UString;
 
 import java.io.File;
 
@@ -37,17 +37,12 @@ public class PhotoPreviewFragment extends XFragment<XPresent, FragmentPhotoDetai
     }
 
     @Override
-    public boolean defaultLoading() {
-        return false;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.fragment_photo_detail;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         getBinding().image.setOnPhotoTapListener((view, x, y) -> {
             if (getP() != null) getP().start();
         });

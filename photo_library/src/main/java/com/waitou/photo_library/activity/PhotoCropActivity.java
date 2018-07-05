@@ -11,14 +11,14 @@ import android.support.v4.content.FileProvider;
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
+import com.to.aboomy.utils_lib.AlertToast;
+import com.to.aboomy.utils_lib.UDate;
+import com.to.aboomy.utils_lib.UFile;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.ActivityPhotoCropBinding;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XActivity;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UDate;
-import com.to.aboomy.utils_lib.UFile;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.kit.USDCard;
 
@@ -40,18 +40,14 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
     }
 
     @Override
-    public boolean defaultLoading() {
-        return true;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.activity_photo_crop;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
-        initMenuActionBar("裁剪", "完成", v -> {
+    public void afterCreate(Bundle savedInstanceState) {
+        getBar().initializeHeader("裁剪");
+        getBar().setRightText("完成", v -> {
             if (isCanSave) {
                 showProgress();
                 File saveFile = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + UDate.date2String(UDate.getNowDate(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
@@ -80,7 +76,6 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
                 });
             }
         });
-
         getBinding().setPresenter(getP());
         String photoPath = getIntent().getStringExtra(PhotoValue.EXTRA_URL);
         getBinding().crop.startLoad(FileProvider.getUriForFile(this, UImage.FILE_PROVIDER_NAME, new File(photoPath)), new LoadCallback() {
@@ -97,6 +92,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
             }
         });
     }
+
 
     @Override
     public void reloadData() {

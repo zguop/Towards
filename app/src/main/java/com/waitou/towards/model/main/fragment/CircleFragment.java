@@ -14,19 +14,13 @@ import com.waitou.wt_library.base.XPresent;
 
 public class CircleFragment extends XFragment<XPresent, FragmentHomeBinding> {
 
-
-    @Override
-    public boolean defaultXView() {
-        return true;
-    }
-
     @Override
     public int getContentViewId() {
         return R.layout.fragment_home;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         TitleInfo homeinfo = new TitleInfo("sss");
         getBinding().setItem(homeinfo);
     }

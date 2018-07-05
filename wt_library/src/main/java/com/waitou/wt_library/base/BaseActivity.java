@@ -2,14 +2,19 @@ package com.waitou.wt_library.base;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.to.aboomy.theme_lib.ChangeModeController;
+import com.to.aboomy.theme_lib.config.ThemeUtils;
+import com.waitou.wt_library.R;
 import com.waitou.wt_library.imageloader.ILFactory;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -24,12 +29,29 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private CompositeDisposable mCompositeDisposable;
+    private boolean             isImmersiveStatusBar;
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
+        isImmersiveStatusBar = StatusBarUtil.setImmersiveStatusBarBackgroundColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+    }
+
+    /**
+     * 设置状态栏透明，需要在onCreate之后调用
+     */
+    public void transparencyBar() {
+        if (isImmersiveStatusBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StatusBarUtil.transparencyBar(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+        }
+    }
+
+    public void transparencyBar(DrawerLayout drawerLayout) {
+        if (isImmersiveStatusBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StatusBarUtil.drawerLayoutTransparencyBar(this, drawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+        }
     }
 
     @Override
@@ -82,11 +104,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    protected ViewDataBinding bindingInflate(@LayoutRes int resId, ViewGroup container) {
+    protected <D extends ViewDataBinding> D bindingInflate(@LayoutRes int resId, ViewGroup container) {
         return DataBindingUtil.inflate(getLayoutInflater(), resId, container, false);
     }
 
-    protected View inflate(@LayoutRes int resId, ViewGroup container) {
-        return getLayoutInflater().inflate(resId, container, false);
+    @SuppressWarnings("unchecked")
+    public <T extends View> T ff(@LayoutRes int id) {
+        return (T) getLayoutInflater().inflate(id, null);
     }
+
 }

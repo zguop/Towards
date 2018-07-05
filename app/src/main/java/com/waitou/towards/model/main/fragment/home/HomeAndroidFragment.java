@@ -30,7 +30,7 @@ public class HomeAndroidFragment extends XFragment<HomePresenter, IncludePullRec
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         mAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_gank_page);
         mAdapter.setPresenter(getP());
         getBinding().setManager(LayoutManagerUtil.getVerticalLayoutManager(getActivity()));

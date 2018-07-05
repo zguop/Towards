@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.to.aboomy.utils_lib.USize;
 import com.waitou.towards.BR;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.IncludeViewPagerBinding;
@@ -27,11 +28,6 @@ public class HomeFragment extends XFragment<HomePresenter, IncludeViewPagerBindi
     private ViewSmartLayoutBinding mLayoutBinding;
 
     @Override
-    public boolean defaultXView() {
-        return false;
-    }
-
-    @Override
     public HomePresenter createPresenter() {
         return new HomePresenter();
     }
@@ -42,7 +38,7 @@ public class HomeFragment extends XFragment<HomePresenter, IncludeViewPagerBindi
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         initToolBar(getActivity());
         XFragmentAdapter adapter = new XFragmentAdapter(getChildFragmentManager(), getP().getHomeCommendFragment(), getP().getCargoFragment(), getP().getHomeAndroidFragment());
         getBinding().setAdapter(adapter);
@@ -67,9 +63,11 @@ public class HomeFragment extends XFragment<HomePresenter, IncludeViewPagerBindi
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        ViewDataBinding viewDataBinding = bindingInflate(R.layout.toolbar_home_title, container);
+        ViewDataBinding viewDataBinding = bindingInflate(R.layout.toolbar_home_title, null);
         viewDataBinding.setVariable(BR.position, position);
         viewDataBinding.setVariable(BR.colorId, R.color.skin_tab_icon_not);
-        return viewDataBinding.getRoot();
+        View root = viewDataBinding.getRoot();
+        root.setLayoutParams(new ViewGroup.LayoutParams(USize.dip2pxInt(40),USize.dip2pxInt(40)));
+        return root;
     }
 }

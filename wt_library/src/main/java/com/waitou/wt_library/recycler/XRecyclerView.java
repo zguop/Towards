@@ -169,6 +169,7 @@ public class XRecyclerView extends RecyclerView {
         if (layout == null) {
             return;
         }
+
         super.setLayoutManager(layout);
 
         if (layout instanceof GridLayoutManager) {

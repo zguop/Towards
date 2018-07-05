@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ScanView">
-        <attr name="maskColor" format="color"/>
-        <attr name="lineColor" format="color"/>
-        <attr name="scanType" format="enum">
+        <attr name="qr_maskColor" format="color"/>
+        <attr name="qr_lineColor" format="color"/>
+        <attr name="qr_scan_title" format="string"/>
+        <attr name="qr_scan_tips" format="string"/>
+        <attr name="qr_scan_title_size" format="dimension"/>
+        <attr name="qr_scan_tips_size" format="dimension"/>
+        <attr name="qr_scanType" format="enum">
             <enum name="qr_code" value="0"/>
             <enum name="bar_code" value="1"/>
         </attr>

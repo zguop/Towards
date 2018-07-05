@@ -7,13 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.MotionEvent;
 
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.photo_library.databinding.ActivityPhotoPreviewBinding;
 import com.waitou.photo_library.fragment.PhotoPreviewFragment;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
-import com.to.aboomy.utils_lib.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +26,6 @@ import java.util.List;
 public class PhotoPreviewActivity extends XActivity<PhotoPreviewPresenter, ActivityPhotoPreviewBinding> {
 
     @Override
-    public boolean defaultXView() {
-        return false;
-    }
-
-    @Override
     public PhotoPreviewPresenter createPresenter() {
         return new PhotoPreviewPresenter();
     }
@@ -41,7 +36,7 @@ public class PhotoPreviewActivity extends XActivity<PhotoPreviewPresenter, Activ
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         Util.transparentStatusBar(this);
         Intent intent = getIntent();
         int position = intent.getIntExtra(PhotoValue.EXTRA_SELECTED_PHOTO_POSITION, 0);

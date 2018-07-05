@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable;
  * Created by waitou on 17/1/9.
  */
 
-public abstract class XPresent<V extends IView> implements UIPresent<V> {
+public abstract class XPresent<V extends UIView> implements UIPresent<V> {
 
     private V                   v;
     private CompositeDisposable mCompositeDisposable;

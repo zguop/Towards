@@ -35,7 +35,6 @@ ext {
             "okhttp3"                : "com.squareup.okhttp3:okhttp:3.5.0",
             "avi-loading"            : "com.wang.avi:library:1.0.2",
             "glide"                  : "com.github.bumptech.glide:glide:3.7.0",
-            "statusbar"              : 'com.jaeger.statusbaruitl:library:1.3.5',
             "okhttp3-integration"    : "com.github.bumptech.glide:okhttp3-integration:1.4.0",
             "smarttablayout"         : "com.ogaclejapan.smarttablayout:library:1.6.1@aar",
             "circleimageview"        : "de.hdodenhof:circleimageview:2.1.0",
@@ -58,7 +57,8 @@ ext {
             "multidex"               : "com.android.support:multidex:1.0.1",
             "gson"                   : "com.google.code.gson:gson:2.8.0",
             "zxing"                  : "com.google.zxing:core:3.3.0",
-
+            "statusbarlib"           : 'com.to.aboomy:statusbar_lib:1.1.4',
+            'tangram'                : 'com.alibaba.android:tangram:2.0.5@aar'
 
     ]
 

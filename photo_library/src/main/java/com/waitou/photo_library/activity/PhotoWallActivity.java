@@ -3,7 +3,11 @@ package com.waitou.photo_library.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.to.aboomy.rx_lib.RxBus;
+import com.to.aboomy.utils_lib.AlertToast;
+import com.to.aboomy.utils_lib.USize;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoInfo;
@@ -11,12 +15,9 @@ import com.waitou.photo_library.databinding.ActivityPhotoWallBinding;
 import com.waitou.photo_library.event.PhotoEvent;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XActivity;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.USize;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.recycler.divider.GridSpacingItemDecoration;
-import com.to.aboomy.rx_lib.RxBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
     private SingleTypeAdapter<PhotoInfo> mPhotoGridAdapter;
     private PhotoPickerFinal             mPhotoPickerFinal;
 
+    private TextView mRightText;
+
     @Override
     public PhotoWallPresenter createPresenter() {
         return new PhotoWallPresenter();
@@ -46,13 +49,12 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         mPhotoPickerFinal = PhotoPickerFinal.get();
+        getBar().initializeHeader("选择图片");
         if (mPhotoPickerFinal.isMultiMode()) {
-            initMenuActionBar("选择图片", "完成", v -> submit());
+            mRightText = getBar().setRightText("完成", v -> submit());
             setRightText();
-        } else {
-            initMenuActionBar("选择图片");
         }
         getBinding().setPresenter(getP());
         getBinding().setIsMultiMode(mPhotoPickerFinal.isMultiMode());
@@ -64,13 +66,14 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         reloadData();
     }
 
+
     public void submit() {
         RxBus.getDefault().post(new PhotoEvent(getP().selectionList));
         finish();
     }
 
     public void setRightText() {
-        setToolbarRightText("完成(" + getP().preview.get() + "/" + mPhotoPickerFinal.getSelectLimit() + ")");
+        mRightText.setText("完成(" + getP().preview.get() + "/" + mPhotoPickerFinal.getSelectLimit() + ")");
     }
 
     @Override

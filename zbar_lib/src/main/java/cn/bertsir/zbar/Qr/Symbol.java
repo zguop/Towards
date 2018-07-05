@@ -34,7 +34,7 @@ public class Symbol {
     /**
      * No symbol decoded.
      */
-    public static final int NONE = 0;
+    public static final int NONE    = 0;
     /**
      * Symbol detected but not decoded.
      */
@@ -43,35 +43,35 @@ public class Symbol {
     /**
      * EAN-8.
      */
-    public static final int EAN8 = 8;
+    public static final int EAN8        = 8;
     /**
      * UPC-E.
      */
-    public static final int UPCE = 9;
+    public static final int UPCE        = 9;
     /**
      * ISBN-10 (from EAN-13).
      */
-    public static final int ISBN10 = 10;
+    public static final int ISBN10      = 10;
     /**
      * UPC-A.
      */
-    public static final int UPCA = 12;
+    public static final int UPCA        = 12;
     /**
      * EAN-13.
      */
-    public static final int EAN13 = 13;
+    public static final int EAN13       = 13;
     /**
      * ISBN-13 (from EAN-13).
      */
-    public static final int ISBN13 = 14;
+    public static final int ISBN13      = 14;
     /**
      * Interleaved 2 of 5.
      */
-    public static final int I25 = 25;
+    public static final int I25         = 25;
     /**
      * DataBar (RSS-14).
      */
-    public static final int DATABAR = 34;
+    public static final int DATABAR     = 34;
     /**
      * DataBar Expanded.
      */
@@ -79,27 +79,27 @@ public class Symbol {
     /**
      * Codabar.
      */
-    public static final int CODABAR = 38;
+    public static final int CODABAR     = 38;
     /**
      * Code 39.
      */
-    public static final int CODE39 = 39;
+    public static final int CODE39      = 39;
     /**
      * PDF417.
      */
-    public static final int PDF417 = 57;
+    public static final int PDF417      = 57;
     /**
      * QR Code.
      */
-    public static final int QRCODE = 64;
+    public static final int QRCODE      = 64;
     /**
      * Code 93.
      */
-    public static final int CODE93 = 93;
+    public static final int CODE93      = 93;
     /**
      * Code 128.
      */
-    public static final int CODE128 = 128;
+    public static final int CODE128     = 128;
 
     /**
      * 裁剪的X轴
@@ -134,7 +134,7 @@ public class Symbol {
     /**
      * 识别类型
      */
-    public static int scanType = 0;//1二维码 2UPCA条形码 3全部类型 4用户指定类型
+    public static int scanType = 1;//1二维码 2UPCA条形码 3全部类型 4用户指定类型
 
     /**
      * 识别码类
@@ -144,7 +144,7 @@ public class Symbol {
     /**
      * 是否只识别框中内容
      */
-    public static boolean is_only_scan_center = false;
+    public static boolean is_only_scan_center = true;
 
 
     /**

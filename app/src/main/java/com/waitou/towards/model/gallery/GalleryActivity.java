@@ -1,50 +1,73 @@
 package com.waitou.towards.model.gallery;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityGalleryBinding;
 import com.waitou.towards.model.gallery.helper.CardAdapter;
 import com.waitou.towards.model.gallery.helper.CardScaleHelper;
-import com.waitou.wt_library.base.CollapsingXActivity;
-import com.to.aboomy.utils_lib.AlertToast;
+import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by waitou on 17/2/23.
  * 妹子相册
  */
 
-public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, ActivityGalleryBinding> {
+public class GalleryActivity extends XActivity<GalleryPresenter, ActivityGalleryBinding> {
 
     private CardAdapter<GankResultsTypeInfo> mAdapter;
     private CardScaleHelper                  mCardScaleHelper;
+    private Disposable                       mSubscribe;
 
     @Override
-    protected int getCollContentViewId() {
+    public int getContentViewId() {
         return R.layout.activity_gallery;
     }
 
     @Override
-    protected void initCollData(Bundle savedInstanceState) {
-        goneToolBar();
-        transparentStatusBar(this);
+    public void afterCreate(Bundle savedInstanceState) {
+        transparencyBar();
         mAdapter = new CardAdapter<>(this, R.layout.item_gallery);
-        getCollBinding().setManager(LayoutManagerUtil.getHorizontalLayoutManager(this));
-        getCollBinding().setAdapter(mAdapter);
-        getCollBinding().setPresenter(getP());
+        getBinding().setManager(LayoutManagerUtil.getHorizontalLayoutManager(this));
+        getBinding().setAdapter(mAdapter);
+        getBinding().setPresenter(getP());
         rxClick();
         reloadData();
+        initCycle();
+    }
+
+    private void initCycle() {
+        getBinding().cycle.setOnClickListener(v -> {
+            if (mSubscribe != null && !mSubscribe.isDisposed()) {
+                mSubscribe.dispose();
+            } else {
+                mSubscribe = Flowable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                        .onBackpressureDrop()
+                        .subscribe(aLong -> {
+                            if (mCardScaleHelper != null) {
+                                int currentItemPos = mCardScaleHelper.getCurrentItemPos();
+                                getBinding().include.xList.smoothScrollToPosition(++currentItemPos);
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -73,17 +96,17 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
         }
         showContent();
         mAdapter.addAll(galleryInfo);
-        getCollBinding().include.xList.setDefaultPageSize();
+        getBinding().include.xList.setDefaultPageSize();
         if (mCardScaleHelper == null) {
             mCardScaleHelper = new CardScaleHelper();
-            mCardScaleHelper.attachToRecyclerView(getCollBinding().include.xList);
+            mCardScaleHelper.attachToRecyclerView(getBinding().include.xList);
         } else {
             mCardScaleHelper.notifyChangeWidth();
         }
     }
 
     private void rxClick() {
-        pend(RxView.clicks(getCollBinding().fabBtn)
+        pend(RxView.clicks(getBinding().fabBtn)
                 .compose(getRxPermissions().ensureEach(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 .subscribe(permission -> {
                     if (permission.granted) {
@@ -97,14 +120,11 @@ public class GalleryActivity extends CollapsingXActivity<GalleryPresenter, Activ
 
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void transparentStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSubscribe != null && !mSubscribe.isDisposed()) {
+            mSubscribe.dispose();
         }
     }
 }

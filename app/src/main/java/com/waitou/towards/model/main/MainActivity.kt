@@ -9,16 +9,14 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
-import cn.bertsir.zbar.ScanActivity
-import com.jaeger.library.StatusBarUtil
 import com.to.aboomy.theme_lib.ChangeModeController
-import com.to.aboomy.theme_lib.config.ThemeUtils
 import com.umeng.socialize.UMShareAPI
 import com.waitou.photo_library.PhotoPickerFinal
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
+import com.waitou.towards.model.QrScanActivity
 import com.waitou.towards.model.activity.RecommendedActivity
 import com.waitou.towards.model.gallery.GalleryActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
@@ -29,9 +27,8 @@ import com.waitou.towards.model.main.fragment.home.HomeFragment
 import com.waitou.towards.model.main.fragment.joke.TextJokeFragment
 import com.waitou.towards.view.dialog.BaseDialog
 import com.waitou.towards.view.dialog.ListOfDialog
-import com.waitou.wt_library.base.XActivity
+import com.waitou.wt_library.base.BaseActivity
 import com.waitou.wt_library.base.XFragmentAdapter
-import com.waitou.wt_library.base.XPresent
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
@@ -41,8 +38,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private var mainBinding: ActivityMainBinding? = null
     private var homeFragment = HomeFragment()
     private var textJokeFragment = TextJokeFragment()
     private var figureFragment = FigureFragment()
@@ -55,53 +53,40 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
     override fun onCreate(savedInstanceState: Bundle?) {
         ChangeModeController.get().init(this)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun defaultXView(): Boolean {
-        return false
-    }
-
-    override fun getContentViewId(): Int {
-        return R.layout.activity_main
-    }
-
-    override fun initData(savedInstanceState: Bundle?) {
-        binding.toolbar.fromCustomMenuView(homeFragment.getHomeToolbar(this), R.id.home)
-        binding.toolbar.setBackListener(R.drawable.icon_menu) { binding.mainDrawerLayout.openDrawer(GravityCompat.START) }
-        binding.toolbar.setRightIcon(R.drawable.svg_ic_qr_scan,{
-            Router.newIntent().from(this).to(ScanActivity::class.java).launch()
-        })
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        transparencyBar(mainBinding?.mainDrawerLayout)
+        mainBinding?.toolbar?.customTitleView(homeFragment.getHomeToolbar(this))
+        mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
+        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
-        binding.adapter = adapter
-        binding.mainTab.setupWithViewPager(binding.fContent)
+        mainBinding?.adapter = adapter
+        mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)
         val binding = DataBindingUtil.inflate<NavHeaderMainBinding>(layoutInflater, R.layout.nav_header_main, null, false)
         binding.drawableId = R.drawable.nav_header_img
-        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, getBinding().mainDrawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary))
-        getBinding().navView.addHeaderView(binding.root)
-        getBinding().navView.setNavigationItemSelectedListener(this)
-        getBinding().mainTab.setOnNavigationItemSelectedListener { item ->
+        mainBinding?.navView?.addHeaderView(binding.root)
+        mainBinding?.navView?.setNavigationItemSelectedListener(this)
+        mainBinding?.mainTab?.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> getBinding().toolbar.fromCustomMenuView(homeFragment.getHomeToolbar(this), R.id.home)
-                R.id.menu_joke -> getBinding().toolbar.fromCustomMenuView(textJokeFragment.jokeToolBar, R.id.menu_joke)
-                R.id.menu_circle -> getBinding().toolbar.visibility = View.GONE
+                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.getHomeToolbar(this))
+                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar)
+                R.id.menu_circle -> mainBinding?.toolbar?.visibility = View.GONE
             }
             true
         }
+
     }
 
-
-    override fun reloadData() {}
 
     /**
      * 左侧菜单是否被打开
      */
     private fun toggle(): Boolean {
-        return binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START)
+        return mainBinding?.mainDrawerLayout!!.isDrawerOpen(GravityCompat.START)
     }
 
     override fun onBackPressed() {
         if (toggle()) {
-            binding.mainDrawerLayout.closeDrawer(GravityCompat.START)
+            mainBinding?.mainDrawerLayout!!.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
             Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -110,7 +95,7 @@ class MainActivity : XActivity<XPresent<*>, ActivityMainBinding>(), NavigationVi
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        binding.mainDrawerLayout.closeDrawer(GravityCompat.START)
+        mainBinding?.mainDrawerLayout!!.closeDrawer(GravityCompat.START)
         pend(Observable.timer(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe {
                     when (item.itemId) {

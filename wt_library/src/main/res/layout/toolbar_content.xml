@@ -4,24 +4,84 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="48dp">
 
-        <!--左边返回-->
-        <ImageView
-            android:id="@+id/left_img"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:id="@+id/left_click"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:scaleType="centerInside"
-            android:tint="?attr/skin_kind_color_not"/>
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <!--左边返回-->
+            <ImageView
+                android:id="@+id/left_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/base_svg_ic_back"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/left_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="?attr/skin_kind_color_not"
+                android:textSize="15dp"
+                android:visibility="gone"
+                tools:text="杭州"
+                tools:visibility="visible"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/right_click"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/icon_menu"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/base_svg_ic_back"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/text_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="?attr/skin_kind_color_not"
+                android:textSize="15dp"
+                android:visibility="gone"
+                tools:text="菜单"
+                tools:visibility="visible"/>
+
+        </LinearLayout>
 
         <!--中间标题-->
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/bar_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="50dp"
-            android:layout_toRightOf="@id/left_img">
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:gravity="center">
 
             <com.waitou.wt_library.view.DoubleClickTextView
                 android:id="@+id/title"
@@ -31,43 +91,13 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
+                android:minWidth="70dp"
                 android:text="标题"
                 android:textColor="?attr/skin_kind_color_not"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
 
-        </FrameLayout>
-
-        <!--右边菜单-->
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <TextView
-                android:id="@+id/text_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="?attr/skin_kind_color_not"
-                android:textSize="16dp"
-                android:visibility="gone"
-                tools:text="菜单"
-                tools:visibility="visible"/>
-
-            <ImageView
-                android:id="@+id/icon_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:tint="?attr/skin_kind_color_not"
-                android:visibility="gone"
-                tools:visibility="visible"/>
-
-        </FrameLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 

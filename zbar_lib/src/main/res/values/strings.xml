@@ -2,5 +2,7 @@
 
     <string name="qr_cancel">取消</string>
     <string name="qr_scan_title">二维码扫描</string>
+    <string name="qr_scan_security_tips"><![CDATA[手机扫码 安全登录]]></string>
+    <string name="qr_scan_trumpet_tips">支持快速扫码登录，如二维火排队、二维火叫号取餐、数据大屏等应用。</string>
 
 </resources>

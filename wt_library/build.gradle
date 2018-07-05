@@ -1,22 +1,24 @@
 globleConfigure()
 android {
-    dataBinding{
+    dataBinding {
         enabled = true
     }
 }
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies["annotations"]
     api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["design"]
-    implementation rootProject.ext.dependencies["annotations"]
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["avi-loading"]
     api rootProject.ext.dependencies["rxpermissions"]
     api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["bottomsheet"]
-    api rootProject.ext.dependencies["statusbar"]
+    api rootProject.ext.dependencies["statusbarlib"]
+    api rootProject.ext.dependencies['tangram']
+
     implementation rootProject.ext.dependencies["canary-debug"]
     implementation(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'

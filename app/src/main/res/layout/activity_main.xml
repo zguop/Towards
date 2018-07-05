@@ -12,9 +12,9 @@
 
     <com.waitou.towards.view.SkinDrawerLayout
         android:id="@+id/main_drawer_layout"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
         <LinearLayout

@@ -58,7 +58,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/colorPrimary"
+                    android:tint="?android:attr/colorPrimary"
                     app:src="@{GankEnum.valueFrom(item.type)}"/>
 
                 <TextView

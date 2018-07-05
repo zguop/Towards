@@ -29,14 +29,14 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         mAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_gank_page);
         mAdapter.setPresenter(getP());
         getBinding().setManager(LayoutManagerUtil.getVerticalLayoutManager(getActivity()));
         getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
-        ItemHeaderCargoBinding headerCargoBinding = (ItemHeaderCargoBinding) bindingInflate(R.layout.item_header_cargo, null);
+        ItemHeaderCargoBinding headerCargoBinding = bindingInflate(R.layout.item_header_cargo, null);
         headerCargoBinding.setPresenter(getP());
         getBinding().xList.getRecyclerView().addHeaderView(headerCargoBinding.getRoot());
     }

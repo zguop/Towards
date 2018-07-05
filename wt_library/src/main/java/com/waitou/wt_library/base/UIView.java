@@ -6,15 +6,11 @@ import android.os.Bundle;
  * Created by waitou on 17/1/9.
  */
 
-public interface UIView<P> extends IView<P> {
-
-    boolean defaultXView();
-
-    boolean defaultLoading();
+public interface UIView<P> {
 
     int getContentViewId();
 
-    void initData(Bundle savedInstanceState);
+    void afterCreate(Bundle savedInstanceState);
 
     void reloadData();
 

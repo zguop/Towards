@@ -3,11 +3,11 @@ package com.waitou.towards.model.guide;
 import android.os.Bundle;
 import android.view.animation.Animation;
 
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityLogoBinding;
 import com.waitou.towards.model.main.MainActivity;
 import com.waitou.wt_library.base.XActivity;
-import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.router.Router;
 
 
@@ -17,11 +17,6 @@ import com.waitou.wt_library.router.Router;
  */
 
 public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBinding> {
-
-    @Override
-    public boolean defaultXView() {
-        return false;
-    }
 
     @Override
     public SplashPresenter createPresenter() {
@@ -34,7 +29,7 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         Util.setWindowFullScreen(this, true);
         getBinding().setPresenter(getP());
         reloadData();

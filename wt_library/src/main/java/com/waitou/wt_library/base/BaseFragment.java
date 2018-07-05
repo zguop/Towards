@@ -7,7 +7,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -128,12 +127,8 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    protected ViewDataBinding bindingInflate(@LayoutRes int resId, ViewGroup container) {
-        return DataBindingUtil.inflate(getActivity().getLayoutInflater(), resId, container, false);
-    }
-
-    protected View inflate(@LayoutRes int resId, ViewGroup container) {
-        return getActivity().getLayoutInflater().inflate(resId, container, false);
+    protected <D extends ViewDataBinding> D bindingInflate(@LayoutRes int resId, ViewGroup container) {
+        return DataBindingUtil.inflate(getLayoutInflater(), resId, container, container != null);
     }
 
     @Override

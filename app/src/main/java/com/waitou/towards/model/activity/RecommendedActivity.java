@@ -29,9 +29,37 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
     List<String> list = new ArrayList<>();
     private Adapter adapter;
 
+
     @Override
-    public void initData(Bundle savedInstanceState) {
-//        VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
+    public void reloadData() {
+        add(40);
+    }
+
+    private void add(int b){
+        list.clear();
+        runOnUiThread(() -> {
+            for (int i = 0; i < b; i++) {
+                list.add("我是item = " + i);
+            }
+            adapter.addData(list);
+        });
+
+    }
+
+
+    @Override
+    public RecommendedPresenter createPresenter() {
+        return new RecommendedPresenter();
+    }
+
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_recommended;
+    }
+
+    @Override
+    public void afterCreate(Bundle savedInstanceState) {
         getBinding().list.setLayoutManager(LayoutManagerUtil.getVerticalLayoutManager(this));
         adapter = new Adapter();
         getBinding().list.setAdapter(adapter);
@@ -61,40 +89,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
             }
         });
         showLoading();
-        reloadData();
 
-
-    }
-
-    @Override
-    public void reloadData() {
-        add(40);
-    }
-
-    private void add(int b){
-        list.clear();
-        runOnUiThread(() -> {
-            for (int i = 0; i < b; i++) {
-                list.add("我是item = " + i);
-            }
-            adapter.addData(list);
-        });
-
-    }
-
-    @Override
-    public RecommendedPresenter createPresenter() {
-        return new RecommendedPresenter();
-    }
-
-    @Override
-    public boolean defaultXView() {
-        return true;
-    }
-
-    @Override
-    public int getContentViewId() {
-        return R.layout.activity_recommended;
     }
 
 

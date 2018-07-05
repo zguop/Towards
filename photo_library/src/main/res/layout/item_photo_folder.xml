@@ -83,6 +83,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="?attr/colorPrimary"/>
+            android:background="?android:attr/colorPrimary"/>
     </RelativeLayout>
 </layout>

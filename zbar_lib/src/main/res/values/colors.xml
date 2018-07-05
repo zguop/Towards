@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="common_color">#ff5f00</color>
-    <color name="qr_white">#FFFFFF</color>
+    <color name="qr_white">#FFFFFFFF</color>
 
     <color name="qr_black">#7f000000</color>
+    <color name="qr_black_title_bg">#6A6A6A</color>
 
 </resources>

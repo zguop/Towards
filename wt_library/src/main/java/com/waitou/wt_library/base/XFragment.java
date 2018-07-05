@@ -1,11 +1,10 @@
 package com.waitou.wt_library.base;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,48 +20,34 @@ import com.waitou.wt_library.recycler.XPullRecyclerView;
 
 public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends BaseFragment implements UIView<P> {
 
-    private FragmentXBinding  mXBinding;
-    private LayoutInflater    mInflater;
-    private AppCompatActivity mAppCompatActivity;
-
-    private P presenter;
+    private FragmentXBinding mXBinding;
+    public  P presenter;
     private D d;
 
     @SuppressWarnings("unchecked")
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.mInflater = inflater;
-        if (defaultXView()) {
-            mXBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_x, container, false);
-            initReloadData(mXBinding.xContentLayout.getErrorView());
-            if (getContentViewId() > 0) {
-                d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
-                mXBinding.xContentLayout.addContentView(d.getRoot());
-            }
-            if (defaultLoading()) {
-                showLoading();
-            }
-        } else {
-            if (getContentViewId() > 0) {
-                d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
-            }
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mXBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_x, container, false);
+        initReloadData(mXBinding.xContentLayout.getErrorView());
+        if (getContentViewId() > 0) {
+            d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
+            mXBinding.xContentLayout.addContentView(d.getRoot());
         }
         isViewCreated = true;
-
-        if (getP() == null) {
-            setPresenter(createPresenter());
-            if (getP() != null) {
-                getP().attachV(this);
+        if (presenter == null) {
+            presenter = createPresenter();
+            if (presenter != null) {
+                presenter.attachV(this);
             }
         }
-        return defaultXView() ? mXBinding.getRoot() : d.getRoot();
+        return mXBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData(savedInstanceState);
+        afterCreate(savedInstanceState);
         //fragment可见 且 数据未加载 调用 fragmentVisibleHint
         if (getUserVisibleHint() && !isLoadDataCompleted) {
             fragmentVisibleHint();
@@ -70,36 +55,15 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
         }
     }
 
-    public P getP() {
-        return presenter;
-    }
+    public P getP() { return presenter; }
 
     @Override
     public P createPresenter() {
         return null;
     }
 
-    @Override
     public void setPresenter(P presenter) {
         this.presenter = presenter;
-    }
-
-    @Override
-    public boolean defaultXView() {
-        return true;
-    }
-
-    @Override
-    public boolean defaultLoading() {
-        return true;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof AppCompatActivity) {
-            this.mAppCompatActivity = (AppCompatActivity) context;
-        }
     }
 
     protected void initReloadData(View view) {
@@ -113,18 +77,6 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     protected FragmentXBinding getXBinding() {
         return mXBinding;
     }
-
-    protected AppCompatActivity getAppCompatActivity() {
-        return mAppCompatActivity;
-    }
-
-    protected LayoutInflater getInflater() {
-        if (mInflater == null) {
-            return getActivity().getLayoutInflater();
-        }
-        return mInflater;
-    }
-
 
     /*--------------- 界面状态 ---------------*/
     public void showContent() {

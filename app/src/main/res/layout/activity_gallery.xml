@@ -37,18 +37,29 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            app:menu_colorNormal="?attr/colorPrimary"
-            app:menu_colorPressed="?attr/colorPrimary"
+            app:menu_colorNormal="?android:attr/colorPrimary"
+            app:menu_colorPressed="?android:attr/colorPrimary"
             app:menu_colorRipple="#8c8e91"
             app:menu_fab_size="mini">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_ic_cycle"
+                app:fab_colorNormal="?android:attr/colorPrimary"
+                app:fab_colorPressed="?android:attr/colorPrimary"
+                app:fab_colorRipple="#8c8e91"
+                app:fab_label="轮播"
+                app:fab_size="mini"/>
 
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.finish()}"
                 android:src="@drawable/svg_ic_undo"
-                app:fab_colorNormal="?attr/colorPrimary"
-                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorNormal="?android:attr/colorPrimary"
+                app:fab_colorPressed="?android:attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
                 app:fab_label="返回"
                 app:fab_size="mini"/>
@@ -58,8 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/svg_ic_download"
-                app:fab_colorNormal="?attr/colorPrimary"
-                app:fab_colorPressed="?attr/colorPrimary"
+                app:fab_colorNormal="?android:attr/colorPrimary"
+                app:fab_colorPressed="?android:attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
                 app:fab_label="保存"
                 app:fab_size="mini"/>

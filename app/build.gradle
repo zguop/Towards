@@ -2,6 +2,7 @@ globleConfigure()
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
+
 android {
     defaultConfig {
         applicationId "com.waitou.towards"
@@ -50,7 +51,6 @@ dependencies {
     implementation rootProject.ext.dependencies["jolyglot_gson"]
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["bubbleseekbar"]
-    implementation rootProject.ext.dependencies["vlayout"]
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation "com.android.databinding:compiler:3.1.3"
@@ -58,7 +58,6 @@ dependencies {
     implementation project(':photo_library')
     implementation project(':three_library')
     implementation project(':zbar_lib')
-
 }
 
 apply from: "$rootProject.projectDir/tinkerConfigure.gradle"

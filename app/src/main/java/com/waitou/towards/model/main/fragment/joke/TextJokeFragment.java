@@ -23,11 +23,6 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
     private ToolbarJokeTitleBinding mToolbarJokeTitle;
 
     @Override
-    public boolean defaultXView() {
-        return false;
-    }
-
-    @Override
     public TextJokePresenter createPresenter() {
         return new TextJokePresenter();
     }
@@ -38,7 +33,7 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         initTootBar();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { //6.0以下xml中默认颜色 高亮 代码重新设置一遍
             mToolbarJokeTitle.item1.setTextColor(ThemeUtils.getColorStateList(getActivity(), R.color.skin_general_text_not));

@@ -2,11 +2,11 @@ package com.waitou.towards.model.graffiti;
 
 import android.os.Bundle;
 
+import com.to.aboomy.utils_lib.Util;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityGraffitiBinding;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.wt_library.base.XActivity;
-import com.to.aboomy.utils_lib.Util;
 
 /**
  * Created by waitou on 17/3/19.
@@ -21,17 +21,12 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
     }
 
     @Override
-    public boolean defaultXView() {
-        return false;
-    }
-
-    @Override
     public int getContentViewId() {
         return R.layout.activity_graffiti;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void afterCreate(Bundle savedInstanceState) {
         Util.setWindowFullScreen(this, true);
         getBinding().setPresenter(getP());
     }
