@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.to.aboomy.rx_lib.RxComposite;
 import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.theme_lib.config.ThemeUtils;
@@ -72,6 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
         }
+        RxComposite.clear();
     }
 
     /**

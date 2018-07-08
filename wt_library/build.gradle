@@ -7,8 +7,8 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies["annotations"]
-    api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["design"]
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["glide"]
@@ -18,11 +18,15 @@ dependencies {
     api rootProject.ext.dependencies["bottomsheet"]
     api rootProject.ext.dependencies["statusbarlib"]
     api rootProject.ext.dependencies['tangram']
+    api rootProject.ext.dependencies['qybanner']
 
     implementation rootProject.ext.dependencies["canary-debug"]
     implementation(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'
     }
+
+
+    api project(':rx_lib')
     api project(':net_library')
     api project(':tinker_lib')
     api project(':utils_lib')

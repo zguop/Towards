@@ -22,7 +22,7 @@ import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
-import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter;
+import com.waitou.wt_library.view.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +44,10 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     private HomeAndroidFragment mHomeAndroidFragment;
 
     public ObservableField<String> txName = new ObservableField<>("all");
+
+    public void setBanner(){
+
+    }
 
     /**
      * banner item 点击

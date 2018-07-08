@@ -58,6 +58,7 @@ ext {
             "gson"                   : "com.google.code.gson:gson:2.8.0",
             "zxing"                  : "com.google.zxing:core:3.3.0",
             "statusbarlib"           : 'com.to.aboomy:statusbar_lib:1.1.4',
+            "qybanner"               : 'com.to.aboomy:banner:1.6.0',
             'tangram'                : 'com.alibaba.android:tangram:2.0.5@aar'
 
     ]

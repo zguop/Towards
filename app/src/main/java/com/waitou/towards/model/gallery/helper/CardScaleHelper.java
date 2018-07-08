@@ -3,6 +3,7 @@ package com.waitou.towards.model.gallery.helper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -111,7 +112,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - USize.dip2pxInt(2 * (mPagePadding + mShowLeftCardWidth));
+            mCardWidth = mCardGalleryWidth - USize.dip2pxInt( mPagePadding + mShowLeftCardWidth) * 2;
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });
@@ -141,6 +142,8 @@ public class CardScaleHelper {
         if (mOnePageWidth <= 0) return;
         boolean pageChanged = false;
         // 滑动超过一页说明已翻页
+
+        Log.e("aa" , "mCurrentItemOffset" + mCurrentItemOffset + "mCurrentItemPos " + mCurrentItemPos + " mOnePageWidth " + mOnePageWidth);
         if (Math.abs(mCurrentItemOffset - mCurrentItemPos * mOnePageWidth) >= mOnePageWidth) {
             pageChanged = true;
         }

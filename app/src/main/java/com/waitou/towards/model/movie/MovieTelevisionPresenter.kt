@@ -5,7 +5,7 @@ import com.waitou.towards.net.DataLoader
 import com.waitou.towards.net.SimpleErrorVerify
 import com.waitou.wt_library.base.XPresent
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter
-import com.waitou.wt_library.view.viewpager.SingleViewPagerAdapter
+import com.waitou.wt_library.view.SingleViewPagerAdapter
 
 /**
  * Created by waitou on 17/5/25.

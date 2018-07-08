@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.to.aboomy.rx_lib.RxComposite;
+import com.to.aboomy.rx_lib.RxUtil;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityRecommendedBinding;
 import com.waitou.wt_library.base.XActivity;
@@ -18,6 +20,9 @@ import com.waitou.wt_library.recycler.PullRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 
 /**
@@ -35,7 +40,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
         add(40);
     }
 
-    private void add(int b){
+    private void add(int b) {
         list.clear();
         runOnUiThread(() -> {
             for (int i = 0; i < b; i++) {
@@ -58,8 +63,37 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
         return R.layout.activity_recommended;
     }
 
+    private void time() {
+        Disposable subscribe = RxUtil.timer(1000L)
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+
+                    }
+                });
+        RxComposite.singlePend(subscribe);
+    }
+
+
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+//        tinkerPatch();
+//        for (int i = 0; i < 5; i++) {
+//            time();
+//        }
+//        tinkerPatch();
+//
+//        time();
+//
+//        RxUtil.timer(1000L)
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(Long aLong) throws Exception {
+//                        time();
+//                    }
+//                });
+
+
         getBinding().list.setLayoutManager(LayoutManagerUtil.getVerticalLayoutManager(this));
         adapter = new Adapter();
         getBinding().list.setAdapter(adapter);
@@ -80,7 +114,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
 
             @Override
             public void onLoadMore(int page) {
-                Log.d("aa" , "  page = " + page);
+                Log.d("aa", "  page = " + page);
                 new Thread(() -> {
                     SystemClock.sleep(4000);
                     add(10);

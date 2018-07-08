@@ -11,9 +11,10 @@
 
 部分界面截图：
 
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_3236.gif) 
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489737675_9871.gif)
-![这里写图片描述](http://img.my.csdn.net/uploads/201703/17/1489736672_1472.gif)
+![每次启动都不一页的广告页](gif/auto.gif)
+![有主题的切换](gif/auto1.gif)
+![可以看高清的妹纸图](gif/auto5.gif)
+![这里有强大的画板](gif/auto6.gif)
 
 
 下载链接：

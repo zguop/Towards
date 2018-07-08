@@ -18,11 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.waitou.wt_library.view.viewpager.WTBanner
+        <com.to.aboomy.banner.QyBanner
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:adapter="@{item.pagerAdapter}"/>
+            app:bannerAdapter="@{item.pagerAdapter}"
+            app:bannerIndicator="@{item.qyIndicator}"/>
 
         <RelativeLayout
             android:layout_width="250dp"

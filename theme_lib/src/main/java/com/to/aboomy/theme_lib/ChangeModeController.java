@@ -89,6 +89,15 @@ public class ChangeModeController {
         }
     }
 
+    /**
+     * 主页面点创建的view 发生主题变化，可以手动添加到变更数组中
+     */
+    public void addSkinView(View view) {
+        if (view instanceof SkinCompatSupportable) {
+            mSkinViewList.add(new SkinView(view, null));
+        }
+    }
+
     public void init(final AppCompatActivity activity) {
         checkConfig();
         LayoutInflaterCompat.setFactory(LayoutInflater.from(activity), (parent, name, context, attrs) -> {
@@ -352,6 +361,7 @@ public class ChangeModeController {
 
     public void cancel() {
         mSkinViewList.clear();
+        mSkinViewList = null;
         sChangeModeController = null;
     }
 }

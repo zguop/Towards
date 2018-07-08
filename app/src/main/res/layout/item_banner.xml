@@ -8,13 +8,19 @@
             name="item"
             type="com.waitou.towards.bean.BannerAdapterInfo"/>
 
+        <variable
+            name="presenter"
+            type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>
+
+
     </data>
 
-    <com.waitou.wt_library.view.viewpager.WTBanner
+    <com.to.aboomy.banner.QyBanner
         android:id="@+id/banner"
-        android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
-        app:adapter="@{item.pagerAdapter}"/>
+        android:layout_height="200dp"
+        android:background="@color/colorWhite"
+        app:bannerIndicator="@{item.qyIndicator}"
+        app:bannerAdapter="@{item.pagerAdapter}"/>
 
 </layout>

@@ -2,7 +2,6 @@ package com.waitou.towards.model.gallery;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.to.aboomy.utils_lib.AlertToast;
@@ -18,12 +17,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by waitou on 17/2/23.
@@ -58,12 +53,12 @@ public class GalleryActivity extends XActivity<GalleryPresenter, ActivityGallery
             if (mSubscribe != null && !mSubscribe.isDisposed()) {
                 mSubscribe.dispose();
             } else {
-                mSubscribe = Flowable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                mSubscribe = Flowable.interval(1, 2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                         .onBackpressureDrop()
                         .subscribe(aLong -> {
                             if (mCardScaleHelper != null) {
-                                int currentItemPos = mCardScaleHelper.getCurrentItemPos();
-                                getBinding().include.xList.smoothScrollToPosition(++currentItemPos);
+                                mCardScaleHelper.setCurrentItemPos(mCardScaleHelper.getCurrentItemPos() + 1);
+                                mCardScaleHelper.notifyChangeWidth();
                             }
                         });
             }

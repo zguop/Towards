@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
+import com.to.aboomy.rx_lib.RxComposite;
 import com.to.aboomy.rx_lib.RxUtil;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.tinker_lib.TinkerManager;
@@ -21,7 +22,6 @@ import com.to.aboomy.utils_lib.UString;
 import com.to.aboomy.utils_lib.UtilsContextWrapper;
 import com.waitou.net_library.DataServiceProvider;
 import com.waitou.net_library.helper.EmptyErrorVerify;
-import com.waitou.net_library.helper.RxGlobalRequestHelp;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.HttpUtil;
 import com.waitou.three_library.ThreeApplicationLike;
@@ -115,8 +115,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
 
     private void tinkerPatch() {
         Observable<PatchInfo> observable = DataServiceProvider.getInstance().provide(HttpUtil.GITHUB_API, LoaderService
-                .class).checkPatch().compose(RxTransformerHelper.applySchedulersResult(getApplication(), new EmptyErrorVerify
-                ()));
+                .class).checkPatch().compose(RxTransformerHelper.applySchedulersResult(getApplication(), new EmptyErrorVerify()));
 
         Consumer<PatchInfo> consumer = patchInfo -> {
             File patchFile = ServerUtils.getServerFile(getApplication(), patchInfo.versionName);
@@ -141,7 +140,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
             );
         };
 
-        RxGlobalRequestHelp.request(observable, consumer);
+        RxComposite.disposableScribe(observable, consumer);
 
     }
 

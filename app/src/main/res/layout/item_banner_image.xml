@@ -19,16 +19,17 @@
     </data>
 
     <android.support.v7.widget.CardView
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="@{() -> presenter.onLinkClick(item.linkType,item.link)}"
-        android:scaleType="fitXY"
-        app:imageUrl="@{item.banner}"/>
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> presenter.onLinkClick(item.linkType,item.link)}"
+            android:scaleType="fitXY"
+            app:imageUrl="@{item.banner}"/>
 
     </android.support.v7.widget.CardView>
 
