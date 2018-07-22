@@ -52,6 +52,7 @@ dependencies {
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["bubbleseekbar"]
 
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation "com.android.databinding:compiler:3.1.3"
 

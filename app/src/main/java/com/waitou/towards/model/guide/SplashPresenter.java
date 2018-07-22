@@ -22,6 +22,7 @@ import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
+import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.base.XPresent;
 import com.to.aboomy.utils_lib.USize;
 import com.to.aboomy.utils_lib.UFile;
@@ -237,7 +238,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      * 主要用下载图片 保存到cache目录
      */
     private void downLoaderImg(String url, LogoImg logoImg, LogoImgDao logoImgDao) {
-        String imageCacheSavePath = UImage.getImageCacheSavePath(getV(), url);
+        String imageCacheSavePath = UImage.getImageCacheSavePath(BaseApplication.getApp(), url);
         DownloadThread.get(0, url, imageCacheSavePath, (id, progress, isCompleted, file) -> {
             if (isCompleted) {
                 logoImg.setSavePath(imageCacheSavePath);

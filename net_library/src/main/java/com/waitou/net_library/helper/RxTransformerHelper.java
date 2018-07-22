@@ -8,6 +8,7 @@ import com.waitou.net_library.log.LogUtil;
 import com.waitou.net_library.model.BaseResponse;
 import com.waitou.net_library.model.MovieBaseResponse;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Predicate;
@@ -35,7 +36,7 @@ public class RxTransformerHelper {
     public static <T> ObservableTransformer<T, T> applySchedulersAndAllFilter(Context context, ErrorVerify errorVerify) {
         return upstream -> upstream
                 .compose(applySchedulers())
-                .onErrorReturn(throwable -> {
+                .onErrorResumeNext(throwable -> {
                     //rx异常先处理
                     LogUtil.e(Log.getStackTraceString(throwable));
                     throwable.printStackTrace();
@@ -43,7 +44,7 @@ public class RxTransformerHelper {
                         errorVerify.netError(throwable);
                     }
                     //返回值null 继续执行 filter
-                    return null;
+                    return Observable.empty();
                 })
                 .filter(verifyNotEmpty()) //异常后返回null，filter判断数据中断
                 .filter(verifyBusiness(errorVerify)); //业务异常 code异常中断

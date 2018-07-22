@@ -8,18 +8,11 @@
 
     </data>
 
-
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/qr_white"/>
 
-     <com.waitou.wt_library.recycler.PullRecyclerView
-         android:id="@+id/list"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"/>
-
-    </LinearLayout>
 
 </layout>

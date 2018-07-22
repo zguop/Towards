@@ -16,7 +16,6 @@ import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
-import com.waitou.towards.model.QrScanActivity
 import com.waitou.towards.model.activity.RecommendedActivity
 import com.waitou.towards.model.gallery.GalleryActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
@@ -57,7 +56,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         transparencyBar(mainBinding?.mainDrawerLayout)
         mainBinding?.toolbar?.customTitleView(homeFragment.getHomeToolbar(this))
         mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
-        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
+        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(RecommendedActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
         mainBinding?.adapter = adapter
         mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)

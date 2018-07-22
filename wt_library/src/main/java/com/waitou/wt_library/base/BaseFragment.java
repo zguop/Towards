@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -22,12 +21,6 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseFragment extends Fragment {
 
     private CompositeDisposable mCompositeDisposable;
-
-    /**
-     * 屏幕高宽 子类需复写 isScreenDisplayMetrics 进行获取
-     */
-    protected int mScreenHeight;
-    protected int mScreenWidth;
 
     /**
      * 控件是否初始化完毕
@@ -47,13 +40,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (isScreenDisplayMetrics()) {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            mScreenHeight = displayMetrics.heightPixels;
-            mScreenWidth = displayMetrics.widthPixels;
-        }
-
         //当前fragment可见
         if (getUserVisibleHint()) {
             //获取父fragment
@@ -106,13 +92,6 @@ public abstract class BaseFragment extends Fragment {
      * fragment的懒加载
      */
     protected void fragmentVisibleHint() {
-    }
-
-    /**
-     * 是否获取屏幕高宽值 可选
-     */
-    protected boolean isScreenDisplayMetrics() {
-        return false;
     }
 
     /**

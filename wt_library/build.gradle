@@ -17,10 +17,11 @@ dependencies {
     api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["bottomsheet"]
     api rootProject.ext.dependencies["statusbarlib"]
-    api rootProject.ext.dependencies['tangram']
     api rootProject.ext.dependencies['qybanner']
 
-    implementation rootProject.ext.dependencies["canary-debug"]
+    debugImplementation rootProject.ext.dependencies["leakcanary-canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["leakcanary-canary-release"]
+
     implementation(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'
     }
@@ -31,5 +32,7 @@ dependencies {
     api project(':tinker_lib')
     api project(':utils_lib')
     api project(':theme_lib')
+    api project(':recycler_lib')
+
 
 }
