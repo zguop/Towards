@@ -11,6 +11,7 @@ import com.waitou.net_library.model.MovieBaseResponse;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
@@ -28,6 +29,19 @@ public class RxTransformerHelper {
         return observable -> observable
                 .compose(applySchedulersAndAllFilter(context, errorVerify))
                 .map(tBaseResponse -> tBaseResponse.result);
+    }
+
+    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResults(Context context, ErrorVerify errorVerify) {
+        return observable -> observable
+                .compose(applySchedulersAndAllFilter(context, errorVerify))
+                .map(new Function<BaseResponse<T>, T>() {
+                    @Override
+                    public T apply(BaseResponse<T> tBaseResponse) throws Exception {
+                        tBaseResponse.result = null;
+
+                        return tBaseResponse.result;
+                    }
+                });
     }
 
     /**

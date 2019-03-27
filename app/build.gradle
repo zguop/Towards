@@ -15,6 +15,7 @@ android {
         applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = "towards_v${variant.versionName}_${variant.buildType.name}.apk"
+
             }
         }
     }
@@ -62,5 +63,7 @@ dependencies {
 }
 
 apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
+
+
 
 

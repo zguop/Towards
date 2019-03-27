@@ -52,7 +52,7 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
     public PullRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupAttrs(context, attrs);
-        inflate(context, R.layout.view_recycler_layout, this);
+        inflate(context, R.layout.rv_view_recycler_layout, this);
     }
 
     private void setupAttrs(Context context, AttributeSet attrs) {

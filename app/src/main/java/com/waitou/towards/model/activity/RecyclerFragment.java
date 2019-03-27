@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.to.aboomy.recycler_lib.QyRecyclerAdapter;
+import com.to.aboomy.recycler_lib.MuRecyclerAdapter;
 
 /**
  * auth aboom
@@ -17,14 +17,14 @@ import com.to.aboomy.recycler_lib.QyRecyclerAdapter;
  */
 public abstract class RecyclerFragment extends Fragment {
 
-    private QyRecyclerAdapter mAdapter;
+    private MuRecyclerAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mAdapter = new QyRecyclerAdapter();
+        mAdapter = new MuRecyclerAdapter();
         recyclerView.setAdapter(mAdapter);
 
 

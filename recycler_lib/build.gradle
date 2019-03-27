@@ -3,9 +3,9 @@ android {
     dataBinding {
         enabled = true
     }
+    resourcePrefix 'rv_'
 }
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["adapterHelper"]
 }

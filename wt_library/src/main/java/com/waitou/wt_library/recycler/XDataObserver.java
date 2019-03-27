@@ -28,12 +28,6 @@ public class XDataObserver extends RecyclerView.AdapterDataObserver {
     }
 
     @Override
-    public void onItemRangeInserted(int positionStart, int itemCount) {
-        super.onItemRangeInserted(positionStart, itemCount);
-        adapter.notifyItemRangeInserted(positionStart + adapter.getHeaderSize(), itemCount);
-    }
-
-    @Override
     public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
         super.onItemRangeMoved(fromPosition, toPosition, itemCount);
         adapter.notifyItemRangeChanged(fromPosition + adapter.getHeaderSize(), itemCount + adapter.getHeaderSize() + toPosition);

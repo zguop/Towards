@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.to.aboomy.recycler_lib.Displayable;
-import com.to.aboomy.recycler_lib.QyRecyclerAdapter;
+import com.to.aboomy.recycler_lib.MuRecyclerAdapter;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityRecommendedBinding;
 import com.waitou.wt_library.base.XActivity;
@@ -24,7 +24,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
     public static final String EXTRA_LIST = "extra_list";
 
     List<Displayable> mMultiItemEntities = new ArrayList<>();
-    private QyRecyclerAdapter mBAdapter;
+    private MuRecyclerAdapter mBAdapter;
     private RecyclerIntentVO  mRecyclerIntentVO;
 
     @Override
@@ -46,9 +46,9 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         mRecyclerIntentVO = (RecyclerIntentVO) getIntent().getSerializableExtra(EXTRA_LIST);
-        mBAdapter = new QyRecyclerAdapter();
+        mBAdapter = new MuRecyclerAdapter();
         mBAdapter.addProvider(new TextItemProvider(), new SubmitProvider());
-        mBAdapter.setQyPresenter(new RecommendHelper());
+        mBAdapter.setPresenter(new RecommendHelper());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         getBinding().list.setLayoutManager(linearLayoutManager);

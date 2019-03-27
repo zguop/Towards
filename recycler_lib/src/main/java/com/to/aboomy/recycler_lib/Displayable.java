@@ -7,4 +7,5 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
  * date 2018/7/22
  */
 public interface Displayable extends MultiItemEntity{
+
 }
