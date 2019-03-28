@@ -27,7 +27,6 @@ dependencies {
     }
 
 
-    dependencies.getProperties()
     api project(':rx_lib')
     api project(':net_library')
     api project(':tinker_lib')
@@ -37,32 +36,3 @@ dependencies {
 
 
 }
-def s = ['androidTestApi','androidTestAnnotationProcessor','androidTestCompile','androidTestCompileOnly','androidTestDebugAnnotationProcessor',
-'androidTestDebugApi','androidTestDebugCompile','androidTestDebugCompileOnly','androidTestDebugImplementation','androidTestDebugProvided',
-'androidTestDebugPublish','androidTestDebugRuntimeOnly','androidTestDebugWearApp','androidTestImplementation','androidTestProvided',
-'androidTestPublish','androidTestRuntimeOnly','androidTestWearApp','annotationProcessor','api']
-//task uploadBatch{
-//   def projectSet = rootProject.allprojects
-//    println "================== " + projectSet
-//
-//    Properties properties = new Properties()
-//    InputStream inputStream = rootProject.file(MAVEN_CONFIG_PATH).newDataInputStream()
-//    properties.load(inputStream)
-//
-//    def map = [:]
-//
-//    projectSet.each{
-//        println "================== " + it
-//        it.name
-//        properties.containsKey()
-//        map.put()
-//    }
-//    map.each { key, value ->
-//        def moduleProject = rootProject.childProjects.get(key)
-//        moduleProject.configurations.all {
-//
-//        }
-//
-//    }}
-//
-//

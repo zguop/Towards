@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
 
+apply plugin: 'com.tencent.matrix-plugin'
+apply plugin: 'newlens'
+
 android {
     defaultConfig {
         applicationId "com.waitou.towards"
@@ -15,7 +18,6 @@ android {
         applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = "towards_v${variant.versionName}_${variant.buildType.name}.apk"
-
             }
         }
     }
@@ -33,6 +35,14 @@ android {
         schemaVersion 1//数据库版本号
         daoPackage 'com.waitou.towards.greendao'
         targetGenDir 'src/main/java'
+    }
+}
+
+matrix {
+    trace {
+        enable = true	//if you don't want to use trace canary, set false
+        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
+        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
     }
 }
 
@@ -60,10 +70,21 @@ dependencies {
     implementation project(':photo_library')
     implementation project(':three_library')
     implementation project(':zbar_lib')
+
+    implementation group: "com.tencent.matrix", name: "matrix-android-lib", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-android-commons", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-trace-canary", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-android", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-common", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-io-canary", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-sqlite-lint-android-sdk", version: MATRIX_VERSION, changing: true
+
+    implementation 'com.networkbench.newlens.agent.android:nbs.newlens.agent:2.12.1'
+    implementation 'com.networkbench.newlens.agent.android:nbs.newlens.nativecrash:1.0.0'
+
+
 }
 
 apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
-
-
 
 

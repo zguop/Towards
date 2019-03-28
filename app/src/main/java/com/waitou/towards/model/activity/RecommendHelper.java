@@ -1,6 +1,6 @@
 package com.waitou.towards.model.activity;
 
-import com.to.aboomy.recycler_lib.IPresenter;
+import com.to.aboomy.recycler_lib.IQyPresenter;
 import com.to.aboomy.utils_lib.AlertToast;
 import com.to.aboomy.utils_lib.UString;
 
@@ -8,10 +8,9 @@ import com.to.aboomy.utils_lib.UString;
  * auth aboom
  * date 2018/7/22
  */
-public class RecommendHelper implements IPresenter {
+public class RecommendHelper implements IQyPresenter {
 
     RequestBean mRequestBean = new RequestBean();
-
 
 
     public void submit() {
@@ -28,9 +27,6 @@ public class RecommendHelper implements IPresenter {
         AlertToast.show("通过");
 
     }
-
-
-
 
 
 }

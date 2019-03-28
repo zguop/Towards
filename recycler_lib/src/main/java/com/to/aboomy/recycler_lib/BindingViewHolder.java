@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
  */
 public class BindingViewHolder<T extends ViewDataBinding> extends BaseViewHolder {
 
-    private IPresenter iPresenter;
+    private IQyPresenter mQyPresenter;
 
     public BindingViewHolder(View view) {
         super(view);
@@ -22,12 +22,13 @@ public class BindingViewHolder<T extends ViewDataBinding> extends BaseViewHolder
         return (T) itemView.getTag(R.id.BaseQuickAdapter_databinding_support);
     }
 
-    public IPresenter getPresenter() {
-        return iPresenter;
+    public IQyPresenter getQyPresenter() {
+        return mQyPresenter;
     }
 
-    void setPresenter(IPresenter iQyPresenter) {
-        this.iPresenter = iQyPresenter;
+    void setQyHelper(IQyPresenter iQyPresenter) {
+        this.mQyPresenter = iQyPresenter;
     }
+
 
 }

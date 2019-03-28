@@ -3,6 +3,22 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.waitou.towards">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--使用可视化操作命名功能需配置悬浮窗权限(选配)-->
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+
     <!-- 允许程序访问有关GSM网络信息-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -17,6 +33,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+
+
         <activity
             android:name=".model.guide.SplashActivity"
             android:launchMode="singleTask"
@@ -33,14 +51,30 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
 
-        <activity android:name=".model.activity.ListActivity"/>
 
         <!--主页-->
         <activity
             android:name=".model.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <!--请添加这里的整个intent-filter区块，并确保其中只有一个data字段-->
+
+            <intent-filter>
+
+                <data android:scheme="tingyun.36933"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+            </intent-filter>
+
+            <!--请添加这里的整个intent-filter区块，并确保其中只有一个data字段-->
+
+        </activity>
         <!--妹子相册页面-->
         <activity
             android:name=".model.gallery.GalleryActivity"

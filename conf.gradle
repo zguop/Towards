@@ -60,7 +60,7 @@ ext {
             "zxing"                    : "com.google.zxing:core:3.3.0",
             "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.4',
             "qybanner"                 : 'com.to.aboomy:banner:1.6.0',
-            "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46',
+            "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40',
 
     ]
 
