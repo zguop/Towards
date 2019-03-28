@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.MultipleItemRvAdapter;
-import com.chad.library.adapter.base.provider.BaseItemProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,12 +16,12 @@ import java.util.List;
  * auth aboom
  * date 2018/7/9
  */
-public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, BindingViewHolder> {
+public class QyRecyclerAdapter extends MultipleItemRvAdapter<Displayable, BindingViewHolder> {
 
-    private List<BaseItemProvider> mProviderList = new ArrayList<>();
-    private IPresenter          iPresenter;
+    private List<QyItemProvider> mProviderList = new ArrayList<>();
+    private IQyPresenter mQyPresenter;
 
-    public MuRecyclerAdapter() {
+    public QyRecyclerAdapter() {
         super(null);
     }
 
@@ -40,7 +39,7 @@ public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, Bindin
     @Override
     protected BindingViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BindingViewHolder bindingViewHolder = super.onCreateDefViewHolder(parent, viewType);
-        bindingViewHolder.setPresenter(iPresenter);
+        bindingViewHolder.setQyHelper(mQyPresenter);
         return bindingViewHolder;
     }
 
@@ -48,9 +47,9 @@ public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, Bindin
     protected void convert(BindingViewHolder helper, Displayable item) {
         ViewDataBinding binding = helper.getBinding();
         binding.setVariable(BR.item, item);
-        binding.setVariable(BR.presenter, iPresenter);
-        helper.getBinding().executePendingBindings();
+        binding.setVariable(BR.presenter, mQyPresenter);
         super.convert(helper, item);
+        helper.getBinding().executePendingBindings();
     }
 
     @Override
@@ -60,18 +59,17 @@ public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, Bindin
 
     @Override
     public void registerItemProvider() {
-        for (BaseItemProvider itemProvider : mProviderList) {
-            mProviderDelegate.registerProvider(itemProvider);
+        for (QyItemProvider qyItemProvider : mProviderList) {
+            mProviderDelegate.registerProvider(qyItemProvider);
         }
     }
 
-    public void addProvider(BaseItemProvider... baseItemProviders) {
-        Collections.addAll(mProviderList, baseItemProviders);
+    public void addProvider(QyItemProvider... qyItemProviders) {
+        Collections.addAll(mProviderList, qyItemProviders);
         finishInitialize();
-        mProviderList = null;
     }
 
-    public void setPresenter(IPresenter presenter) {
-        iPresenter = presenter;
+    public void setQyPresenter(IQyPresenter qyPresenter) {
+        mQyPresenter = qyPresenter;
     }
 }

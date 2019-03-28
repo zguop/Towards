@@ -13,9 +13,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.to.aboomy.utils_lib.UFile;
-import com.to.aboomy.utils_lib.USize;
-import com.to.aboomy.utils_lib.UString;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.AsyncOkHttpClient;
@@ -27,7 +24,10 @@ import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.base.XPresent;
+import com.to.aboomy.utils_lib.USize;
+import com.to.aboomy.utils_lib.UFile;
 import com.waitou.wt_library.kit.UImage;
+import com.to.aboomy.utils_lib.UString;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -132,8 +132,6 @@ public class SplashPresenter extends XPresent<SplashActivity> {
             initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
             return;
         }
-
-
 
         List<String> imgUrl; //stream操作 java8的 一大新特性
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {

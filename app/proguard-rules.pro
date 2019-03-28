@@ -264,8 +264,12 @@ public static java.lang.String TABLENAME;
 -keepattributes SourceFile,LineNumberTable
 -keep class com.tencent.tinker.**{*;}
 
+# 听云的混淆配置
+-keep class com.networkbench.** { *; }
 
+-dontwarn com.networkbench.**
 
+-keepattributes Exceptions, Signature, InnerClasses
 
 
 

@@ -1,9 +1,11 @@
 package com.waitou.towards.model.activity;
 
 
-import com.chad.library.adapter.base.provider.BaseItemProvider;
+import android.text.Editable;
+import android.text.TextWatcher;
+
 import com.to.aboomy.recycler_lib.BindingViewHolder;
-import com.to.aboomy.utils_lib.AlertToast;
+import com.to.aboomy.recycler_lib.QyItemProvider;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ItemTextBinding;
 
@@ -11,7 +13,7 @@ import com.waitou.towards.databinding.ItemTextBinding;
  * auth aboom
  * date 2018/7/10
  */
-public class TextItemProvider extends BaseItemProvider<TextBean, BindingViewHolder<ItemTextBinding>> {
+public class TextItemProvider extends QyItemProvider<TextBean, BindingViewHolder<ItemTextBinding>> {
 
     @Override
     public int viewType() {
@@ -26,16 +28,28 @@ public class TextItemProvider extends BaseItemProvider<TextBean, BindingViewHold
     @Override
     public void convert(BindingViewHolder<ItemTextBinding> helper, TextBean data, int position) {
         helper.getBinding().etUsername.setHint(data.title);
-        RecommendHelper recommendHelper = (RecommendHelper) helper.getPresenter();
+        RecommendHelper recommendHelper = (RecommendHelper) helper.getQyPresenter();
+        helper.getBinding().etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                recommendHelper.mRequestBean.phone = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
-
 
     @Override
-    public void onClick(BindingViewHolder<ItemTextBinding> helper, TextBean data, int position) {
-        super.onClick(helper, data, position);
-
-        AlertToast.show("data " + data.info);
+    public Object object() {
+        return null;
     }
-
 }

@@ -25,7 +25,6 @@
             android:layout_weight="1"
             android:background="@color/colorWhite"
             android:inputType="phone"
-            android:text="@={item.info}"
             android:textColor="@color/color_373737"
             android:textColorHint="@color/color_373737"
             android:textSize="17dp"

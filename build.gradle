@@ -7,14 +7,19 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+
+        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.1.3'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath "com.tencent.tinker:tinker-patch-gradle-plugin:${tinkerVersion}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath ("com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}") { changing = true }
+
+        classpath 'com.networkbench.newlens.agent.android:agent-gradle-plugin:2.12.1'
     }
 }
 
@@ -22,6 +27,8 @@ allprojects {
     apply from: "$rootProject.projectDir/subModuleHeader.gradle"
     repositories {
         flatDir { dirs 'libs' }
+
+        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
     }
 }
 
@@ -45,13 +52,10 @@ beforeEvaluate {}
 /**
  * 配置阶段完成以后的回调
  */
-afterEvaluate {
-
-}
+afterEvaluate {}
 
 /**
  * gradle执行完毕后的回调监听
  */
 gradle.buildFinished {}
-
 
