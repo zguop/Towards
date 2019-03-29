@@ -77,14 +77,14 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
      * 加载HomeCommendFragment首页数据
      */
     void loadHomeData() {
-        Disposable disposable = Observable.zip(DataLoader.getGithubApi().getBannerPage().subscribeOn(Schedulers.io())
-                , DataLoader.getGithubApi().getHomeData().subscribeOn(Schedulers.io())
+        Disposable disposable = Observable.zip(DataLoader.getGithubApi().getBannerPage()
+                , DataLoader.getGithubApi().getHomeData()
                 , Pair::create)
+                .subscribeOn(Schedulers.io())
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
                     if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
-                        int dayOfWeek = UDate.getWeekIndex(UDate.getNowDate()) - 1;
-                        getHomeCommendFragment().onBannerSuccess(pair.first.result.get(dayOfWeek));
+                        getHomeCommendFragment().onBannerSuccess(pair.first.result);
                     }
                     if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
                         getHomeCommendFragment().onFunctionSuccess(pair.second.result.function);

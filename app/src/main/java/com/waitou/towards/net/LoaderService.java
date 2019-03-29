@@ -33,7 +33,7 @@ public interface LoaderService {
     Observable<BaseResponse<List<String>>> getLogoList(); //logo图
 
     @GET("master/beats_banner.json")
-    Observable<BaseResponse<List<List<BannerPageInfo>>>> getBannerPage(); //首页轮播图
+    Observable<BaseResponse<List<BannerPageInfo>>> getBannerPage(); //首页轮播图
 
     @GET("master/wt_home.json")
     Observable<BaseResponse<HomeFunctionInfo>> getHomeData(); //首页
