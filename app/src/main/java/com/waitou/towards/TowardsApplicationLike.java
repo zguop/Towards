@@ -5,10 +5,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.Utils;
 import com.facebook.stetho.Stetho;
 import com.to.aboomy.rx_lib.RxComposite;
 import com.to.aboomy.rx_lib.RxUtil;
@@ -17,9 +20,6 @@ import com.to.aboomy.tinker_lib.TinkerManager;
 import com.to.aboomy.tinker_lib.patch.PatchInfo;
 import com.to.aboomy.tinker_lib.patch.ServerUtils;
 import com.to.aboomy.tinker_lib.patch.VersionInfo;
-import com.to.aboomy.utils_lib.UActivity;
-import com.to.aboomy.utils_lib.UString;
-import com.to.aboomy.utils_lib.UtilsContextWrapper;
 import com.waitou.net_library.DataServiceProvider;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
@@ -54,7 +54,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
     protected void initInMainProcess() {
         super.initInMainProcess();
         //utils工具类的初始化
-        UtilsContextWrapper.init(BaseApplication.getApp());
+        initUtils();
         //初始化网络环境
         HttpUtil.init(BaseApplication.getApp());
         //glide加载初始化
@@ -62,10 +62,9 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
         //通过chrome来查看android数据库 chrome://inspect/#devices
         Stetho.initializeWithDefaults(BaseApplication.getApp());
         //所以activity都会回调的生命周期方法
-        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+        BaseApplication.getApp().registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                UActivity.getActivityList().add(activity);
             }
 
             @Override
@@ -95,9 +94,6 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                if (UActivity.getActivityList().contains(activity)) {
-                    UActivity.getActivityList().remove(activity);
-                }
                 if (activity instanceof MainActivity) {
                     fixInputMethodManagerLeak(activity);
                 }
@@ -105,6 +101,12 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
         });
         initThemeLib();
         tinkerPatch();
+    }
+
+    private void initUtils() {
+        Utils.init(BaseApplication.getApp());
+        LogUtils.getConfig().setGlobalTag("aa");
+
     }
 
     private void initThemeLib() {
@@ -128,7 +130,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
             if (!v.isUpdate(patchInfo.patchVersion, patchInfo.versionName)) {
                 return;
             }
-            if (UString.isEmpty(patchInfo.downloadUrl)) {
+            if (TextUtils.isEmpty(patchInfo.downloadUrl)) {
                 return;
             }
             DownloadThread.get(0, patchInfo.downloadUrl, patchFile.getAbsolutePath()

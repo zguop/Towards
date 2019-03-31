@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.to.aboomy.rx_lib.RxBus;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.USize;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoInfo;
@@ -62,7 +62,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         mPhotoGridAdapter.setPresenter(getP());
         getBinding().xList.setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3));
         getBinding().xList.setAdapter(mPhotoGridAdapter);
-        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, USize.dip2pxInt(2), false));
+        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, SizeUtils.dp2px(2), false));
         reloadData();
     }
 
@@ -83,9 +83,9 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
                     if (permission.granted) {
                         getP().imageDataSource(null);
                     } else if (permission.shouldShowRequestPermissionRationale) {
-                        AlertToast.show("权限被禁止，无法选择本地图片！"); //拒绝了权限
+                        ToastUtils.showShort("权限被禁止，无法选择本地图片！"); //拒绝了权限
                     } else {
-                        AlertToast.show("请到应用设置中开启权限！");//永久拒绝了权限
+                        ToastUtils.showShort("请到应用设置中开启权限！");//永久拒绝了权限
                     }
                 });
     }

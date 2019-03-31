@@ -3,6 +3,8 @@ package com.waitou.towards.model.main.fragment.joke;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.three_library.share.ShareInfo;
@@ -12,8 +14,6 @@ import com.waitou.towards.common.ExtraValue;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UString;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 
 /**
@@ -49,9 +49,9 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
         ShareInfo shareInfo = new ShareInfo();
         shareInfo.content = item.content;
         shareInfo.imageUrl = item.url;
-        shareInfo.type = UString.isNotEmpty(shareInfo.imageUrl) ? ShareInfo.TEXT_AND_IMAGE : ShareInfo.TEXT;
+        shareInfo.type = ObjectUtils.isNotEmpty(shareInfo.imageUrl) ? ShareInfo.TEXT_AND_IMAGE : ShareInfo.TEXT;
         UShare.share(getV().getActivity(), shareInfo, media -> {
-            AlertToast.show("分享成功");
+            ToastUtils.showShort("分享成功");
             Log.d("aa", " 分享成功");
         });
     }

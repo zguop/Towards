@@ -3,10 +3,10 @@ package com.waitou.towards.model.main.fragment.home;
 import android.os.Bundle;
 import android.view.Gravity;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.to.aboomy.banner.QyIndicator;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.theme_lib.config.ThemeUtils;
-import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerAdapterInfo;
@@ -97,7 +97,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
     }
 
     public void onError(Throwable throwable) {
-        AlertToast.show(throwable.getMessage());
+        ToastUtils.showShort(throwable.getMessage());
         showError();
     }
 }

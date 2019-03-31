@@ -1,8 +1,8 @@
 package com.waitou.towards.net;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.helper.ErrorVerify;
 import com.waitou.towards.R;
-import com.to.aboomy.utils_lib.AlertToast;
 
 /**
  * Created by waitou on 17/1/11.
@@ -11,11 +11,11 @@ import com.to.aboomy.utils_lib.AlertToast;
 public class SimpleErrorVerify implements ErrorVerify {
     @Override
     public void call(String code, String desc) {
-        AlertToast.show(desc);
+        ToastUtils.showShort(desc);
     }
 
     @Override
     public void netError(Throwable throwable) {
-        AlertToast.show(R.string.warn_net_error);
+        ToastUtils.showShort(R.string.warn_net_error);
     }
 }

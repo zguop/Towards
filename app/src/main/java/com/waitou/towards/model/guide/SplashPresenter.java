@@ -2,20 +2,21 @@ package com.waitou.towards.model.guide;
 
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.to.aboomy.utils_lib.UFile;
-import com.to.aboomy.utils_lib.USize;
-import com.to.aboomy.utils_lib.UString;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.http.AsyncOkHttpClient;
@@ -25,16 +26,13 @@ import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.wt_library.BaseApplication;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UImage;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,8 +44,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  */
 
 public class SplashPresenter extends XPresent<SplashActivity> {
-
-    private static final String TAG = SplashPresenter.class.getSimpleName();
 
     public ObservableField<Drawable> drawable = new ObservableField<>();
 
@@ -70,17 +66,17 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                                     LogoImg unique = logoImgDao.queryBuilder().where(LogoImgDao.Properties.ImgUrl.eq(imgUrl)).unique();
                                     //查看本地是否下载过图片
                                     String savePath = unique.getSavePath();
-                                    if (UString.isNotEmpty(savePath)) {
+                                    if (!StringUtils.isEmpty(savePath)) {
                                         //删除本地下载的图片
-                                        boolean b = UFile.deleteFile(savePath);
-                                        Log.e(TAG, "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
+                                        boolean b = FileUtils.deleteFile(savePath);
+                                        LogUtils.e( "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
                                     }
                                     //删除数据库中的这条数据
                                     logoImgDao.delete(unique);
                                 }
                             }
                         } else {
-                            Log.e(TAG, " 没有要删除的图片");
+                            LogUtils.e( " 没有要删除的图片");
                         }
                     }
                 })
@@ -98,7 +94,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                 .subscribe(s -> {
                     LogoImg logoImg = new LogoImg();
                     logoImg.setImgUrl(s);
-                    Log.e(TAG, " 插入数据库的图片 ： " + logoImg.getImgUrl());
+                    LogUtils.e( " 插入数据库的图片 ： " + logoImg.getImgUrl());
                     logoImgDao.insert(logoImg); //插入数据 直接开始下载图片
                     downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
                 }));
@@ -112,7 +108,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         // 数据库图片不为0
         for (LogoImg logoImg : logoImgList) { //本地图片一定要存在
             String savePath = logoImg.getSavePath();
-            if (UString.isNotEmpty(savePath) && UFile.isFileExists(savePath)) {
+            if (!StringUtils.isEmpty(savePath) && FileUtils.isFileExists(savePath)) {
                 showLogoList.add(logoImg);
             } else {
                 downloadList.add(logoImg);
@@ -120,53 +116,40 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         }
 
         if (!downloadList.isEmpty()) {
-            Log.e(TAG, " 需要下载 ：" + downloadList.size() + " 张图片");
+            LogUtils.e( " 需要下载 ：" + downloadList.size() + " 张图片");
             for (LogoImg logoImg : downloadList) {
                 downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
             }
         }
 
-        Log.e(TAG, " 显示的图片有 " + showLogoList.size() + " 张");
+        LogUtils.e( " 显示的图片有 " + showLogoList.size() + " 张");
         //如果没有显示的图片 设置默认的图片
         if (showLogoList.isEmpty()) {
             initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
             return;
         }
 
+        List<String> imgUrl = Observable.fromIterable(showLogoList)
+                .filter(o -> !o.getIsShowLogoUrl())
+                .map(LogoImg::getSavePath).toList().blockingGet();
 
-
-        List<String> imgUrl; //stream操作 java8的 一大新特性
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            imgUrl = showLogoList.stream()
-                    .filter(logoImg -> !logoImg.getIsShowLogoUrl())
-                    .map(LogoImg::getSavePath)
-                    .collect(Collectors.toList());
-        } else {
-            imgUrl = new ArrayList<>();
-            for (LogoImg logoImg : showLogoList) {
-                if (!logoImg.getIsShowLogoUrl()) {
-                    imgUrl.add(logoImg.getSavePath());
-                }
-            }
-        }
-
-        Log.e(TAG, " 可以显示的有 " + imgUrl.size() + " 张");
+        LogUtils.e( " 可以显示的有 " + imgUrl.size() + " 张");
         boolean empty = imgUrl.isEmpty();
         //如果乳品全部都使用过，那么就从showLogoList 重新取一张图片使用
         int random = new Random().nextInt(empty ? showLogoList.size() : imgUrl.size());
         String savePath;
         if (empty) {
-            Log.e(TAG, " 获取的是 showLogoList 中的图片 ");
+            LogUtils.e( " 获取的是 showLogoList 中的图片 ");
             savePath = showLogoList.get(random).getSavePath();
         } else {
-            Log.e(TAG, " 获取的是 imgUrl 中的图片 ");
+            LogUtils.e( " 获取的是 imgUrl 中的图片 ");
             savePath = imgUrl.get(random);
         }
         //显示图片
         loadFileImg(savePath);
 
         if (empty) {
-            Log.e(TAG, " 所有图片已经显示， 更新数据库标识");
+            LogUtils.e( " 所有图片已经显示， 更新数据库标识");
             //所有图片都已经显示过 去数据库刷新标识
             for (LogoImg logoImg : showLogoList) {
                 logoImg.setIsShowLogoUrl(false);
@@ -176,7 +159,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         //去数据库刷新使用过的图片标识
         //查询某个条件的数据
         LogoImg unique = logoImgDao.queryBuilder().where(LogoImgDao.Properties.SavePath.eq(savePath)).unique();
-        Log.e(TAG, " 显示的图片是 ： " + unique.getImgUrl());
+        LogUtils.e( " 显示的图片是 ： " + unique.getImgUrl());
         unique.setIsShowLogoUrl(true);
         //更新标识
         logoImgDao.update(unique);
@@ -187,13 +170,13 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void loadFileImg(String savePath) {
         File file = new File(savePath);
-        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(USize.getDeviceWidth(), USize.getDeviceHeight()) {
+        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight()) {
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
                 initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
-                boolean b = UFile.deleteFile(file);//加载失败的图片需要删除
-                Log.e(TAG, "加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
+                boolean b = FileUtils.deleteFile(file);//加载失败的图片需要删除
+                LogUtils.e( "加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
             }
 
             @Override
@@ -240,12 +223,13 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      * 主要用下载图片 保存到cache目录
      */
     private void downLoaderImg(String url, LogoImg logoImg, LogoImgDao logoImgDao) {
-        String imageCacheSavePath = UImage.getImageCacheSavePath(BaseApplication.getApp(), url);
+        //下载的图片路径：/data/user/0/com.waitou.towards.debug/cache/65F7D5ADFA49A9794389EC4F3EB7F834.jpg
+        String imageCacheSavePath = PathUtils.getInternalAppCachePath() + File.separator + EncryptUtils.encryptMD5ToString(url) + url.substring(url.lastIndexOf("."));
         DownloadThread.get(0, url, imageCacheSavePath, (id, progress, isCompleted, file) -> {
             if (isCompleted) {
                 logoImg.setSavePath(imageCacheSavePath);
                 logoImgDao.update(logoImg);
-                Log.e(TAG, " save 成功 " + imageCacheSavePath);
+                LogUtils.e("下载的图片路径 " + imageCacheSavePath);
             }
         }).setClient(AsyncOkHttpClient.getOkHttpClient()).start();
     }

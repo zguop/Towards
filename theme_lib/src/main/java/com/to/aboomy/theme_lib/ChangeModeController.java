@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.SPStaticUtils;
 import com.to.aboomy.theme_lib.config.IThemeConfig;
 import com.to.aboomy.theme_lib.config.ThemeConstant;
 import com.to.aboomy.theme_lib.config.ThemeModule;
@@ -26,7 +27,6 @@ import com.to.aboomy.theme_lib.skin.SkinAttr;
 import com.to.aboomy.theme_lib.skin.SkinAttrType;
 import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
 import com.to.aboomy.theme_lib.skin.SkinView;
-import com.to.aboomy.utils_lib.USharedPref;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ public class ChangeModeController {
     };
 
     private static ChangeModeController sChangeModeController;
-    private List<SkinView> mSkinViewList = new ArrayList<>();
-    private IThemeConfig mThemeConfig;
+    private        List<SkinView>       mSkinViewList = new ArrayList<>();
+    private        IThemeConfig         mThemeConfig;
 
     private ChangeModeController() {
     }
@@ -247,7 +247,7 @@ public class ChangeModeController {
      * 获取当前的主题model
      */
     public ThemeModule getThemeModel() {
-        int themeId = USharedPref.get().getInteger(ThemeConstant.PRE_THEME_MODEL);
+        int themeId = SPStaticUtils.getInt(ThemeConstant.PRE_THEME_MODEL);
         return getThemeInfo(themeId);
     }
 
@@ -255,7 +255,7 @@ public class ChangeModeController {
      * 设置当前主题
      */
     public void setTheme(Activity ctx) {
-        int theme = USharedPref.get().getInteger(ThemeConstant.PRE_THEME_MODEL);
+        int theme = SPStaticUtils.getInt(ThemeConstant.PRE_THEME_MODEL);
         ThemeModule themeInfo = getThemeInfo(theme);
         ctx.setTheme(themeInfo.getThemeId());
     }
@@ -267,7 +267,7 @@ public class ChangeModeController {
         ctx.setTheme(themeModule.getThemeId());
         showAnimation(ctx);
         refreshUI(ctx);
-        USharedPref.get().put(ThemeConstant.PRE_THEME_MODEL, themeModule.getThemeId());
+        SPStaticUtils.put(ThemeConstant.PRE_THEME_MODEL, themeModule.getThemeId());
     }
 
     public List<ThemeModule> getThemes() {

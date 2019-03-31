@@ -16,7 +16,7 @@
 
             <!--左边返回-->
             <ImageView
-                android:id="@+id/left_img"
+                android:id="@+id/left_back"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:scaleType="centerInside"
@@ -92,7 +92,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:minWidth="70dp"
-                android:text="标题"
+                tools:text="标题"
                 android:textColor="?attr/skin_kind_color_not"
                 android:textSize="17dp"
                 android:textStyle="bold"/>

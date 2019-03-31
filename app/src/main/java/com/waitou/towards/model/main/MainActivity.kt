@@ -53,11 +53,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         ChangeModeController.get().init(this)
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        transparencyBar(mainBinding?.mainDrawerLayout)
-        mainBinding?.toolbar?.customTitleView(homeFragment.getHomeToolbar(this))
         mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
         mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(RecommendedActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
+        mainBinding?.toolbar?.post {
+            mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
+        }
         mainBinding?.adapter = adapter
         mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)
         val binding = DataBindingUtil.inflate<NavHeaderMainBinding>(layoutInflater, R.layout.nav_header_main, null, false)
@@ -66,8 +67,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainBinding?.navView?.setNavigationItemSelectedListener(this)
         mainBinding?.mainTab?.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.getHomeToolbar(this))
-                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar)
+                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
+                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar.root)
                 R.id.menu_circle -> mainBinding?.toolbar?.visibility = View.GONE
             }
             true

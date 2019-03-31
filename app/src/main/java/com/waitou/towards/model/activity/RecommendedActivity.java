@@ -47,7 +47,7 @@ public class RecommendedActivity extends XActivity<RecommendedPresenter, Activit
     public void afterCreate(Bundle savedInstanceState) {
         mRecyclerIntentVO = (RecyclerIntentVO) getIntent().getSerializableExtra(EXTRA_LIST);
         mBAdapter = new MuRecyclerAdapter();
-        mBAdapter.addProvider(new TextItemProvider(), new SubmitProvider());
+        mBAdapter.addProvider( new SubmitProvider());
         mBAdapter.setPresenter(new RecommendHelper());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

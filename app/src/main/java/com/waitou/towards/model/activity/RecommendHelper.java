@@ -1,8 +1,8 @@
 package com.waitou.towards.model.activity;
 
+import android.text.TextUtils;
+
 import com.to.aboomy.recycler_lib.IPresenter;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UString;
 
 /**
  * auth aboom
@@ -16,16 +16,13 @@ public class RecommendHelper implements IPresenter {
 
     public void submit() {
 
-        if (UString.isEmpty(mRequestBean.phone)) {
-            AlertToast.show("手机号不能为空");
+        if (TextUtils.isEmpty(mRequestBean.phone)) {
             return;
         }
 
-        if (UString.isEmpty(mRequestBean.password)) {
-            AlertToast.show("密码不能为空");
+        if (TextUtils.isEmpty(mRequestBean.password)) {
             return;
         }
-        AlertToast.show("通过");
 
     }
 

@@ -11,11 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.to.aboomy.banner.IQyIndicator;
 import com.to.aboomy.banner.QyBanner;
 import com.to.aboomy.banner.ScalePageTransformer;
 import com.to.aboomy.theme_lib.config.ThemeUtils;
-import com.to.aboomy.utils_lib.USize;
 
 
 /**
@@ -40,7 +40,7 @@ public class UtilsBinding {
 
     @BindingAdapter({"bannerAdapter", "bannerIndicator"})
     public static void setBanner(QyBanner qyBanner, PagerAdapter pagerAdapter, IQyIndicator iQyIndicator) {
-        qyBanner.setPageMargins(USize.dip2pxInt(30), USize.dip2pxInt(10), USize.dip2pxInt(30), USize.dip2pxInt(20), USize.dip2pxInt(10));
+        qyBanner.setPageMargins(SizeUtils.dp2px(30), SizeUtils.dp2px(10), SizeUtils.dp2px(30), SizeUtils.dp2px(20), SizeUtils.dp2px(10));
         qyBanner.setPageTransformer(true, new ScalePageTransformer(0.8f));
         qyBanner.setIndicator(iQyIndicator);
         qyBanner.setAdapter(pagerAdapter);

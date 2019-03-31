@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.to.aboomy.utils_lib.USize;
+import com.blankj.utilcode.util.SizeUtils;
 
 
 /**
@@ -16,15 +16,15 @@ public class CardAdapterHelper {
 
     public void onCreateViewHolder(ViewGroup parent, View itemView) {
         RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) itemView.getLayoutParams();
-        lp.width = parent.getWidth() - USize.dip2pxInt( 2 * (mPagePadding + mShowLeftCardWidth));
+        lp.width = parent.getWidth() - SizeUtils.dp2px( 2 * (mPagePadding + mShowLeftCardWidth));
         itemView.setLayoutParams(lp);
     }
 
     public void onBindViewHolder(View itemView, final int position, int itemCount) {
-        int padding = USize.dip2pxInt( mPagePadding);
+        int padding = SizeUtils.dp2px( mPagePadding);
         itemView.setPadding(padding, 0, padding, 0);
-        int leftMarin = position == 0 ? padding + USize.dip2pxInt( mShowLeftCardWidth) : 0;
-        int rightMarin = position == itemCount - 1 ? padding + USize.dip2pxInt( mShowLeftCardWidth) : 0;
+        int leftMarin = position == 0 ? padding + SizeUtils.dp2px( mShowLeftCardWidth) : 0;
+        int rightMarin = position == itemCount - 1 ? padding + SizeUtils.dp2px( mShowLeftCardWidth) : 0;
         setViewMargin(itemView, leftMarin, 0, rightMarin, 0);
     }
 

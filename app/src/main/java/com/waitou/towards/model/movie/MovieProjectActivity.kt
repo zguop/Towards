@@ -1,7 +1,7 @@
 package com.waitou.towards.model.movie
 
 import android.os.Bundle
-import com.to.aboomy.utils_lib.UString
+import com.blankj.utilcode.util.ObjectUtils
 import com.waitou.net_library.model.Displayable
 import com.waitou.towards.R
 import com.waitou.towards.bean.MovieResInfo
@@ -43,7 +43,7 @@ class MovieProjectActivity : XActivity<MovieProjectPresenter, ActivityMovieBindi
         p.start()
         val typeList = movieResInfo!!.list
         val infoList = typeList!!
-                .filter { UString.isNotEmpty(it.moreURL) && UString.isNotEmpty(it.title) }
+                .filter { ObjectUtils.isNotEmpty(it.moreURL) && ObjectUtils.isNotEmpty(it.title) }
                 .map {
                     val movieInfo = it.childList!![0]
                     movieInfo.title = it.title

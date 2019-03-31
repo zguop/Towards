@@ -3,8 +3,8 @@ package com.waitou.towards.model.gallery;
 import android.Manifest;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.jakewharton.rxbinding2.view.RxView;
-import com.to.aboomy.utils_lib.AlertToast;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityGalleryBinding;
@@ -81,7 +81,7 @@ public class GalleryActivity extends XActivity<GalleryPresenter, ActivityGallery
             showError();
             return;
         }
-        AlertToast.show("请检查网络！");
+        ToastUtils.showShort("请检查网络！");
     }
 
     public void onSuccess(List<GankResultsTypeInfo> galleryInfo) {
@@ -107,9 +107,9 @@ public class GalleryActivity extends XActivity<GalleryPresenter, ActivityGallery
                     if (permission.granted) {
                         if (mCardScaleHelper != null) mCardScaleHelper.saveImageToGallery();
                     } else if (permission.shouldShowRequestPermissionRationale) {
-                        AlertToast.show("保存图片需要授权该权限！"); //拒绝了权限
+                        ToastUtils.showShort("保存图片需要授权该权限！"); //拒绝了权限
                     } else {
-                        AlertToast.show("请到应用设置中开启权限哦！");//永久拒绝了权限
+                        ToastUtils.showShort("请到应用设置中开启权限哦！");//永久拒绝了权限
                     }
                 }));
 

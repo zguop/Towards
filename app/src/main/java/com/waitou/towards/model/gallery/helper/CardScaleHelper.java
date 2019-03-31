@@ -7,13 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.USize;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.wt_library.kit.UImage;
-
-import io.reactivex.disposables.Disposable;
-
-import static com.waitou.wt_library.kit.UImage.scale;
 
 
 public class CardScaleHelper {
@@ -34,11 +31,9 @@ public class CardScaleHelper {
     private int mLastPos = -1;
 
     private CardLinearSnapHelper mLinearSnapHelper = new CardLinearSnapHelper();
-    private Disposable mSubscribe;
 
 
     public void attachToRecyclerView(final RecyclerView recyclerView) {
-        // 开启log会影响滑动体验, 调试时才开启
         this.mRecyclerView = recyclerView;
         this.mContext = mRecyclerView.getContext();
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -99,9 +94,9 @@ public class CardScaleHelper {
         View positionView = getPositionView();
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
-            Bitmap scale = scale(positionView.getDrawingCache(), USize.getDeviceWidth(), USize.getDeviceHeight());
+            Bitmap scale = UImage.scale(positionView.getDrawingCache(), ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight());
             UImage.saveImageToGallery(mContext, scale);
-            AlertToast.show("图片成功保存到相册O(∩_∩)O~");
+            ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
             positionView.setDrawingCacheEnabled(false);
         }
     }
@@ -112,7 +107,7 @@ public class CardScaleHelper {
     private void initWidth() {
         mRecyclerView.post(() -> {
             mCardGalleryWidth = mRecyclerView.getWidth();
-            mCardWidth = mCardGalleryWidth - USize.dip2pxInt( mPagePadding + mShowLeftCardWidth) * 2;
+            mCardWidth = mCardGalleryWidth - SizeUtils.dp2px(mPagePadding + mShowLeftCardWidth) * 2;
             mOnePageWidth = mCardWidth;
             notifyChangeWidth();
         });
@@ -143,7 +138,7 @@ public class CardScaleHelper {
         boolean pageChanged = false;
         // 滑动超过一页说明已翻页
 
-        Log.e("aa" , "mCurrentItemOffset" + mCurrentItemOffset + "mCurrentItemPos " + mCurrentItemPos + " mOnePageWidth " + mOnePageWidth);
+        Log.e("aa", "mCurrentItemOffset" + mCurrentItemOffset + "mCurrentItemPos " + mCurrentItemPos + " mOnePageWidth " + mOnePageWidth);
         if (Math.abs(mCurrentItemOffset - mCurrentItemPos * mOnePageWidth) >= mOnePageWidth) {
             pageChanged = true;
         }

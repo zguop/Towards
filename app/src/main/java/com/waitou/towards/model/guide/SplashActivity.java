@@ -3,7 +3,7 @@ package com.waitou.towards.model.guide;
 import android.os.Bundle;
 import android.view.animation.Animation;
 
-import com.to.aboomy.utils_lib.Util;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.ActivityLogoBinding;
 import com.waitou.towards.model.main.MainActivity;
@@ -30,7 +30,7 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        Util.setWindowFullScreen(this, true);
+        ScreenUtils.setFullScreen(this);
         getBinding().setPresenter(getP());
         reloadData();
     }

@@ -6,10 +6,9 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
+import com.blankj.utilcode.util.SizeUtils
 import com.to.aboomy.banner.QyIndicator
 import com.to.aboomy.theme_lib.config.ThemeUtils
-import com.to.aboomy.utils_lib.USize
-import com.to.aboomy.utils_lib.Util
 import com.waitou.net_library.model.Displayable
 import com.waitou.towards.R
 import com.waitou.towards.bean.BannerAdapterInfo
@@ -53,9 +52,8 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
             }
         }
         (xBinding.xContentLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
-        Util.transparentStatusBar(this)
-        xBinding.toolbar.layoutParams.height = USize.dip2pxInt(73f)
-        xBinding.toolbar.setPadding(0, USize.dip2pxInt(25f), 0, 0)
+        xBinding.toolbar.layoutParams.height = SizeUtils.dp2px(73f)
+        xBinding.toolbar.setPadding(0, SizeUtils.dp2px(25f), 0, 0)
         xBinding.toolbar.visibility = View.GONE
         adapter = MultiTypeAdapter<Displayable>(this)
         adapter!!.addViewTypeToLayoutMap(0, R.layout.item_banner_search)
@@ -65,7 +63,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
         binding.adapter = adapter
         binding.xList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private val argbEvaluator = ArgbEvaluator()
-            private val height = USize.dip2pxInt(175f)
+            private val height = SizeUtils.dp2px(175f)
             private val startColor = 0x00ffffff
             private val endColor = ThemeUtils.getThemeAttrColor(this@MovieRecommendActivity, R.attr.colorPrimary)
             private var mDy = 0

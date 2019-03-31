@@ -1,6 +1,5 @@
 globleConfigure()
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.dependencies["appcompat-v7"]
-    implementation project(':utils_lib')
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["utilcode"]
 }

@@ -4,16 +4,17 @@ import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPStaticUtils;
+import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UDate;
-import com.to.aboomy.utils_lib.USharedPref;
-import com.to.aboomy.utils_lib.Util;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
+import com.waitou.towards.UDate;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.common.ExtraValue;
@@ -45,10 +46,6 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
 
     public ObservableField<String> txName = new ObservableField<>("all");
 
-    public void setBanner(){
-
-    }
-
     /**
      * banner item 点击
      */
@@ -67,7 +64,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         shareInfo.targetUrl = item.url;
         shareInfo.type = ShareInfo.WEB0;
         UShare.share(getV().getActivity(), shareInfo, media -> {
-            AlertToast.show("分享成功");
+            ToastUtils.showShort("分享成功");
             Log.d("aa", " 分享成功");
 
         });
@@ -93,7 +90,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 })
                 .observeOn(Schedulers.io())
                 .flatMap(currentDate -> {
-                    String everyday = USharedPref.get().getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
+                    String everyday = SPStaticUtils.getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
                     boolean isReload = false;
                     if (!everyday.equals(currentDate)) { //第二天
                         if (UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
@@ -113,34 +110,34 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                                 }
                                 return Observable.just(info);
                             }).doOnNext(info ->
-                                    USharedPref.get().put(ExtraValue.EVERYDAY_DATA, finalCurrentDate[0])
+                                    SPStaticUtils.put(ExtraValue.EVERYDAY_DATA, finalCurrentDate[0])
                             );
                 })
                 .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
                     if (gankResultsInfo != null) {
-                        if (Util.isNotEmptyList(gankResultsInfo.福利)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.福利)) {
                             lists.add(gankResultsInfo.福利);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.休息视频)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.休息视频)) {
                             lists.add(gankResultsInfo.休息视频);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.Android)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.Android)) {
                             lists.add(gankResultsInfo.Android);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.瞎推荐)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.瞎推荐)) {
                             lists.add(gankResultsInfo.瞎推荐);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.App)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.App)) {
                             lists.add(gankResultsInfo.App);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.iOS)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.iOS)) {
                             lists.add(gankResultsInfo.iOS);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.拓展资源)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.拓展资源)) {
                             lists.add(gankResultsInfo.拓展资源);
                         }
-                        if (Util.isNotEmptyList(gankResultsInfo.前端)) {
+                        if (ObjectUtils.isNotEmpty(gankResultsInfo.前端)) {
                             lists.add(gankResultsInfo.前端);
                         }
                         if (lists.size() > 0) {
@@ -208,7 +205,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                             } else {
                                 mCargoFragment.showError(page == 1);
                             }
-                            AlertToast.show(throwable.toString());
+                            ToastUtils.showShort(throwable.toString());
                         });
         getV().pend(disposable);
     }
@@ -218,7 +215,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
                 .listener(item -> {
                     if (txName.get().equals(item.getTitle())) {
-                        AlertToast.show("当前已经是 " + txName.get() + " 分类");
+                        ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
                         return true;
                     }
                     txName.set(item.getTitle().toString());
@@ -230,7 +227,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
 
     public String setGankPageTime(String publishedAt) {
         String date = publishedAt.replace('T', ' ').replace('Z', ' ');
-        return UDate.getFriendlyTimeSpanByNow(date);
+        return TimeUtils.getFriendlyTimeSpanByNow(date);
     }
 
     /*--------------- fragment ---------------*/

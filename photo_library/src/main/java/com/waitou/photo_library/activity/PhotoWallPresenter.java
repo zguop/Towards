@@ -10,7 +10,6 @@ import android.databinding.ObservableInt;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -23,6 +22,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.to.aboomy.rx_lib.RxUtil;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.photo_library.PhotoPickerFinal;
@@ -34,19 +38,15 @@ import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.FolderPopUpWindow;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UDate;
-import com.to.aboomy.utils_lib.USize;
-import com.to.aboomy.utils_lib.UFile;
 import com.waitou.wt_library.kit.UImage;
-import com.waitou.wt_library.kit.USDCard;
-import com.to.aboomy.utils_lib.Util;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.router.Router;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by waitou on 17/4/3.
@@ -254,7 +254,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     @BindingAdapter({"marginBottom"})
     public static void marginBottom(View view, int dp) {
         RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
-        params.bottomMargin = USize.dip2pxInt(dp);
+        params.bottomMargin = SizeUtils.dp2px(dp);
         view.setLayoutParams(params);
     }
 
@@ -277,7 +277,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
             if (!selectionList.contains(info)) {
                 if (selectionList.size() == mPhotoPickerFinal.getSelectLimit()) {
                     buttonView.setChecked(false);
-                    AlertToast.show("最多选择" + mPhotoPickerFinal.getSelectLimit() + "张图片");
+                    ToastUtils.showShort("最多选择" + mPhotoPickerFinal.getSelectLimit() + "张图片");
                     return;
                 }
                 mask.setVisibility(View.VISIBLE);
@@ -314,9 +314,9 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
                         if (permission.granted) {
                             takePicture();
                         } else if (permission.shouldShowRequestPermissionRationale) {
-                            AlertToast.show("权限被禁止，无法打开相机！"); //拒绝了权限
+                            ToastUtils.showShort("权限被禁止，无法打开相机！"); //拒绝了权限
                         } else {
-                            AlertToast.show("请到应用设置中开启权限！");//永久拒绝了权限
+                            ToastUtils.showShort("请到应用设置中开启权限！");//永久拒绝了权限
                         }
                     });
             return;
@@ -355,7 +355,9 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        scanPath = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + UDate.date2String(UDate.getNowDate(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
+        scanPath = FileUtils.getFileByPath(PathUtils.getExternalPicturesPath() + File.separator +
+                "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(),
+                new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + UImage.JPG);
         LogUtil.e(" takePicture path = " + scanPath);
         Uri uri;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
@@ -379,7 +381,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         }
         //删除掉相机拍摄进入裁剪之前的照片
         if (deletePath != null) {
-            UFile.deleteFile(deletePath);
+            FileUtils.deleteFile(deletePath);
             deletePath = null;
         }
         //不等于null 裁剪回调

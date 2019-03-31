@@ -2,6 +2,7 @@ package com.waitou.photo_library.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.ViewTreeObserver;
 
 import com.bumptech.glide.Glide;
@@ -9,7 +10,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.to.aboomy.utils_lib.UString;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.FragmentPhotoDetailBinding;
 import com.waitou.photo_library.util.PhotoValue;
@@ -83,7 +83,7 @@ public class PhotoPreviewFragment extends XFragment<XPresent, FragmentPhotoDetai
     }
 
     private boolean checkHead(String url) {
-        return UString.isNotEmpty(url) && (url.startsWith("http://") || url.startsWith("https://"));
+        return !TextUtils.isEmpty(url) && (url.startsWith("http://") || url.startsWith("https://"));
     }
 
     public static PhotoPreviewFragment newInstance(String imageUrl) {

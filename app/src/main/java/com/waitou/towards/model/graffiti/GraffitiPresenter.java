@@ -15,6 +15,8 @@ import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -28,8 +30,6 @@ import com.waitou.towards.enums.GraffitiToolEnum;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.USize;
 import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
@@ -45,8 +45,6 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-
-import static com.to.aboomy.utils_lib.USize.getDeviceWidth;
 
 /**
  * Created by waitou on 17/3/27.
@@ -88,7 +86,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
             mGraffitiToolAdapter.setPresenter(this);
             List<GraffitiToolInfo> toolInfoList = new ArrayList<>();
             for (GraffitiToolEnum toolEnum : GraffitiToolEnum.values()) {
-                GraffitiToolInfo info = new GraffitiToolInfo(ContextCompat.getDrawable(getV(), toolEnum.getRedId()),toolEnum.getTool());
+                GraffitiToolInfo info = new GraffitiToolInfo(ContextCompat.getDrawable(getV(), toolEnum.getRedId()), toolEnum.getTool());
                 toolInfoList.add(info);
             }
             mGraffitiToolAdapter.set(toolInfoList);
@@ -266,21 +264,21 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
         getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        Bitmap bitmap = Bitmap.createBitmap(getDeviceWidth(), USize.getDeviceHeight(), Bitmap.Config.ARGB_8888);
+                        Bitmap bitmap = Bitmap.createBitmap(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight(), Bitmap.Config.ARGB_8888);
                         Canvas bitCanvas = new Canvas(bitmap);
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
                             graffitiPicView.doDraw(bitCanvas);
                             graffitiView.doDraw(bitCanvas);
                             UImage.saveImageToGallery(getV(), bitmap);
                             bitmap.recycle();
-                            AlertToast.show("图片成功保存到相册O(∩_∩)O~");
+                            ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
                         } else {
-                            AlertToast.show("先绘制点什么吧!╮(╯▽╰)╭");
+                            ToastUtils.showShort("先绘制点什么吧!╮(╯▽╰)╭");
                         }
                     } else if (permission.shouldShowRequestPermissionRationale) {
-                        AlertToast.show("保存图片需要授权该权限！"); //拒绝了权限
+                        ToastUtils.showShort("保存图片需要授权该权限！"); //拒绝了权限
                     } else {
-                        AlertToast.show("请到应用设置中开启权限哦！");//永久拒绝了权限
+                        ToastUtils.showShort("请到应用设置中开启权限哦！");//永久拒绝了权限
                     }
                 }));
     }

@@ -5,24 +5,25 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.content.FileProvider;
 
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UDate;
-import com.to.aboomy.utils_lib.UFile;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.ActivityPhotoCropBinding;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.kit.UImage;
-import com.waitou.wt_library.kit.USDCard;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * Created by waitou on 17/4/20.
@@ -31,7 +32,7 @@ import java.io.File;
 
 public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPhotoCropBinding> {
 
-    private boolean isCanSave = false; // 是否可以保存
+    private boolean                isCanSave = false; // 是否可以保存
     private ProgressDialogFragment mDialogFragment;
 
     @Override
@@ -50,7 +51,8 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
         getBar().setRightText("完成", v -> {
             if (isCanSave) {
                 showProgress();
-                File saveFile = UFile.getFileByPath(USDCard.getSDCardPublicPath(Environment.DIRECTORY_PICTURES) + "IMAGE_" + UDate.date2String(UDate.getNowDate(), "yyyy_MM_dd_HH_mm_ss") + UImage.JPG);
+                File saveFile = FileUtils.getFileByPath(PathUtils.getExternalPicturesPath() + File.separator +
+                        "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(), new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + UImage.JPG);
                 getBinding().crop.startCrop(Uri.fromFile(saveFile), new CropCallback() {
                     @Override
                     public void onSuccess(Bitmap cropped) {
@@ -87,7 +89,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
 
             @Override
             public void onError() {
-                AlertToast.show("加载失败");
+                ToastUtils.showShort("加载失败");
                 finish();
             }
         });

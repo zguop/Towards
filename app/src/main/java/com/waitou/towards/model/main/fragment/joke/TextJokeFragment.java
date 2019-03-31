@@ -72,7 +72,7 @@ public class TextJokeFragment extends XFragment<TextJokePresenter, IncludeViewPa
 
     public ViewDataBinding initTootBar() {
         if (mToolbarJokeTitle == null) {
-            mToolbarJokeTitle = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.toolbar_joke_title, null, false);
+            mToolbarJokeTitle = DataBindingUtil.inflate(getLayoutInflater(), R.layout.toolbar_joke_title, null, false);
         }
         return mToolbarJokeTitle;
     }

@@ -61,6 +61,7 @@ ext {
             "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.4',
             "qybanner"                 : 'com.to.aboomy:banner:1.6.0',
             "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46',
+            "utilcode"                 : 'com.blankj:utilcode:1.23.7',//有android x版本
 
     ]
 

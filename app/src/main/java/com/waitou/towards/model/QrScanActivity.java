@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.to.aboomy.statusbar_lib.StatusBarView;
-import com.to.aboomy.utils_lib.USize;
 import com.waitou.towards.R;
 
 import cn.bertsir.zbar.ScanActivity;

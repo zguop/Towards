@@ -2,6 +2,8 @@ package com.waitou.three_library.share;
 
 import android.app.Activity;
 
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -9,8 +11,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.waitou.three_library.R;
-import com.to.aboomy.utils_lib.AlertToast;
-import com.to.aboomy.utils_lib.UString;
 
 import io.reactivex.functions.Consumer;
 
@@ -40,12 +40,12 @@ public class UShare {
 
                             @Override
                             public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                AlertToast.show(throwable.getMessage());
+                                ToastUtils.showShort(throwable.getMessage());
                             }
 
                             @Override
                             public void onCancel(SHARE_MEDIA share_media) {
-                                AlertToast.show("分享取消了...");
+                                ToastUtils.showShort("分享取消了...");
                             }
                         })
                 ).grid().show();
@@ -67,7 +67,7 @@ public class UShare {
             case ShareInfo.WEB0:
                 shareAction.withMedia(
                         new UMWeb(info.targetUrl, info.title, info.content,
-                                UString.isNotEmpty(info.imageUrl) ? new UMImage(activity, info.imageUrl) : null));
+                                ObjectUtils.isNotEmpty(info.imageUrl) ? new UMImage(activity, info.imageUrl) : null));
                 break;
         }
         shareAction.setCallback(listener)

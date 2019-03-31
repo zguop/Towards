@@ -7,11 +7,11 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.wt_library.base.XPresent;
-import com.to.aboomy.utils_lib.AlertToast;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class PhotoPreviewPresenter extends XPresent<PhotoPreviewActivity> {
             if (!selectPhotoList.contains(photoInfo)) {
                 if (selectPhotoList.size() == mPhotoPickerFinal.getSelectLimit()) {
                     compoundButton.setChecked(false);
-                    AlertToast.show("最多选择" + mPhotoPickerFinal.getSelectLimit() + "张图片");
+                    ToastUtils.showShort("最多选择" + mPhotoPickerFinal.getSelectLimit() + "张图片");
                     return;
                 }
                 selectPhotoList.add(photoInfo);

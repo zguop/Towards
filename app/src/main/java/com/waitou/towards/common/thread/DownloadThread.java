@@ -1,6 +1,6 @@
 package com.waitou.towards.common.thread;
 
-import com.to.aboomy.utils_lib.UFile;
+import com.blankj.utilcode.util.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,8 +33,8 @@ public class DownloadThread implements Runnable {
         this.id = id;
         this.url = url;
         this.listener = listener;
-        UFile.createFileByDeleteOldFile(path);
-        file = UFile.getFileByPath(path);
+        FileUtils.createFileByDeleteOldFile(path);
+        file = FileUtils.getFileByPath(path);
     }
 
     public DownloadThread setClient(OkHttpClient client) {

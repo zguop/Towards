@@ -22,7 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.to.aboomy.utils_lib.USize;
+import com.blankj.utilcode.util.SizeUtils;
 
 
 /**
@@ -97,11 +97,11 @@ public class LceAnimator {
             AnimatorSet set = new AnimatorSet();
             ObjectAnimator contentFadeIn = ObjectAnimator.ofFloat(contentView, "alpha", 0f, 1f);
             ObjectAnimator contentTranslateIn = ObjectAnimator.ofFloat(contentView, "translationY",
-                    USize.dip2px(translateDp), 0);
+                    SizeUtils.dp2px(translateDp), 0);
 
             ObjectAnimator loadingFadeOut = ObjectAnimator.ofFloat(loadingView, "alpha", 1f, 0f);
             ObjectAnimator loadingTranslateOut = ObjectAnimator.ofFloat(loadingView, "translationY", 0,
-                    -USize.dip2px(translateDp));
+                    -SizeUtils.dp2px(translateDp));
 
             set.playTogether(contentFadeIn, contentTranslateIn, loadingFadeOut, loadingTranslateOut);
             set.setDuration(500);

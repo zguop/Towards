@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.MotionEvent;
 
-import com.to.aboomy.utils_lib.Util;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.photo_library.databinding.ActivityPhotoPreviewBinding;
@@ -37,7 +36,6 @@ public class PhotoPreviewActivity extends XActivity<PhotoPreviewPresenter, Activ
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        Util.transparentStatusBar(this);
         Intent intent = getIntent();
         int position = intent.getIntExtra(PhotoValue.EXTRA_SELECTED_PHOTO_POSITION, 0);
         ArrayList<PhotoInfo> selectPhoto = intent.getParcelableArrayListExtra(PhotoValue.EXTRA_PHOTO_ITEMS);

@@ -47,7 +47,7 @@ public class HttpUtil {
      * 设置当前环境的url
      */
     public static String setCurrentUrl(String address) {
-        return currentAddress = isTestHttp() ? TEST_DOMAIN_URL + address : ACTIVE_DOMAIN_URL + address;
+        return currentAddress = isTestHttp() ? ACTIVE_HTTPS + address : ACTIVE_DOMAIN_URL + address;
     }
 
     /**
