@@ -2,16 +2,16 @@ package com.to.aboomy.recycler_lib;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.MultipleItemRvAdapter;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.chad.library.adapter.base.util.MultiTypeDelegate;
+import com.chad.library.adapter.base.util.ProviderDelegate;
 
 /**
  * auth aboom
@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, BindingViewHolder> {
 
-    private List<BaseItemProvider> mProviderList = new ArrayList<>();
-    private IPresenter          iPresenter;
+    private IPresenter             iPresenter;
 
     public MuRecyclerAdapter() {
         super(null);
+        finishInitialize();
     }
 
     @Override
@@ -50,28 +50,97 @@ public class MuRecyclerAdapter extends MultipleItemRvAdapter<Displayable, Bindin
         binding.setVariable(BR.item, item);
         binding.setVariable(BR.presenter, iPresenter);
         helper.getBinding().executePendingBindings();
-        super.convert(helper, item);
-    }
+        int itemViewType = helper.getItemViewType();
+        BaseItemProvider provider =  mProviderDelegate.getItemProviders().get(itemViewType);
+        provider.mContext = helper.itemView.getContext();
+        int position = helper.getLayoutPosition() - getHeaderLayoutCount();
+        provider.convert(helper, item, position);
+        bindClick(helper, item, position, provider);    }
 
     @Override
     protected int getViewType(Displayable displayable) {
-        return displayable.getItemType();
+        SparseArray<BaseItemProvider> itemProviders = mProviderDelegate.getItemProviders();
+        for (int i = 0; i < itemProviders.size(); i++) {
+            int key = itemProviders.keyAt(i);
+            BindingItemProvider provider = (BindingItemProvider) itemProviders.get(key);
+            if (provider.isForViewType(displayable)) {
+                return key;
+            }
+        }
+        return -1;
+    }
+
+
+    @Override
+    public void finishInitialize() {
+        mProviderDelegate = new ProviderDelegate();
+        setMultiTypeDelegate(new MultiTypeDelegate<Displayable>() {
+            @Override
+            protected int getItemType(Displayable displayable) {
+                return getViewType(displayable);
+            }
+        });
     }
 
     @Override
     public void registerItemProvider() {
-        for (BaseItemProvider itemProvider : mProviderList) {
-            mProviderDelegate.registerProvider(itemProvider);
+        SparseArray<BaseItemProvider> itemProviders = mProviderDelegate.getItemProviders();
+        for (int i = 0; i < itemProviders.size(); i++) {
+            int key = itemProviders.keyAt(i);
+            BaseItemProvider provider = itemProviders.get(key);
+            provider.mData = mData;
+            getMultiTypeDelegate().registerItemType(key, provider.layout());
         }
     }
 
-    public void addProvider(BaseItemProvider... baseItemProviders) {
-        Collections.addAll(mProviderList, baseItemProviders);
-        finishInitialize();
-        mProviderList = null;
+    public void addProvider(BindingItemProvider... baseItemProvider) {
+        SparseArray<BaseItemProvider> itemProviders = mProviderDelegate.getItemProviders();
+        for (BindingItemProvider bindingItemProvider : baseItemProvider) {
+            int viewType = itemProviders.size();
+            while (itemProviders.get(viewType) != null) {
+                viewType++;
+            }
+            mProviderDelegate.registerProvider(bindingItemProvider);
+        }
+        registerItemProvider();
     }
 
     public void setPresenter(IPresenter presenter) {
         iPresenter = presenter;
+    }
+
+    private void bindClick(final BaseViewHolder helper, final Displayable item, final int position, final BaseItemProvider provider) {
+        OnItemClickListener clickListener = getOnItemClickListener();
+        OnItemLongClickListener longClickListener = getOnItemLongClickListener();
+
+        if (clickListener != null && longClickListener != null){
+            //如果已经设置了子条目点击监听和子条目长按监听
+            // If you have set up a sub-entry click monitor and sub-entries long press listen
+            return;
+        }
+
+        View itemView = helper.itemView;
+
+        if (clickListener == null){
+            //如果没有设置点击监听，则回调给itemProvider
+            //Callback to itemProvider if no click listener is set
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    provider.onClick(helper, item, position);
+                }
+            });
+        }
+
+        if (longClickListener == null){
+            //如果没有设置长按监听，则回调给itemProvider
+            // If you do not set a long press listener, callback to the itemProvider
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return provider.onLongClick(helper, item, position);
+                }
+            });
+        }
     }
 }

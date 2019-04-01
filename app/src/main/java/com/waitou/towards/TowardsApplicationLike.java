@@ -117,7 +117,7 @@ public class TowardsApplicationLike extends ThreeApplicationLike {
 
     private void tinkerPatch() {
         Observable<PatchInfo> observable = DataServiceProvider.getInstance().provide(HttpUtil.GITHUB_API, LoaderService
-                .class).checkPatch().compose(RxTransformerHelper.applySchedulersResult(getApplication(), new EmptyErrorVerify()));
+                .class).checkPatch().compose(RxTransformerHelper.applySchedulersResult( new EmptyErrorVerify()));
 
         Consumer<PatchInfo> consumer = patchInfo -> {
             File patchFile = ServerUtils.getServerFile(getApplication(), patchInfo.versionName);

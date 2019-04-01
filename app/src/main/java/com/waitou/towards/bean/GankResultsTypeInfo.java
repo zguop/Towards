@@ -10,7 +10,7 @@ import java.util.List;
  * Created by waitou on 17/2/16.
  */
 
-public class GankResultsTypeInfo implements Displayable {
+public class GankResultsTypeInfo implements  Displayable, com.to.aboomy.recycler_lib.Displayable {
 
     @SerializedName("_id")
     @Expose
@@ -53,5 +53,7 @@ public class GankResultsTypeInfo implements Displayable {
     public String who; //dmj
 
     public boolean isShowTitle;
+
+    public Boolean isShowImageUrl;
 
 }

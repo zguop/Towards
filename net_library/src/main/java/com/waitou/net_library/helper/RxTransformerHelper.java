@@ -1,6 +1,5 @@
 package com.waitou.net_library.helper;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -11,7 +10,6 @@ import com.waitou.net_library.model.MovieBaseResponse;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
@@ -25,29 +23,16 @@ public class RxTransformerHelper {
     /**
      * 过滤器，result业务过滤 返回数据源
      */
-    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResult(Context context, ErrorVerify errorVerify) {
+    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResult(ErrorVerify errorVerify) {
         return observable -> observable
-                .compose(applySchedulersAndAllFilter(context, errorVerify))
+                .compose(applySchedulersAndAllFilter(errorVerify))
                 .map(tBaseResponse -> tBaseResponse.result);
-    }
-
-    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResults(Context context, ErrorVerify errorVerify) {
-        return observable -> observable
-                .compose(applySchedulersAndAllFilter(context, errorVerify))
-                .map(new Function<BaseResponse<T>, T>() {
-                    @Override
-                    public T apply(BaseResponse<T> tBaseResponse) throws Exception {
-                        tBaseResponse.result = null;
-
-                        return tBaseResponse.result;
-                    }
-                });
     }
 
     /**
      * 过滤器， 业务过滤
      */
-    public static <T> ObservableTransformer<T, T> applySchedulersAndAllFilter(Context context, ErrorVerify errorVerify) {
+    public static <T> ObservableTransformer<T, T> applySchedulersAndAllFilter(ErrorVerify errorVerify) {
         return upstream -> upstream
                 .compose(applySchedulers())
                 .onErrorResumeNext(throwable -> {

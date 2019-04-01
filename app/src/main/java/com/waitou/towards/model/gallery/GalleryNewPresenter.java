@@ -4,14 +4,12 @@ import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.recycler.XRecyclerView;
 
 /**
- * Created by waitou on 17/2/23.
- * 妹子相册presenter
+ * auth aboom
+ * date 2019/3/31
  */
-
-public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecyclerView.OnRefreshAndLoadMoreListener {
+public class GalleryNewPresenter extends XPresent<GalleryNewActivity> {
 
     void loadData(int page) {
         pend(DataLoader.getGankApi().getGirlPics(page)
@@ -22,20 +20,7 @@ public class GalleryPresenter extends XPresent<GalleryActivity> implements XRecy
                         getV().onError(page == 1);
                     }
                 }))
-                .map(listGankIoDayInfo -> listGankIoDayInfo.results)
+                .map(o -> o.results)
                 .subscribe(galleryInfo -> getV().onSuccess(galleryInfo)));
-    }
-
-    @Override
-    public void onRefresh() {
-    }
-
-    @Override
-    public void onLoadMore(int page) {
-        loadData(page);
-    }
-
-    public void finish() {
-        getV().finish();
     }
 }

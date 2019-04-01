@@ -10,8 +10,5 @@ public class ItemButton implements Displayable {
 
     public String buttonDes;
 
-    @Override
-    public int getItemType() {
-        return 4;
-    }
+
 }

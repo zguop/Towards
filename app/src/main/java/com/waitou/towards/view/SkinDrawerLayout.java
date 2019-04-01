@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
 import com.waitou.wt_library.base.BaseActivity;
 
@@ -28,6 +29,7 @@ public class SkinDrawerLayout extends DrawerLayout implements SkinCompatSupporta
     @Override
     public void applySkin() {
         if (getContext() instanceof BaseActivity) {
+            LogUtils.e("--------------------------------------");
             ((BaseActivity) getContext()).transparencyBar(this);
         }
     }

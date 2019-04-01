@@ -76,7 +76,7 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
         }
 
         getV().pend(DataLoader.getJokeApi().getTextJoke(params)
-                .compose(RxTransformerHelper.applySchedulersResult(getV().getActivity(), new SimpleErrorVerify() {
+                .compose(RxTransformerHelper.applySchedulersResult( new SimpleErrorVerify() {
                     @Override
                     public void call(String code, String desc) {
                         super.call(code, desc);

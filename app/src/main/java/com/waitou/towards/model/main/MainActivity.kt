@@ -17,7 +17,7 @@ import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
 import com.waitou.towards.model.activity.RecommendedActivity
-import com.waitou.towards.model.gallery.GalleryActivity
+import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
 import com.waitou.towards.model.main.fragment.CircleFragment
 import com.waitou.towards.model.main.fragment.FigureFragment
@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         ChangeModeController.get().init(this)
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        transparencyBar(mainBinding?.mainDrawerLayout)
         mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
         mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(RecommendedActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
@@ -102,7 +103,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         R.id.nav_tuijian -> Router.newIntent().from(this).to(RecommendedActivity::class.java).launch()
                         R.id.nav_all -> {
                         }
-                        R.id.nav_meizi -> Router.newIntent().from(this).to(GalleryActivity::class.java).launch()
+                        R.id.nav_meizi -> Router.newIntent().from(this).to(GalleryNewActivity::class.java).launch()
                         R.id.nav_graffiti -> Router.newIntent().from(this).to(GraffitiActivity::class.java).launch()
                         R.id.nav_collect -> PhotoPickerFinal.get()
                                 .with(this)

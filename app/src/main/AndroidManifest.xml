@@ -45,6 +45,9 @@
         <activity
             android:name=".model.gallery.GalleryActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".model.gallery.GalleryNewActivity"
+            android:screenOrientation="portrait"/>
         <!--随手涂鸦-->
         <activity
             android:name=".model.graffiti.GraffitiActivity"

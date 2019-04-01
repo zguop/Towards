@@ -12,8 +12,5 @@ public class TextBean implements Displayable {
 
     public String info;
 
-    @Override
-    public int getItemType() {
-        return 2;
-    }
+
 }

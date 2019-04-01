@@ -53,7 +53,7 @@ dependencies {
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["bubbleseekbar"]
 
-
+    implementation 'github.hellocsl:GalleryLayoutManager:1.0.6'
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
