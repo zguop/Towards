@@ -24,6 +24,7 @@ import com.to.aboomy.recycler_lib.PullRecyclerView;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityNewGalleryBinding;
+import com.waitou.towards.model.gallery.helper.CurveTransformer;
 import com.waitou.towards.model.gallery.helper.ScaleTransformer;
 import com.waitou.wt_library.base.XActivity;
 import com.waitou.wt_library.kit.UImage;
@@ -44,9 +45,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityNewGalleryBinding> implements PullRecyclerView.OnLoadMoreListener {
 
-    private MuRecyclerAdapter    adapter;
-    private Disposable           subscribe;
-    private Disposable           cacheSubscribe;
+    private MuRecyclerAdapter adapter;
+    private Disposable        subscribe;
+    private Disposable        cacheSubscribe;
+    private int               choosePosition = -1;
+    private boolean           transformer;
 
     @Override
     public int getContentViewId() {
@@ -57,9 +60,13 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
     public void afterCreate(Bundle savedInstanceState) {
         transparencyBar();
         GalleryLayoutManager layoutManager = new GalleryLayoutManager(GalleryLayoutManager.HORIZONTAL);
-        layoutManager.attach(getBinding().list.getContentView(), 1);
+        layoutManager.attach(getBinding().list.getContentView());
         layoutManager.setItemTransformer(new ScaleTransformer());
         layoutManager.setOnItemSelectedListener((recyclerView, item, position) -> {
+            if (choosePosition == position) {
+                return;
+            }
+            choosePosition = position;
             GankResultsTypeInfo info = (GankResultsTypeInfo) adapter.getItem(position);
             if (info != null) {
                 if (cacheSubscribe != null && !cacheSubscribe.isDisposed()) {
@@ -107,13 +114,8 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                 ImageView imageView = helper.getView(R.id.image);
                 Glide.with(GalleryNewActivity.this)
                         .load(info.url)
-                        .placeholder(R.drawable.place_holder)
+                        .error(R.drawable.place_holder)
                         .into(new SimpleTarget<GlideDrawable>() {
-                            @Override
-                            public void onLoadStarted(Drawable placeholder) {
-                                imageView.setImageDrawable(placeholder);
-                            }
-
                             @Override
                             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                                 imageView.setImageDrawable(resource);
@@ -122,7 +124,7 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
 
                             @Override
                             public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                                super.onLoadFailed(e, errorDrawable);
+                                imageView.setImageDrawable(errorDrawable);
                                 info.isShowImageUrl = false;
                             }
                         });
@@ -143,6 +145,16 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                             getBinding().list.getContentView().smoothScrollToPosition(currentPosition + 1);
                         });
             }
+        });
+        getBinding().style.setOnClickListener(v -> {
+            getBinding().menu.close(true);
+            transformer = !transformer;
+            if (transformer) {
+                layoutManager.setItemTransformer(new CurveTransformer());
+            } else {
+                layoutManager.setItemTransformer(new ScaleTransformer());
+            }
+            getBinding().list.setAdapter(adapter);
         });
         reloadData();
     }

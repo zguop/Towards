@@ -45,13 +45,14 @@
                 app:fab_size="mini"/>
 
             <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/svg_ic_undo"
                 app:fab_colorNormal="?android:attr/colorPrimary"
                 app:fab_colorPressed="?android:attr/colorPrimary"
                 app:fab_colorRipple="#8c8e91"
-                app:fab_label="返回"
+                app:fab_label="模式"
                 app:fab_size="mini"/>
 
             <com.github.clans.fab.FloatingActionButton

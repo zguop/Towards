@@ -16,7 +16,7 @@ public class CurveTransformer implements GalleryLayoutManager.ItemTransformer {
         int height = item.getHeight();
         item.setPivotX(width / 2.f);
         item.setPivotY(height);
-        float scale = 1 - 0.1f * Math.abs(fraction);
+        float scale = 1 - 0.15f * Math.abs(fraction);
         item.setScaleX(scale);
         item.setScaleY(scale);
         item.setRotation(ROTATE_ANGEL * fraction);
