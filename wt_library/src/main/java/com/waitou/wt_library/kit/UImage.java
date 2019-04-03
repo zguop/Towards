@@ -2,9 +2,7 @@ package com.waitou.wt_library.kit;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,22 +15,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.v4.content.FileProvider;
 import android.view.View;
 
-import com.blankj.utilcode.util.PathUtils;
 import com.waitou.net_library.BuildConfig;
 import com.waitou.wt_library.BaseApplication;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by waitou on 17/3/24.
@@ -1323,31 +1313,32 @@ public class UImage {
     /**
      * 将bitmap保存到系统图库
      */
-    @SuppressLint("SimpleDateFormat")
-    public static void saveImageToGallery(Context context, Bitmap bmp) {
-        String picDir = PathUtils.getExternalPicturesPath();
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
-        String fileName = "IMAGE_" + timeStamp + JPG;
-        // 首先保存图片
-        File file = new File(picDir + java.io.File.separator + fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 其次把文件插入到系统图库
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
-        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, FileProvider.getUriForFile(context, FILE_PROVIDER_NAME, file)));
-    }
+//    @SuppressLint("SimpleDateFormat")
+//    public static void saveImageToGallery(Context context, Bitmap bmp) {
+//        String picDir = PathUtils.getExternalPicturesPath();
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+//        String fileName = "IMAGE_" + timeStamp + JPG;
+//        // 首先保存图片
+//        File file = new File(picDir + java.io.File.separator + fileName);
+//        try {
+//            FileOutputStream fos = new FileOutputStream(file);
+//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//            fos.flush();
+//            fos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // 其次把文件插入到系统图库
+//
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+//        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+//        values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+//        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//        // 最后通知图库更新
+//        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, FileProvider.getUriForFile(context, FILE_PROVIDER_NAME, file)));
+//    }
 //
 //    /**
 //     * 根据文件名判断文件是否为图片

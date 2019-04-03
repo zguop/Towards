@@ -7,9 +7,9 @@ import android.content.Context;
  */
 
 public enum NativeEnum {
-    TYPE_H5(ExtraValue.TYPE_H5, ExtraValue.PATH_H5),
-    TYPE_MOVIE_RECOMMEND(ExtraValue.TYPE_MOVIE_RECOMMEND, ExtraValue.PATH_MOVIE_RECOMMEND),
-    TYPE_DEFAULT(ExtraValue.TYPE_DEFAULT, "");
+    TYPE_H5(Values.TYPE_H5, Values.PATH_H5),
+    TYPE_MOVIE_RECOMMEND(Values.TYPE_MOVIE_RECOMMEND, Values.PATH_MOVIE_RECOMMEND),
+    TYPE_DEFAULT(Values.TYPE_DEFAULT, "");
 
     private int    type;
     private String path;

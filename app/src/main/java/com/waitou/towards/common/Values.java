@@ -4,7 +4,7 @@ package com.waitou.towards.common;
  * Created by waitou on 17/1/4.
  */
 
-public class ExtraValue {
+public class Values {
 
     //笑话大全的key
 //    public static String KEY = "7d0bcca9211cf28a52b9b6b5f9268fd9";
@@ -39,5 +39,21 @@ public class ExtraValue {
 
     public static final String PATH_H5 = "path_h5";
 
+
+
+
+
+
+
+    /*--------------- 常量值 ---------------*/
+    /**
+     * 图片目录
+     */
+    public static final String FILE_PATH_PICTURES = ".Pictures";
+
+    /**
+     * 包名 + fileProvider
+     */
+    public static final String FILE_PROVIDER = ".file_provider";
 
 }

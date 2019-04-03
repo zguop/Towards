@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PathUtils;
@@ -19,13 +18,12 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
-import com.waitou.net_library.http.AsyncOkHttpClient;
 import com.waitou.towards.R;
-import com.waitou.towards.common.thread.DownloadThread;
 import com.waitou.towards.greendao.GreenDaoHelper;
 import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
+import com.waitou.towards.util.KitUtils;
 import com.waitou.wt_library.base.XPresent;
 
 import java.io.File;
@@ -54,7 +52,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<LogoImg> logoImgList = logoImgDao.loadAll();
         //去请求网络上的logo图片
         pend(DataLoader.getGithubApi().getLogoList()
-                .compose(RxTransformerHelper.applySchedulersResult( new EmptyErrorVerify()))
+                .compose(RxTransformerHelper.applySchedulersResult(new EmptyErrorVerify()))
                 .filter(strings -> strings != null && strings.size() > 0)
                 .doOnNext(strings -> {
                     if (!logoImgList.isEmpty()) {
@@ -69,14 +67,14 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                                     if (!StringUtils.isEmpty(savePath)) {
                                         //删除本地下载的图片
                                         boolean b = FileUtils.deleteFile(savePath);
-                                        LogUtils.e( "  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
+                                        LogUtils.e("  删除本地图片是否成功 = " + b + " 删除的图片是 ： " + unique.getImgUrl());
                                     }
                                     //删除数据库中的这条数据
                                     logoImgDao.delete(unique);
                                 }
                             }
                         } else {
-                            LogUtils.e( " 没有要删除的图片");
+                            LogUtils.e(" 没有要删除的图片");
                         }
                     }
                 })
@@ -94,7 +92,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                 .subscribe(s -> {
                     LogoImg logoImg = new LogoImg();
                     logoImg.setImgUrl(s);
-                    LogUtils.e( " 插入数据库的图片 ： " + logoImg.getImgUrl());
+                    LogUtils.e(" 插入数据库的图片 ： " + logoImg.getImgUrl());
                     logoImgDao.insert(logoImg); //插入数据 直接开始下载图片
                     downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
                 }));
@@ -116,13 +114,13 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         }
 
         if (!downloadList.isEmpty()) {
-            LogUtils.e( " 需要下载 ：" + downloadList.size() + " 张图片");
+            LogUtils.e(" 需要下载 ：" + downloadList.size() + " 张图片");
             for (LogoImg logoImg : downloadList) {
                 downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
             }
         }
 
-        LogUtils.e( " 显示的图片有 " + showLogoList.size() + " 张");
+        LogUtils.e(" 显示的图片有 " + showLogoList.size() + " 张");
         //如果没有显示的图片 设置默认的图片
         if (showLogoList.isEmpty()) {
             initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
@@ -133,23 +131,23 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                 .filter(o -> !o.getIsShowLogoUrl())
                 .map(LogoImg::getSavePath).toList().blockingGet();
 
-        LogUtils.e( " 可以显示的有 " + imgUrl.size() + " 张");
+        LogUtils.e(" 可以显示的有 " + imgUrl.size() + " 张");
         boolean empty = imgUrl.isEmpty();
         //如果乳品全部都使用过，那么就从showLogoList 重新取一张图片使用
         int random = new Random().nextInt(empty ? showLogoList.size() : imgUrl.size());
         String savePath;
         if (empty) {
-            LogUtils.e( " 获取的是 showLogoList 中的图片 ");
+            LogUtils.e(" 获取的是 showLogoList 中的图片 ");
             savePath = showLogoList.get(random).getSavePath();
         } else {
-            LogUtils.e( " 获取的是 imgUrl 中的图片 ");
+            LogUtils.e(" 获取的是 imgUrl 中的图片 ");
             savePath = imgUrl.get(random);
         }
         //显示图片
         loadFileImg(savePath);
 
         if (empty) {
-            LogUtils.e( " 所有图片已经显示， 更新数据库标识");
+            LogUtils.e(" 所有图片已经显示， 更新数据库标识");
             //所有图片都已经显示过 去数据库刷新标识
             for (LogoImg logoImg : showLogoList) {
                 logoImg.setIsShowLogoUrl(false);
@@ -159,7 +157,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         //去数据库刷新使用过的图片标识
         //查询某个条件的数据
         LogoImg unique = logoImgDao.queryBuilder().where(LogoImgDao.Properties.SavePath.eq(savePath)).unique();
-        LogUtils.e( " 显示的图片是 ： " + unique.getImgUrl());
+        LogUtils.e(" 显示的图片是 ： " + unique.getImgUrl());
         unique.setIsShowLogoUrl(true);
         //更新标识
         logoImgDao.update(unique);
@@ -176,7 +174,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                 super.onLoadFailed(e, errorDrawable);
                 initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
                 boolean b = FileUtils.deleteFile(file);//加载失败的图片需要删除
-                LogUtils.e( "加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
+                LogUtils.e("加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
             }
 
             @Override
@@ -223,14 +221,10 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      * 主要用下载图片 保存到cache目录
      */
     private void downLoaderImg(String url, LogoImg logoImg, LogoImgDao logoImgDao) {
-        //下载的图片路径：/data/user/0/com.waitou.towards.debug/cache/65F7D5ADFA49A9794389EC4F3EB7F834.jpg
-        String imageCacheSavePath = PathUtils.getInternalAppCachePath() + File.separator + EncryptUtils.encryptMD5ToString(url) + url.substring(url.lastIndexOf("."));
-        DownloadThread.get(0, url, imageCacheSavePath, (id, progress, isCompleted, file) -> {
-            if (isCompleted) {
-                logoImg.setSavePath(imageCacheSavePath);
-                logoImgDao.update(logoImg);
-                LogUtils.e("下载的图片路径 " + imageCacheSavePath);
-            }
-        }).setClient(AsyncOkHttpClient.getOkHttpClient()).start();
+        KitUtils.downLoaderImg(url, PathUtils.getInternalAppCachePath(), path -> {
+            LogUtils.e("图片下载完成路径 " + path);
+            logoImg.setSavePath(path);
+            logoImgDao.update(logoImg);
+        });
     }
 }

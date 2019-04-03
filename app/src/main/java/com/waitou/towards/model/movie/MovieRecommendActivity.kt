@@ -15,7 +15,7 @@ import com.waitou.towards.bean.BannerAdapterInfo
 import com.waitou.towards.bean.MovieInfo
 import com.waitou.towards.bean.MovieResInfo
 import com.waitou.towards.bean.TitleInfo
-import com.waitou.towards.common.ExtraValue
+import com.waitou.towards.common.Values
 import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
 import com.waitou.wt_library.recycler.LayoutManagerUtil
@@ -47,7 +47,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
                 Router.newIntent()
                         .from(this)
                         .to(MovieProjectActivity::class.java)
-                        .putSerializable(ExtraValue.MOVIE_PROJECT, movieResInfo)
+                        .putSerializable(Values.MOVIE_PROJECT, movieResInfo)
                         .launch()
             }
         }

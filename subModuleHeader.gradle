@@ -57,8 +57,8 @@ def appConfigure = {
                 }
             }
 
-            buildTypes.with {
-                release.with {
+            buildTypes {
+                release {
                     //签名配置
                     signingConfig = signingConfigs.config
                     //混淆打开
@@ -69,14 +69,14 @@ def appConfigure = {
                     //移除无用的resource文件
                     shrinkResources false
                 }
-                debug.with {
+                debug {
                     //签名配置
                     signingConfig = signingConfigs.config
                     applicationIdSuffix ".debug"
                 }
             }
 
-            dexOptions.with {
+            dexOptions {
                 javaMaxHeapSize "12g"
                 jumboMode true
                 preDexLibraries false

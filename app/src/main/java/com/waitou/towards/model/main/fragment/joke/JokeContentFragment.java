@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.waitou.towards.R;
 import com.waitou.towards.bean.JokeInfo;
-import com.waitou.towards.common.ExtraValue;
+import com.waitou.towards.common.Values;
 import com.waitou.towards.databinding.IncludePullRecyclerBinding;
 import com.waitou.wt_library.base.XFragment;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
@@ -30,7 +30,7 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        mType = getArguments().getInt(ExtraValue.JOKE_CONTENT_TYPE);
+        mType = getArguments().getInt(Values.JOKE_CONTENT_TYPE);
         mAdapter = new MultiTypeAdapter<>(getActivity());
         mAdapter.addViewTypeToLayoutMap(0, R.layout.item_textjoke);
         mAdapter.addViewTypeToLayoutMap(1, R.layout.item_imagejoke);

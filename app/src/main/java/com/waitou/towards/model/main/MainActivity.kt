@@ -74,7 +74,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             true
         }
-
     }
 
 
@@ -91,7 +90,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         } else {
             super.onBackPressed()
             Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe({ killAll() })
+                    .subscribe { killAll() }
         }
     }
 

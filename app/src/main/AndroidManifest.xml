@@ -33,8 +33,6 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
 
-        <activity android:name=".model.activity.ListActivity"/>
-
         <!--主页-->
         <activity
             android:name=".model.main.MainActivity"
@@ -71,17 +69,6 @@
         <activity
             android:name=".model.QrScanActivity"
             android:screenOrientation="portrait"/>
-        <!--FileProvider配置-->
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${packageName1}.android.file_provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-
-        </provider>
     </application>
 
 </manifest>

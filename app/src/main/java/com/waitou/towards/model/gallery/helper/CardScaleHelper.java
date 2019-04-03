@@ -94,7 +94,7 @@ public class CardScaleHelper {
         if (positionView != null) {
             positionView.setDrawingCacheEnabled(true);
             Bitmap scale = UImage.scale(positionView.getDrawingCache(), ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight());
-            UImage.saveImageToGallery(mContext, scale);
+//            KitUtils.saveImageToGallery( scale);
             ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
             positionView.setDrawingCacheEnabled(false);
         }

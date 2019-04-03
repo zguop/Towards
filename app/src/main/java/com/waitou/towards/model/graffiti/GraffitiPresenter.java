@@ -30,7 +30,6 @@ import com.waitou.towards.enums.GraffitiToolEnum;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
@@ -269,7 +268,7 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
                             graffitiPicView.doDraw(bitCanvas);
                             graffitiView.doDraw(bitCanvas);
-                            UImage.saveImageToGallery(getV(), bitmap);
+//                            UImage.saveImageToGallery(getV(), bitmap);
                             bitmap.recycle();
                             ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
                         } else {

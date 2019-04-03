@@ -17,7 +17,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.UDate;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
-import com.waitou.towards.common.ExtraValue;
+import com.waitou.towards.common.Values;
 import com.waitou.towards.common.NativeEnum;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
@@ -90,7 +90,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 })
                 .observeOn(Schedulers.io())
                 .flatMap(currentDate -> {
-                    String everyday = SPStaticUtils.getString(ExtraValue.EVERYDAY_DATA, "2017-03-04");
+                    String everyday = SPStaticUtils.getString(Values.EVERYDAY_DATA, "2017-03-04");
                     boolean isReload = false;
                     if (!everyday.equals(currentDate)) { //第二天
                         if (UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
@@ -110,7 +110,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                                 }
                                 return Observable.just(info);
                             }).doOnNext(info ->
-                                    SPStaticUtils.put(ExtraValue.EVERYDAY_DATA, finalCurrentDate[0])
+                                    SPStaticUtils.put(Values.EVERYDAY_DATA, finalCurrentDate[0])
                             );
                 })
                 .flatMap(gankResultsInfo -> {

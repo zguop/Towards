@@ -5,7 +5,7 @@ import com.blankj.utilcode.util.ObjectUtils
 import com.waitou.net_library.model.Displayable
 import com.waitou.towards.R
 import com.waitou.towards.bean.MovieResInfo
-import com.waitou.towards.common.ExtraValue
+import com.waitou.towards.common.Values
 import com.waitou.towards.databinding.ActivityMovieBinding
 import com.waitou.wt_library.base.XActivity
 import com.waitou.wt_library.recycler.LayoutManagerUtil
@@ -31,7 +31,7 @@ class MovieProjectActivity : XActivity<MovieProjectPresenter, ActivityMovieBindi
 
     override fun afterCreate(savedInstanceState: Bundle?) {
         bar?.initializeHeader("专题推荐")
-        movieResInfo = intent.getSerializableExtra(ExtraValue.MOVIE_PROJECT) as MovieResInfo?
+        movieResInfo = intent.getSerializableExtra(Values.MOVIE_PROJECT) as MovieResInfo?
         adapter = SingleTypeAdapter(this, R.layout.item_project_movie)
         binding.manager = LayoutManagerUtil.getGridLayoutManager(this, 2)!!
         binding.adapter = adapter

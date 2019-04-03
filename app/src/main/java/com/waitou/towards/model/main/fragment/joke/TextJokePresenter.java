@@ -10,7 +10,7 @@ import com.waitou.net_library.model.RequestParams;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
 import com.waitou.towards.bean.JokeInfo;
-import com.waitou.towards.common.ExtraValue;
+import com.waitou.towards.common.Values;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
@@ -31,7 +31,7 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
             mFragmentJoke = new JokeContentFragment();
             mFragmentJoke.setPresenter(this);
             Bundle bundle = new Bundle();
-            bundle.putInt(ExtraValue.JOKE_CONTENT_TYPE, 0);
+            bundle.putInt(Values.JOKE_CONTENT_TYPE, 0);
             mFragmentJoke.setArguments(bundle);
         }
 
@@ -39,7 +39,7 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
             mFragmentPic = new JokeContentFragment();
             mFragmentPic.setPresenter(this);
             Bundle bundle = new Bundle();
-            bundle.putInt(ExtraValue.JOKE_CONTENT_TYPE, 1);
+            bundle.putInt(Values.JOKE_CONTENT_TYPE, 1);
             mFragmentPic.setArguments(bundle);
         }
         return type == 0 ? mFragmentJoke : mFragmentPic;
@@ -61,7 +61,7 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
      */
     void loadJokeData(int page, int type) {
         RequestParams params = new RequestParams();
-        params.put("key", ExtraValue.KEY);
+        params.put("key", Values.KEY);
         params.put("page", page);
         switch (type) {
             case 0:
