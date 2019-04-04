@@ -19,7 +19,7 @@
         android:id="@+id/scan_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:qr_scan_tips="@string/qr_scan_trumpet_tips"
-        tools:qr_scan_title="@string/qr_scan_security_tips"/>
+        tools:qr_scan_tips="扫码扫码扫码扫码扫码扫码扫码扫码"
+        tools:qr_scan_title="扫码扫码扫码扫码扫码扫码扫码扫码"/>
 
 </RelativeLayout>

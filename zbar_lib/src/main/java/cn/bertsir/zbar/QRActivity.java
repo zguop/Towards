@@ -60,7 +60,6 @@ public abstract class QRActivity extends AppCompatActivity implements ScanCallba
 
     protected abstract int getContentId();
 
-
     /**
      * 指定QrConfig常量 默认是二维码
      * 在页面初始化调用
@@ -145,9 +144,6 @@ public abstract class QRActivity extends AppCompatActivity implements ScanCallba
         }
         if (mCameraPreView != null) {
             mCameraPreView.setFlash(false);
-        }
-        if (BuildConfig.DEBUG) {
-            Log.e("aa", "onScanResult = " + content);
         }
     }
 }

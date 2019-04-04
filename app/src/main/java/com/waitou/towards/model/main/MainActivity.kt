@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
+import cn.bertsir.zbar.QRActivity
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
 import com.waitou.photo_library.PhotoPickerFinal
@@ -16,6 +17,7 @@ import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
+import com.waitou.towards.model.QrScanActivity
 import com.waitou.towards.model.activity.RecommendedActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
@@ -55,7 +57,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         transparencyBar(mainBinding?.mainDrawerLayout)
         mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
-        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(RecommendedActivity::class.java).launch() }
+        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
         mainBinding?.toolbar?.post {
             mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)

@@ -159,7 +159,7 @@ public class ScanView extends View {
             }
             w += textScreen;
         }
-        float textX = x - w / 2;
+        float textX = x - (w >> 1);// w / 2
         canvas.drawText(text, start, end, textX, textY, paint);
         if (end != chars.length) {
             drawTipsText(end, totalWidth, x, textY + scanTipsSize + dip2px(4), chars, text, canvas, paint);
