@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.FileProvider;
+import android.view.View;
 
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
@@ -47,6 +48,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+        getBar().setVisibility(View.VISIBLE);
         getBar().initializeHeader("裁剪");
         getBar().setRightText("完成", v -> {
             if (isCanSave) {
@@ -80,7 +82,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
         });
         getBinding().setPresenter(getP());
         String photoPath = getIntent().getStringExtra(PhotoValue.EXTRA_URL);
-        getBinding().crop.startLoad(FileProvider.getUriForFile(this, UImage.FILE_PROVIDER_NAME, new File(photoPath)), new LoadCallback() {
+        getBinding().crop.startLoad( UriUtils.file2Uri(new File(photoPath)), new LoadCallback() {
             @Override
             public void onSuccess() {
                 showContent();

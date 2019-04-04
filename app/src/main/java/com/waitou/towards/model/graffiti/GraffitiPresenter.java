@@ -11,10 +11,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -27,6 +28,7 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.databinding.ItemSeekBarBinding;
 import com.waitou.towards.enums.GraffitiToolEnum;
+import com.waitou.towards.util.KitUtils;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
 import com.waitou.wt_library.base.XPresent;
@@ -38,6 +40,7 @@ import com.xw.repo.BubbleSeekBar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -75,7 +78,6 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     private BaseDialog                          mToolDialog;
     private BaseDialog                          mSeekBarDialog;
 
-
     /**
      * 选择工具
      */
@@ -85,7 +87,8 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
             mGraffitiToolAdapter.setPresenter(this);
             List<GraffitiToolInfo> toolInfoList = new ArrayList<>();
             for (GraffitiToolEnum toolEnum : GraffitiToolEnum.values()) {
-                GraffitiToolInfo info = new GraffitiToolInfo(ContextCompat.getDrawable(getV(), toolEnum.getRedId()), toolEnum.getTool());
+                GraffitiToolInfo info = new GraffitiToolInfo(Objects.requireNonNull(
+                        ContextCompat.getDrawable(getV(), toolEnum.getRedId())), toolEnum.getTool());
                 toolInfoList.add(info);
             }
             mGraffitiToolAdapter.set(toolInfoList);
@@ -248,11 +251,14 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
     public static void onTouch(View view, Consumer<Integer> action) {
         view.setOnTouchListener((v, event) -> {
             try {
-                action.accept(MotionEventCompat.getActionMasked(event));
+                action.accept(event.getAction());
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.performClick();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return false;
+            return true;
         });
     }
 
@@ -268,9 +274,12 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
                             graffitiPicView.doDraw(bitCanvas);
                             graffitiView.doDraw(bitCanvas);
-//                            UImage.saveImageToGallery(getV(), bitmap);
-                            bitmap.recycle();
-                            ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
+                            String imageCacheSavePath = PathUtils.getExternalPicturesPath() + File.separator + "IMAGE_" + System.currentTimeMillis() + ".jpg";
+                            boolean save = ImageUtils.save(bitmap, imageCacheSavePath, Bitmap.CompressFormat.JPEG, true);
+                            if (save) {
+                                KitUtils.saveImageToGallery(new File(imageCacheSavePath));
+                                ToastUtils.showShort("图片成功保存到相册O(∩_∩)O~");
+                            }
                         } else {
                             ToastUtils.showShort("先绘制点什么吧!╮(╯▽╰)╭");
                         }

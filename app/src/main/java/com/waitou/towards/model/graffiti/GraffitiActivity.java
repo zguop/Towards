@@ -26,6 +26,7 @@ public class GraffitiActivity extends XActivity<GraffitiPresenter, ActivityGraff
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+        transparencyBar();
         getBinding().setPresenter(getP());
     }
 
