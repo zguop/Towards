@@ -7,13 +7,10 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -27,6 +24,7 @@ import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.UriUtils;
 import com.to.aboomy.rx_lib.RxUtil;
 import com.waitou.net_library.log.LogUtil;
 import com.waitou.photo_library.PhotoPickerFinal;
@@ -38,7 +36,6 @@ import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.FolderPopUpWindow;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XPresent;
-import com.waitou.wt_library.kit.UImage;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter;
 import com.waitou.wt_library.router.Router;
@@ -216,11 +213,11 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     /**
      * 当前文件夹的index
      */
-    public ObservableInt           selectedIndex = new ObservableInt();
+    public  ObservableInt                      selectedIndex = new ObservableInt();
     /**
      * 当前文件夹的描述
      */
-    public ObservableField<String> folderName    = new ObservableField<>("全部图片");
+    public  ObservableField<String>            folderName    = new ObservableField<>("全部图片");
 
     /**
      * 弹出文件选框
@@ -343,10 +340,10 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
     /**
      * 拍照后的图片路径
      */
-    private File scanPath;
-    private File deletePath;
-    private static final String SCAN_TYPE = "image/jpeg";
-    private ProgressDialogFragment mDialogFragment;
+    private              File                   scanPath;
+    private              File                   deletePath;
+    private static final String                 SCAN_TYPE = "image/jpeg";
+    private              ProgressDialogFragment mDialogFragment;
 
     /**
      * 打开相机进行拍照
@@ -357,15 +354,9 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
         scanPath = FileUtils.getFileByPath(PathUtils.getExternalPicturesPath() + File.separator +
                 "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(),
-                new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + UImage.JPG);
+                new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + ".jpg");
         LogUtil.e(" takePicture path = " + scanPath);
-        Uri uri;
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
-            uri = Uri.fromFile(scanPath);
-        } else {
-            uri = FileProvider.getUriForFile(getV(), UImage.FILE_PROVIDER_NAME, scanPath);
-        }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, UriUtils.file2Uri(scanPath));
         getV().startActivityForResult(intent, PhotoWallActivity.PHOTO_REQUEST_CODE);
     }
 

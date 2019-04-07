@@ -23,6 +23,10 @@ import com.waitou.wt_library.action.Action1;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -65,7 +69,6 @@ public class KitUtils {
         oldTransitionDrawable.startTransition(500);
     }
 
-
     /**
      * 将bitmap保存到系统图库
      */
@@ -77,7 +80,6 @@ public class KitUtils {
         Utils.getApp().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Utils.getApp().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, UriUtils.file2Uri(imgFile)));
     }
-
 
     /**
      * 下载
@@ -115,5 +117,23 @@ public class KitUtils {
                     filePathAction.call(result);
             }
         });
+    }
+
+
+    public static DateFormat getDateFormat(String pattern) {
+        return new SimpleDateFormat(pattern, Locale.getDefault());
+    }
+
+    /**
+     * 时间是否大于选择的时间
+     *
+     * @param hour   时
+     * @param minute 分
+     */
+    public static boolean isRightTime(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        int h = calendar.get(Calendar.HOUR_OF_DAY);
+        int m = calendar.get(Calendar.MINUTE);
+        return h > hour || (h == hour && m >= minute);
     }
 }

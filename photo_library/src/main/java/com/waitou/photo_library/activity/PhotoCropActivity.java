@@ -20,7 +20,6 @@ import com.waitou.photo_library.databinding.ActivityPhotoCropBinding;
 import com.waitou.photo_library.util.PhotoValue;
 import com.waitou.photo_library.view.ProgressDialogFragment;
 import com.waitou.wt_library.base.XActivity;
-import com.waitou.wt_library.kit.UImage;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -54,7 +53,7 @@ public class PhotoCropActivity extends XActivity<PhotoCropPresenter, ActivityPho
             if (isCanSave) {
                 showProgress();
                 File saveFile = FileUtils.getFileByPath(PathUtils.getExternalPicturesPath() + File.separator +
-                        "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(), new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + UImage.JPG);
+                        "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(), new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + ".jpg");
                 getBinding().crop.startCrop(Uri.fromFile(saveFile), new CropCallback() {
                     @Override
                     public void onSuccess(Bitmap cropped) {

@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Library</string>
     <string name="item_page_count">%1$s / %2$s</string>
+    <string name="text_empty">No data!</string>
+    <string name="text_retry">Something went wrong!\nTap to retry</string>
 </resources>

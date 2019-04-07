@@ -1,15 +1,11 @@
 package com.waitou.wt_library.base;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.to.aboomy.rx_lib.RxComposite;
 import com.to.aboomy.statusbar_lib.StatusBarUtil;
@@ -31,6 +27,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private CompositeDisposable mCompositeDisposable;
     private boolean             isImmersiveStatusBar;
+
+    @SuppressWarnings("unchecked")
+    public <T extends View> T ff(int id) {
+        return (T) getLayoutInflater().inflate(id, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends View> T f(int id) {
+        return (T) findViewById(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends View> T f(View view, int id) {
+        return (T) view.findViewById(id);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -106,15 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected boolean onBackPressedOverride() {
         return false;
-    }
-
-    protected <D extends ViewDataBinding> D bindingInflate(@LayoutRes int resId, ViewGroup container) {
-        return DataBindingUtil.inflate(getLayoutInflater(), resId, container, false);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends View> T ff(@LayoutRes int id) {
-        return (T) getLayoutInflater().inflate(id, null);
     }
 
 }

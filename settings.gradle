@@ -5,6 +5,5 @@ include ':app', ':recycler_lib',
         ':three_library',
         ':tinker_lib',
         ':theme_lib',
-        ':utils_lib',
         ':rx_lib',
         ':zbar_lib'

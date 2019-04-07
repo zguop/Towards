@@ -4,7 +4,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+       >
 
         <LinearLayout
             android:id="@+id/left_click"
@@ -92,10 +93,10 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:minWidth="70dp"
-                tools:text="标题"
                 android:textColor="?attr/skin_kind_color_not"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="标题"/>
 
         </RelativeLayout>
 

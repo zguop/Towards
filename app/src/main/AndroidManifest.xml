@@ -40,10 +40,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <!--妹子相册页面-->
-        <activity
-            android:name=".model.gallery.GalleryActivity"
-            android:screenOrientation="portrait"/>
-
         <activity android:name=".model.gallery.GalleryNewActivity"
             android:screenOrientation="portrait"/>
         <!--随手涂鸦-->
@@ -69,6 +65,9 @@
         <activity
             android:name=".model.QrScanActivity"
             android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".model.activity.GloadActivity"/>
     </application>
 
 </manifest>

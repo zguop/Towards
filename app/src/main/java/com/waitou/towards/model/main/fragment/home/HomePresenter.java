@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import com.blankj.utilcode.constant.TimeConstants;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.SPStaticUtils;
 import com.blankj.utilcode.util.TimeUtils;
@@ -14,13 +15,13 @@ import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
-import com.waitou.towards.UDate;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
-import com.waitou.towards.common.Values;
 import com.waitou.towards.common.NativeEnum;
+import com.waitou.towards.common.Values;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.net.cache.Repository;
+import com.waitou.towards.util.KitUtils;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.SingleViewPagerAdapter;
@@ -86,17 +87,18 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
                         getHomeCommendFragment().onFunctionSuccess(pair.second.result.function);
                     }
-                    return UDate.getNowString(UDate.FORMAT_DATE);
+                    return TimeUtils.getNowString(KitUtils.getDateFormat("yyyy-MM-dd"));
                 })
                 .observeOn(Schedulers.io())
                 .flatMap(currentDate -> {
                     String everyday = SPStaticUtils.getString(Values.EVERYDAY_DATA, "2017-03-04");
                     boolean isReload = false;
                     if (!everyday.equals(currentDate)) { //第二天
-                        if (UDate.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
+                        if (KitUtils.isRightTime(12, 30)) { //如果是早上 取缓存 如果缓存没有 请求前一天数据
                             isReload = true; //第二天 大于十二点三十 更新数据
                         } else {
-                            currentDate = UDate.getYesterday(currentDate, UDate.FORMAT_DATE); //请求前一天数据
+                            currentDate = TimeUtils.getString(currentDate,
+                                    KitUtils.getDateFormat("yyyy-MM-dd"), -1, TimeConstants.DAY);//请求前一天数据
                         }
                     }
                     //如果请求的数据是null 请求前一天数据
@@ -105,7 +107,8 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                             .flatMap(info -> {
                                 LogUtil.e("aa", "loadHomeData is null = " + info.isNull); //请求数据如果为null 尝试再次请求前一天数据
                                 if (info.isNull) {
-                                    finalCurrentDate[0] = UDate.getYesterday(finalCurrentDate[0], UDate.FORMAT_DATE);
+                                    finalCurrentDate[0] = TimeUtils.getString(finalCurrentDate[0],
+                                            KitUtils.getDateFormat("yyyy-MM-dd"), -1, TimeConstants.DAY);
                                     return getGankIoDay(finalCurrentDate[0], false);//请求前一天数据
                                 }
                                 return Observable.just(info);
@@ -211,10 +214,13 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     }
 
     public void showBottomSheet() {
+        if (getV().getActivity() == null) {
+            return;
+        }
         new BottomSheet.Builder(getV().getActivity())
                 .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
                 .listener(item -> {
-                    if (txName.get().equals(item.getTitle())) {
+                    if (ObjectUtils.equals(item.getTitle(), txName.get())) {
                         ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
                         return true;
                     }

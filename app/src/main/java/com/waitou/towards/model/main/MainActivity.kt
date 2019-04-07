@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
-import cn.bertsir.zbar.QRActivity
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
 import com.waitou.photo_library.PhotoPickerFinal
@@ -18,6 +17,7 @@ import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
 import com.waitou.towards.model.QrScanActivity
+import com.waitou.towards.model.activity.GloadActivity
 import com.waitou.towards.model.activity.RecommendedActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
@@ -103,6 +103,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     when (item.itemId) {
                         R.id.nav_tuijian -> Router.newIntent().from(this).to(RecommendedActivity::class.java).launch()
                         R.id.nav_all -> {
+                            Router.newIntent().from(this).to(GloadActivity::class.java).launch()
                         }
                         R.id.nav_meizi -> Router.newIntent().from(this).to(GalleryNewActivity::class.java).launch()
                         R.id.nav_graffiti -> Router.newIntent().from(this).to(GraffitiActivity::class.java).launch()
