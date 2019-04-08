@@ -8,4 +8,6 @@ dependencies {
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["rxjava"]
     api rootProject.ext.dependencies["gson"]
+
+    implementation 'com.yanzhenjie:okalle:0.1.5'
 }
