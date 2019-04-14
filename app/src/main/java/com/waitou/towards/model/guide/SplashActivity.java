@@ -33,6 +33,9 @@ public class SplashActivity extends XActivity<SplashPresenter, ActivityLogoBindi
         ScreenUtils.setFullScreen(this);
         getBinding().setPresenter(getP());
         reloadData();
+
+
+
     }
 
     @Override
