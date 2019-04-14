@@ -13,7 +13,6 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["avi-loading"]
-    api rootProject.ext.dependencies["rxpermissions"]
     api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["bottomsheet"]
     api rootProject.ext.dependencies["statusbarlib"]

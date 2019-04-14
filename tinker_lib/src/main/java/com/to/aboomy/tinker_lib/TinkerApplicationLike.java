@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.multidex.MultiDex;
 
 import com.tencent.tinker.entry.DefaultApplicationLike;
 import com.tencent.tinker.lib.tinker.Tinker;
@@ -26,8 +25,6 @@ public class TinkerApplicationLike extends DefaultApplicationLike {
 
     @Override
     public void onBaseContextAttached(Context base) {
-
-        MultiDex.install(base);
 
         TinkerManager.setTinkerApplicationLike(this);
 

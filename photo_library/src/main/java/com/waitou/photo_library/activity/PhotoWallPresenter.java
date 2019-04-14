@@ -1,6 +1,5 @@
 package com.waitou.photo_library.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.BindingAdapter;
@@ -19,9 +18,12 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -43,6 +45,7 @@ import com.waitou.wt_library.router.Router;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -306,16 +309,19 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         boolean showCamera = mPhotoPickerFinal.isShowCamera();
         //点击相机的位置
         if (showCamera && position == 0) {
-            getV().getRxPermissions().requestEach(Manifest.permission.CAMERA)
-                    .subscribe(permission -> {
-                        if (permission.granted) {
+            PermissionUtils.permission(PermissionConstants.CAMERA)
+                    .rationale(shouldRequest -> shouldRequest.again(true))
+                    .callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(List<String> permissionsGranted) {
                             takePicture();
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            ToastUtils.showShort("权限被禁止，无法打开相机！"); //拒绝了权限
-                        } else {
-                            ToastUtils.showShort("请到应用设置中开启权限！");//永久拒绝了权限
                         }
-                    });
+
+                        @Override
+                        public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                            ToastUtils.showShort(ObjectUtils.isEmpty(permissionsDeniedForever) ? "权限被禁止，无法打开相机！" : "请到应用设置中开启存储权限!"); //拒绝了权限
+                        }
+                    }).request();
             return;
         }
         //之后点击的都是图片 多选的情况

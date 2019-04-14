@@ -1,6 +1,5 @@
 package com.waitou.towards.model.graffiti;
 
-import android.Manifest;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
@@ -14,8 +13,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -266,9 +268,11 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
      * 图片保存
      */
     public void save(GraffitiView graffitiView, GraffitiPicView graffitiPicView) {
-        getV().pend(getV().getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(permission -> {
-                    if (permission.granted) {
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .rationale(shouldRequest -> shouldRequest.again(true))
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
                         Bitmap bitmap = Bitmap.createBitmap(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight(), Bitmap.Config.ARGB_8888);
                         Canvas bitCanvas = new Canvas(bitmap);
                         if (graffitiPicView.checkSave() || graffitiView.checkSave()) {
@@ -283,11 +287,12 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
                         } else {
                             ToastUtils.showShort("先绘制点什么吧!╮(╯▽╰)╭");
                         }
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        ToastUtils.showShort("保存图片需要授权该权限！"); //拒绝了权限
-                    } else {
-                        ToastUtils.showShort("请到应用设置中开启权限哦！");//永久拒绝了权限
                     }
-                }));
+
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                        ToastUtils.showShort(ObjectUtils.isEmpty(permissionsDeniedForever) ? "保存图片需要授权该权限！" : "请到应用设置中开启存储权限!"); //拒绝了权限
+                    }
+                }).request();
     }
 }

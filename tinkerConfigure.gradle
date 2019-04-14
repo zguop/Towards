@@ -3,12 +3,12 @@ apply plugin: 'com.tencent.tinker.patch'
 def bakPath = file("${project.rootDir}/tinkerTemp/")
 
 def getTinkerIdValue() {
-    "${rootProject.ext.hotfix.tinkerId}"
+    "${rootProject.ext.android.versionName}"
 }
 
 tinkerPatch {
 
-    oldApk = "${bakPath}/${getTinkerIdValue()}/towards-debug-2.0.5.apk"
+    oldApk = "${bakPath}/${getTinkerIdValue()}/towards-debug-2.0.6.apk"
 
     /**
      * 不忽略tinker的警告,有则终止patch文件的生成

@@ -4,5 +4,4 @@ dependencies {
     //compileOnly rootProject.ext.dependencies['tinker_anno']
     //tinker's main Android lib
     api rootProject.ext.dependencies['tinker_lib']
-    implementation rootProject.ext.dependencies['multidex']
 }

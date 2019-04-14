@@ -1,10 +1,12 @@
 package com.waitou.photo_library.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.to.aboomy.rx_lib.RxBus;
@@ -21,6 +23,7 @@ import com.waitou.wt_library.recycler.divider.GridSpacingItemDecoration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by waitou on 17/4/3.
@@ -78,16 +81,19 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
 
     @Override
     public void reloadData() {
-        getRxPermissions().requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(permission -> {
-                    if (permission.granted) {
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .rationale(shouldRequest -> shouldRequest.again(true))
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
                         getP().imageDataSource(null);
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        ToastUtils.showShort("权限被禁止，无法选择本地图片！"); //拒绝了权限
-                    } else {
-                        ToastUtils.showShort("请到应用设置中开启权限！");//永久拒绝了权限
                     }
-                });
+
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                        ToastUtils.showShort(ObjectUtils.isEmpty(permissionsDeniedForever) ? "权限被禁止，无法选择本地图片！" : "请到应用设置中开启存储权限!"); //拒绝了权限
+                    }
+                }).request();
     }
 
     public void onPhotoLoaded(ArrayList<PhotoInfo> list) {
