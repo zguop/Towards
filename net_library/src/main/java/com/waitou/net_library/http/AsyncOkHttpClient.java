@@ -1,6 +1,9 @@
 package com.waitou.net_library.http;
 
 
+import com.safframework.http.interceptor.LoggingInterceptor;
+import com.waitou.net_library.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -20,10 +23,15 @@ public class AsyncOkHttpClient {
 
     public static OkHttpClient getOkHttpClient() {
         if (sOkHttpClient == null) {
-            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            LoggingInterceptor loggingInterceptor = new LoggingInterceptor.Builder()
+                    .loggable(BuildConfig.DEBUG)
+                    .tag("aa")
+                    .request()
+                    .response()
+                    .hideVerticalLine()// 隐藏竖线边框
+                    .build();
             sOkHttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(httpLoggingInterceptor)//日志打印拦截工具
+                    .addInterceptor(loggingInterceptor)//日志打印拦截工具
                     .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
                     .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
                     .writeTimeout(TIMEOUT, TimeUnit.MILLISECONDS)

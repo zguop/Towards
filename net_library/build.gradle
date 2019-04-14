@@ -8,6 +8,7 @@ dependencies {
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["rxjava"]
     api rootProject.ext.dependencies["gson"]
-
-    implementation 'com.yanzhenjie:okalle:0.1.5'
+    implementation rootProject.ext.dependencies['utilcode']
+    implementation 'com.safframework.log:saf-logginginterceptor:1.4.0'
+//    implementation 'com.yanzhenjie:okalle:0.1.5'
 }

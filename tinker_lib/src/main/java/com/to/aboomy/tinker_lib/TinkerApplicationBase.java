@@ -16,12 +16,4 @@ public class TinkerApplicationBase extends TinkerApplication {
     protected TinkerApplicationBase(String delegateClassName) {
         super(ShareConstants.TINKER_ENABLE_ALL, delegateClassName);
     }
-
-    protected TinkerApplicationBase(int tinkerFlags, String delegateClassName) {
-        super(ShareConstants.TINKER_ENABLE_ALL, delegateClassName);
-    }
-
-    protected TinkerApplicationBase(int tinkerFlags, String delegateClassName, String loaderClassName, boolean tinkerLoadVerifyFlag) {
-        super(ShareConstants.TINKER_ENABLE_ALL, delegateClassName, loaderClassName, false);
-    }
 }

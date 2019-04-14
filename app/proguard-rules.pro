@@ -265,7 +265,8 @@ public static java.lang.String TABLENAME;
 -keep class com.tencent.tinker.**{*;}
 
 
-
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
 
 
 

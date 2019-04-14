@@ -1,0 +1,6 @@
+globleConfigure()
+android {
+    resourcePrefix 'meta_'
+}
+dependencies {
+}

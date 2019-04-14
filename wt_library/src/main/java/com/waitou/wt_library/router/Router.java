@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import com.waitou.net_library.log.LogUtil;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -176,7 +174,6 @@ public class Router {
                 }
             }
         } catch (Throwable throwable) {
-            LogUtil.e(throwable.getMessage());
             if (callback != null) {
                 callback.onError(from, to, throwable);
             }

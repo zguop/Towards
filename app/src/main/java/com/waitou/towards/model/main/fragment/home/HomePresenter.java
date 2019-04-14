@@ -5,13 +5,13 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.blankj.utilcode.constant.TimeConstants;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.SPStaticUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.waitou.net_library.helper.RxTransformerHelper;
-import com.waitou.net_library.log.LogUtil;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
 import com.waitou.towards.R;
@@ -81,11 +81,11 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .subscribeOn(Schedulers.io())
                 .compose(RxTransformerHelper.applySchedulers())
                 .map(pair -> {
-                    if (pair.first != null && pair.first.result != null && pair.first.result.size() > 0) {
-                        getHomeCommendFragment().onBannerSuccess(pair.first.result);
+                    if (ObjectUtils.isNotEmpty(pair.first)) {
+                        getHomeCommendFragment().onBannerSuccess(pair.first);
                     }
-                    if (pair.second != null && pair.second.result != null && pair.second.result.function.size() > 0) {
-                        getHomeCommendFragment().onFunctionSuccess(pair.second.result.function);
+                    if (ObjectUtils.isNotEmpty(pair.second)) {
+                        getHomeCommendFragment().onFunctionSuccess(pair.second);
                     }
                     return TimeUtils.getNowString(KitUtils.getDateFormat("yyyy-MM-dd"));
                 })
@@ -105,7 +105,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                     final String[] finalCurrentDate = {currentDate};
                     return getGankIoDay(currentDate, isReload)
                             .flatMap(info -> {
-                                LogUtil.e("aa", "loadHomeData is null = " + info.isNull); //请求数据如果为null 尝试再次请求前一天数据
+                                LogUtils.e("loadHomeData is null = " + info.isNull); //请求数据如果为null 尝试再次请求前一天数据
                                 if (info.isNull) {
                                     finalCurrentDate[0] = TimeUtils.getString(finalCurrentDate[0],
                                             KitUtils.getDateFormat("yyyy-MM-dd"), -1, TimeConstants.DAY);
@@ -178,7 +178,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         String[] current = date.split("-");
         return Repository.getRepository().getGankIoDay(current[0], current[1], current[2], isReload)
                 .map(reply -> {
-                    LogUtil.e("aa", " day = " + date + " loadHomeData " + reply.toString());
+                    LogUtils.e(" day = " + date + " loadHomeData " + reply.toString());
                     return reply.getData();
                 });
     }
@@ -189,11 +189,10 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
     void loadCargoData(String type, int page) {
         Disposable disposable = Repository.getRepository().getGankIoData(type, page)
                 .map(reply -> {
-                    LogUtil.e("aa", " type = " + type + " loadCargoData " + reply.toString());
+                    LogUtils.e(" type = " + type + " loadCargoData " + reply.toString());
                     return reply.getData();
                 })
                 .compose(RxTransformerHelper.applySchedulers())
-                .filter(RxTransformerHelper.verifyNotEmpty())
                 .doOnNext(this::addWelfareImg)
                 .subscribe(info -> {
                             if (type.equals(HomeAndroidFragment.TYPE_ANDROID)) {

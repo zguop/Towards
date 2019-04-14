@@ -20,14 +20,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 
+import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.lib.tinker.TinkerApplicationHelper;
 import com.tencent.tinker.lib.util.TinkerLog;
-import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
-import com.to.aboomy.tinker_lib.TinkerManager;
 import com.to.aboomy.tinker_lib.reporter.SampleTinkerReport;
-import com.to.aboomy.tinker_lib.util.TinkerUtils;
+import com.to.aboomy.tinker_lib.util.TinkerManager;
+import com.to.aboomy.tinker_lib.util.Utils;
 
 
 /**
@@ -41,10 +41,10 @@ import com.to.aboomy.tinker_lib.util.TinkerUtils;
 public class SampleUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = "Tinker.SampleUncaughtExHandler";
 
-    private final Thread.UncaughtExceptionHandler ueh;
-    private static final long   QUICK_CRASH_ELAPSE  = 10 * 1000;
-    public static final  int    MAX_CRASH_COUNT     = 3;
-    private static final String DALVIK_XPOSED_CRASH = "Class ref in pre-verified class resolved to unexpected implementation";
+    private final        Thread.UncaughtExceptionHandler ueh;
+    private static final long                            QUICK_CRASH_ELAPSE  = 10 * 1000;
+    public static final  int                             MAX_CRASH_COUNT     = 3;
+    private static final String                          DALVIK_XPOSED_CRASH = "Class ref in pre-verified class resolved to unexpected implementation";
 
     public SampleUncaughtExceptionHandler() {
         ueh = Thread.getDefaultUncaughtExceptionHandler();
@@ -80,7 +80,7 @@ public class SampleUncaughtExceptionHandler implements Thread.UncaughtExceptionH
         boolean isXposed = false;
         while (throwable != null) {
             if (!isXposed) {
-                isXposed = TinkerUtils.isXposedExists(throwable);
+                isXposed = Utils.isXposedExists(throwable);
             }
 
             // xposed?

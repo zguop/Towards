@@ -8,7 +8,7 @@ def getTinkerIdValue() {
 
 tinkerPatch {
 
-    oldApk = "${bakPath}/${getTinkerIdValue()}/app.apk"
+    oldApk = "${bakPath}/${getTinkerIdValue()}/towards-debug-2.0.5.apk"
 
     /**
      * 不忽略tinker的警告,有则终止patch文件的生成
@@ -125,9 +125,10 @@ android.applicationVariants.all { variant ->
             it.doLast {
                 def destPath = file("${bakPath}/${getTinkerIdValue()}/")
                 copy {
+                    def outputsPrefix = "towards-${variant.flavorName}${variant.buildType.name}-${variant.versionName}.apk"
                     from variant.outputs.first().outputFile
                     into destPath
-                    rename {'app.apk'}
+                    rename { outputsPrefix }
                 }
                 copy {
                     from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"

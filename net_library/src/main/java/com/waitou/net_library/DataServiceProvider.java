@@ -1,7 +1,6 @@
 package com.waitou.net_library;
 
 import com.waitou.net_library.http.AsyncOkHttpClient;
-import com.waitou.net_library.http.HttpUtil;
 
 import java.util.HashMap;
 
@@ -34,13 +33,14 @@ public class DataServiceProvider {
 
     private Retrofit getRetrofit(String baseUrl) {
         return new Retrofit.Builder()
-                .baseUrl(HttpUtil.setCurrentUrl(baseUrl))
+                .baseUrl(baseUrl)
                 .client(AsyncOkHttpClient.getOkHttpClient())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T provide(String baseUrl, Class<T> tClass) {
         if (dataServiceMap == null) {
             dataServiceMap = new HashMap<>();
@@ -52,38 +52,4 @@ public class DataServiceProvider {
 
         return (T) dataServiceMap.get(baseUrl);
     }
-
-
-
-
-
-
-    @Deprecated
-    public <T> T provide(Class<T> tClass) {
-        if (dataServiceMap == null) {
-            dataServiceMap = new HashMap<>();
-        }
-        if (!dataServiceMap.containsKey(tClass.getName()) || dataServiceMap.get(tClass.getName()) == null) {
-            dataServiceMap.put(tClass.getName(), getRetrofit(HttpUtil.RANDOM_BASE_URL).create(tClass));
-        }
-        return (T) dataServiceMap.get(tClass.getName());
-    }
-
-
-    @Deprecated
-    public void reloadService(String address) {
-        if (HttpUtil.getCurrentAddress().contains(address)) {
-            return;
-        }
-        if (dataServiceMap != null) {
-            dataServiceMap.clear();
-        }
-        retrofit = new Retrofit.Builder()
-                .baseUrl(HttpUtil.setCurrentUrl(address))
-                .client(AsyncOkHttpClient.getOkHttpClient())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.to.aboomy.tinker_lib.patch;
+package com.waitou.towards.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

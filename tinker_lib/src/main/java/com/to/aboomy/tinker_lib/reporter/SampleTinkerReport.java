@@ -19,10 +19,12 @@ package com.to.aboomy.tinker_lib.reporter;
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
-import com.to.aboomy.tinker_lib.util.TinkerUtils;
+import com.to.aboomy.tinker_lib.util.Utils;
+
 
 /**
  * a simple tinker data reporter
+ * Created by zhangshaowen on 16/9/17.
  */
 public class SampleTinkerReport {
     private static final String TAG = "Tinker.SampleTinkerReport";
@@ -183,22 +185,22 @@ public class SampleTinkerReport {
             case ShareConstants.ERROR_PATCH_JIT:
                 reporter.onReport(KEY_TRY_APPLY_JIT);
                 break;
-            case TinkerUtils.ERROR_PATCH_ROM_SPACE:
+            case Utils.ERROR_PATCH_ROM_SPACE:
                 reporter.onReport(KEY_TRY_APPLY_ROM_SPACE);
                 break;
-            case TinkerUtils.ERROR_PATCH_GOOGLEPLAY_CHANNEL:
+            case Utils.ERROR_PATCH_GOOGLEPLAY_CHANNEL:
                 reporter.onReport(KEY_TRY_APPLY_GOOGLEPLAY);
                 break;
             case ShareConstants.ERROR_PATCH_ALREADY_APPLY:
                 reporter.onReport(KEY_TRY_APPLY_ALREADY_APPLY);
                 break;
-            case TinkerUtils.ERROR_PATCH_CRASH_LIMIT:
+            case Utils.ERROR_PATCH_CRASH_LIMIT:
                 reporter.onReport(KEY_TRY_APPLY_CRASH_LIMIT);
                 break;
-            case TinkerUtils.ERROR_PATCH_MEMORY_LIMIT:
+            case Utils.ERROR_PATCH_MEMORY_LIMIT:
                 reporter.onReport(KEY_TRY_APPLY_MEMORY_LIMIT);
                 break;
-            case TinkerUtils.ERROR_PATCH_CONDITION_NOT_SATISFIED:
+            case Utils.ERROR_PATCH_CONDITION_NOT_SATISFIED:
                 reporter.onReport(KEY_TRY_APPLY_CONDITION_NOT_SATISFIED);
                 break;
 
@@ -305,11 +307,11 @@ public class SampleTinkerReport {
         switch (type) {
             case ShareConstants.TYPE_INTERPRET_GET_INSTRUCTION_SET_ERROR:
                 reporter.onReport(KEY_LOADED_INTERPRET_GET_INSTRUCTION_SET_ERROR);
-                reporter.onReport("Tinker Exception:interpret occur exception " + TinkerUtils.getExceptionCauseString(e));
+                reporter.onReport("Tinker Exception:interpret occur exception " + Utils.getExceptionCauseString(e));
                 break;
             case ShareConstants.TYPE_INTERPRET_COMMAND_ERROR:
                 reporter.onReport(KEY_LOADED_INTERPRET_INTERPRET_COMMAND_ERROR);
-                reporter.onReport("Tinker Exception:interpret occur exception " + TinkerUtils.getExceptionCauseString(e));
+                reporter.onReport("Tinker Exception:interpret occur exception " + Utils.getExceptionCauseString(e));
                 break;
             case ShareConstants.TYPE_INTERPRET_OK:
                 reporter.onReport(KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK);
@@ -369,7 +371,7 @@ public class SampleTinkerReport {
         }
         //reporter exception, for dex check fail, we don't need to report stacktrace
         if (!isCheckFail) {
-            reporter.onReport("Tinker Exception:load tinker occur exception " + TinkerUtils.getExceptionCauseString(throwable));
+            reporter.onReport("Tinker Exception:load tinker occur exception " + Utils.getExceptionCauseString(throwable));
         }
     }
 
@@ -390,7 +392,7 @@ public class SampleTinkerReport {
             reporter.onReport(KEY_APPLIED_DEXOPT_FORMAT);
         } else {
             reporter.onReport(KEY_APPLIED_DEXOPT_OTHER);
-            reporter.onReport("Tinker Exception:apply tinker occur exception " + TinkerUtils.getExceptionCauseString(throwable));
+            reporter.onReport("Tinker Exception:apply tinker occur exception " + Utils.getExceptionCauseString(throwable));
         }
     }
 
@@ -524,7 +526,7 @@ public class SampleTinkerReport {
             return;
         }
         reporter.onReport(KEY_APPLIED_EXCEPTION);
-        reporter.onReport("Tinker Exception:apply tinker occur exception " + TinkerUtils.getExceptionCauseString(throwable));
+        reporter.onReport("Tinker Exception:apply tinker occur exception " + Utils.getExceptionCauseString(throwable));
     }
 
     public static void onFastCrashProtect() {

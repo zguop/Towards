@@ -6,6 +6,6 @@ android {
     resourcePrefix 'rv_'
 }
 dependencies {
-    compileOnly rootProject.ext.dependencies["recyclerview-v7"]
+    implementation rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["adapterHelper"]
 }

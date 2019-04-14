@@ -31,7 +31,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class TinkerUtils {
+/**
+ * Created by zhangshaowen on 16/4/7.
+ */
+public class Utils {
     private static final String TAG = "Tinker.Utils";
 
     /**
@@ -63,15 +66,15 @@ public class TinkerUtils {
     }
 
     public static int checkForPatchRecover(long roomSize, int maxMemory) {
-        if (TinkerUtils.isGooglePlay()) {
-            return TinkerUtils.ERROR_PATCH_GOOGLEPLAY_CHANNEL;
+        if (Utils.isGooglePlay()) {
+            return Utils.ERROR_PATCH_GOOGLEPLAY_CHANNEL;
         }
         if (maxMemory < MIN_MEMORY_HEAP_SIZE) {
-            return TinkerUtils.ERROR_PATCH_MEMORY_LIMIT;
+            return Utils.ERROR_PATCH_MEMORY_LIMIT;
         }
         //or you can mention user to clean their rom space!
         if (!checkRomSpaceEnough(roomSize)) {
-            return TinkerUtils.ERROR_PATCH_ROM_SPACE;
+            return Utils.ERROR_PATCH_ROM_SPACE;
         }
 
         return ShareConstants.ERROR_PATCH_OK;

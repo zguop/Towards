@@ -1,35 +1,20 @@
 package com.to.aboomy.rx_lib;
 
-import android.util.Log;
 import android.util.SparseArray;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**
+ * 不依赖某个activity的生命周期的网络请求.请求获得结果后自动unsubscribe
  * auth aboom
  * date 2018/7/7
  */
 public class RxComposite {
 
-    private static final CompositeDisposable     TASK_DISPOSABLE = new CompositeDisposable();
-    private static final SparseArray<Disposable> TASK_MAP        = new SparseArray<>();
-
-    /**
-     * 向队列中添加一个Subscription
-     */
-    public synchronized static void pend(Disposable disposable) {
-        if (disposable != null) {
-            TASK_DISPOSABLE.add(disposable);
-        }
-    }
-
-    public static void clear() {
-        TASK_DISPOSABLE.dispose();
-    }
+    private static final SparseArray<Disposable> TASK_MAP = new SparseArray<>();
 
     public synchronized static <T> void disposableScribe(Observable<T> observable, Consumer<? super T> onNext) {
         if (observable == null) {
@@ -53,16 +38,16 @@ public class RxComposite {
     }
 
 
-    public synchronized static void singlePend(Disposable disposable) {
-        if (disposable == null || disposable.isDisposed()) {
-            return;
-        }
-        int increasingRequestCode = TASK_MAP.size();
-        Log.e("aa", "singlePend code " + increasingRequestCode);
-        while (TASK_MAP.get(increasingRequestCode) != null) {
-            TASK_MAP.get(increasingRequestCode).dispose();
-            TASK_MAP.remove(increasingRequestCode);
-        }
-        TASK_MAP.put(increasingRequestCode, disposable);
-    }
+//    public synchronized static void singlePend(Disposable disposable) {
+//        if (disposable == null || disposable.isDisposed()) {
+//            return;
+//        }
+//        int increasingRequestCode = TASK_MAP.size();
+//        Log.e("aa", "singlePend code " + increasingRequestCode);
+//        while (TASK_MAP.get(increasingRequestCode) != null) {
+//            TASK_MAP.get(increasingRequestCode).dispose();
+//            TASK_MAP.remove(increasingRequestCode);
+//        }
+//        TASK_MAP.put(increasingRequestCode, disposable);
+//    }
 }

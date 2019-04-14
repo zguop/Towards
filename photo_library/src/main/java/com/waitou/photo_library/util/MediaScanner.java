@@ -2,7 +2,8 @@ package com.waitou.photo_library.util;
 
 import android.media.MediaScannerConnection;
 
-import com.waitou.wt_library.BaseApplication;
+
+import com.blankj.utilcode.util.Utils;
 
 import io.reactivex.functions.Action;
 
@@ -14,7 +15,7 @@ import io.reactivex.functions.Action;
 
 public class MediaScanner {
     public static void scan(String path, String type, Action action0)  {
-        MediaScannerConnection.scanFile(BaseApplication.getApp(), new String[]{path}, new String[]{type}, (path1, uri) -> {
+        MediaScannerConnection.scanFile(Utils.getApp(), new String[]{path}, new String[]{type}, (path1, uri) -> {
             try {
                 action0.run();
             } catch (Exception e) {

@@ -6,13 +6,13 @@ import android.util.Log;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
+import com.waitou.net_library.helper.SimpleErrorVerify;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
 import com.waitou.towards.bean.JokeInfo;
 import com.waitou.towards.common.Values;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.towards.net.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 

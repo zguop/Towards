@@ -1,8 +1,8 @@
 package com.waitou.towards.model.movie
 
 import com.waitou.net_library.helper.RxTransformerHelper
+import com.waitou.net_library.helper.SimpleErrorVerify
 import com.waitou.towards.net.DataLoader
-import com.waitou.towards.net.SimpleErrorVerify
 import com.waitou.wt_library.base.XPresent
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter
 import com.waitou.wt_library.view.SingleViewPagerAdapter

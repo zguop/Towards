@@ -1,8 +1,7 @@
-package com.waitou.towards.net;
+package com.waitou.net_library.helper;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.waitou.net_library.helper.ErrorVerify;
-import com.waitou.towards.R;
+import com.waitou.net_library.R;
 
 /**
  * Created by waitou on 17/1/11.

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.to.aboomy.tinker_lib;
+package com.to.aboomy.tinker_lib.util;
 
+import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.lib.listener.PatchListener;
 import com.tencent.tinker.lib.patch.AbstractPatch;
 import com.tencent.tinker.lib.patch.UpgradePatch;
@@ -25,19 +26,22 @@ import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.lib.util.UpgradePatchRetry;
-import com.tencent.tinker.loader.app.ApplicationLike;
 import com.to.aboomy.tinker_lib.crash.SampleUncaughtExceptionHandler;
 import com.to.aboomy.tinker_lib.reporter.SampleLoadReporter;
 import com.to.aboomy.tinker_lib.reporter.SamplePatchListener;
 import com.to.aboomy.tinker_lib.reporter.SamplePatchReporter;
-import com.to.aboomy.tinker_lib.service.TinkerResultService;
+import com.to.aboomy.tinker_lib.service.SampleResultService;
 
+
+/**
+ * Created by zhangshaowen on 16/7/3.
+ */
 public class TinkerManager {
     private static final String TAG = "Tinker.TinkerManager";
 
     private static ApplicationLike                applicationLike;
     private static SampleUncaughtExceptionHandler uncaughtExceptionHandler;
-    private static boolean isInstalled = false;
+    private static boolean                        isInstalled = false;
 
     public static void setTinkerApplicationLike(ApplicationLike appLike) {
         applicationLike = appLike;
@@ -58,9 +62,25 @@ public class TinkerManager {
         UpgradePatchRetry.getInstance(applicationLike.getApplication()).setRetryEnable(enable);
     }
 
+
+    /**
+     * all use default class, simply Tinker install method
+     */
+    public static void sampleInstallTinker(ApplicationLike appLike) {
+        if (isInstalled) {
+            TinkerLog.w(TAG, "install tinker, but has installed, ignore");
+            return;
+        }
+        TinkerInstaller.install(appLike);
+        isInstalled = true;
+
+    }
+
     /**
      * you can specify all class you want.
      * sometimes, you can only install tinker in some process you want!
+     *
+     * @param appLike
      */
     public static void installTinker(ApplicationLike appLike) {
         if (isInstalled) {
@@ -72,15 +92,13 @@ public class TinkerManager {
         //or you can just use DefaultPatchReporter
         PatchReporter patchReporter = new SamplePatchReporter(appLike.getApplication());
         //or you can just use DefaultPatchListener
-        //校验patch文件是否合法
         PatchListener patchListener = new SamplePatchListener(appLike.getApplication());
         //you can set your own upgrade patch if you need
-
         AbstractPatch upgradePatchProcessor = new UpgradePatch();
 
         TinkerInstaller.install(appLike,
-                loadReporter, patchReporter, patchListener,
-                TinkerResultService.class, upgradePatchProcessor);
+            loadReporter, patchReporter, patchListener,
+            SampleResultService.class, upgradePatchProcessor);
 
         isInstalled = true;
     }

@@ -52,7 +52,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<LogoImg> logoImgList = logoImgDao.loadAll();
         //去请求网络上的logo图片
         pend(DataLoader.getGithubApi().getLogoList()
-                .compose(RxTransformerHelper.applySchedulersResult(new EmptyErrorVerify()))
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(new EmptyErrorVerify()))
                 .filter(strings -> strings != null && strings.size() > 0)
                 .doOnNext(strings -> {
                     if (!logoImgList.isEmpty()) {

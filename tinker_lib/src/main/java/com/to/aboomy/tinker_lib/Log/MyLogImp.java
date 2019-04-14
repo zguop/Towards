@@ -20,6 +20,9 @@ import android.util.Log;
 
 import com.tencent.tinker.lib.util.TinkerLog;
 
+/**
+ * Created by zhangshaowen on 16/6/3.
+ */
 public class MyLogImp implements TinkerLog.TinkerLogImp {
     private static final String TAG = "Tinker.MyLogImp";
 
@@ -37,7 +40,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
 
     public static void setLevel(final int level) {
         MyLogImp.level = level;
-        Log.w(TAG, "new log level: " + level);
+        android.util.Log.w(TAG, "new log level: " + level);
 
     }
 
@@ -45,7 +48,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
     public void v(String s, String s1, Object... objects) {
         if (level <= LEVEL_VERBOSE) {
             final String log = objects == null ? s1 : String.format(s1, objects);
-            Log.v(s, log);
+            android.util.Log.v(s, log);
         }
     }
 
@@ -53,7 +56,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
     public void i(String s, String s1, Object... objects) {
         if (level <= LEVEL_INFO) {
             final String log = objects == null ? s1 : String.format(s1, objects);
-            Log.i(s, log);
+            android.util.Log.i(s, log);
         }
     }
 
@@ -61,7 +64,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
     public void w(String s, String s1, Object... objects) {
         if (level <= LEVEL_WARNING) {
             final String log = objects == null ? s1 : String.format(s1, objects);
-            Log.w(s, log);
+            android.util.Log.w(s, log);
         }
     }
 
@@ -69,7 +72,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
     public void d(String s, String s1, Object... objects) {
         if (level <= LEVEL_DEBUG) {
             final String log = objects == null ? s1 : String.format(s1, objects);
-            Log.d(s, log);
+            android.util.Log.d(s, log);
         }
     }
 
@@ -77,7 +80,7 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
     public void e(String s, String s1, Object... objects) {
         if (level <= LEVEL_ERROR) {
             final String log = objects == null ? s1 : String.format(s1, objects);
-            Log.e(s, log);
+            android.util.Log.e(s, log);
         }
     }
 
@@ -88,6 +91,6 @@ public class MyLogImp implements TinkerLog.TinkerLogImp {
             log = "";
         }
         log = log + "  " + Log.getStackTraceString(throwable);
-        Log.e(s, log);
+        android.util.Log.e(s, log);
     }
 }

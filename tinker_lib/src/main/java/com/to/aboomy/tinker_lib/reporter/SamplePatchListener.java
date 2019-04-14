@@ -24,10 +24,13 @@ import com.tencent.tinker.lib.listener.DefaultPatchListener;
 import com.tencent.tinker.lib.util.TinkerLog;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.SharePatchFileUtil;
+import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
 import com.to.aboomy.tinker_lib.crash.SampleUncaughtExceptionHandler;
-import com.to.aboomy.tinker_lib.util.TinkerUtils;
+import com.to.aboomy.tinker_lib.util.Utils;
 
 import java.io.File;
+import java.util.Properties;
+
 
 /**
  * Created by zhangshaowen on 16/4/30.
@@ -63,7 +66,7 @@ public class SamplePatchListener extends DefaultPatchListener {
         int returnCode = super.patchCheck(path, patchMd5);
 
         if (returnCode == ShareConstants.ERROR_PATCH_OK) {
-            returnCode = TinkerUtils.checkForPatchRecover(NEW_PATCH_RESTRICTION_SPACE_SIZE_MIN, maxMemory);
+            returnCode = Utils.checkForPatchRecover(NEW_PATCH_RESTRICTION_SPACE_SIZE_MIN, maxMemory);
         }
 
         if (returnCode == ShareConstants.ERROR_PATCH_OK) {
@@ -71,24 +74,24 @@ public class SamplePatchListener extends DefaultPatchListener {
             //optional, only disable this patch file with md5
             int fastCrashCount = sp.getInt(patchMd5, 0);
             if (fastCrashCount >= SampleUncaughtExceptionHandler.MAX_CRASH_COUNT) {
-                returnCode = TinkerUtils.ERROR_PATCH_CRASH_LIMIT;
+                returnCode = Utils.ERROR_PATCH_CRASH_LIMIT;
             }
         }
         // Warning, it is just a sample case, you don't need to copy all of these
         // Interception some of the request
-//        if (returnCode == ShareConstants.ERROR_PATCH_OK) {
-//            Properties properties = ShareTinkerInternals.fastGetPatchPackageMeta(patchFile);
-//            if (properties == null) {
-//                returnCode = TinkerUtils.ERROR_PATCH_CONDITION_NOT_SATISFIED;
-//            } else {
-//                String platform = properties.getProperty(TinkerUtils.PLATFORM);
-//                TinkerLog.i(TAG, "get platform:" + platform);
-//                // check patch platform require
-//                if (platform == null || !platform.equals(BuildInfo.PLATFORM)) {
-//                    returnCode = TinkerUtils.ERROR_PATCH_CONDITION_NOT_SATISFIED;
-//                }
-//            }
-//        }
+        if (returnCode == ShareConstants.ERROR_PATCH_OK) {
+            Properties properties = ShareTinkerInternals.fastGetPatchPackageMeta(patchFile);
+            if (properties == null) {
+                returnCode = Utils.ERROR_PATCH_CONDITION_NOT_SATISFIED;
+            } else {
+                String platform = properties.getProperty(Utils.PLATFORM);
+                TinkerLog.i(TAG, "get platform:" + platform);
+                // check patch platform require
+                if (platform == null || !platform.equals("all")){
+                    returnCode = Utils.ERROR_PATCH_CONDITION_NOT_SATISFIED;
+                }
+            }
+        }
 
         SampleTinkerReport.onTryApply(returnCode == ShareConstants.ERROR_PATCH_OK);
         return returnCode;

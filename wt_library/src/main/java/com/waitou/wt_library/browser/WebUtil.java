@@ -3,9 +3,9 @@ package com.waitou.wt_library.browser;
 import android.content.Context;
 import android.content.Intent;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.waitou.net_library.log.LogUtil;
 
 
 /**
@@ -15,7 +15,7 @@ import com.waitou.net_library.log.LogUtil;
 public class WebUtil {
 
     public static void turnWeb(Context context, String url, String title) {
-        LogUtil.e("turn web url: " + url);
+        LogUtils.e("turn web url: " + url);
         if (StringUtils.isEmpty(url)) {
             ToastUtils.showShort("url缺失了..");
             return;

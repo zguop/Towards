@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.waitou.towards.bean.HomeFunctionInfo.FunctionInfo"/>
+            type="com.waitou.towards.bean.FunctionInfo"/>
 
         <variable
             name="presenter"

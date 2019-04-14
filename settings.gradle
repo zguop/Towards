@@ -1,4 +1,4 @@
-include ':app', ':recycler_lib',
+include ':app', ':recycler_lib', ':meta_provider_lib',
         ':net_library',
         ':wt_library',
         ':photo_library',

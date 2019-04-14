@@ -12,6 +12,11 @@
             android:name=".browser.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
+
+
+        <meta-data
+            android:name="com.waitou.wt_library.BaseApplication"
+            android:value="SUB_APP" />
     </application>
 
 </manifest>

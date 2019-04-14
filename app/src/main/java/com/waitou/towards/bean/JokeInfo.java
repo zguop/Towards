@@ -2,14 +2,13 @@ package com.waitou.towards.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.waitou.net_library.model.BaseRequest;
 import com.waitou.net_library.model.Displayable;
 
 /**
  * Created by waitou on 17/1/4.
  */
 
-public class JokeInfo extends BaseRequest implements Displayable{
+public class JokeInfo implements Displayable{
 
     @SerializedName("content")
     @Expose

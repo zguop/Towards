@@ -27,6 +27,11 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <!--application生命周期-->
+        <meta-data
+            android:name="com.waitou.three_library.ThreeApplication"
+            android:value="SUB_APP" />
+
         <!--友盟 app key-->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -61,6 +66,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+
+
 
 
     </application>

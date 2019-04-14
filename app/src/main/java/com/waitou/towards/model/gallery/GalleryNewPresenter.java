@@ -2,7 +2,7 @@ package com.waitou.towards.model.gallery;
 
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.towards.net.SimpleErrorVerify;
+import com.waitou.net_library.helper.SimpleErrorVerify;
 import com.waitou.wt_library.base.XPresent;
 
 /**

@@ -8,7 +8,7 @@ import com.to.aboomy.tinker_lib.TinkerApplicationBase;
  * des
  */
 
-public class TowardsApplication extends TinkerApplicationBase{
+public class TowardsApplication extends TinkerApplicationBase {
 
     public TowardsApplication() {
         super(TowardsApplicationLike.class.getName());

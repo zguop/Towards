@@ -1,21 +1,60 @@
 package com.waitou.wt_library;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.res.Configuration;
+
+import com.billy.android.loading.Gloading;
+import com.squareup.leakcanary.LeakCanary;
+import com.waitou.meta_provider_lib.ISubApplication;
+import com.waitou.wt_library.adapter.GlobalAdapter;
 
 /**
- * Created by waitou on 16/12/23.
+ * auth aboom
+ * date 2019/4/14
  */
-public class BaseApplication{
+public class BaseApplication implements ISubApplication {
 
-    @SuppressLint("StaticFieldLeak")
-    private static Application mApp;
-
-    public static void setApplication(Application application) {
-        BaseApplication.mApp = application;
+    @Override
+    public void onMainCreate(Application application) {
+        Gloading.initDefault(new GlobalAdapter());
+        initLeakCanary(application);
     }
 
-    public static Application getApp() {
-        return mApp;
+    private void initLeakCanary(Application application) {
+        /*---------------  内存泄漏的检测 ---------------*/
+        if (!BuildConfig.DEBUG || LeakCanary.isInAnalyzerProcess(application)) {
+            return;
+        }
+        LeakCanary.install(application);
+    }
+
+    @Override
+    public void onOtherProcess(Application application, String process) {
+
+    }
+
+    @Override
+    public void onBaseContextAttached() {
+
+    }
+
+    @Override
+    public void onTerminate() {
+
+    }
+
+    @Override
+    public void onLowMemory() {
+
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+
+    }
+
+    @Override
+    public void onConfigurationChange(Configuration newConfig) {
+
     }
 }

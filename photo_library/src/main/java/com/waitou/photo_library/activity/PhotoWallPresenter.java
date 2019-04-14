@@ -20,13 +20,13 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.UriUtils;
 import com.to.aboomy.rx_lib.RxUtil;
-import com.waitou.net_library.log.LogUtil;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.bean.PhotoFolderInfo;
@@ -355,7 +355,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
         scanPath = FileUtils.getFileByPath(PathUtils.getExternalPicturesPath() + File.separator +
                 "IMAGE_" + TimeUtils.date2String(TimeUtils.getNowDate(),
                 new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())) + ".jpg");
-        LogUtil.e(" takePicture path = " + scanPath);
+        LogUtils.e(" takePicture path = " + scanPath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, UriUtils.file2Uri(scanPath));
         getV().startActivityForResult(intent, PhotoWallActivity.PHOTO_REQUEST_CODE);
     }

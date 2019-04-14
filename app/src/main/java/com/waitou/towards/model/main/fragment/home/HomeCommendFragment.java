@@ -12,8 +12,8 @@ import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerAdapterInfo;
 import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.CanInfo;
+import com.waitou.towards.bean.FunctionInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
-import com.waitou.towards.bean.HomeFunctionInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
 import com.waitou.towards.databinding.IncludeMatchRecyclerViewBinding;
 import com.waitou.wt_library.base.XFragment;
@@ -75,8 +75,8 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
         mAdapter.add(0, new BannerAdapterInfo(bannerAdapter, qyIndicator), 0);
     }
 
-    public void onFunctionSuccess(List<HomeFunctionInfo.FunctionInfo> homeFunctionInfo) {
-        SingleTypeAdapter<HomeFunctionInfo.FunctionInfo> functionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
+    public void onFunctionSuccess(List<FunctionInfo> homeFunctionInfo) {
+        SingleTypeAdapter<FunctionInfo> functionInfoAdapter = new SingleTypeAdapter<>(getActivity(), R.layout.item_home_function);
         functionInfoAdapter.set(homeFunctionInfo);
         functionInfoAdapter.setPresenter(getP());
         RecyclerAdapterInfo recyclerAdapterInfo = new RecyclerAdapterInfo(functionInfoAdapter, LayoutManagerUtil.getGridLayoutManager(getActivity(), homeFunctionInfo.size()));

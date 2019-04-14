@@ -12,8 +12,6 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.waitou.three_library.R;
 
-import io.reactivex.functions.Consumer;
-
 /**
  * Created by waitou on 17/5/16.
  * 调用友盟分享
@@ -21,7 +19,11 @@ import io.reactivex.functions.Consumer;
 
 public class UShare {
 
-    public static void share(Activity activity, ShareInfo info, Consumer<SHARE_MEDIA> action) {
+    public interface OnShareListener {
+        void onShare(String share_media);
+    }
+
+    public static void share(Activity activity, ShareInfo info, OnShareListener action) {
         new BottomSheet.Builder(activity, R.style.BottomSheet_Dialog)
                 .title("分享到").sheet(R.menu.menu_share_bottom_sheet)
                 .listener((dialog, which) -> share(activity, ShareEnum.valueOf(which), info, new UMShareListener() {
@@ -31,11 +33,7 @@ public class UShare {
 
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
-                                try {
-                                    action.accept(share_media);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                action.onShare(share_media.toString());
                             }
 
                             @Override

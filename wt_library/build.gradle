@@ -29,10 +29,10 @@ dependencies {
     implementation(rootProject.ext.dependencies['okhttp3-integration']) {
         exclude group: 'glide-parent'
     }
+    implementation project(':meta_provider_lib')
 
     api project(':rx_lib')
     api project(':net_library')
-    api project(':tinker_lib')
     api project(':theme_lib')
     api project(':recycler_lib')
 }

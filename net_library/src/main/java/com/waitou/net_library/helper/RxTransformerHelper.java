@@ -3,7 +3,7 @@ package com.waitou.net_library.helper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.waitou.net_library.log.LogUtil;
+import com.blankj.utilcode.util.LogUtils;
 import com.waitou.net_library.model.BaseResponse;
 import com.waitou.net_library.model.MovieBaseResponse;
 
@@ -37,7 +37,7 @@ public class RxTransformerHelper {
                 .compose(applySchedulers())
                 .onErrorResumeNext(throwable -> {
                     //rx异常先处理
-                    LogUtil.e(Log.getStackTraceString(throwable));
+                    LogUtils.e(Log.getStackTraceString(throwable));
                     throwable.printStackTrace();
                     if (errorVerify != null) {
                         errorVerify.netError(throwable);
@@ -45,7 +45,6 @@ public class RxTransformerHelper {
                     //返回值null 继续执行 filter
                     return Observable.empty();
                 })
-                .filter(verifyNotEmpty()) //异常后返回null，filter判断数据中断
                 .filter(verifyBusiness(errorVerify)); //业务异常 code异常中断
     }
 
@@ -59,13 +58,6 @@ public class RxTransformerHelper {
     }
 
     /**
-     * 数据不为null
-     */
-    public static <T> Predicate<T> verifyNotEmpty() {
-        return t -> t != null;
-    }
-
-    /**
      * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功 自行判断
      */
     public static <T> Predicate<T> verifyBusiness(ErrorVerify errorVerify) {
@@ -74,7 +66,7 @@ public class RxTransformerHelper {
                 BaseResponse baseResponse = (BaseResponse) t;
                 boolean success = Integer.valueOf(baseResponse.errorCode) == 0;
                 if (!success && errorVerify != null) {
-                    LogUtil.e("返回错误码：" + baseResponse.errorCode + "\t\t\t错误信息：" + baseResponse.reason);
+                    LogUtils.e("返回错误码：" + baseResponse.errorCode + "\t\t\t错误信息：" + baseResponse.reason);
                     errorVerify.call(baseResponse.errorCode, baseResponse.reason);
                 }
                 return success;
