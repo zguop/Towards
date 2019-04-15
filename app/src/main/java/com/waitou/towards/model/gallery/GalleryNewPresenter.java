@@ -15,8 +15,8 @@ public class GalleryNewPresenter extends XPresent<GalleryNewActivity> {
         pend(DataLoader.getGankApi().getGirlPics(page)
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify() {
                     @Override
-                    public void netError(Throwable throwable) {
-                        super.netError(throwable);
+                    public void call(Throwable throwable) {
+                        super.call(throwable);
                         getV().onError(page == 1);
                     }
                 }))

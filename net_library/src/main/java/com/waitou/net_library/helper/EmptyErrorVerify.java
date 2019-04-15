@@ -6,12 +6,7 @@ package com.waitou.net_library.helper;
 
 public class EmptyErrorVerify implements ErrorVerify {
     @Override
-    public void call(String code, String desc) {
-
-    }
-
-    @Override
-    public void netError(Throwable throwable) {
+    public void call(Throwable throwable) {
 
     }
 }

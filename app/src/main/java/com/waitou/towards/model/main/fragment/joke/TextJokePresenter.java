@@ -3,6 +3,7 @@ package com.waitou.towards.model.main.fragment.joke;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
@@ -76,19 +77,22 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
         }
 
         getV().pend(DataLoader.getJokeApi().getTextJoke(params)
-                .compose(RxTransformerHelper.applySchedulersResult( new SimpleErrorVerify() {
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify() {
                     @Override
-                    public void call(String code, String desc) {
-                        super.call(code, desc);
-                        getFragment(type).showError(page == 1);
-                    }
-
-                    @Override
-                    public void netError(Throwable throwable) {
-                        super.netError(throwable);
+                    public void call(Throwable throwable) {
+                        super.call(throwable);
                         getFragment(type).showError(page == 1);
                     }
                 }))
+                .filter(baseResponse -> {
+                    boolean success = Integer.valueOf(baseResponse.errorCode) == 0;
+                    if (!success) {
+                        LogUtils.e("返回错误码：" + baseResponse.errorCode + "\t\t\t错误信息：" + baseResponse.reason);
+                        ToastUtils.showShort(baseResponse.reason);
+                        getFragment(type).showError(page == 1);
+                    }
+                    return success;
+                }).map(listBaseResponse -> listBaseResponse.result)
                 .subscribe(jokeInfo -> getFragment(type).success(page, jokeInfo)));
     }
 }

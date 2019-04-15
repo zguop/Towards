@@ -1,4 +1,4 @@
-package com.waitou.net_library.model;
+package com.waitou.towards.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

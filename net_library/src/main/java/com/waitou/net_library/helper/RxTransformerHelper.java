@@ -1,16 +1,12 @@
 package com.waitou.net_library.helper;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.waitou.net_library.model.BaseResponse;
-import com.waitou.net_library.model.MovieBaseResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -19,15 +15,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class RxTransformerHelper {
-
-    /**
-     * 过滤器，result业务过滤 返回数据源
-     */
-    public static <T> ObservableTransformer<BaseResponse<T>, T> applySchedulersResult(ErrorVerify errorVerify) {
-        return observable -> observable
-                .compose(applySchedulersAndAllFilter(errorVerify))
-                .map(tBaseResponse -> tBaseResponse.result);
-    }
 
     /**
      * 过滤器， 业务过滤
@@ -40,12 +27,10 @@ public class RxTransformerHelper {
                     LogUtils.e(Log.getStackTraceString(throwable));
                     throwable.printStackTrace();
                     if (errorVerify != null) {
-                        errorVerify.netError(throwable);
+                        errorVerify.call(throwable);
                     }
-                    //返回值null 继续执行 filter
                     return Observable.empty();
-                })
-                .filter(verifyBusiness(errorVerify)); //业务异常 code异常中断
+                });
     }
 
     /**
@@ -55,30 +40,5 @@ public class RxTransformerHelper {
         return observable -> observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * 错误码返回  //由于本应用接口都是网络寻找，数据结构不稳定 默认返回成功 自行判断
-     */
-    public static <T> Predicate<T> verifyBusiness(ErrorVerify errorVerify) {
-        return t -> {
-            if (t instanceof BaseResponse) {
-                BaseResponse baseResponse = (BaseResponse) t;
-                boolean success = Integer.valueOf(baseResponse.errorCode) == 0;
-                if (!success && errorVerify != null) {
-                    LogUtils.e("返回错误码：" + baseResponse.errorCode + "\t\t\t错误信息：" + baseResponse.reason);
-                    errorVerify.call(baseResponse.errorCode, baseResponse.reason);
-                }
-                return success;
-            } else if (t instanceof MovieBaseResponse) {
-                MovieBaseResponse movieBaseResponse = (MovieBaseResponse) t;
-                boolean success = movieBaseResponse.code == 200;
-                if (!success && errorVerify != null) {
-                    errorVerify.call(movieBaseResponse.code + "", TextUtils.isEmpty(movieBaseResponse.msg) ? "服务器开小差" : movieBaseResponse.msg);
-                }
-                return success;
-            }
-            return true;
-        };
     }
 }

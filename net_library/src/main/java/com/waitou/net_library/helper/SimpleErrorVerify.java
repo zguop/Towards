@@ -9,12 +9,7 @@ import com.waitou.net_library.R;
 
 public class SimpleErrorVerify implements ErrorVerify {
     @Override
-    public void call(String code, String desc) {
-        ToastUtils.showShort(desc);
-    }
-
-    @Override
-    public void netError(Throwable throwable) {
+    public void call(Throwable throwable) {
         ToastUtils.showShort(R.string.warn_net_error);
     }
 }

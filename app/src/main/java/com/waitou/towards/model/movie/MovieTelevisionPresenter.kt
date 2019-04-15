@@ -1,5 +1,7 @@
 package com.waitou.towards.model.movie
 
+import android.text.TextUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.waitou.net_library.helper.RxTransformerHelper
 import com.waitou.net_library.helper.SimpleErrorVerify
 import com.waitou.towards.net.DataLoader
@@ -14,18 +16,20 @@ class MovieTelevisionPresenter : XPresent<MovieRecommendActivity>(), BaseViewAda
 
     override fun start() {
         v.pend(DataLoader.getMovieApi().homeMoviePage
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter( object : SimpleErrorVerify() {
-                    override fun call(code: String?, desc: String?) {
-                        super.call(code, desc)
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(object : SimpleErrorVerify() {
+                    override fun call(throwable: Throwable?) {
+                        super.call(throwable)
                         v.showError()
                     }
-                    override fun netError(throwable: Throwable?) {
-                        super.netError(throwable)
-                        v.showError()
+                })).filter {
+                    val success = it.code == 200
+                    if (!success) {
+                        ToastUtils.showShort(if (TextUtils.isEmpty(it.msg)) "服务器开小差" else it.msg)
                     }
-                }))
+                    success
+                }
                 .map { it.result }
-                .subscribe({ v.onSuccess(it) }))
+                .subscribe { v.onSuccess(it) })
     }
 }
 

@@ -1,8 +1,8 @@
 package com.waitou.towards.net;
 
 import com.waitou.towards.bean.PatchInfo;
-import com.waitou.net_library.model.BaseResponse;
-import com.waitou.net_library.model.MovieBaseResponse;
+import com.waitou.towards.bean.BaseResponse;
+import com.waitou.towards.bean.MovieBaseResponse;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.bean.BannerPageInfo;
 import com.waitou.towards.bean.FunctionInfo;
