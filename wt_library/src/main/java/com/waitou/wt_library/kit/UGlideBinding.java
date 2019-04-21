@@ -86,6 +86,7 @@ public class UGlideBinding {
     @BindingAdapter({"fileImageUrl", "placeholder"})
     public static void loadFileImage(ImageView view, String file, Drawable loading) {
         ILFactory.getLoader().loadFile(view, new File(file), new ILoader.Options(loading, null));
+
     }
 
     @BindingAdapter({"fileImageUrl"})

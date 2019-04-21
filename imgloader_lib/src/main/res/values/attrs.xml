@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HsImageLoaderView">
+        <attr name="hs_placeholder_image" format="reference"/>
+        <attr name="hs_failure_image" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="HsRoundImageView">
+        <attr name="hs_oval" format="boolean" />
+        <attr name="hs_cover_src" format="boolean" />
+        <attr name="hs_corner_radius" format="dimension" />
+        <attr name="hs_corner_top_left_radius" format="dimension" />
+        <attr name="hs_corner_top_right_radius" format="dimension" />
+        <attr name="hs_corner_bottom_left_radius" format="dimension" />
+        <attr name="hs_corner_bottom_right_radius" format="dimension" />
+        <attr name="hs_border_width" format="dimension" />
+        <attr name="hs_border_color" format="color" />
+        <attr name="hs_inner_border_width" format="dimension" />
+        <attr name="hs_inner_border_color" format="color" />
+        <attr name="hs_mask_color" format="color" />
+    </declare-styleable>
+</resources>
