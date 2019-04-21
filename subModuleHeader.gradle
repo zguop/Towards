@@ -17,7 +17,7 @@ def commonConfigure = {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
-        defaultConfig.with {
+        defaultConfig {
             minSdkVersion rootProject.ext.android.minSdkVersion
             targetSdkVersion rootProject.ext.android.targetSdkVersion
             versionCode rootProject.ext.android.versionCode
@@ -27,18 +27,18 @@ def commonConfigure = {
                 annotationProcessorOptions.includeCompileClasspath = true
             }
         }
-        buildTypes.with {
-            release.with {
+        buildTypes {
+            release {
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
-        sourceSets.with {
-            main.with {
+        sourceSets {
+            main {
                 jniLibs.srcDirs = ['libs']
             }
         }
-        lintOptions.with {
+        lintOptions {
             checkReleaseBuilds false
             abortOnError false
         }
@@ -66,13 +66,15 @@ def appConfigure = {
                     proguardFiles getDefaultProguardFile('proguard-android.txt'), project.file('proguard-rules.pro')
                     //ZipAlign优化
                     zipAlignEnabled false
-                    //移除无用的resource文件
+                    //移除无用的resource文件 资源压缩
                     shrinkResources false
-                    multiDexKeepProguard file("multiDexKeep.txt")
+
+                    multiDexKeepProguard file("multi_dex.pro")
+
 
                 }
                 debug {
-                    multiDexKeepProguard file("multiDexKeep.txt")
+                    multiDexKeepProguard file("multi_dex.pro")
 
                     //签名配置
                     signingConfig = signingConfigs.config

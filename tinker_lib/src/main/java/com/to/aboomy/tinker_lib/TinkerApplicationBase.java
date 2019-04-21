@@ -1,7 +1,5 @@
 package com.to.aboomy.tinker_lib;
 
-import android.annotation.SuppressLint;
-
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
@@ -10,9 +8,7 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
  * date 2018/4/16
  * tinkerFlags, tinker支持的类型，dex,library，还是全部都支持！
  */
-@SuppressLint("Registered")
 public class TinkerApplicationBase extends TinkerApplication {
-
     protected TinkerApplicationBase(String delegateClassName) {
         super(ShareConstants.TINKER_ENABLE_ALL, delegateClassName);
     }

@@ -1,0 +1,6 @@
+globleConfigure()
+android {
+    resourcePrefix 'hs_'
+}
+dependencies {
+}

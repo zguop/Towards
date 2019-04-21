@@ -1,2 +1,0 @@
-com/tencent/tinker.**
-com/tencent/bugly.**

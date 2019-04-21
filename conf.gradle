@@ -54,6 +54,7 @@ ext {
             "qybanner"                 : 'com.to.aboomy:banner:1.6.0',
             "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46',
             "utilcode"                 : 'com.blankj:utilcode:1.23.7',//有android x版本
+            "multidex"                 : "com.android.support:multidex:1.0.3",
     ]
 
     // "databinding-adapter": 'com.github.markzhai:databinding-rv-adapter:1.0.1',

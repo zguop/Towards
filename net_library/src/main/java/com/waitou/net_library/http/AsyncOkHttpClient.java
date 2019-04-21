@@ -26,8 +26,11 @@ public class AsyncOkHttpClient {
             LoggingInterceptor loggingInterceptor = new LoggingInterceptor.Builder()
                     .loggable(BuildConfig.DEBUG)
                     .tag("aa")
+                    .requestTag("aa")
+                    .responseTag("aa")
                     .request()
                     .response()
+                    .logLevel(LoggingInterceptor.LogLevel.ERROR)
                     .hideVerticalLine()// 隐藏竖线边框
                     .build();
             sOkHttpClient = new OkHttpClient.Builder()

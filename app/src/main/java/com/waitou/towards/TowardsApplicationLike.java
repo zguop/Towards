@@ -22,20 +22,15 @@ import com.waitou.meta_provider_lib.ISubApplication;
 import com.waitou.meta_provider_lib.JlMetaProvider;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
-import com.waitou.net_library.http.AsyncOkHttpClient;
 import com.waitou.towards.bean.PatchInfo;
 import com.waitou.towards.common.ThemeImpl;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.wt_library.imageloader.ILFactory;
 
-import java.io.InputStream;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 
 /**
@@ -80,6 +75,7 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
 
     @Override
     public void onBaseContextAttached(Context base) {
+//        MultiDex.install(base);
         super.onBaseContextAttached(base);
         if (subApp == null) {
             JlMetaProvider.register(getApplication(), "SUB_APP", ISubApplication.class);
@@ -141,27 +137,22 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
             if (TextUtils.isEmpty(patchInfo.downloadUrl)) {
                 return;
             }
-//            File patchFile = ServerUtils.getServerFile(getApplication(), patchInfo.versionName);
-//            if (patchFile.exists()) {
-//                if (patchFile.delete()) {
-//                    LogUtils.e(patchFile.getName() + " delete");
-//                }
-//            }
+
             ThreadUtils.executeByIo(new ThreadUtils.SimpleTask<String>() {
                 @Nullable
                 @Override
                 public String doInBackground() throws Throwable {
-                    Request request = new Request.Builder().url(patchInfo.downloadUrl).build();
-                    Response response = AsyncOkHttpClient.getOkHttpClient().newCall(request).execute();
-                    ResponseBody body = response.body();
-                    if (body != null) {
-                        InputStream inputStream = body.byteStream();
+//                    Request request = new Request.Builder().url(patchInfo.downloadUrl).build();
+//                    Response response = AsyncOkHttpClient.getOkHttpClient().newCall(request).execute();
+//                    ResponseBody body = response.body();
+//                    if (body != null) {
+//                        InputStream inputStream = body.byteStream();
 //                        boolean writeFile = FileIOUtils.writeFileFromIS(patchFile.getAbsolutePath(), inputStream);
 //                        if (writeFile) {
 //                            String md5 = SharePatchFileUtil.getMD5(patchFile);
 //                            return patchFile.getAbsolutePath();
 //                        }
-                    }
+//                    }
                     return null;
                 }
 

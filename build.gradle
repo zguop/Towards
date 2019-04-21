@@ -50,12 +50,69 @@ beforeEvaluate {}
  * 配置阶段完成以后的回调
  */
 afterEvaluate {
-
+    //计算build的时长
+//    def startBuildTime
+//    def preBuildTask = tasks.getByName('preBuild')
+//    preBuildTask?.doFirst {
+//        startBuildTime = System.currentTimeMillis()
+//    }
+//    def buildTask = tasks.getByName('build')
+//    buildTask?.doLast {
+//        def endBuildTime = System.currentTimeMillis()
+//        prinltn "the build time is：${endBuildTime - startBuildTime}"
+//    }
 }
+
+
 
 /**
  * gradle执行完毕后的回调监听
  */
 gradle.buildFinished {}
 
+/**
+ *
+ *
+ * task执行
+ *
+ *
+ */
+task taskX {
+    doLast {
+        prinltn 'taskX'
+    }
+}
 
+task taskY {
+    doLast {
+        prinltn 'taskY'
+    }
+}
+
+task taskZ(dependsOn: [taskX, taskY]) {
+    //在所有lib task执行后执行
+//    dependsOn tasks.findAll {
+//        it.name.startsWith('lib')
+//    }
+
+    doLast {
+        prinltn 'taskZ'
+
+    }
+}
+
+//taskZ.dependsOn(taskX, taskY)
+
+//= doLast
+task lib1 << {
+    prinltn 'lib1'
+}
+
+task lib2 << {
+    prinltn 'lib2'
+
+}
+
+task nolib << {
+    prinltn 'nolib'
+}

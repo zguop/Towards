@@ -9,6 +9,6 @@ dependencies {
     api rootProject.ext.dependencies["rxjava"]
     api rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies['utilcode']
-    implementation 'com.safframework.log:saf-logginginterceptor:1.4.0'
+    implementation 'com.safframework.log:saf-logginginterceptor:1.4.1'
 //    implementation 'com.yanzhenjie:okalle:0.1.5'
 }

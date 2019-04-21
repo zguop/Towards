@@ -1,0 +1,5 @@
+-keep class com.waitou.towards.TowardsApplication{ *; }
+-keep class com.waitou.towards.TowardsApplicationLike{ *; }
+-keep com.to.aboomy.tinker_lib.TinkerApplicationLike{ *; }
+-keep com.to.aboomy.tinker_lib.TinkerApplicationBase{ *; }
+-keep class com.tencent.tinker.**{ *; }
