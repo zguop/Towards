@@ -28,8 +28,8 @@
                 android:layout_height="150dp"
                 android:layout_centerVertical="true"
                 android:scaleType="fitXY"
-                app:imageUrl="@{item.pic}"
-                app:placeholder="@{@drawable/svg_ic_play_movie}"/>
+                app:imageURI="@{item.pic}"
+                app:placeholderImage="@{@drawable/svg_ic_play_movie}"/>
 
         </RelativeLayout>
 

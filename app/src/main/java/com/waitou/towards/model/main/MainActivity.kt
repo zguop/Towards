@@ -63,7 +63,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainBinding?.adapter = adapter
         mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)
         val binding = DataBindingUtil.inflate<NavHeaderMainBinding>(layoutInflater, R.layout.nav_header_main, null, false)
-        binding.drawableId = R.drawable.nav_header_img
         mainBinding?.navView?.addHeaderView(binding.root)
         mainBinding?.navView?.setNavigationItemSelectedListener(this)
         mainBinding?.mainTab?.setOnNavigationItemSelectedListener { item ->

@@ -20,10 +20,6 @@ import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.waitou.photo_library.PhotoPickerFinal;
 import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.towards.R;
@@ -152,18 +148,10 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
                 .isCrop(true)
                 .executePhoto(info -> {
                     PhotoInfo photoInfo = info.get(0);
-                    Glide.with(getV())
-                            .load(new File(photoInfo.photoPath))
-                            .asBitmap()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .into(new SimpleTarget<Bitmap>(photoInfo.photoWidth, photoInfo.photoHeight) {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    reset();
-                                    bitmapField.set(resource);
-                                    enable.set(checkBitmap());
-                                }
-                            });
+                    Bitmap resource = ImageUtils.getBitmap(photoInfo.photoPath, photoInfo.photoWidth, photoInfo.photoHeight);
+                    reset();
+                    bitmapField.set(resource);
+                    enable.set(checkBitmap());
                 }));
     }
 

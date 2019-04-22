@@ -46,7 +46,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies['cardview-v7']
     implementation rootProject.ext.dependencies["smarttablayout"]
-    implementation rootProject.ext.dependencies["circleimageview"]
     implementation rootProject.ext.dependencies["flexbox"]
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["stetho"]
@@ -67,6 +66,8 @@ dependencies {
     implementation project(':wt_library')
     implementation project(':meta_provider_lib')
     implementation project(':tinker_lib')
+    implementation project(':imgloader_lib')
+
 }
 
 apply from: "$rootProject.projectDir/tinkerConfigure.gradle"

@@ -41,7 +41,7 @@
                 android:layout_height="58dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
-                app:fileImageUrl="@{item.cover.photoPath}"
+                app:imageURI="@{item.cover.photoPath}"
                 tools:background="#f00"/>
 
             <LinearLayout

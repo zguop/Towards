@@ -1,6 +1,8 @@
 package com.waitou.towards.model.main.fragment.home;
 
 import android.databinding.ObservableField;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
@@ -116,36 +118,62 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                                     SPStaticUtils.put(Values.EVERYDAY_DATA, finalCurrentDate[0])
                             );
                 })
+
                 .flatMap(gankResultsInfo -> {
                     List<List<GankResultsTypeInfo>> lists = new ArrayList<>();
                     if (gankResultsInfo != null) {
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.福利)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.福利) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_aixin);
+                            }
                             lists.add(gankResultsInfo.福利);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.休息视频)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.休息视频) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_movie);
+                            }
                             lists.add(gankResultsInfo.休息视频);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.Android)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.Android) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_android);
+                            }
                             lists.add(gankResultsInfo.Android);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.瞎推荐)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.瞎推荐) {
+                                gankResultsTypeInfo.typeLogo =  getDrawable(R.drawable.svg_ic_xia);
+                            }
                             lists.add(gankResultsInfo.瞎推荐);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.App)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.App) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_app);
+                            }
                             lists.add(gankResultsInfo.App);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.iOS)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.iOS) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_ios);
+                            }
                             lists.add(gankResultsInfo.iOS);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.拓展资源)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.拓展资源) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_tuozhan);
+                            }
                             lists.add(gankResultsInfo.拓展资源);
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.前端)) {
+                            for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.前端) {
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_qian);
+                            }
                             lists.add(gankResultsInfo.前端);
                         }
                         if (lists.size() > 0) {
                             lists.get(0).get(0).isShowTitle = true;
                         }
+
                     }
                     return Observable.just(lists);
                 })
@@ -160,6 +188,13 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                 .subscribe(lists -> getHomeCommendFragment().onSuccess(lists)
                         , throwable -> getHomeCommendFragment().onError(throwable));
         getV().pend(disposable);
+    }
+
+    private Drawable getDrawable(int resId) {
+        if (getV().getActivity() == null) {
+            return null;
+        }
+        return ContextCompat.getDrawable(getV().getActivity(), resId);
     }
 
     private void addWelfareImg(List<GankResultsTypeInfo> list) {

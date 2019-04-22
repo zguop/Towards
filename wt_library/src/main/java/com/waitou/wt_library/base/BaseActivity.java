@@ -11,7 +11,6 @@ import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.wt_library.R;
-import com.waitou.wt_library.imageloader.ILFactory;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -65,18 +64,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isImmersiveStatusBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarUtil.drawerLayoutTransparencyBar(this, drawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ILFactory.getLoader().resume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ILFactory.getLoader().pause(this);
     }
 
     @Override

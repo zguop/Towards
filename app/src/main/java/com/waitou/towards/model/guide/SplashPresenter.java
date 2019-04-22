@@ -1,21 +1,18 @@
 package com.waitou.towards.model.guide;
 
 import android.databinding.ObservableField;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.waitou.net_library.helper.EmptyErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.R;
@@ -168,20 +165,15 @@ public class SplashPresenter extends XPresent<SplashActivity> {
      */
     private void loadFileImg(String savePath) {
         File file = new File(savePath);
-        Glide.with(getV()).load(file).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>(ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight()) {
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
-                boolean b = FileUtils.deleteFile(file);//加载失败的图片需要删除
-                LogUtils.e("加载失败了 = " + e.toString() + " 删除掉这张图片 = " + b);
-            }
-
-            @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                initImageResource(resource);
-            }
-        });
+        LogUtils.e(" 显示的图片本地路径是 ： " + file.getAbsolutePath());
+        Bitmap bitmap = ImageUtils.getBitmap(file, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight());
+        if (bitmap == null) {
+            initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
+            boolean b = FileUtils.deleteFile(file);//加载失败的图片需要删除
+            LogUtils.e("加载失败了，删除掉这张图片 = " + b);
+        } else {
+            initImageResource(ImageUtils.bitmap2Drawable(bitmap));
+        }
     }
 
     /**

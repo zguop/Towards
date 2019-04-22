@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:scaleType="fitXY"
-            app:load="@{drawableId}"/>
+            app:placeholderImage="@{@drawable/nav_header_img}"/>
 
     </RelativeLayout>
 

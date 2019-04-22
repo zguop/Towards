@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions;
 /**
  * auth aboom
  * date 2019/4/21
+ *
  */
 public class ImageLoaderBinding {
     @BindingAdapter(value = {"imageURI", "placeholderImage", "failureImage"}, requireAll = false)

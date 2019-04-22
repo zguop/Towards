@@ -30,7 +30,7 @@ public class AsyncOkHttpClient {
                     .responseTag("aa")
                     .request()
                     .response()
-                    .logLevel(LoggingInterceptor.LogLevel.ERROR)
+                    .logLevel(LoggingInterceptor.LogLevel.INFO)
                     .hideVerticalLine()// 隐藏竖线边框
                     .build();
             sOkHttpClient = new OkHttpClient.Builder()

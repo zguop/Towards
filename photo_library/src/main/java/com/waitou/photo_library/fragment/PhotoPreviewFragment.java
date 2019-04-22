@@ -1,15 +1,17 @@
 package com.waitou.photo_library.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.ViewTreeObserver;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.blankj.utilcode.util.UriUtils;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.waitou.imgloader_lib.DisplayOptions;
+import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.photo_library.R;
 import com.waitou.photo_library.databinding.FragmentPhotoDetailBinding;
 import com.waitou.photo_library.util.PhotoValue;
@@ -25,7 +27,7 @@ import java.io.File;
 
 public class PhotoPreviewFragment extends XFragment<XPresent, FragmentPhotoDetailBinding> {
 
-    private String  url; //url
+    private String url; //url
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,21 +64,21 @@ public class PhotoPreviewFragment extends XFragment<XPresent, FragmentPhotoDetai
                 showLoading();
                 getBinding().image.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 if (checkHead(url)) {
-                    Glide.with(getActivity()).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new SimpleTarget<GlideDrawable>(getBinding().image.getWidth(), getBinding().image.getHeight()) {
-                        @Override
-                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                            showContent();
-                            getBinding().image.setImageDrawable(resource);
-                        }
-                    });
+                    ImageLoader.displayImage(getBinding().image, url,
+                            DisplayOptions.build()
+                                    .setWidth(getBinding().image.getWidth())
+                                    .setHeight(getBinding().image.getHeight()),
+                            new DrawableImageViewTarget(getBinding().image) {
+                                @Override
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                    getBinding().image.setImageDrawable(resource);
+                                    showContent();
+                                }
+                            });
+
                 } else {
-                    Glide.with(getActivity()).load(new File(url)).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new SimpleTarget<GlideDrawable>(getBinding().image.getWidth(), getBinding().image.getHeight()) {
-                        @Override
-                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                            showContent();
-                            getBinding().image.setImageDrawable(resource);
-                        }
-                    });
+                    showContent();
+                    getBinding().image.setImageURI(UriUtils.file2Uri(new File(url)));
                 }
             }
         });

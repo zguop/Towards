@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -16,15 +17,14 @@ import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.to.aboomy.recycler_lib.BindingItemProvider;
 import com.to.aboomy.recycler_lib.Displayable;
 import com.to.aboomy.recycler_lib.MuRecyclerAdapter;
 import com.to.aboomy.recycler_lib.PullRecyclerView;
+import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.databinding.ActivityNewGalleryBinding;
@@ -43,7 +43,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -120,27 +119,19 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                     info.isShowImageUrl = null;
                 }
                 ImageView imageView = helper.getView(R.id.image);
-                Glide.with(GalleryNewActivity.this)
-                        .load(info.url)
-                        .placeholder(R.drawable.place_holder)
-                        .into(new SimpleTarget<GlideDrawable>() {
-                            @Override
-                            public void onLoadStarted(Drawable placeholder) {
-                                super.onLoadStarted(placeholder);
-                                imageView.setImageDrawable(placeholder);
-                            }
+                ImageLoader.displayImage(imageView, info.url, R.drawable.place_holder, new DrawableImageViewTarget(imageView) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        super.onLoadFailed(errorDrawable);
+                        info.isShowImageUrl = false;
+                    }
 
-                            @Override
-                            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                                imageView.setImageDrawable(resource);
-                                info.isShowImageUrl = true;
-                            }
-
-                            @Override
-                            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                                info.isShowImageUrl = false;
-                            }
-                        });
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        super.onResourceReady(resource, transition);
+                        info.isShowImageUrl = true;
+                    }
+                });
             }
         });
         getBinding().list.setAdapter(adapter);

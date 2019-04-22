@@ -47,9 +47,9 @@
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:imageUrl="@{item.url}"
-                app:placeholder="@{@drawable/default_place}"
-                app:error="@{@drawable/error_place}"/>
+                app:imageURI="@{item.url}"
+                app:placeholderImage="@{@drawable/default_place}"
+                app:failureImage="@{@drawable/error_place}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

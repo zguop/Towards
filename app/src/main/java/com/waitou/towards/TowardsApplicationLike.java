@@ -25,7 +25,6 @@ import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.bean.PatchInfo;
 import com.waitou.towards.common.ThemeImpl;
 import com.waitou.towards.net.DataLoader;
-import com.waitou.wt_library.imageloader.ILFactory;
 
 import java.util.List;
 
@@ -60,8 +59,6 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
         }
         //utils工具类的初始化
         initUtils();
-        //glide加载初始化
-        ILFactory.getLoader().init(getApplication());
         //通过chrome来查看android数据库 chrome://inspect/#devices
         Stetho.initializeWithDefaults(getApplication());
         //初始化主题

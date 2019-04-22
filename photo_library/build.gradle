@@ -9,5 +9,6 @@ dependencies {
     api rootProject.ext.dependencies["photoView"]
     api rootProject.ext.dependencies["crop"]
     implementation project(':wt_library')
+    implementation project(':imgloader_lib')
     api project(':rx_lib')
 }

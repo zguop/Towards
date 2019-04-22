@@ -31,8 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_centerVertical="true"
-                app:cropImageUrl="@{item.pic}"
-                app:placeholder="@{@drawable/svg_ic_play_movie}"/>
+                android:scaleType="centerCrop"
+                app:imageURI="@{item.pic}"
+                app:placeholderImage="@{@drawable/svg_ic_play_movie}"/>
 
         </RelativeLayout>
 

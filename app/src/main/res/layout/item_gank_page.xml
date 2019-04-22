@@ -7,7 +7,6 @@
 
         <import type="android.view.View"/>
 
-        <import type="com.waitou.towards.enums.GankEnum"/>
 
         <import type="android.text.Html"/>
 
@@ -59,7 +58,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
                     android:tint="?android:attr/colorPrimary"
-                    app:src="@{GankEnum.valueFrom(item.type)}"/>
+                    android:src="@{item.typeLogo}"/>
 
                 <TextView
                     android:id="@+id/tv"
@@ -87,8 +86,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:scaleType="centerCrop"
                 android:visibility="@{item.images == null ? View.GONE :View.VISIBLE}"
-                app:cropImageUrl="@{item.images[0]}"/>
+                app:imageURI="@{item.images[0]}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

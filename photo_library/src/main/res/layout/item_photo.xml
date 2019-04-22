@@ -40,8 +40,8 @@
             android:contentDescription="@null"
             android:onClick="@{() -> presenter.onPhotoItemClick(item, position)}"
             android:scaleType="@{position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? ScaleType.CENTER_INSIDE : ScaleType.CENTER_CROP}"
-            app:fileImageUrl="@{item.photoPath}"
-            app:placeholder="@{position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? @drawable/svg_ic_camera : @drawable/svg_ic_photo_bg}"/>
+            app:imageURI="@{item.photoPath}"
+            app:placeholderImage="@{position == 0 &amp;&amp; presenter.mPhotoPickerFinal.isShowCamera() ? @drawable/svg_ic_camera : @drawable/svg_ic_photo_bg}"/>
 
         <View
             android:id="@+id/mask"

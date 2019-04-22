@@ -1,5 +1,7 @@
 package com.waitou.towards.bean;
 
+import android.graphics.drawable.Drawable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.waitou.net_library.model.Displayable;
@@ -52,8 +54,19 @@ public class GankResultsTypeInfo implements  Displayable, com.to.aboomy.recycler
     @Expose
     public String who; //dmj
 
+    /**
+     * 是否显示今日推荐
+     */
     public boolean isShowTitle;
 
+    /**
+     * 这个字段在美女相册里有用
+     */
     public Boolean isShowImageUrl;
+
+    /**
+     * 首页右边的小图标
+     */
+    public Drawable typeLogo;
 
 }
