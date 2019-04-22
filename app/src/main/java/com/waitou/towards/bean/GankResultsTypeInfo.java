@@ -62,7 +62,7 @@ public class GankResultsTypeInfo implements  Displayable, com.to.aboomy.recycler
     /**
      * 这个字段在美女相册里有用
      */
-    public Boolean isShowImageUrl;
+    public boolean isShowImageUrl;
 
     /**
      * 首页右边的小图标

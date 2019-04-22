@@ -68,14 +68,8 @@ def appConfigure = {
                     zipAlignEnabled false
                     //移除无用的resource文件 资源压缩
                     shrinkResources false
-
-                    multiDexKeepProguard file("multi_dex.pro")
-
-
                 }
                 debug {
-                    multiDexKeepProguard file("multi_dex.pro")
-
                     //签名配置
                     signingConfig = signingConfigs.config
                     applicationIdSuffix ".debug"

@@ -2,7 +2,7 @@
 完全按照自己的想法开发，借鉴于github许多开源项目UI。不定时上传代码。
 
 
-使用的到的技术  kotlin + DataBinding + mvp + rxJava2 + retrofit + rxCache
+使用的到的技术  kotlin + DataBinding + mvp + rxJava2 + retrofit + Glide
 
 大量dataBinding例子
 

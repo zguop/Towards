@@ -17,9 +17,8 @@ dependencies {
     api rootProject.ext.dependencies["statusbarlib"]
     api rootProject.ext.dependencies['qybanner']
     api rootProject.ext.dependencies['utilcode']
-//    api 'com.lzy.net:okgo:3.0.4'
-    api 'com.github.limedroid:XStateController:v1.1.1'
-    api 'com.billy.android:gloading:1.0.0'
+    implementation 'com.github.limedroid:XStateController:v1.1.1'
+    implementation 'com.billy.android:gloading:1.0.0'
 
 
     debugImplementation rootProject.ext.dependencies["leakcanary-canary-debug"]

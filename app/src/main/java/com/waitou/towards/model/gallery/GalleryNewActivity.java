@@ -3,7 +3,6 @@ package com.waitou.towards.model.gallery;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
@@ -39,11 +38,9 @@ import java.util.concurrent.TimeUnit;
 
 import github.hellocsl.layoutmanager.gallery.GalleryLayoutManager;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * auth aboom
@@ -55,7 +52,6 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
     private GalleryLayoutManager layoutManager;
 
     private Disposable subscribe;
-    private Disposable cacheSubscribe;
     private boolean    transformer;
     private int        choosePosition = -1;
 
@@ -71,29 +67,15 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
         layoutManager.attach(getBinding().list.getContentView());
         layoutManager.setItemTransformer(new ScaleTransformer());
         layoutManager.setOnItemSelectedListener((recyclerView, item, position) -> {
-            if (choosePosition == position) {
-                return;
-            }
             choosePosition = position;
             GankResultsTypeInfo info = (GankResultsTypeInfo) adapter.getItem(position);
-            if (info != null) {
-                if (cacheSubscribe != null && !cacheSubscribe.isDisposed()) {
-                    cacheSubscribe.dispose();
-                }
-                cacheSubscribe = Observable.just(item)
-                        .doOnNext(view -> {
-                            while (ObjectUtils.isEmpty(info.isShowImageUrl)) {
-                                SystemClock.sleep(50);
-                            }
-                        })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(view -> {
-                            item.setDrawingCacheEnabled(true);
-                            Bitmap drawingCache = item.getDrawingCache();
-                            KitUtils.startSwitchBackgroundAnim(getBinding().list, ImageUtils.fastBlur(drawingCache, 1, 25));
-                            item.setDrawingCacheEnabled(false);
-                        });
+            if (info != null && info.isShowImageUrl) {
+                item.post(() -> {
+                    item.setDrawingCacheEnabled(true);
+                    Bitmap drawingCache = item.getDrawingCache();
+                    GalleryNewActivity.this.updateBgDrawable(drawingCache);
+                    item.setDrawingCacheEnabled(false);
+                });
             }
         });
         adapter = new MuRecyclerAdapter();
@@ -115,21 +97,15 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
             public void convert(BaseViewHolder helper, Displayable data, int position) {
                 helper.itemView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
                 GankResultsTypeInfo info = (GankResultsTypeInfo) data;
-                if (info.isShowImageUrl != null && !info.isShowImageUrl) {
-                    info.isShowImageUrl = null;
-                }
                 ImageView imageView = helper.getView(R.id.image);
                 ImageLoader.displayImage(imageView, info.url, R.drawable.place_holder, new DrawableImageViewTarget(imageView) {
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        super.onLoadFailed(errorDrawable);
-                        info.isShowImageUrl = false;
-                    }
-
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         super.onResourceReady(resource, transition);
                         info.isShowImageUrl = true;
+                        if (choosePosition == position) {
+                            updateBgDrawable(ImageUtils.drawable2Bitmap(resource));
+                        }
                     }
                 });
             }
@@ -141,6 +117,12 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
         getBinding().style.setOnClickListener(v -> transformer());
         getBinding().save.setOnClickListener(v -> requestStoragePermission(this::saveImage));
         reloadData();
+    }
+
+
+    private void updateBgDrawable(Bitmap drawingCache) {
+        KitUtils.startSwitchBackgroundAnim(getBinding().list, ImageUtils.fastBlur(drawingCache, 1, 25));
+
     }
 
     @Override
