@@ -45,6 +45,7 @@ kapt {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies['cardview-v7']
+    implementation rootProject.ext.dependencies['lifecycle_extensions']
     implementation rootProject.ext.dependencies["smarttablayout"]
     implementation rootProject.ext.dependencies["flexbox"]
     implementation rootProject.ext.dependencies["fab"]
@@ -53,6 +54,9 @@ dependencies {
     implementation rootProject.ext.dependencies["jolyglot_gson"]
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["bubbleseekbar"]
+
+
+
 //    implementation rootProject.ext.dependencies["multidex"]
 
     implementation 'github.hellocsl:GalleryLayoutManager:1.0.6'

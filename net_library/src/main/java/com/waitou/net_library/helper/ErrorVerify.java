@@ -5,5 +5,5 @@ package com.waitou.net_library.helper;
  */
 
 public interface ErrorVerify {
-    void call(Throwable throwable);
+     void call(Throwable throwable);
 }

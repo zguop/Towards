@@ -15,8 +15,8 @@ import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
 import com.waitou.towards.model.QrScanActivity
+import com.waitou.towards.model.activity.Demo
 import com.waitou.towards.model.activity.GloadActivity
-import com.waitou.towards.model.activity.RecommendedActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
 import com.waitou.towards.model.main.fragment.CircleFragment
@@ -98,7 +98,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         pend(Observable.timer(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe {
                     when (item.itemId) {
-                        R.id.nav_tuijian -> Router.newIntent().from(this).to(RecommendedActivity::class.java).launch()
+                        R.id.nav_tuijian -> Router.newIntent().from(this).to(Demo::class.java).launch()
                         R.id.nav_all -> {
                             Router.newIntent().from(this).to(GloadActivity::class.java).launch()
                         }

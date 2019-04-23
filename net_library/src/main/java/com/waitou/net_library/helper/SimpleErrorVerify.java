@@ -4,12 +4,12 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.R;
 
 /**
- * Created by waitou on 17/1/11.
+ * Created by waitou on 17/2/17.
  */
 
-public class SimpleErrorVerify implements ErrorVerify {
+public interface SimpleErrorVerify extends ErrorVerify {
     @Override
-    public void call(Throwable throwable) {
+    default void call(Throwable throwable) {
         ToastUtils.showShort(R.string.warn_net_error);
     }
 }

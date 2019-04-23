@@ -1,10 +1,12 @@
 package com.waitou.towards.model.gallery;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -19,18 +21,19 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.github.clans.fab.FloatingActionMenu;
 import com.to.aboomy.recycler_lib.BindingItemProvider;
 import com.to.aboomy.recycler_lib.Displayable;
 import com.to.aboomy.recycler_lib.MuRecyclerAdapter;
 import com.to.aboomy.recycler_lib.PullRecyclerView;
 import com.waitou.imgloader_lib.ImageLoader;
+import com.waitou.net_library.model.APIResult;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GankResultsTypeInfo;
-import com.waitou.towards.databinding.ActivityNewGalleryBinding;
 import com.waitou.towards.model.gallery.helper.CurveTransformer;
 import com.waitou.towards.model.gallery.helper.ScaleTransformer;
 import com.waitou.towards.util.KitUtils;
-import com.waitou.wt_library.base.XActivity;
+import com.waitou.wt_library.base.BasePageActivity;
 
 import java.io.File;
 import java.util.List;
@@ -46,25 +49,30 @@ import io.reactivex.functions.Action;
  * auth aboom
  * date 2019/3/31
  */
-public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityNewGalleryBinding> implements PullRecyclerView.OnLoadMoreListener {
+public class GalleryNewActivity extends BasePageActivity implements PullRecyclerView.OnLoadMoreListener {
 
     private MuRecyclerAdapter    adapter;
     private GalleryLayoutManager layoutManager;
 
-    private Disposable subscribe;
-    private boolean    transformer;
-    private int        choosePosition = -1;
+    private Disposable         subscribe;
+    private boolean            transformer;
+    private int                choosePosition;
+    private FloatingActionMenu floatingActionMenu;
+    private PullRecyclerView   pullRecyclerView;
+    private GalleryViewModule  galleryViewModule;
 
     @Override
-    public int getContentViewId() {
-        return R.layout.activity_new_gallery;
+    public View getContentView() {
+        return ff(R.layout.activity_new_gallery);
     }
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         transparencyBar();
+        pullRecyclerView = f(R.id.list);
+        floatingActionMenu = f(R.id.menu);
         layoutManager = new GalleryLayoutManager(GalleryLayoutManager.HORIZONTAL);
-        layoutManager.attach(getBinding().list.getContentView());
+        layoutManager.attach(pullRecyclerView.getContentView());
         layoutManager.setItemTransformer(new ScaleTransformer());
         layoutManager.setOnItemSelectedListener((recyclerView, item, position) -> {
             choosePosition = position;
@@ -73,7 +81,7 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                 item.post(() -> {
                     item.setDrawingCacheEnabled(true);
                     Bitmap drawingCache = item.getDrawingCache();
-                    GalleryNewActivity.this.updateBgDrawable(drawingCache);
+                    KitUtils.startSwitchBackgroundAnim(pullRecyclerView, ImageUtils.fastBlur(drawingCache, 1, 25));
                     item.setDrawingCacheEnabled(false);
                 });
             }
@@ -104,63 +112,53 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                         super.onResourceReady(resource, transition);
                         info.isShowImageUrl = true;
                         if (choosePosition == position) {
-                            updateBgDrawable(ImageUtils.drawable2Bitmap(resource));
+                            KitUtils.startSwitchBackgroundAnim(pullRecyclerView, ImageUtils.fastBlur(ImageUtils.drawable2Bitmap(resource), 1, 25));
                         }
                     }
                 });
             }
         });
-        getBinding().list.setAdapter(adapter);
-        getBinding().list.setOnLoadMoreListener(this);
-        getBinding().setPresenter(getP());
-        getBinding().cycle.setOnClickListener(v -> cycle());
-        getBinding().style.setOnClickListener(v -> transformer());
-        getBinding().save.setOnClickListener(v -> requestStoragePermission(this::saveImage));
+        pullRecyclerView.setAdapter(adapter);
+        pullRecyclerView.setOnLoadMoreListener(this);
+        f(R.id.cycle).setOnClickListener(v -> cycle());
+        f(R.id.style).setOnClickListener(v -> transformer());
+        f(R.id.save).setOnClickListener(v -> requestStoragePermission(this::saveImage));
+
+        galleryViewModule = ViewModelProviders.of(this).get(GalleryViewModule.class);
+        galleryViewModule.getLiveData().observe(this, this::bindUI);
         reloadData();
-    }
-
-
-    private void updateBgDrawable(Bitmap drawingCache) {
-        KitUtils.startSwitchBackgroundAnim(getBinding().list, ImageUtils.fastBlur(drawingCache, 1, 25));
-
-    }
-
-    @Override
-    public GalleryNewPresenter createPresenter() {
-        return new GalleryNewPresenter();
     }
 
     @Override
     public void reloadData() {
         showLoading();
-        getP().loadData(1);
+        galleryViewModule.getGirlPics();
     }
 
     @Override
     public void onLoadMore(int page) {
-        getP().loadData(page);
+        galleryViewModule.getGirlPics(page);
     }
 
-    public void onError(boolean isReload) {
-        if (isReload) {
-            showError();
+    public void bindUI(APIResult<List<GankResultsTypeInfo>> apiResult) {
+        if (!apiResult.isSuccess()) {
+            if (apiResult.getCode() == 1) {
+                showFailed();
+            }
             return;
         }
-        ToastUtils.showShort("请检查网络！");
-    }
-
-    public void onSuccess(List<GankResultsTypeInfo> galleryInfo) {
-        if (ObjectUtils.isEmpty(galleryInfo)) {
+        List<GankResultsTypeInfo> data = apiResult.getData();
+        if (ObjectUtils.isEmpty(data)) {
             showEmpty();
             return;
         }
         showContent();
-        adapter.addData(galleryInfo);
-        getBinding().list.loadComplete(galleryInfo.size() < 10);
+        adapter.addData(data);
+        pullRecyclerView.loadComplete(data.size() < 10);
     }
 
     private void cycle() {
-        getBinding().menu.close(true);
+        floatingActionMenu.close(true);
         if (subscribe != null && !subscribe.isDisposed()) {
             subscribe.dispose();
         } else {
@@ -168,20 +166,20 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
                     .onBackpressureDrop()
                     .subscribe(aLong -> {
                         int currentPosition = layoutManager.getCurSelectedPosition();
-                        getBinding().list.getContentView().smoothScrollToPosition(currentPosition + 1);
+                        pullRecyclerView.getContentView().smoothScrollToPosition(currentPosition + 1);
                     });
         }
     }
 
     private void transformer() {
-        getBinding().menu.close(true);
+        floatingActionMenu.close(true);
         transformer = !transformer;
         if (transformer) {
             layoutManager.setItemTransformer(new CurveTransformer());
         } else {
             layoutManager.setItemTransformer(new ScaleTransformer());
         }
-        getBinding().list.setAdapter(adapter);
+        pullRecyclerView.setAdapter(adapter);
     }
 
     private void requestStoragePermission(Action action) {
@@ -212,7 +210,7 @@ public class GalleryNewActivity extends XActivity<GalleryNewPresenter, ActivityN
         if (item == null) {
             return;
         }
-        getBinding().menu.close(true);
+        floatingActionMenu.close(true);
         String url = ((GankResultsTypeInfo) item).url;
         KitUtils.downLoaderImg(url, PathUtils.getExternalPicturesPath(), path -> {
             LogUtils.e("图片下载完成路径 " + path);

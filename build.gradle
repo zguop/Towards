@@ -61,6 +61,9 @@ afterEvaluate {
 //        def endBuildTime = System.currentTimeMillis()
 //        prinltn "the build time is：${endBuildTime - startBuildTime}"
 //    }
+
+    def dragon = file('bear')
+    println dragon.text
 }
 
 
@@ -102,17 +105,3 @@ task taskZ(dependsOn: [taskX, taskY]) {
 }
 
 //taskZ.dependsOn(taskX, taskY)
-
-//= doLast
-task lib1 << {
-    prinltn 'lib1'
-}
-
-task lib2 << {
-    prinltn 'lib2'
-
-}
-
-task nolib << {
-    prinltn 'nolib'
-}

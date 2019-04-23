@@ -20,7 +20,7 @@ import com.to.aboomy.tinker_lib.TinkerApplicationLike;
 import com.to.aboomy.tinker_lib.util.TinkerManager;
 import com.waitou.meta_provider_lib.ISubApplication;
 import com.waitou.meta_provider_lib.JlMetaProvider;
-import com.waitou.net_library.helper.EmptyErrorVerify;
+import com.waitou.net_library.helper.SimpleErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.bean.PatchInfo;
 import com.waitou.towards.common.ThemeImpl;
@@ -128,7 +128,7 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
 
     private void tinkerPatch() {
         Observable<PatchInfo> observable = DataLoader.getGithubApi().checkPatch()
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter(new EmptyErrorVerify()));
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify()));
         Consumer<PatchInfo> consumer = patchInfo -> {
 
             if (TextUtils.isEmpty(patchInfo.downloadUrl)) {

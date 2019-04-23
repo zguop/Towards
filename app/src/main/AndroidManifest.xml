@@ -34,6 +34,7 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
 
+        <activity android:name=".model.activity.Demo"/>
         <!--主页-->
         <activity
             android:name=".model.main.MainActivity"

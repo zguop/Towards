@@ -1,9 +1,9 @@
 package com.waitou.wt_library.manager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,18 +25,17 @@ public class ViewManager {
     private Gloading.Holder holder;
 
     public ViewManager(ViewGroup content) {
-        groupView = content;
         context = content.getContext();
+        groupView = content;
     }
 
-    public static ViewManager getManager(Activity activity) {
+    public static ViewManager getManager(AppCompatActivity activity) {
         CoordinatorLayout content = new CoordinatorLayout(activity);
         return getManager(activity, content);
     }
 
-    public static ViewManager getManager(Activity activity, ViewGroup viewGroup) {
-        ViewGroup wrapper = activity.findViewById(android.R.id.content);
-        wrapper.addView(viewGroup, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    public static ViewManager getManager(AppCompatActivity activity, ViewGroup viewGroup) {
+        activity.setContentView(viewGroup, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return getManager(viewGroup);
     }
 
@@ -49,7 +48,7 @@ public class ViewManager {
         if (contentView == null) {
             throw new IllegalStateException("contentView can not be null");
         }
-        if (iView.getContentView().getParent() != null) {
+        if (contentView.getParent() != null) {
             ViewGroup parent = (ViewGroup) contentView.getParent();
             parent.removeView(contentView);
         }

@@ -1,10 +1,16 @@
 package com.waitou.towards.model.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.wt_library.base.BasePageActivity;
 import com.waitou.wt_library.view.TowardsToolbar;
 
@@ -14,17 +20,30 @@ import com.waitou.wt_library.view.TowardsToolbar;
  */
 public class GloadActivity extends BasePageActivity {
 
-    Handler handler = new Handler();
+    private TextView textView;
 
     @Override
     public void reloadData() {
-        showLoading();
-        handler.postDelayed(new Runnable() {
+        VM vm = ViewModelProviders.of(this).get(VM.class);
+//        final Observer<Long> elapsedTimeObserver = new Observer<Long>() {
+//            @Override
+//            public void onChanged(@Nullable final Long aLong) {
+//                Log.e("aa" , " along = "+ aLong);
+//                textView.setText(String.valueOf(aLong));
+//            }
+//        };
+        vm.getMap().observe(this, new Observer<Boolean>() {
             @Override
-            public void run() {
-                showFailed();
+            public void onChanged(@Nullable Boolean aBoolean) {
+                textView.setText(String.valueOf(aBoolean));
             }
-        }, 2000);
+        });
+    }
+
+    @Override
+    protected void initLoadingStatusViewIfNeed() {
+        viewManager.wrapXStateController(this, false);
+
     }
 
     @Override
@@ -36,7 +55,19 @@ public class GloadActivity extends BasePageActivity {
 
     @Override
     public View getContentView() {
-        return new TextView(this);
+        textView = new TextView(this);
+        textView.setTextSize(16);
+        textView.setTextColor(Color.BLUE);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        textView.setGravity(Gravity.CENTER);
+        textView.setText("1111111");
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showShort(textView.getText().toString());
+            }
+        });
+        return textView;
     }
 
 }

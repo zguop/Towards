@@ -1,4 +1,4 @@
-def VSupportSdk = "27.1.0"
+def VSupportSdk = "27.1.1"
 def retrofitVersion = "2.2.0"
 def leakcanaryCanary = "1.5.4"
 
@@ -20,6 +20,7 @@ ext {
             "design"                   : "com.android.support:design:${VSupportSdk}",
             "annotations"              : "com.android.support:support-annotations:${VSupportSdk}",
             "recyclerview-v7"          : "com.android.support:recyclerview-v7:${VSupportSdk}",
+            "lifecycle_extensions"     : "android.arch.lifecycle:extensions:1.1.0",
             "retrofit"                 : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             "adapter-rxjava"           : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             "converter-gson"           : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
