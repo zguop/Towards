@@ -80,7 +80,6 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify() {
                     @Override
                     public void call(Throwable throwable) {
-                        super.call(throwable);
                         getFragment(type).showError(page == 1);
                     }
                 }))

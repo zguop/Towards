@@ -11,7 +11,7 @@ def applyPlugin = {
 }
 
 def commonConfigure = {
-    android.with {
+    android {
         compileSdkVersion rootProject.ext.android.compileSdkVersion
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8

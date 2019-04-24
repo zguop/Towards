@@ -1,9 +1,9 @@
 package com.to.aboomy.rx_lib;
 
 
-import io.reactivex.Flowable;
-import io.reactivex.processors.FlowableProcessor;
-import io.reactivex.processors.PublishProcessor;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * Created by waitou on 17/1/11.
@@ -16,26 +16,18 @@ public class RxBus {
      * http://www.loongwind.com/archives/264.html
      * https://theseyears.gitbooks.io/android-architecture-journey/content/rxbus.html
      */
-    private static volatile RxBus defaultInstance;
-
-    private final FlowableProcessor<Object> bus;
+    private final Subject<Object> bus;
 
     private RxBus() {
-        bus = PublishProcessor.create().toSerialized();
+        bus = PublishSubject.create().toSerialized();
     }
 
     public static RxBus getDefault() {
-        RxBus rxBus = defaultInstance;
-        if (defaultInstance == null) {
-            synchronized (RxBus.class) {
-                rxBus = defaultInstance;
-                if (defaultInstance == null) {
-                    rxBus = new RxBus();
-                    defaultInstance = rxBus;
-                }
-            }
-        }
-        return rxBus;
+        return RxBusHolder.defaultInstance;
+    }
+
+    private static class RxBusHolder {
+        private static final RxBus defaultInstance = new RxBus();
     }
 
     /**
@@ -55,7 +47,7 @@ public class RxBus {
     /**
      * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
      */
-    public <T> Flowable<T> toObservable(Class<T> eventType) {
+    public <T> Observable<T> toObservable(Class<T> eventType) {
         return bus.ofType(eventType);
     }
 
@@ -63,7 +55,7 @@ public class RxBus {
      * 根据专递的code 和 eventType 类型返回特定类型 eventType的观察者
      * 对于注册了 code为 0 ， class为voidMessage的观察者，那么就接收不到code为0之外的voidMessage。
      */
-    public <T> Flowable<T> toObservable(final int code, final Class<T> eventType) {
+    public <T> Observable<T> toObservable(final int code, final Class<T> eventType) {
         return bus.ofType(RxBusBaseEvent.class)
                 .filter(event -> event.getCode() == code && eventType.isInstance(event.getObject()))
                 .map(RxBusBaseEvent::getObject)

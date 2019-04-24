@@ -11,12 +11,14 @@ dependencies {
     api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["design"]
     api rootProject.ext.dependencies["recyclerview-v7"]
-    api rootProject.ext.dependencies["avi-loading"]
     api rootProject.ext.dependencies["rxbinding"]
     api rootProject.ext.dependencies["bottomsheet"]
     api rootProject.ext.dependencies["statusbarlib"]
     api rootProject.ext.dependencies['qybanner']
     api rootProject.ext.dependencies['utilcode']
+
+
+    implementation rootProject.ext.dependencies["avi-loading"]
     implementation 'com.github.limedroid:XStateController:v1.1.1'
     implementation 'com.billy.android:gloading:1.0.0'
 

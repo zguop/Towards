@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.waitou.net_library.helper.SimpleErrorVerify;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.R;
 import com.waitou.towards.greendao.GreenDaoHelper;
@@ -49,7 +48,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         List<LogoImg> logoImgList = logoImgDao.loadAll();
         //去请求网络上的logo图片
         pend(DataLoader.getGithubApi().getLogoList()
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify()))
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(null))
                 .filter(strings -> strings != null && strings.size() > 0)
                 .doOnNext(strings -> {
                     if (!logoImgList.isEmpty()) {
