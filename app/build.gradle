@@ -71,6 +71,7 @@ dependencies {
     implementation project(':meta_provider_lib')
     implementation project(':tinker_lib')
     implementation project(':imgloader_lib')
+    implementation project(':widget_lib')
 
 }
 

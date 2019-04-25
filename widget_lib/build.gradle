@@ -1,0 +1,9 @@
+globleConfigure()
+android {
+    resourcePrefix 'widget_'
+}
+dependencies {
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation project(':wt_library')
+
+}
