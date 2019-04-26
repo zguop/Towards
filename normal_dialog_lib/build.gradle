@@ -1,0 +1,8 @@
+globleConfigure()
+android {
+    resourcePrefix 'dl_'
+}
+dependencies {
+    compileOnly rootProject.ext.dependencies["appcompat-v7"]
+    compileOnly rootProject.ext.dependencies["recyclerview-v7"]
+}

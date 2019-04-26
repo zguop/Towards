@@ -1,18 +1,19 @@
 package com.waitou.widget_lib;
 
-import android.content.Context;
-import android.view.View;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.waitou.normal_dialog_lib.NormalDialog;
 
 /**
  * auth aboom
  * date 2019-04-25
  */
-public class EasyDialog extends BaseDialog {
-
-    private View view;
+public class EasyDialog extends NormalDialog {
 
     @Override
-    public View getContentView(Context activity) {
-        return view;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 }

@@ -1,5 +1,6 @@
-package com.waitou.widget_lib;
+package com.waitou.normal_dialog_lib;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,25 +17,29 @@ import android.view.WindowManager;
 /**
  * auth aboom
  * date 2019-04-25
+ * DialogFragment生命周期
+ * onCreate-->onCreateDialog-->onCreateView-->onViewCreated-->onStart
  */
-public class BaseDialog extends DialogFragment implements IDialogView {
+public class NormalDialog extends DialogFragment {
 
-    private Float dimAmount;
-    private int   gravity;
-    private int   width;//宽度
-    private int   height;//高度
+    protected Float dimAmount;
+    protected int   gravity;
+    protected int   width;//宽度
+    protected int   height;//高度
 
+    private IDialogView iDialogView;
+    private DialogInterface.OnDismissListener onDismissListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.widget_Dialog_Tip);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.dl_Dialog_Tip);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return getContentView(getActivity());
+        return iDialogView != null ? iDialogView.getContentView(getActivity()) : new View(getActivity());
     }
 
     @Override
@@ -50,17 +55,38 @@ public class BaseDialog extends DialogFragment implements IDialogView {
                 attributes.dimAmount = dimAmount;
             }
             if (gravity == Gravity.BOTTOM) {
-                window.setWindowAnimations(R.style.widget_anim_slide_share_from_bottom);
+                window.setWindowAnimations(R.style.dl_anim_slide_share_from_bottom);
             }
             window.setAttributes(attributes);
             window.setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (onDismissListener != null) {
+            onDismissListener.onDismiss(dialog);
+        }
+    }
+
+    /**
+     * 设置view
+     */
+    public NormalDialog setDialogView(IDialogView iDialogView) {
+        this.iDialogView = iDialogView;
+        return this;
+    }
+
+    public NormalDialog setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+        this.onDismissListener = onDismissListener;
+        return this;
+    }
+
     /**
      * 屏幕外不可点击取消
      */
-    public BaseDialog setOutCancelable(boolean cancelable) {
+    public NormalDialog setOutCancelable(boolean cancelable) {
         super.setCancelable(cancelable);
         return this;
     }
@@ -70,7 +96,7 @@ public class BaseDialog extends DialogFragment implements IDialogView {
      *
      * @param gravity {@link Gravity}
      */
-    public BaseDialog setGravity(int gravity) {
+    public NormalDialog setGravity(int gravity) {
         this.gravity = gravity;
         return this;
     }
@@ -82,7 +108,7 @@ public class BaseDialog extends DialogFragment implements IDialogView {
      *              WindowManager.LayoutParams.MATCH_PARENT 可以传入
      *              60 固定值
      */
-    public BaseDialog setWidget(int width) {
+    public NormalDialog setWidget(int width) {
         this.width = width;
         return this;
     }
@@ -94,7 +120,7 @@ public class BaseDialog extends DialogFragment implements IDialogView {
      *               WindowManager.LayoutParams.MATCH_PARENT 可以传入
      *               60 固定值
      */
-    public BaseDialog setHeight(int height) {
+    public NormalDialog setHeight(int height) {
         this.height = height;
         return this;
     }
@@ -103,10 +129,11 @@ public class BaseDialog extends DialogFragment implements IDialogView {
      * 设置
      * 调节灰色背景透明度[0-1]
      */
-    public BaseDialog setDimAmount(float dimAmount) {
+    public NormalDialog setDimAmount(float dimAmount) {
         this.dimAmount = dimAmount;
         return this;
     }
+
 
     public void show(FragmentManager fragmentManager) {
         if (this.isAdded()) {

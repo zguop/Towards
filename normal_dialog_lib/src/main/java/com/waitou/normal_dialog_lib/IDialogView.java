@@ -1,4 +1,4 @@
-package com.waitou.widget_lib;
+package com.waitou.normal_dialog_lib;
 
 import android.content.Context;
 import android.view.View;

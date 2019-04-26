@@ -4,6 +4,5 @@ android {
 }
 dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
-    implementation project(':wt_library')
-
+    api project(':normal_dialog_lib')
 }

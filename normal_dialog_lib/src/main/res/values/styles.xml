@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dl_Dialog_Tip" parent="Theme.AppCompat.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 背景缓存颜色 -->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <!--透明bar-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+    <!--底部弹出的动画-->
+    <style name="dl_anim_slide_share_from_bottom">
+        <item name="android:windowEnterAnimation">@anim/dl_slide_share_from_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/dl_slide_share_from_bottom_out</item>
+    </style>
+</resources>
