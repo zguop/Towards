@@ -38,7 +38,7 @@ ext {
             "jolyglot_gson"            : 'com.github.VictorAlbertos.Jolyglot:gson:0.0.4',
             "stetho"                   : 'com.facebook.stetho:stetho:1.5.1', //chrome来查看android数据库
             "greendao"                 : 'org.greenrobot:greendao:3.2.0',//GreenDao 数据库
-            "bubbleseekbar"            : 'com.xw.repo:bubbleseekbar:3.20-lite',
+            "bubbleseekbar"            : 'com.xw.repo:bubbleseekbar:3.2-lite',
             "photoView"                : 'com.github.chrisbanes:PhotoView:2.0.0', //有android x 2.1.3
             "crop"                     : 'com.isseiaoki:simplecropview:1.1.4',//图片裁剪
             "bugly_crashreport"        : 'com.tencent.bugly:crashreport:latest.release',
