@@ -1,11 +1,13 @@
 package com.waitou.towards.model.main.fragment.joke;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.waitou.basic_lib.DialogUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.helper.SimpleErrorVerify;
 import com.waitou.net_library.model.RequestParams;
@@ -51,9 +53,16 @@ public class TextJokePresenter extends XPresent<TextJokeFragment> implements Bas
         shareInfo.content = item.content;
         shareInfo.imageUrl = item.url;
         shareInfo.type = ObjectUtils.isNotEmpty(shareInfo.imageUrl) ? ShareInfo.TEXT_AND_IMAGE : ShareInfo.TEXT;
-        UShare.share(getV().getActivity(), shareInfo, media -> {
-            ToastUtils.showShort("分享成功");
-            Log.d("aa", " 分享成功");
+        FragmentActivity activity = getV().getActivity();
+        if(activity == null){
+            return;
+        }
+        DialogUtils.showShareDialog(activity, shareInfo, new UShare.OnShareListener() {
+            @Override
+            public void onShare(SHARE_MEDIA share_media) {
+                ToastUtils.showShort("分享成功");
+
+            }
         });
     }
 

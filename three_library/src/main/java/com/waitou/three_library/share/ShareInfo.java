@@ -22,6 +22,7 @@ public class ShareInfo {
 
     public int type;
 
+
     @Override
     public String toString() {
         return "ShareInfo{" +

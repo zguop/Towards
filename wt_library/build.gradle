@@ -12,7 +12,6 @@ dependencies {
     api rootProject.ext.dependencies["design"]
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["rxbinding"]
-    api rootProject.ext.dependencies["bottomsheet"]
     api rootProject.ext.dependencies["statusbarlib"]
     api rootProject.ext.dependencies['qybanner']
     api rootProject.ext.dependencies['utilcode']

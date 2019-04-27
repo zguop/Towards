@@ -5,9 +5,8 @@ android {
     }
 }
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies["bugly_crashreport"]
     implementation rootProject.ext.dependencies['utilcode']
-    implementation rootProject.ext.dependencies["bottomsheet"]
     implementation project(':meta_provider_lib')
 }

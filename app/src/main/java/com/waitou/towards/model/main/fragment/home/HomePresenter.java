@@ -4,7 +4,6 @@ import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import com.blankj.utilcode.constant.TimeConstants;
 import com.blankj.utilcode.util.LogUtils;
@@ -12,7 +11,8 @@ import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.SPStaticUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.cocosw.bottomsheet.BottomSheet;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.waitou.basic_lib.DialogUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;
@@ -29,6 +29,7 @@ import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
 import com.waitou.wt_library.view.SingleViewPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -66,10 +67,11 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         shareInfo.imageUrl = item.images != null && !item.images.isEmpty() ? item.images.get(0) : "";
         shareInfo.targetUrl = item.url;
         shareInfo.type = ShareInfo.WEB0;
-        UShare.share(getV().getActivity(), shareInfo, media -> {
-            ToastUtils.showShort("分享成功");
-            Log.d("aa", " 分享成功");
-
+        DialogUtils.showShareDialog(getV().getActivity(), shareInfo, new UShare.OnShareListener() {
+            @Override
+            public void onShare(SHARE_MEDIA share_media) {
+                ToastUtils.showShort("分享成功");
+            }
         });
     }
 
@@ -142,7 +144,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         }
                         if (ObjectUtils.isNotEmpty(gankResultsInfo.瞎推荐)) {
                             for (GankResultsTypeInfo gankResultsTypeInfo : gankResultsInfo.瞎推荐) {
-                                gankResultsTypeInfo.typeLogo =  getDrawable(R.drawable.svg_ic_xia);
+                                gankResultsTypeInfo.typeLogo = getDrawable(R.drawable.svg_ic_xia);
                             }
                             lists.add(gankResultsInfo.瞎推荐);
                         }
@@ -251,18 +253,43 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
         if (getV().getActivity() == null) {
             return;
         }
-        new BottomSheet.Builder(getV().getActivity())
-                .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
-                .listener(item -> {
-                    if (ObjectUtils.equals(item.getTitle(), txName.get())) {
-                        ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
-                        return true;
-                    }
-                    txName.set(item.getTitle().toString());
-                    mCargoFragment.showLoading();
-                    loadCargoData(txName.get(), 1);
-                    return true;
-                }).grid().show();
+        HomeGankIconEnum[] values = HomeGankIconEnum.values();
+        DialogUtils.showBottomSheetDialog(getV().getFragmentManager(),
+                "选择分类",
+                0,
+                0,
+                R.layout.bs_item_share,
+                Arrays.asList(values),
+                3,
+                (dialog, helper, data, position) -> {
+                    helper.setImageResource(R.id.img, data.getResId());
+                    helper.setText(R.id.text, data.getDesc());
+                    helper.itemView.setOnClickListener(v -> {
+                        dialog.dismiss();
+                        if (ObjectUtils.equals(data.getDesc(), txName.get())) {
+                            ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
+                            return;
+                        }
+                        txName.set(data.getDesc());
+                        mCargoFragment.showLoading();
+                        loadCargoData(txName.get(), 1);
+                    });
+                }
+        );
+
+//
+//        new BottomSheet.Builder(getV().getActivity())
+//                .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
+//                .listener(item -> {
+//                    if (ObjectUtils.equals(item.getTitle(), txName.get())) {
+//                        ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
+//                        return true;
+//                    }
+//                    txName.set(item.getTitle().toString());
+//                    mCargoFragment.showLoading();
+//                    loadCargoData(txName.get(), 1);
+//                    return true;
+//                }).grid().show();
     }
 
     public String setGankPageTime(String publishedAt) {

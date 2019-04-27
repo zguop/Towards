@@ -4,13 +4,11 @@ import android.app.Activity;
 
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.cocosw.bottomsheet.BottomSheet;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-import com.waitou.three_library.R;
 
 /**
  * Created by waitou on 17/5/16.
@@ -20,37 +18,10 @@ import com.waitou.three_library.R;
 public class UShare {
 
     public interface OnShareListener {
-        void onShare(String share_media);
+        void onShare(SHARE_MEDIA share_media);
     }
 
-    public static void share(Activity activity, ShareInfo info, OnShareListener action) {
-        new BottomSheet.Builder(activity, R.style.BottomSheet_Dialog)
-                .title("分享到").sheet(R.menu.menu_share_bottom_sheet)
-                .listener((dialog, which) -> share(activity, ShareEnum.valueOf(which), info, new UMShareListener() {
-                            @Override
-                            public void onStart(SHARE_MEDIA share_media) {
-                            }
-
-                            @Override
-                            public void onResult(SHARE_MEDIA share_media) {
-                                action.onShare(share_media.toString());
-                            }
-
-                            @Override
-                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                ToastUtils.showShort(throwable.getMessage());
-                            }
-
-                            @Override
-                            public void onCancel(SHARE_MEDIA share_media) {
-                                ToastUtils.showShort("分享取消了...");
-                            }
-                        })
-                ).grid().show();
-    }
-
-
-    private static void share(Activity activity, SHARE_MEDIA media, ShareInfo info, UMShareListener listener) {
+    public static void share(Activity activity, SHARE_MEDIA media, ShareInfo info, OnShareListener listener) {
         ShareAction shareAction = new ShareAction(activity).setPlatform(media);
         switch (info.type) {
             case ShareInfo.TEXT: //文本
@@ -68,7 +39,28 @@ public class UShare {
                                 ObjectUtils.isNotEmpty(info.imageUrl) ? new UMImage(activity, info.imageUrl) : null));
                 break;
         }
-        shareAction.setCallback(listener)
-                .share();
+        shareAction.setCallback(new UMShareListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onResult(SHARE_MEDIA share_media) {
+                if (listener != null) {
+                    listener.onShare(share_media);
+                }
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                ToastUtils.showShort(throwable.getMessage());
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media) {
+                ToastUtils.showShort("分享取消了...");
+            }
+        }).share();
     }
 }

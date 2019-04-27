@@ -56,15 +56,11 @@ dependencies {
     implementation rootProject.ext.dependencies["bubbleseekbar"]
 
 
-
-//    implementation rootProject.ext.dependencies["multidex"]
-
     implementation 'github.hellocsl:GalleryLayoutManager:1.0.6'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation "com.android.databinding:compiler:3.1.4"
 
-    implementation project(':three_library')
     implementation project(':photo_library')
     implementation project(':zbar_lib')
     implementation project(':wt_library')
@@ -72,6 +68,7 @@ dependencies {
     implementation project(':tinker_lib')
     implementation project(':imgloader_lib')
     implementation project(':widget_lib')
+    implementation project(':basic_lib')
 
 }
 

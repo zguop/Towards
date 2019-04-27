@@ -9,22 +9,28 @@ import com.waitou.three_library.R;
 
 public enum ShareEnum {
 
-    WX(R.id.menu_wx, SHARE_MEDIA.WEIXIN),
+    WX("微信", R.drawable.svg_ic_wx, SHARE_MEDIA.WEIXIN),
 
-    WX_CIRCLE(R.id.menu_wx_friend, SHARE_MEDIA.WEIXIN_CIRCLE),
+    WX_CIRCLE("朋友圈", R.drawable.svg_ic_wx_friend, SHARE_MEDIA.WEIXIN_CIRCLE),
 
-    QQ(R.id.menu_qq, SHARE_MEDIA.QQ);
+    QQ("QQ", R.drawable.svg_ic_qq, SHARE_MEDIA.QQ);
 
-    private int         id;
+    private int         resId;
+    private String      name;
     private SHARE_MEDIA media;
 
-    ShareEnum(int id, SHARE_MEDIA media) {
-        this.id = id;
+    ShareEnum(String name, int resId, SHARE_MEDIA media) {
+        this.name = name;
+        this.resId = resId;
         this.media = media;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
+    }
+
+    public int getResId() {
+        return resId;
     }
 
     public SHARE_MEDIA getMedia() {
@@ -34,11 +40,9 @@ public enum ShareEnum {
     public static SHARE_MEDIA valueOf(int id) {
         if (id == R.id.menu_wx) {
             return WX.getMedia();
-        }
-        else if (id == R.id.menu_wx_friend) {
+        } else if (id == R.id.menu_wx_friend) {
             return WX_CIRCLE.getMedia();
-        }
-        else {
+        } else {
             return QQ.getMedia();
         }
     }

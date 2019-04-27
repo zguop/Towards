@@ -1,0 +1,12 @@
+globleConfigure()
+android {
+    resourcePrefix 'bs'
+}
+dependencies {
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["recyclerview-v7"]
+    api rootProject.ext.dependencies['utilcode']
+    api project(':three_library')
+    api project(':normal_dialog_lib')
+    api project(':recycler_lib')
+}

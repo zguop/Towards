@@ -4,5 +4,4 @@ android {
 }
 dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
-    api project(':normal_dialog_lib')
 }
