@@ -394,7 +394,7 @@ public class QRUtils {
         Canvas cv = new Canvas(newBitmap);
         cv.drawBitmap(first, 0, 0, null);
         cv.drawBitmap(second, fromPoint.x, fromPoint.y, null);
-        cv.save(Canvas.ALL_SAVE_FLAG);
+        cv.save();
         cv.restore();
 
         return newBitmap;
@@ -423,7 +423,7 @@ public class QRUtils {
         Canvas canvas = new Canvas(newb);
         canvas.drawBitmap(src, 0, 0, null);
         canvas.drawBitmap(watermark, paddingLeft, paddingTop, null);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return newb;
     }

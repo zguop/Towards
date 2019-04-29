@@ -67,7 +67,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
             private val startColor = 0x00ffffff
             private val endColor = ThemeUtils.getThemeAttrColor(this@MovieRecommendActivity, R.attr.colorPrimary)
             private var mDy = 0
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 mDy += dy
                 val parent = bar.parent as View

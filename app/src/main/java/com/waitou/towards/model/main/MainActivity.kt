@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
 import com.to.aboomy.theme_lib.ChangeModeController
+import com.umeng.socialize.UMShareAPI
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
@@ -164,16 +165,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         ChangeModeController.get().cancel()
-//        UMShareAPI.get(this).release()
+        UMShareAPI.get(this).release()
     }
 
     /**
