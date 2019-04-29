@@ -54,6 +54,7 @@ dependencies {
     implementation rootProject.ext.dependencies["jolyglot_gson"]
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["bubbleseekbar"]
+    implementation rootProject.ext.dependencies["bottomNavigationViewEx"]
 
     implementation 'github.hellocsl:GalleryLayoutManager:1.0.6'
 

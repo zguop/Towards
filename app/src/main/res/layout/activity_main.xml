@@ -63,12 +63,11 @@
                     app:layout_behavior="@string/quick_hide_behavior"
                     app:srcCompat="@android:drawable/ic_dialog_email"/>
 
-                <com.waitou.towards.view.ExBottomNavigationView
+                <com.waitou.towards.view.ExNavigationView
                     android:id="@+id/main_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    app:enableShiftingMode="@{false}"
                     app:itemBackground="?android:attr/colorPrimary"
                     app:itemIconTint="@color/skin_bottom_bar_not"
                     app:itemTextColor="@color/skin_bottom_bar_not"
