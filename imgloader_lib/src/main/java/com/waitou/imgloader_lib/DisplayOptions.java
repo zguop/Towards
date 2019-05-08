@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.IdRes;
 
 import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 /**
  * auth aboom
@@ -14,8 +15,8 @@ public class DisplayOptions {
     static final int RES_NONE = -1;
 
     /*--------------- 全局配置 ---------------*/
-    public static final int RES_PLACE_HOLDER = RES_NONE;
-    public static final int RES_ERROR        = RES_NONE;
+    public static int RES_PLACE_HOLDER = RES_NONE;
+    public static int RES_ERROR        = RES_NONE;
     /*--------------- end ---------------*/
 
     /**
@@ -37,9 +38,12 @@ public class DisplayOptions {
 
     /**
      * 自定义的transformation
+     * 圆角变换 RoundedCorners
+     * 圆形变换 circleCrop
      */
     private Transformation<Bitmap> transformation;
 
+    private DiskCacheStrategy diskCacheStrategy;
 
     private DisplayOptions() {
     }
@@ -73,6 +77,11 @@ public class DisplayOptions {
         return this;
     }
 
+    public DisplayOptions setDiskCacheStrategy(DiskCacheStrategy diskCacheStrategy) {
+        this.diskCacheStrategy = diskCacheStrategy;
+        return this;
+    }
+
     public int getPlaceholder() {
         return placeholder;
     }
@@ -91,5 +100,9 @@ public class DisplayOptions {
 
     public int getHeight() {
         return height;
+    }
+
+    public DiskCacheStrategy getDiskCacheStrategy() {
+        return diskCacheStrategy;
     }
 }

@@ -21,7 +21,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.BaseActivity;
-import com.waitou.wt_library.view.TowardsToolbar;
+import com.waitou.wt_library.view.TitleBar;
 
 /**
  * Created by waitou on 17/3/17.
@@ -48,7 +48,7 @@ public class WebActivity extends BaseActivity {
         Intent intent = getIntent();
         mUrl = intent.getStringExtra(PLATFORM_WEB_URL);
         mTitleStr = intent.getStringExtra(PLATFORM_WEB_TITLE);
-        TowardsToolbar toolbar = findViewById(R.id.toolbar);
+        TitleBar toolbar = findViewById(R.id.toolbar);
 
         /*--------------- 初始化标题 ---------------*/
         TextView toolTitle = toolbar.initializeHeader(StringUtils.null2Length0(mTitleStr));

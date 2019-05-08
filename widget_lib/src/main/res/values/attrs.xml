@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="widget_ShadowLayout">
+        <attr name="widget_sl_cornerRadius" format="dimension"/>
+        <attr name="widget_sl_shadowRadius" format="dimension"/>
+        <attr name="widget_sl_shadowColor" format="color"/>
+        <attr name="widget_sl_dx" format="dimension"/>
+        <attr name="widget_sl_dy" format="dimension"/>
+        <attr name="widget_sl_palette" format="boolean"/>
+    </declare-styleable>
+</resources>

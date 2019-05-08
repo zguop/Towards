@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
@@ -59,12 +58,12 @@ public class ImageLoader {
     /**
      * 通用的加载图片的方法
      *
-     * @param imageView 加载的view
-     * @param url       加载的url
+     * @param imageView   加载的view
+     * @param modelLoader glide load方法支持的所有类型
      */
-    public static void displayImage(ImageView imageView, String url) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
     }
@@ -73,12 +72,12 @@ public class ImageLoader {
      * 通用的加载图片的方法
      *
      * @param imageView   加载的view
-     * @param url         加载的url
+     * @param modelLoader glide load方法支持的所有类型
      * @param placeholder 占位图
      */
-    public static void displayImage(ImageView imageView, String url, int placeholder) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(imageView);
@@ -87,13 +86,13 @@ public class ImageLoader {
     /**
      * 通用的加载图片的方法
      *
-     * @param imageView 加载的view
-     * @param url       加载的url
-     * @param options   配置属性
+     * @param imageView   加载的view
+     * @param modelLoader glide load方法支持的所有类型
+     * @param options     配置属性
      */
-    public static void displayImage(ImageView imageView, String url, DisplayOptions options) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .apply(getRequestOptions(options))
                 .into(imageView);
@@ -102,10 +101,10 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, BitmapImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, BitmapImageViewTarget target) {
         Glide.with(imageView)
                 .asBitmap()
-                .load(url)
+                .load(modelLoader)
                 .transition(new BitmapTransitionOptions().crossFade())
                 .into(target);
     }
@@ -113,10 +112,10 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, int placeholder, BitmapImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder, BitmapImageViewTarget target) {
         Glide.with(imageView)
                 .asBitmap()
-                .load(url)
+                .load(modelLoader)
                 .transition(new BitmapTransitionOptions().crossFade())
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(target);
@@ -125,10 +124,10 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, DisplayOptions options, BitmapImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options, BitmapImageViewTarget target) {
         Glide.with(imageView)
                 .asBitmap()
-                .load(url)
+                .load(modelLoader)
                 .transition(new BitmapTransitionOptions().crossFade())
                 .apply(getRequestOptions(options))
                 .into(target);
@@ -137,9 +136,9 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, DrawableImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, DrawableImageViewTarget target) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .into(target);
     }
@@ -147,9 +146,9 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, int placeholder, DrawableImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder, DrawableImageViewTarget target) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(target);
@@ -159,9 +158,9 @@ public class ImageLoader {
     /**
      * 图片加载方法回调加载
      */
-    public static void displayImage(ImageView imageView, String url, DisplayOptions options, DrawableImageViewTarget target) {
+    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options, DrawableImageViewTarget target) {
         Glide.with(imageView)
-                .load(url)
+                .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .apply(getRequestOptions(options))
                 .into(target);
@@ -177,9 +176,11 @@ public class ImageLoader {
     @SuppressLint("CheckResult")
     static RequestOptions getRequestOptions(DisplayOptions options) {
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         if (options == null) {
             return requestOptions;
+        }
+        if (options.getDiskCacheStrategy() != null) {
+            requestOptions.diskCacheStrategy(options.getDiskCacheStrategy());
         }
         if (options.getPlaceholder() != DisplayOptions.RES_NONE) {
             requestOptions.placeholder(options.getPlaceholder());

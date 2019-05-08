@@ -37,11 +37,11 @@ public class HsImageLoaderView extends HsRoundImageView {
 
     @Override
     public void setImageURI(@Nullable Uri uri) {
-        loadImage(uri == null ? "" : uri.toString());
+        loadImage(uri);
     }
 
-    public void loadImage(@Nullable String url) {
-        ImageLoader.displayImage(this, url, displayOptions);
+    public <T> void loadImage(@Nullable T modelLoader) {
+        ImageLoader.displayImage(this, modelLoader, displayOptions);
     }
 
     public void clearImage() {

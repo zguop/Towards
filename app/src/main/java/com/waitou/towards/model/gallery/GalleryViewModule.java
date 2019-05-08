@@ -24,15 +24,15 @@ public class GalleryViewModule extends ViewModel {
 
     private MutableLiveData<APIResult<List<GankResultsTypeInfo>>> liveData = new MutableLiveData<>();
 
-    public MutableLiveData<APIResult<List<GankResultsTypeInfo>>> getLiveData() {
+    MutableLiveData<APIResult<List<GankResultsTypeInfo>>> getLiveData() {
         return liveData;
     }
 
-    public void getGirlPics() {
+    void getGirlPics() {
         getGirlPics(1);
     }
 
-    public void getGirlPics(int page) {
+    void getGirlPics(int page) {
         Disposable subscribe = DataLoader.getGankApi().getGirlPics(page)
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify() {
                     @Override

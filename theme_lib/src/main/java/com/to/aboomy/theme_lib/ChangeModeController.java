@@ -66,7 +66,7 @@ public class ChangeModeController {
     private        List<SkinView>       mSkinViewList = new ArrayList<>();
     private        IThemeConfig         mThemeConfig;
 
-    private ChangeModeController() {
+    private  ChangeModeController() {
     }
 
     public static ChangeModeController get() {

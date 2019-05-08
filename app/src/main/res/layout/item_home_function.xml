@@ -1,57 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+<!--<data>-->
 
-        <variable
-            name="item"
-            type="com.waitou.towards.bean.FunctionInfo"/>
+<!--<variable--><!--name="item"--><!--type="com.waitou.towards.bean.FunctionInfo"/>-->
 
-        <variable
-            name="presenter"
-            type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>
-    </data>
+<!--<variable--><!--name="presenter"--><!--type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
+<!--android:onClick="@{() -> presenter.onLinkClick(item.type,item.value)}"-->
+
+<!--app:imageURI="@{item.picUrl}"--><!--app:placeholderImage="@{@drawable/base_ic_retry}"-->
+
+<!--</data>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorWhite"
+              android:orientation="vertical"
+              android:paddingTop="8dp"
+              android:paddingBottom="8dp">
+
+    <com.waitou.widget_lib.ShadowLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:onClick="@{() -> presenter.onLinkClick(item.type,item.value)}"
-        android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:layout_gravity="center_horizontal"
+        app:widget_sl_cornerRadius="30dp"
+        app:widget_sl_shadowRadius="4dp"
+        app:widget_sl_dy="3dp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="10dp">
+        <com.waitou.towards.view.CustomCircleImageView
+            android:id="@+id/img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            app:hs_border_color="?android:attr/colorPrimary"
+            app:hs_border_width="2dp"
+            app:hs_oval="true"
+            tools:background="@drawable/icon_android"/>
 
-            <com.waitou.towards.view.CustomCircleImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:scaleType="centerInside"
-                app:hs_border_color="?android:attr/colorPrimary"
-                app:hs_border_width="2dp"
-                app:hs_oval="true"
-                app:imageURI="@{item.picUrl}"
-                app:placeholderImage="@{@drawable/base_ic_retry}"
-                tools:background="@drawable/icon_android"/>
+    </com.waitou.widget_lib.ShadowLayout>
 
-        </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:text="@{item.typeName}"
-            android:textColor="@color/color_666666"
-            android:textSize="14sp"/>
-
-    </LinearLayout>
-
-</layout>
+</LinearLayout>

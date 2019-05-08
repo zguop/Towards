@@ -11,7 +11,6 @@ import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.BannerAdapterInfo;
 import com.waitou.towards.bean.BannerPageInfo;
-import com.waitou.towards.bean.CanInfo;
 import com.waitou.towards.bean.FunctionInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
 import com.waitou.towards.bean.RecyclerAdapterInfo;
@@ -73,6 +72,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
                 .setIndicatorInColor(ThemeUtils.getThemeAttrColor(getActivity(), R.attr.colorPrimary));
         ChangeModeController.get().addSkinView(qyIndicator);
         mAdapter.add(0, new BannerAdapterInfo(bannerAdapter, qyIndicator), 0);
+
     }
 
     public void onFunctionSuccess(List<FunctionInfo> homeFunctionInfo) {
@@ -91,9 +91,9 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
                 mAdapter.addAll(gankResultsTypeInfo, 2);
             }
         } else {
-            mAdapter.add(new CanInfo(), 3);
+//            mAdapter.add(new CanInfo(), 3);
         }
-        mAdapter.add(new CanInfo(), 4);
+//        mAdapter.add(new CanInfo(), 4);
     }
 
     public void onError(Throwable throwable) {

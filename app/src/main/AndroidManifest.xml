@@ -48,9 +48,8 @@
         <activity
             android:name=".model.graffiti.GraffitiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
         <!--影视推荐-->
         <activity
             android:name=".model.movie.MovieRecommendActivity"
@@ -61,15 +60,13 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".model.activity.RecommendedActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
             android:name=".model.QrScanActivity"
             android:screenOrientation="portrait"/>
 
 
         <activity android:name=".model.activity.GloadActivity"/>
+
+        <activity android:name=".model.activity.ColorActivity"/>
     </application>
 
 </manifest>

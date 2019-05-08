@@ -34,9 +34,7 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
     }
 
     @Override
-    public Runnable run() {
-        return this::reloadData;
-    }
+    public Runnable run() { return this::reloadData; }
 
     public void showLoading() {
         viewManager.showLoading();

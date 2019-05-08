@@ -89,7 +89,7 @@ public class HomePresenter extends XPresent<HomeFragment> implements SingleViewP
                         getHomeCommendFragment().onBannerSuccess(pair.first);
                     }
                     if (ObjectUtils.isNotEmpty(pair.second)) {
-                        getHomeCommendFragment().onFunctionSuccess(pair.second);
+//                        getHomeCommendFragment().onFunctionSuccess(pair.second);
                     }
                     return TimeUtils.getNowString(KitUtils.getDateFormat("yyyy-MM-dd"));
                 })

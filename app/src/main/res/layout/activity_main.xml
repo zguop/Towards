@@ -12,7 +12,6 @@
 
     <com.waitou.towards.view.SkinDrawerLayout
         android:id="@+id/main_drawer_layout"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:openDrawer="start">
@@ -22,59 +21,27 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.design.widget.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.waitou.wt_library.view.TowardsToolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/colorPrimary"
-                        android:minHeight="?android:attr/actionBarSize"
-                        app:contentInsetLeft="0dp"
-                        app:contentInsetStart="0dp"
-                        app:layout_scrollFlags="scroll|enterAlways|snap"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-                </android.support.design.widget.AppBarLayout>
-
                 <com.waitou.towards.view.CompatViewPager
                     android:id="@+id/f_content"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:adapter="@{adapter}"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:offscreenPageLimit="@{4}"
                     app:page_TouchMode="true"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="76dp"
-                    android:layout_marginRight="16dp"
-                    app:backgroundTint="?android:attr/colorPrimary"
-                    app:layout_behavior="@string/quick_hide_behavior"
-                    app:srcCompat="@android:drawable/ic_dialog_email"/>
 
                 <com.waitou.towards.view.ExNavigationView
                     android:id="@+id/main_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    app:layout_behavior="@string/footer_bar_behavior"
                     app:itemBackground="?android:attr/colorPrimary"
                     app:itemIconTint="@color/skin_bottom_bar_not"
                     app:itemTextColor="@color/skin_bottom_bar_not"
-                    app:layout_behavior="@string/footer_bar_behavior"
                     app:menu="@menu/menu_tab"/>
-
-            </android.support.design.widget.CoordinatorLayout>
 
         </LinearLayout>
 

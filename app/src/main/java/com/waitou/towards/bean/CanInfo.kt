@@ -1,6 +1,7 @@
 package com.waitou.towards.bean
 
-import com.waitou.net_library.model.Displayable
+import com.to.aboomy.recycler_lib.Displayable
+
 
 /**
  * Created by waitou on 17/2/20.

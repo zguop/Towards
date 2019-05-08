@@ -47,7 +47,6 @@ dependencies {
     implementation rootProject.ext.dependencies['cardview-v7']
     implementation rootProject.ext.dependencies['lifecycle_extensions']
     implementation rootProject.ext.dependencies["smarttablayout"]
-    implementation rootProject.ext.dependencies["flexbox"]
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["stetho"]
     implementation rootProject.ext.dependencies["rxcache"]

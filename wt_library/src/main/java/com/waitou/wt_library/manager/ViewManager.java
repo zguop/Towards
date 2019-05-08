@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.billy.android.loading.Gloading;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.IView;
-import com.waitou.wt_library.view.TowardsToolbar;
+import com.waitou.wt_library.view.TitleBar;
 
 import cn.droidlover.xstatecontroller.XStateController;
 
@@ -54,19 +54,29 @@ public class ViewManager {
         }
         if (isWrap) {
             XStateController xStateController = (XStateController) View.inflate(context, R.layout.base_view_state, null);
+            xStateController.setId(R.id.page_content);
             xStateController.contentView(contentView);
             this.groupView.addView(xStateController, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            setLayoutParamsCoordinator(xStateController);
             holder = Gloading.getDefault().wrap(xStateController).withRetry(iView.run());
         } else {
+            contentView.setId(R.id.page_content);
             groupView.addView(contentView);
-            setLayoutParamsCoordinator(contentView);
+        }
+        if (groupView instanceof CoordinatorLayout) {
+            View pageContentView = groupView.findViewById(R.id.page_content);
+            while (!(pageContentView.getParent() instanceof CoordinatorLayout)) {
+                pageContentView = (View) pageContentView.getParent();
+            }
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) pageContentView.getLayoutParams();
+            layoutParams.setBehavior(new AppBarLayout.ScrollingViewBehavior());
+            pageContentView.setLayoutParams(layoutParams);
         }
     }
 
-    public TowardsToolbar wrapBar() {
+    public TitleBar wrapBar() {
         AppBarLayout appBarLayout = new AppBarLayout(context);
-        TowardsToolbar toolbar = new TowardsToolbar(context);
+        appBarLayout.setId(R.id.page_title_bar);
+        TitleBar toolbar = new TitleBar(context);
         appBarLayout.addView(toolbar);
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         groupView.addView(appBarLayout, 0);
@@ -87,13 +97,5 @@ public class ViewManager {
 
     public void showEmpty() {
         holder.showEmpty();
-    }
-
-    private void setLayoutParamsCoordinator(View view) {
-        if (groupView instanceof CoordinatorLayout) {
-            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
-            layoutParams.setBehavior(new AppBarLayout.ScrollingViewBehavior());
-            view.setLayoutParams(layoutParams);
-        }
     }
 }

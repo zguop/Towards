@@ -22,9 +22,9 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.clans.fab.FloatingActionMenu;
-import com.to.aboomy.recycler_lib.BindingItemProvider;
+import com.to.aboomy.recycler_lib.AdapterDelegate;
 import com.to.aboomy.recycler_lib.Displayable;
-import com.to.aboomy.recycler_lib.MuRecyclerAdapter;
+import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter;
 import com.to.aboomy.recycler_lib.PullRecyclerView;
 import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.net_library.model.APIResult;
@@ -51,8 +51,8 @@ import io.reactivex.functions.Action;
  */
 public class GalleryNewActivity extends BasePageActivity implements PullRecyclerView.OnLoadMoreListener {
 
-    private MuRecyclerAdapter    adapter;
-    private GalleryLayoutManager layoutManager;
+    private MultipleRecyclerAdapter adapter;
+    private GalleryLayoutManager    layoutManager;
 
     private Disposable         subscribe;
     private boolean            transformer;
@@ -86,8 +86,8 @@ public class GalleryNewActivity extends BasePageActivity implements PullRecycler
                 });
             }
         });
-        adapter = new MuRecyclerAdapter();
-        adapter.addProvider(new BindingItemProvider() {
+        adapter = new MultipleRecyclerAdapter();
+        adapter.addDelegate(new AdapterDelegate() {
             int width = (int) (ScreenUtils.getScreenWidth() * 0.75f);
             int height = (int) (ScreenUtils.getScreenHeight() * 0.85f);
 

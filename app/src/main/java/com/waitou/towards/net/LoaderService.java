@@ -1,16 +1,16 @@
 package com.waitou.towards.net;
 
-import com.waitou.towards.bean.PatchInfo;
-import com.waitou.towards.bean.BaseResponse;
-import com.waitou.towards.bean.MovieBaseResponse;
 import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.bean.BannerPageInfo;
-import com.waitou.towards.bean.FunctionInfo;
+import com.waitou.towards.bean.BaseResponse;
 import com.waitou.towards.bean.GankIoDayInfo;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
+import com.waitou.towards.bean.HomeDataInfo;
 import com.waitou.towards.bean.JokeInfo;
+import com.waitou.towards.bean.MovieBaseResponse;
 import com.waitou.towards.bean.MovieResInfo;
+import com.waitou.towards.bean.PatchInfo;
 
 import java.util.List;
 
@@ -35,7 +35,9 @@ public interface LoaderService {
     Observable<List<BannerPageInfo>> getBannerPage(); //首页轮播图
 
     @GET("master/wt_home.json")
-    Observable<List<FunctionInfo>> getHomeData(); //首页
+    Observable<List<HomeDataInfo>> getHomeData(); //首页
+
+
 
     @GET("master/wt_patch.json")
     Observable<PatchInfo> checkPatch();

@@ -18,17 +18,17 @@ import com.waitou.wt_library.R;
  * bar
  */
 
-public class TowardsToolbar extends Toolbar {
+public class TitleBar extends Toolbar {
 
-    public TowardsToolbar(Context context) {
+    public TitleBar(Context context) {
         this(context, null);
     }
 
-    public TowardsToolbar(Context context, AttributeSet attrs) {
+    public TitleBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TowardsToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         if (!(context instanceof Activity)) {
             throw new IllegalArgumentException("Context 建议使用 Activity类型的");

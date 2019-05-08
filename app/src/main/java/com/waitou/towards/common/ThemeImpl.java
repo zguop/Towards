@@ -15,9 +15,9 @@ public class ThemeImpl implements IThemeConfig {
     @Override
     public List<ThemeModule> getTheme() {
         List<ThemeModule> list = new ArrayList<>();
-        list.add(new ThemeModule(R.style.AppThemePowder, R.color.colorPowder, "powder"));
         list.add(new ThemeModule(R.style.AppThemeRed, R.color.colorRed, "red"));
         list.add(new ThemeModule(R.style.AppThemeBlue, R.color.colorBlue, "blue"));
+        list.add(new ThemeModule(R.style.AppThemePowder, R.color.colorPowder, "powder"));
         return list;
     }
 }

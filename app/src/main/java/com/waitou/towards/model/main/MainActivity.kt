@@ -8,22 +8,20 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
-import android.view.View
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.databinding.ActivityMainBinding
 import com.waitou.towards.databinding.NavHeaderMainBinding
-import com.waitou.towards.model.QrScanActivity
-import com.waitou.towards.model.activity.Demo
+import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.GloadActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
 import com.waitou.towards.model.main.fragment.CircleFragment
 import com.waitou.towards.model.main.fragment.FigureFragment
 import com.waitou.towards.model.main.fragment.PersonFragment
-import com.waitou.towards.model.main.fragment.home.HomeFragment
+import com.waitou.towards.model.main.fragment.home.HomeNewFragment
 import com.waitou.towards.model.main.fragment.joke.TextJokeFragment
 import com.waitou.towards.view.dialog.BaseDialog
 import com.waitou.towards.view.dialog.ListOfDialog
@@ -41,7 +39,7 @@ import java.util.concurrent.TimeUnit
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mainBinding: ActivityMainBinding? = null
-    private var homeFragment = HomeFragment()
+    private var homeFragment = HomeNewFragment()
     private var textJokeFragment = TextJokeFragment()
     private var figureFragment = FigureFragment()
     private var circleFragment = CircleFragment()
@@ -55,12 +53,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         transparencyBar(mainBinding?.mainDrawerLayout)
-        mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
-        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
+//        mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
+//        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
-        mainBinding?.toolbar?.post {
-            mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
-        }
+//        mainBinding?.toolbar?.post {
+//            mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
+//        }
         mainBinding?.adapter = adapter
         mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)
         val binding = DataBindingUtil.inflate<NavHeaderMainBinding>(layoutInflater, R.layout.nav_header_main, null, false)
@@ -68,9 +66,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainBinding?.navView?.setNavigationItemSelectedListener(this)
         mainBinding?.mainTab?.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
-                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar.root)
-                R.id.menu_circle -> mainBinding?.toolbar?.visibility = View.GONE
+//                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
+//                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar.root)
+//                R.id.menu_circle -> mainBinding?.toolbar?.visibility = View.GONE
             }
             true
         }
@@ -99,7 +97,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         pend(Observable.timer(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe {
                     when (item.itemId) {
-                        R.id.nav_tuijian -> Router.newIntent().from(this).to(Demo::class.java).launch()
+                        R.id.nav_tuijian -> Router.newIntent().from(this).to(ColorActivity::class.java).launch()
                         R.id.nav_all -> {
                             Router.newIntent().from(this).to(GloadActivity::class.java).launch()
                         }

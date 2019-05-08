@@ -1,0 +1,230 @@
+package com.waitou.widget_lib;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.v7.graphics.Palette;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+
+/**
+ * auth aboom
+ * date 2019-05-07
+ */
+public class ShadowLayout extends FrameLayout {
+
+    private int   mShadowColor;
+    private float mShadowRadius;
+    private float mCornerRadius;
+    private float mDx;
+    private float mDy;
+
+    private boolean isForceInvalidateShadow;
+    private boolean isPalette;
+
+    public ShadowLayout(Context context) {
+        super(context);
+        initView(context, null);
+    }
+
+    public ShadowLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(context, attrs);
+    }
+
+    public ShadowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initView(context, attrs);
+    }
+
+    @Override
+    protected int getSuggestedMinimumWidth() {
+        return 0;
+    }
+
+    @Override
+    protected int getSuggestedMinimumHeight() {
+        return 0;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        Log.e("aa", " onSizeChanged" + w + " h " + h);
+        isForceInvalidateShadow = !isPalette;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.e("aa", "width = " + (right - left) + " height = " + (bottom - top));
+        paletteShadowColor();
+        if (isForceInvalidateShadow) {
+            isForceInvalidateShadow = false;
+            setBackgroundCompat(right - left, bottom - top);
+        }
+    }
+
+    public void invalidateShadow() {
+        isForceInvalidateShadow = true;
+        requestLayout();
+    }
+
+    public void invalidateShadow(@ColorInt int color) {
+        int colorWithAlpha = getColorWithAlpha(color);
+        if (mShadowColor != colorWithAlpha) {
+            mShadowColor = colorWithAlpha;
+            invalidateShadow();
+        }
+    }
+
+    public void setPalette(boolean palette) {
+        isPalette = palette;
+    }
+
+    private void initView(Context context, AttributeSet attrs) {
+        initAttributes(context, attrs);
+        int xPadding = (int) (mShadowRadius + Math.abs(mDx));
+        int yPadding = (int) (mShadowRadius + Math.abs(mDy));
+        setPadding(xPadding, yPadding, xPadding, yPadding);
+    }
+
+    private void setBackgroundCompat(int w, int h) {
+        Log.e("aa", " setBackgroundCompat " + w + " h " + h);
+        Bitmap bitmap = createShadowBitmap(w, h, mCornerRadius, mShadowRadius, mDx, mDy, mShadowColor);
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
+        setBackground(drawable);
+    }
+
+    @SuppressLint("CustomViewStyleable")
+    private void initAttributes(Context context, AttributeSet attrs) {
+        final TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.widget_ShadowLayout);
+        try {
+            mCornerRadius = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_cornerRadius, getResources().getDimension(R.dimen.widget_default_corner_radius));
+            mShadowRadius = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_shadowRadius, getResources().getDimension(R.dimen.widget_default_shadow_radius));
+            mDx = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_dx, 0);
+            mDy = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_dy, 0);
+            mShadowColor = attr.getColor(R.styleable.widget_ShadowLayout_widget_sl_shadowColor, Color.parseColor("#4D757575"));
+            isPalette = attr.getBoolean(R.styleable.widget_ShadowLayout_widget_sl_palette, false);
+        } finally {
+            attr.recycle();
+        }
+    }
+
+    private Bitmap createShadowBitmap(int shadowWidth, int shadowHeight, float cornerRadius, float shadowRadius,
+                                      float dx, float dy, int shadowColor) {
+
+        Bitmap output = Bitmap.createBitmap(shadowWidth, shadowHeight, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(output);
+
+        RectF shadowRect = new RectF(
+                shadowRadius,
+                shadowRadius,
+                shadowWidth - shadowRadius,
+                shadowHeight - shadowRadius);
+
+        if (dy > 0) {
+            shadowRect.top += dy;
+            shadowRect.bottom -= dy;
+        } else if (dy < 0) {
+            shadowRect.top += Math.abs(dy);
+            shadowRect.bottom -= Math.abs(dy);
+        }
+
+        if (dx > 0) {
+            shadowRect.left += dx;
+            shadowRect.right -= dx;
+        } else if (dx < 0) {
+            shadowRect.left += Math.abs(dx);
+            shadowRect.right -= Math.abs(dx);
+        }
+
+        Paint shadowPaint = new Paint();
+        shadowPaint.setAntiAlias(true);
+        shadowPaint.setColor(Color.TRANSPARENT);
+        shadowPaint.setStyle(Paint.Style.FILL);
+
+        if (!isInEditMode()) {
+            shadowPaint.setShadowLayer(shadowRadius, dx, dy, shadowColor);
+        }
+
+        canvas.drawRoundRect(shadowRect, cornerRadius, cornerRadius, shadowPaint);
+
+        return output;
+    }
+
+    /**
+     * 获取到柔和的深色的颜色（可传默认值）
+     * palette.getDarkMutedColor(Color.BLUE);
+     * 获取到活跃的深色的颜色（可传默认值）
+     * palette.getDarkVibrantColor(Color.BLUE);
+     * 获取到柔和的明亮的颜色（可传默认值）
+     * palette.getLightMutedColor(Color.BLUE);
+     * 获取到活跃的明亮的颜色（可传默认值）
+     * palette.getLightVibrantColor(Color.BLUE);
+     * 获取图片中最活跃的颜色（也可以说整个图片出现最多的颜色）（可传默认值）
+     * palette.getVibrantColor(Color.BLUE);
+     * 获取图片中一个最柔和的颜色（可传默认值）
+     * palette.getMutedColor(Color.BLUE);
+     */
+    private void paletteShadowColor() {
+        if (!isPalette) {
+            return;
+        }
+        int childCount = getChildCount();
+        if (childCount != 1) {
+            return;
+        }
+        View childAt = getChildAt(0);
+        if (childAt instanceof ImageView) {
+            Drawable drawable = ((ImageView) childAt).getDrawable();
+            if (drawable == null) {
+                return;
+            }
+            int colorWithAlpha = mShadowColor;
+            if (drawable instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                Palette.Swatch mutedSwatch = Palette.from(bitmap).generate().getMutedSwatch();
+                if (mutedSwatch != null) {
+                    colorWithAlpha = getColorWithAlpha(mutedSwatch.getRgb());
+                }
+            } else if (drawable instanceof ColorDrawable) {
+                colorWithAlpha = getColorWithAlpha(((ColorDrawable) drawable).getColor());
+            }
+
+            Log.e("aa", " colorWithAlpha = " + colorWithAlpha + " mShadowColor = " + mShadowColor);
+            if (mShadowColor != colorWithAlpha) {
+                mShadowColor = colorWithAlpha;
+                isForceInvalidateShadow = true;
+            }
+        }
+    }
+
+    /**
+     * 对色彩加入透明度
+     *
+     * @return a color with alpha made from color
+     */
+    private int getColorWithAlpha(int color) {
+        int alpha = Color.alpha(color);
+        if (alpha < 255) {
+            return color;
+        }
+        int a = Math.min(255, Math.max(0, (int) (0.9f * 255))) << 24;
+        int rgb = 0x00ffffff & color;
+        return a + rgb;
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="150dp"
+             android:layout_marginStart="15dp"
+             android:layout_marginTop="10dp"
+             android:layout_marginEnd="15dp">
+
+    <com.waitou.widget_lib.ShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:widget_sl_cornerRadius="10dp"
+        app:widget_sl_dy="4dp"
+        app:widget_sl_dx="4dp"
+        app:widget_sl_palette="true">
+
+        <com.waitou.imgloader_lib.HsRoundImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:hs_corner_radius="10dp"
+            app:hs_mask_color="#7f000000"/>
+
+    </com.waitou.widget_lib.ShadowLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        tools:text="android"/>
+</FrameLayout>

@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -60,7 +62,7 @@ public abstract class BaseFragment extends Fragment {
         if (getActivity() != null) {
             //获取当前fragment的子fragment
             List<Fragment> childFragmentList = getChildFragmentManager().getFragments();
-            if (childFragmentList != null && childFragmentList.size() > 0) {
+            if (childFragmentList.size() > 0) {
                 for (Fragment fragment : childFragmentList) {
                     if (fragment instanceof BaseFragment) {
                         BaseFragment childBaseFragment = (BaseFragment) fragment;
@@ -92,6 +94,7 @@ public abstract class BaseFragment extends Fragment {
      * fragment的懒加载
      */
     protected void fragmentVisibleHint() {
+        LogUtils.a("fragmentVisibleHint");
     }
 
     /**

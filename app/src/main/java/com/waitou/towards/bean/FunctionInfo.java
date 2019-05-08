@@ -13,10 +13,6 @@ public class FunctionInfo {
     @Expose
     public String picUrl;
 
-    @SerializedName("typeName")
-    @Expose
-    public String typeName;
-
     @SerializedName("type")
     @Expose
     public int type;
@@ -28,4 +24,9 @@ public class FunctionInfo {
     @SerializedName("value")
     @Expose
     public String value;
+
+    @SerializedName("description")
+    @Expose
+    public String description;
+    
 }

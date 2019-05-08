@@ -9,7 +9,7 @@ import android.view.View;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.ActivityXBinding;
 import com.waitou.wt_library.recycler.XPullRecyclerView;
-import com.waitou.wt_library.view.TowardsToolbar;
+import com.waitou.wt_library.view.TitleBar;
 
 
 /**
@@ -46,7 +46,7 @@ public abstract class XActivity<P extends UIPresent, D extends ViewDataBinding> 
         return mXBinding;
     }
 
-    public TowardsToolbar getBar(){
+    public TitleBar getBar(){
         return mXBinding.toolbar;
     }
 

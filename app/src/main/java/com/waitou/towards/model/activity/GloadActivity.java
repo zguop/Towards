@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SizeUtils;
 import com.waitou.normal_dialog_lib.BottomSheetAdapterDialog;
 import com.waitou.wt_library.base.BasePageActivity;
-import com.waitou.wt_library.view.TowardsToolbar;
+import com.waitou.wt_library.view.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class GloadActivity extends BasePageActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        TowardsToolbar toolbar = viewManager.wrapBar();
+        TitleBar toolbar = viewManager.wrapBar();
         toolbar.initializeHeader("我是标题");
         toolbar.setRightText("增加", new View.OnClickListener() {
             @Override

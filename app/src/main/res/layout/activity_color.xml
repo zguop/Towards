@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp">
+
+        <com.waitou.widget_lib.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:widget_sl_cornerRadius="10dp"
+            app:widget_sl_dx="4dp"
+            app:widget_sl_dy="4dp"
+            app:widget_sl_palette="true">
+
+            <com.waitou.imgloader_lib.HsRoundImageView
+                android:id="@+id/img1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:hs_corner_radius="10dp"
+                app:hs_mask_color="#7f000000"/>
+
+        </com.waitou.widget_lib.ShadowLayout>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:text="android"/>
+    </FrameLayout>
+
+
+    <!--<com.waitou.widget_lib.ShadowLayout-->
+        <!--android:id="@+id/shadow"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--app:widget_sl_cornerRadius="75dp"-->
+        <!--app:widget_sl_dy="4dp"-->
+        <!--app:widget_sl_shadowRadius="4dp">-->
+
+        <!--<com.waitou.towards.view.CustomCircleImageView-->
+            <!--android:id="@+id/img"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="150dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:hs_oval="true"-->
+            <!--tools:background="@drawable/icon_android"/>-->
+
+    <!--</com.waitou.widget_lib.ShadowLayout>-->
+
+
+    <TextView
+        android:id="@+id/darkMutedColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="darkMutedColor"/>
+
+    <TextView
+        android:id="@+id/darkVibrantColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="darkVibrantColor"/>
+
+    <TextView
+        android:id="@+id/lightMutedColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="lightMutedColor"/>
+
+    <TextView
+        android:id="@+id/lightVibrantColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="lightVibrantColor"/>
+
+    <TextView
+        android:id="@+id/mutedColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="mutedColor"/>
+
+    <TextView
+        android:id="@+id/vibrantColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="vibrantColor"/>
+
+</LinearLayout>

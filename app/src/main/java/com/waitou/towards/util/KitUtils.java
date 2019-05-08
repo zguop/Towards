@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.ThreadUtils;
@@ -97,7 +98,7 @@ public class KitUtils {
                 if (TextUtils.isEmpty(fileExtension)) {
                     fileExtension = "jpg";
                 }
-                String imageCacheSavePath = savePath + File.separator + "IMAGE_" + System.currentTimeMillis() + "." + fileExtension;
+                String imageCacheSavePath = savePath + File.separator + "IMAGE_" + EncryptUtils.encryptMD5ToString(url) + "." + fileExtension;
                 Request request = new Request.Builder().url(url).build();
                 Response response = AsyncOkHttpClient.getOkHttpClient().newCall(request).execute();
                 ResponseBody body = response.body();
