@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.LogUtils;
-
 import java.util.List;
 
 /**
@@ -47,11 +45,8 @@ public abstract class LazyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getUserVisibleHint()) {
-            //获取父fragment
             Fragment parentFragment = getParentFragment();
-            //如果父fragment不为空且不可见的
             if (parentFragment != null && !parentFragment.getUserVisibleHint()) {
-                //设置它的可见属性
                 waitingShowToUser = true;
                 //手动设置自己为不可见
                 super.setUserVisibleHint(false);
@@ -102,6 +97,5 @@ public abstract class LazyFragment extends Fragment {
      */
     protected void visibleCall() {
         isLoadCompleted = true;
-        LogUtils.a("visibleCall " + getClass().getSimpleName());
     }
 }
