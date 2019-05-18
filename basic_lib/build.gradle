@@ -8,7 +8,8 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies['utilcode']
     api rootProject.ext.dependencies["flexbox"]
-
+    api rootProject.ext.dependencies["banner"]
+    api rootProject.ext.dependencies["statusbarlib"]
 
     api project(':three_library')
     api project(':normal_dialog_lib')

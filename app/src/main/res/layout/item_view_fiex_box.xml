@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                          android:id="@+id/flex_box"
-                                          android:layout_width="match_parent"
-                                          android:layout_height="wrap_content">
+<com.waitou.widget_lib.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:widget_sl_side="bottom"
+                                    app:widget_sl_cornerRadius="0dp"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</com.google.android.flexbox.FlexboxLayout>
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flex_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</com.waitou.widget_lib.ShadowLayout>

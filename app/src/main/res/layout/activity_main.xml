@@ -1,56 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<com.waitou.towards.view.SkinDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                          xmlns:app="http://schemas.android.com/apk/res-auto"
+                                          xmlns:tools="http://schemas.android.com/tools"
+                                          android:id="@+id/drawerLayout"
+                                          android:layout_width="match_parent"
+                                          android:layout_height="match_parent"
+                                          android:fitsSystemWindows="true"
+                                          tools:openDrawer="start">
 
-    <data>
-
-        <variable
-            name="adapter"
-            type="com.waitou.wt_library.base.XFragmentAdapter"/>
-    </data>
-
-    <com.waitou.towards.view.SkinDrawerLayout
-        android:id="@+id/main_drawer_layout"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:openDrawer="start">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.waitou.towards.view.CompatViewPager
+            android:id="@+id/fContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:page_TouchMode="true"/>
 
-                <com.waitou.towards.view.CompatViewPager
-                    android:id="@+id/f_content"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:adapter="@{adapter}"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:offscreenPageLimit="@{4}"
-                    app:page_TouchMode="true"/>
+        <com.waitou.wt_library.view.TitleBar
+            android:id="@+id/pageTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_behavior="@string/widget_title_behavior"/>
 
+        <com.waitou.towards.view.ExNavigationView
+            android:id="@+id/mainTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:itemBackground="?android:attr/colorPrimary"
+            app:itemIconTint="@color/skin_bottom_bar_not"
+            app:itemTextColor="@color/skin_bottom_bar_not"
+            app:layout_behavior="@string/widget_bottom_behavior"
+            app:menu="@menu/menu_tab"/>
 
-                <com.waitou.towards.view.ExNavigationView
-                    android:id="@+id/main_tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    app:layout_behavior="@string/footer_bar_behavior"
-                    app:itemBackground="?android:attr/colorPrimary"
-                    app:itemIconTint="@color/skin_bottom_bar_not"
-                    app:itemTextColor="@color/skin_bottom_bar_not"
-                    app:menu="@menu/menu_tab"/>
+    </android.support.design.widget.CoordinatorLayout>
 
-        </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/activity_main_drawer"/>
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:menu="@menu/activity_main_drawer"/>
-
-    </com.waitou.towards.view.SkinDrawerLayout>
-</layout>
+</com.waitou.towards.view.SkinDrawerLayout>

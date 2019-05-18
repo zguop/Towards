@@ -40,7 +40,8 @@ public class HomeAndroidFragment extends XFragment<HomePresenter, IncludePullRec
     }
 
     @Override
-    protected void fragmentVisibleHint() {
+    protected void visibleCall() {
+        super.visibleCall();
         reloadData();
     }
 

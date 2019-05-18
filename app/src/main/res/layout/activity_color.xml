@@ -16,9 +16,10 @@
         <com.waitou.widget_lib.ShadowLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:widget_sl_dx="10dp"
+            app:widget_sl_dy="10dp"
+            app:widget_sl_shadow="4dp"
             app:widget_sl_cornerRadius="10dp"
-            app:widget_sl_dx="4dp"
-            app:widget_sl_dy="4dp"
             app:widget_sl_palette="true">
 
             <com.waitou.imgloader_lib.HsRoundImageView
@@ -42,25 +43,25 @@
     </FrameLayout>
 
 
-    <!--<com.waitou.widget_lib.ShadowLayout-->
-        <!--android:id="@+id/shadow"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--app:widget_sl_cornerRadius="75dp"-->
-        <!--app:widget_sl_dy="4dp"-->
-        <!--app:widget_sl_shadowRadius="4dp">-->
+    <com.waitou.widget_lib.ShadowLayout
+        android:id="@+id/shadow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        app:widget_sl_cornerRadius="75dp"
+        app:widget_sl_dy="4dp"
+        app:widget_sl_shadow="4dp">
 
-        <!--<com.waitou.towards.view.CustomCircleImageView-->
-            <!--android:id="@+id/img"-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_height="150dp"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--app:hs_oval="true"-->
-            <!--tools:background="@drawable/icon_android"/>-->
+        <com.waitou.towards.view.CustomCircleImageView
+            android:id="@+id/img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            app:hs_oval="true"
+            tools:background="@drawable/icon_android"/>
 
-    <!--</com.waitou.widget_lib.ShadowLayout>-->
+    </com.waitou.widget_lib.ShadowLayout>
 
 
     <TextView

@@ -34,7 +34,7 @@ public class Place implements Displayable {
         return backgroundColor;
     }
 
-    public static Place createDefaultPlace(int height) {
+    public static Place createPlace(int height) {
         Place placeInfo = new Place();
         placeInfo.height = height;
         placeInfo.backgroundColor = Color.TRANSPARENT;

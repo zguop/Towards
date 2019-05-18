@@ -26,6 +26,7 @@ import com.to.aboomy.recycler_lib.AdapterDelegate;
 import com.to.aboomy.recycler_lib.Displayable;
 import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter;
 import com.to.aboomy.recycler_lib.PullRecyclerView;
+import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.net_library.model.APIResult;
 import com.waitou.towards.R;
@@ -68,7 +69,7 @@ public class GalleryNewActivity extends BasePageActivity implements PullRecycler
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        transparencyBar();
+        StatusBarUtil.transparencyBar(this, true);
         pullRecyclerView = f(R.id.list);
         floatingActionMenu = f(R.id.menu);
         layoutManager = new GalleryLayoutManager(GalleryLayoutManager.HORIZONTAL);

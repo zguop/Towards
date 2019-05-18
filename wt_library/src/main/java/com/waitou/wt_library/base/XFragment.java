@@ -3,6 +3,7 @@ package com.waitou.wt_library.base;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,12 +14,18 @@ import com.waitou.wt_library.R;
 import com.waitou.wt_library.databinding.FragmentXBinding;
 import com.waitou.wt_library.recycler.XPullRecyclerView;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by wanglei on 2016/11/27.
  */
 
-public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends BaseFragment implements UIView<P> {
+public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> extends LazyFragment implements UIView<P> {
+
+    private CompositeDisposable mCompositeDisposable;
+
 
     private FragmentXBinding mXBinding;
     public  P presenter;
@@ -27,14 +34,13 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     @SuppressWarnings("unchecked")
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container) {
         mXBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_x, container, false);
         initReloadData(mXBinding.xContentLayout.getErrorView());
         if (getContentViewId() > 0) {
             d = DataBindingUtil.inflate(inflater, getContentViewId(), null, false);
             mXBinding.xContentLayout.addContentView(d.getRoot());
         }
-        isViewCreated = true;
         if (presenter == null) {
             presenter = createPresenter();
             if (presenter != null) {
@@ -48,11 +54,6 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         afterCreate(savedInstanceState);
-        //fragment可见 且 数据未加载 调用 fragmentVisibleHint
-        if (getUserVisibleHint() && !isLoadDataCompleted) {
-            fragmentVisibleHint();
-            isLoadDataCompleted = true;
-        }
     }
 
     public P getP() { return presenter; }
@@ -103,5 +104,29 @@ public abstract class XFragment<P extends UIPresent, D extends ViewDataBinding> 
 
     public void showLoading() {
         mXBinding.xContentLayout.showLoading();
+    }
+
+    /**
+     * 向队列中添加一个 subscription
+     */
+    public void pend(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        if (disposable != null) {
+            mCompositeDisposable.add(disposable);
+        }
+    }
+
+    protected <D extends ViewDataBinding> D bindingInflate(@LayoutRes int resId, ViewGroup container) {
+        return DataBindingUtil.inflate(getLayoutInflater(), resId, container, container != null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
+        }
     }
 }

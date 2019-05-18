@@ -16,8 +16,8 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initManager();
-        initLoadingStatusViewIfNeed();
+        viewManager = ViewManager.getManager(this, initRootView());
+        viewManager.wrapXStateController(this, isLoadingStatusViewIfNeed());
         afterCreate(savedInstanceState);
     }
 
@@ -25,13 +25,7 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
 
     public abstract void afterCreate(Bundle savedInstanceState);
 
-    protected void initManager() {
-        viewManager = ViewManager.getManager(this);
-    }
-
-    protected void initLoadingStatusViewIfNeed() {
-        viewManager.wrapXStateController(this, true);
-    }
+    protected boolean isLoadingStatusViewIfNeed() { return Boolean.TRUE; }
 
     @Override
     public Runnable run() { return this::reloadData; }

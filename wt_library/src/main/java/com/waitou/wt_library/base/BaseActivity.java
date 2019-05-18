@@ -1,9 +1,8 @@
 package com.waitou.wt_library.base;
 
-import android.os.Build;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -24,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private CompositeDisposable mCompositeDisposable;
-    private boolean             isImmersiveStatusBar;
+    public  boolean             isImmersiveStatusBar;
 
     @SuppressWarnings("unchecked")
     public <T extends View> T ff(int id) {
@@ -46,24 +45,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            isImmersiveStatusBar = StatusBarUtil.setImmersiveStatusBarBackgroundColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
+        if (immersiveStatusBar()) {
+            isImmersiveStatusBar = StatusBarUtil.setStatusBarColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
         }
     }
 
-    /**
-     * 设置状态栏透明，需要在onCreate之后调用
-     */
-    public void transparencyBar() {
-        if (isImmersiveStatusBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            StatusBarUtil.transparencyBar(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-        }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
-    public void transparencyBar(DrawerLayout drawerLayout) {
-        if (isImmersiveStatusBar && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            StatusBarUtil.drawerLayoutTransparencyBar(this, drawerLayout, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-        }
+    public boolean immersiveStatusBar() {
+        return Boolean.TRUE;
     }
 
     @Override

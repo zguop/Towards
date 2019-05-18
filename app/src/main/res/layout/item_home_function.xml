@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:widget_sl_cornerRadius="30dp"
-        app:widget_sl_shadowRadius="4dp"
+        app:widget_sl_shadow="4dp"
         app:widget_sl_dy="3dp">
 
         <com.waitou.towards.view.CustomCircleImageView

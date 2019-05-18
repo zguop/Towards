@@ -42,7 +42,8 @@ public class HomeCargoFragment extends XFragment<HomePresenter, IncludePullRecyc
     }
 
     @Override
-    protected void fragmentVisibleHint() {
+    protected void visibleCall() {
+        super.visibleCall();
         reloadData();
     }
 

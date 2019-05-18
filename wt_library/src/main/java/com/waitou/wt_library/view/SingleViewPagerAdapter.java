@@ -6,7 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.to.aboomy.banner.QyPagerAdapter;
+import com.to.aboomy.banner.LoopPagerAdapter;
 import com.waitou.wt_library.BR;
 
 import java.util.List;
@@ -17,12 +17,24 @@ import static com.waitou.wt_library.BR.position;
  * Created by waitou on 17/2/15.
  */
 
-public class SingleViewPagerAdapter<T> extends QyPagerAdapter<T> {
+public class SingleViewPagerAdapter<T> extends LoopPagerAdapter<T> {
 
     private int            mLayoutRes;
     private LayoutInflater mLayoutInflater;
     private Presenter      mPresenter;
     private Decorator      mDecorator;
+
+    @Override
+    protected View newView(Context context, int realPosition, T t) {
+        ViewDataBinding inflate = DataBindingUtil.inflate(mLayoutInflater, getLayoutRes(), null, false);
+        inflate.setVariable(BR.item, mData.get(realPosition));
+        inflate.setVariable(BR.presenter, mPresenter);
+        inflate.setVariable(position, realPosition);
+        if (mDecorator != null) {
+            mDecorator.decorator(inflate, realPosition);
+        }
+        return inflate.getRoot();
+    }
 
     public interface Presenter {
     }
@@ -36,18 +48,6 @@ public class SingleViewPagerAdapter<T> extends QyPagerAdapter<T> {
 
         mLayoutRes = layoutRes;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    protected View newView(Context context, int realPosition) {
-        ViewDataBinding inflate = DataBindingUtil.inflate(mLayoutInflater, getLayoutRes(), null, false);
-        inflate.setVariable(BR.item, mData.get(realPosition));
-        inflate.setVariable(BR.presenter, mPresenter);
-        inflate.setVariable(position, realPosition);
-        if (mDecorator != null) {
-            mDecorator.decorator(inflate, realPosition);
-        }
-        return inflate.getRoot();
     }
 
     public void setDecorator(Decorator decorator) {

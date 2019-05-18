@@ -13,6 +13,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.waitou.imgloader_lib.HsRoundImageView;
 import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.towards.R;
+import com.waitou.towards.view.CustomCircleImageView;
 import com.waitou.wt_library.base.BasePageActivity;
 
 /**
@@ -33,43 +34,13 @@ public class ColorActivity extends BasePageActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         showContent();
-//        CustomCircleImageView viewById = findViewById(R.id.img);
-//        ShadowLayout shadowLayout = findViewById(R.id.shadow);
-//
-//        ImageLoader.displayImage(viewById, url1,new BitmapImageViewTarget(viewById) {
-//            @Override
-//            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-////                super.onResourceReady(resource, transition);
-//                viewById.setImageBitmap(resource);
-//                Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-//                    @Override
-//                    public void onGenerated(Palette palette) {
-//                        int darkMutedColor = palette.getDarkMutedColor(Color.BLUE);
-//                        int darkVibrantColor = palette.getDarkVibrantColor(Color.BLUE);
-//                        int lightVibrantColor = palette.getLightVibrantColor(Color.BLUE);
-//                        int lightMutedColor = palette.getLightMutedColor(Color.BLUE);
-//                        int vibrantColor = palette.getVibrantColor(Color.BLUE);
-//                        int mutedColor = palette.getMutedColor(Color.BLUE);
-//
-////                        int rgb = palette.getDominantSwatch().getRgb();
-//                        Log.e("aa" ,"onResourceReady " + darkMutedColor);
-////                        shadowLayout.invalidateShadow(vibrantColor);
-//
-//
-//                        findViewById(R.id.darkMutedColor).setBackgroundColor(darkMutedColor);
-//                        findViewById(R.id.darkVibrantColor).setBackgroundColor(darkVibrantColor);
-//                        findViewById(R.id.lightMutedColor).setBackgroundColor(lightMutedColor);
-//                        findViewById(R.id.lightVibrantColor).setBackgroundColor(lightVibrantColor);
-//                        findViewById(R.id.mutedColor).setBackgroundColor(mutedColor);
-//                        findViewById(R.id.vibrantColor).setBackgroundColor(vibrantColor);
-//
-//                    }
-//                });
-//
-//            }
-//        });
-
-
+        CustomCircleImageView viewById = findViewById(R.id.img);
+        ImageLoader.displayImage(viewById, url1,new BitmapImageViewTarget(viewById) {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                viewById.setImageBitmap(resource);
+            }
+        });
 
         HsRoundImageView hsRoundImageView =findViewById(R.id.img1);
         ImageLoader.displayImage(hsRoundImageView,url3,new BitmapImageViewTarget(hsRoundImageView){

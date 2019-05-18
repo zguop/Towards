@@ -1,6 +1,5 @@
 package com.waitou.normal_dialog_lib;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import android.widget.TextView;
  * auth aboom
  * date 2019-04-26
  */
-public class BottomSheetAdapterDialog extends NormalDialog implements IDialogView {
+public class BottomSheetAdapterDialog extends NormalDialog {
 
     private RecyclerView.Adapter adapter;
     private String               title;
@@ -27,28 +28,36 @@ public class BottomSheetAdapterDialog extends NormalDialog implements IDialogVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDialogView(this);
-        setGravity(Gravity.BOTTOM);
-        setWidget(WindowManager.LayoutParams.MATCH_PARENT);
+        gravity = Gravity.BOTTOM;
+        width = WindowManager.LayoutParams.MATCH_PARENT;
+        height = height == WindowManager.LayoutParams.WRAP_CONTENT ? getResources().getDimensionPixelSize(R.dimen.dl_bottom_sheet_dialog_default_height) : height;
     }
 
+    @Nullable
     @Override
-    public View getContentView(Context activity) {
-        View inflate = View.inflate(activity, R.layout.dl_bottom_adapter_list, null);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.dl_bottom_adapter_list, container, false);
         TextView dlTitle = inflate.findViewById(R.id.dl_title);
         RecyclerView dlList = inflate.findViewById(R.id.dl_list);
         dlTitle.setText(title);
         dlTitle.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
-        dlList.setLayoutManager(spanCount > 0 ? new GridLayoutManager(activity, spanCount) : new LinearLayoutManager(activity));
+        dlList.setLayoutManager(spanCount > 0 ? new GridLayoutManager(getActivity(), spanCount) : new LinearLayoutManager(getActivity()));
         dlList.setAdapter(adapter);
         return inflate;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int itemCount = spanCount > 0 ?
-                ((GridLayoutManager) ((RecyclerView) view.findViewById(R.id.dl_list))
-                        .getLayoutManager()).getSpanCount() : adapter.getItemCount();
+        int itemCount = 0;
+        if (spanCount > 0) {
+            RecyclerView recyclerView = view.findViewById(R.id.dl_list);
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            if (layoutManager instanceof GridLayoutManager) {
+                itemCount = layoutManager.getItemCount();
+            }
+        } else {
+            itemCount = adapter.getItemCount();
+        }
         int countHeight = itemCount * itemHeight;
         if (height > 0 && countHeight < height) {
             setHeight(WindowManager.LayoutParams.WRAP_CONTENT);

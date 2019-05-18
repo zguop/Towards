@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_bottom_behavior">com.waitou.widget_lib.behavior.BottomBehavior</string>
+    <string name="widget_title_behavior">com.waitou.widget_lib.behavior.TitleBehavior</string>
+    <string name="widget_scale_behavior">com.waitou.widget_lib.behavior.ScaleBehavior</string>
+    <string name="widget_vertical_behavior">com.waitou.widget_lib.behavior.VerticalBehavior</string>
+</resources>

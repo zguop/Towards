@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.SizeUtils
-import com.to.aboomy.banner.QyIndicator
 import com.to.aboomy.theme_lib.config.ThemeUtils
 import com.waitou.net_library.model.Displayable
 import com.waitou.towards.R
@@ -21,6 +20,7 @@ import com.waitou.wt_library.base.XActivity
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.MultiTypeAdapter
 import com.waitou.wt_library.router.Router
+import com.waitou.wt_library.view.Indicator
 import com.waitou.wt_library.view.SingleViewPagerAdapter
 
 /**
@@ -106,7 +106,7 @@ class MovieRecommendActivity : XActivity<MovieTelevisionPresenter, ActivityMovie
                         .forEach { bannerList.remove(it) }
                 val bannerAdapter = SingleViewPagerAdapter<MovieInfo>(this, bannerList, R.layout.item_banner_image_movie)
                 bannerAdapter.setPresenter(p)
-                val qyIndicator = QyIndicator(this)
+                val qyIndicator = Indicator(this)
                         .setGravity(Gravity.CENTER)
                         .setIndicatorInColor(ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary))
                 adapter!!.add(0, BannerAdapterInfo(bannerAdapter,qyIndicator), 0)

@@ -2,18 +2,20 @@ package com.waitou.towards.model.main
 
 import android.app.ActivityManager
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
+import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
-import com.waitou.towards.databinding.ActivityMainBinding
-import com.waitou.towards.databinding.NavHeaderMainBinding
 import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.GloadActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
@@ -32,68 +34,71 @@ import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var mainBinding: ActivityMainBinding? = null
-    private var homeFragment = HomeNewFragment()
-    private var textJokeFragment = TextJokeFragment()
-    private var figureFragment = FigureFragment()
-    private var circleFragment = CircleFragment()
-    private var personFragment = PersonFragment()
+    private val homeFragment = HomeNewFragment()
+    private val textJokeFragment by lazy { TextJokeFragment() }
+    private val figureFragment by lazy { FigureFragment() }
+    private val circleFragment by lazy { CircleFragment() }
+    private val personFragment by lazy { PersonFragment() }
 
     private var mThemeAdapter: SingleTypeAdapter<ThemeInfo>? = null
     private var mThemeDialog: BaseDialog? = null
 
+    override fun immersiveStatusBar(): Boolean {
+        return false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         ChangeModeController.get().init(this)
         super.onCreate(savedInstanceState)
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        transparencyBar(mainBinding?.mainDrawerLayout)
-//        mainBinding?.toolbar?.setLeftIcon(R.drawable.icon_menu) { mainBinding?.mainDrawerLayout?.openDrawer(GravityCompat.START) }
-//        mainBinding?.toolbar?.setRightIcon(R.drawable.svg_ic_qr_scan) { Router.newIntent().from(this).to(QrScanActivity::class.java).launch() }
+        setContentView(R.layout.activity_main)
+        pageTitleBar.setPadding(0, StatusBarUtil.getStatusBarHeight(this), 0, 0)
+        StatusBarUtil.drawerLayoutForColor(this, Color.WHITE, drawerLayout)
         val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
-//        mainBinding?.toolbar?.post {
-//            mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
-//        }
-        mainBinding?.adapter = adapter
-        mainBinding?.mainTab?.setupWithViewPager(mainBinding?.fContent)
-        val binding = DataBindingUtil.inflate<NavHeaderMainBinding>(layoutInflater, R.layout.nav_header_main, null, false)
-        mainBinding?.navView?.addHeaderView(binding.root)
-        mainBinding?.navView?.setNavigationItemSelectedListener(this)
-        mainBinding?.mainTab?.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-//                R.id.menu_home -> mainBinding?.toolbar?.customTitleView(homeFragment.homeToolbar.root)
-//                R.id.menu_joke -> mainBinding?.toolbar?.customTitleView(textJokeFragment.jokeToolBar.root)
-//                R.id.menu_circle -> mainBinding?.toolbar?.visibility = View.GONE
+        fContent.offscreenPageLimit = 4
+        fContent.adapter = adapter
+        mainTab.setupWithViewPager(fContent)
+        val navHeaderView = ff<ImageView>(R.layout.nav_header_main)
+        ImageLoader.displayImage(navHeaderView, R.drawable.nav_header_img)
+        navView.addHeaderView(navHeaderView)
+        navView.setNavigationItemSelectedListener(this)
+        mainTab.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> pageTitleBar.visibility = View.GONE
+                R.id.menu_joke -> pageTitleBar.replaceTitleView(textJokeFragment.jokeToolBar.root)
+                R.id.menu_figure -> pageTitleBar.restoreTitleView("趣图")
+                R.id.menu_circle -> pageTitleBar.restoreTitleView("圈子")
+                R.id.menu_personal -> pageTitleBar.restoreTitleView("我的")
             }
             true
         }
     }
 
-
     /**
      * 左侧菜单是否被打开
      */
     private fun toggle(): Boolean {
-        return mainBinding?.mainDrawerLayout!!.isDrawerOpen(GravityCompat.START)
+        return drawerLayout.isDrawerOpen(GravityCompat.START)
     }
 
     override fun onBackPressed() {
         if (toggle()) {
-            mainBinding?.mainDrawerLayout!!.closeDrawer(GravityCompat.START)
+            drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-            Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe { killAll() }
+//            Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+//                    .subscribe { killAll() }
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        mainBinding?.mainDrawerLayout!!.closeDrawer(GravityCompat.START)
+        drawerLayout.closeDrawer(GravityCompat.START)
         pend(Observable.timer(200, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe {
                     when (item.itemId) {

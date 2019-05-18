@@ -1,5 +1,6 @@
 globleConfigure()
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
 
@@ -69,8 +70,14 @@ dependencies {
     implementation project(':imgloader_lib')
     implementation project(':widget_lib')
     implementation project(':basic_lib')
-
 }
+
+//configurations.all {
+//    resolutionStrategy {
+//        force rootProject.ext.dependencies["okhttpVersion"]
+//        force rootProject.ext.dependencies["multidexVersion"]
+//    }
+//}
 
 //apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
 

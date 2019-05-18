@@ -1,23 +1,23 @@
 package com.waitou.towards.model.main.fragment;
 
 import android.graphics.Color;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.waitou.wt_library.base.LazyFragment;
+
 /**
  * Created by waitou on 16/12/23.
  */
 
-public class PersonFragment extends Fragment {
+public class PersonFragment extends LazyFragment {
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         TextView textView  = new TextView(getActivity());
         textView.setTextColor(Color.BLACK);
         textView.setText(getClass().getSimpleName());

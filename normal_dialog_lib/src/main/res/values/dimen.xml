@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dl_bottom_sheet_dialog_default_height">380dp</dimen>
+</resources>

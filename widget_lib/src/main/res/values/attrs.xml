@@ -2,10 +2,17 @@
 <resources>
     <declare-styleable name="widget_ShadowLayout">
         <attr name="widget_sl_cornerRadius" format="dimension"/>
-        <attr name="widget_sl_shadowRadius" format="dimension"/>
+        <attr name="widget_sl_shadow" format="dimension"/>
         <attr name="widget_sl_shadowColor" format="color"/>
         <attr name="widget_sl_dx" format="dimension"/>
         <attr name="widget_sl_dy" format="dimension"/>
         <attr name="widget_sl_palette" format="boolean"/>
+        <attr name="widget_sl_side">
+            <flag name="all" value="0x0f"/>
+            <flag name="left" value="0x01"/>
+            <flag name="top" value="0x02"/>
+            <flag name="right" value="0x04"/>
+            <flag name="bottom" value="0x08"/>
+        </attr>
     </declare-styleable>
 </resources>

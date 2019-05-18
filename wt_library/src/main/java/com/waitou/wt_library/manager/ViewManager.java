@@ -35,6 +35,7 @@ public class ViewManager {
     }
 
     public static ViewManager getManager(AppCompatActivity activity, ViewGroup viewGroup) {
+        if (viewGroup == null) viewGroup = new CoordinatorLayout(activity);
         activity.setContentView(viewGroup, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return getManager(viewGroup);
     }
@@ -74,12 +75,9 @@ public class ViewManager {
     }
 
     public TitleBar wrapBar() {
-        AppBarLayout appBarLayout = new AppBarLayout(context);
-        appBarLayout.setId(R.id.page_title_bar);
         TitleBar toolbar = new TitleBar(context);
-        appBarLayout.addView(toolbar);
-        toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
-        groupView.addView(appBarLayout, 0);
+        toolbar.setId(R.id.page_title_bar);
+        groupView.addView(toolbar, 0);
         return toolbar;
     }
 

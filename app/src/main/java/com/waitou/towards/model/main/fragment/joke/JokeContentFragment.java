@@ -42,7 +42,8 @@ public class JokeContentFragment extends XFragment<TextJokePresenter, IncludePul
     }
 
     @Override
-    protected void fragmentVisibleHint() {
+    protected void visibleCall() {
+        super.visibleCall();
         reloadData();
     }
 

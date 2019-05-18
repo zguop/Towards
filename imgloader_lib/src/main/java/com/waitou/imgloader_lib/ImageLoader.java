@@ -1,6 +1,8 @@
 package com.waitou.imgloader_lib;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -66,6 +68,7 @@ public class ImageLoader {
                 .load(modelLoader)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
+
     }
 
     /**
@@ -171,6 +174,14 @@ public class ImageLoader {
      */
     public static void clearImage(ImageView imageView) {
         Glide.with(imageView).clear(imageView);
+    }
+
+    static boolean isValidContextForGlide(final Context context) {
+        if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            return !activity.isDestroyed() && !activity.isFinishing();
+        }
+        return true;
     }
 
     @SuppressLint("CheckResult")

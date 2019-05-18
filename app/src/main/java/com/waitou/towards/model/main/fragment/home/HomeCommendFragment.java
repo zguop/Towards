@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.to.aboomy.banner.QyIndicator;
+import com.to.aboomy.banner.IndicatorView;
 import com.to.aboomy.theme_lib.ChangeModeController;
 import com.to.aboomy.theme_lib.config.ThemeUtils;
 import com.waitou.net_library.model.Displayable;
@@ -53,7 +53,8 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
     }
 
     @Override
-    protected void fragmentVisibleHint() {
+    protected void visibleCall() {
+        super.visibleCall();
         showLoading();
         getP().loadHomeData();
     }
@@ -67,7 +68,7 @@ public class HomeCommendFragment extends XFragment<HomePresenter, IncludeMatchRe
     public void onBannerSuccess(List<BannerPageInfo> bannerPageInfo) {
         SingleViewPagerAdapter<BannerPageInfo> bannerAdapter = new SingleViewPagerAdapter<>(getActivity(), bannerPageInfo, R.layout.item_banner_image);
         bannerAdapter.setPresenter(getP());
-        QyIndicator qyIndicator = new Indicator(getActivity())
+        IndicatorView qyIndicator = new Indicator(getActivity())
                 .setGravity(Gravity.CENTER)
                 .setIndicatorInColor(ThemeUtils.getThemeAttrColor(getActivity(), R.attr.colorPrimary));
         ChangeModeController.get().addSkinView(qyIndicator);

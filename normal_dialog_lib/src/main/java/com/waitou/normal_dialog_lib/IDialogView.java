@@ -1,14 +1,14 @@
 package com.waitou.normal_dialog_lib;
 
-import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * auth aboom
  * date 2019-04-25
  */
 public interface IDialogView {
-    default View getContentView(Context activity) {
-        return new View(activity);
-    }
+
+    View getContentView(LayoutInflater inflater, ViewGroup container);
 }

@@ -1,26 +1,7 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:id="@+id/nav_header_img"
+           android:layout_width="match_parent"
+           android:layout_height="230dp"
+           android:scaleType="fitXY"/>
 
-    <data>
 
-        <variable
-            name="drawableId"
-            type="int"/>
-
-    </data>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/nav_header_img"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:scaleType="fitXY"
-            app:placeholderImage="@{@drawable/nav_header_img}"/>
-
-    </RelativeLayout>
-
-</layout>

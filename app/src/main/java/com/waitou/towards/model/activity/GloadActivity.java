@@ -48,9 +48,8 @@ public class GloadActivity extends BasePageActivity {
     }
 
     @Override
-    protected void initLoadingStatusViewIfNeed() {
-        viewManager.wrapXStateController(this, false);
-
+    protected boolean isLoadingStatusViewIfNeed() {
+        return false;
     }
 
     List<String> data = new ArrayList<>();
@@ -84,9 +83,6 @@ public class GloadActivity extends BasePageActivity {
 
     @Override
     public View getContentView() {
-
-
-
         textView = new TextView(this);
         textView.setTextSize(16);
         textView.setTextColor(Color.BLUE);

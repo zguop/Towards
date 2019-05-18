@@ -1,8 +1,9 @@
 package com.waitou.towards.util.behavior;
 
 import android.content.Context;
-import android.support.design.widget.AppBarLayout;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,18 +23,13 @@ public class FooterBarBehavior extends CoordinatorLayout.Behavior<View> {
 
     //This is called to determine which views this behavior depends on
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent,
-                                   View child,
-                                   View dependency) {
-        //We are watching changes in the AppBarLayout
-        return dependency instanceof AppBarLayout;
+    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
+        return dependency instanceof Toolbar;
     }
 
     //This is called for each change to a dependent view
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent,
-                                          View child,
-                                          View dependency) {
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         int offset = -dependency.getTop();
         child.setTranslationY(offset);
         return true;

@@ -14,7 +14,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v7.graphics.Palette;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,8 +24,15 @@ import android.widget.ImageView;
  */
 public class ShadowLayout extends FrameLayout {
 
+    public static final int ALL    = 0x0f;
+    public static final int LEFT   = 0x01;
+    public static final int TOP    = 0x02;
+    public static final int RIGHT  = 0x04;
+    public static final int BOTTOM = 0x08;
+
     private int   mShadowColor;
-    private float mShadowRadius;
+    private int   mShadowSide;
+    private float mShadow;
     private float mCornerRadius;
     private float mDx;
     private float mDy;
@@ -35,13 +41,11 @@ public class ShadowLayout extends FrameLayout {
     private boolean isPalette;
 
     public ShadowLayout(Context context) {
-        super(context);
-        initView(context, null);
+        this(context,null);
     }
 
     public ShadowLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, attrs);
+        this(context, attrs,0);
     }
 
     public ShadowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -59,18 +63,16 @@ public class ShadowLayout extends FrameLayout {
         return 0;
     }
 
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        Log.e("aa", " onSizeChanged" + w + " h " + h);
         isForceInvalidateShadow = !isPalette;
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        Log.e("aa", "width = " + (right - left) + " height = " + (bottom - top));
         paletteShadowColor();
         if (isForceInvalidateShadow) {
             isForceInvalidateShadow = false;
@@ -97,14 +99,17 @@ public class ShadowLayout extends FrameLayout {
 
     private void initView(Context context, AttributeSet attrs) {
         initAttributes(context, attrs);
-        int xPadding = (int) (mShadowRadius + Math.abs(mDx));
-        int yPadding = (int) (mShadowRadius + Math.abs(mDy));
-        setPadding(xPadding, yPadding, xPadding, yPadding);
+        int xPadding = (int) (mShadow + Math.abs(mDx));
+        int yPadding = (int) (mShadow + Math.abs(mDy));
+        int left = ((mShadowSide & LEFT) == LEFT) ? xPadding : 0;
+        int top = ((mShadowSide & TOP) == TOP) ? yPadding : 0;
+        int right = ((mShadowSide & RIGHT) == RIGHT) ? xPadding : 0;
+        int bottom = ((mShadowSide & BOTTOM) == BOTTOM) ? yPadding : 0;
+        setPadding(left, top, right, bottom);
     }
 
     private void setBackgroundCompat(int w, int h) {
-        Log.e("aa", " setBackgroundCompat " + w + " h " + h);
-        Bitmap bitmap = createShadowBitmap(w, h, mCornerRadius, mShadowRadius, mDx, mDy, mShadowColor);
+        Bitmap bitmap = createShadowBitmap(w, h, mCornerRadius, mShadow, mDx, mDy, mShadowColor);
         BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
         setBackground(drawable);
     }
@@ -114,11 +119,12 @@ public class ShadowLayout extends FrameLayout {
         final TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.widget_ShadowLayout);
         try {
             mCornerRadius = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_cornerRadius, getResources().getDimension(R.dimen.widget_default_corner_radius));
-            mShadowRadius = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_shadowRadius, getResources().getDimension(R.dimen.widget_default_shadow_radius));
+            mShadow = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_shadow, getResources().getDimension(R.dimen.widget_default_shadow_radius));
             mDx = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_dx, 0);
             mDy = attr.getDimension(R.styleable.widget_ShadowLayout_widget_sl_dy, 0);
             mShadowColor = attr.getColor(R.styleable.widget_ShadowLayout_widget_sl_shadowColor, Color.parseColor("#4D757575"));
             isPalette = attr.getBoolean(R.styleable.widget_ShadowLayout_widget_sl_palette, false);
+            mShadowSide = attr.getInt(R.styleable.widget_ShadowLayout_widget_sl_side, ALL);
         } finally {
             attr.recycle();
         }
@@ -126,7 +132,6 @@ public class ShadowLayout extends FrameLayout {
 
     private Bitmap createShadowBitmap(int shadowWidth, int shadowHeight, float cornerRadius, float shadowRadius,
                                       float dx, float dy, int shadowColor) {
-
         Bitmap output = Bitmap.createBitmap(shadowWidth, shadowHeight, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(output);
 
@@ -204,8 +209,6 @@ public class ShadowLayout extends FrameLayout {
             } else if (drawable instanceof ColorDrawable) {
                 colorWithAlpha = getColorWithAlpha(((ColorDrawable) drawable).getColor());
             }
-
-            Log.e("aa", " colorWithAlpha = " + colorWithAlpha + " mShadowColor = " + mShadowColor);
             if (mShadowColor != colorWithAlpha) {
                 mShadowColor = colorWithAlpha;
                 isForceInvalidateShadow = true;
