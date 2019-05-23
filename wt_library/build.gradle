@@ -18,7 +18,7 @@ dependencies {
 
     implementation rootProject.ext.dependencies["avi-loading"]
     implementation 'com.github.limedroid:XStateController:v1.1.1'
-    implementation 'com.billy.android:gloading:1.0.0'
+    api 'com.billy.android:gloading:1.0.0'
 
 
     debugImplementation rootProject.ext.dependencies["leakcanary-canary-debug"]
@@ -30,4 +30,5 @@ dependencies {
     api project(':net_library')
     api project(':theme_lib')
     api project(':recycler_lib')
+    implementation project(':widget_lib')
 }

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * 基类数据 自行定义
  */
 
-public class BaseResponse<T> {
+public class JokeResponse<T> {
 
     /**
      * 返回码，见ResponseCode枚举

@@ -25,9 +25,9 @@ public class HomeNewViewModule extends ViewModel {
 
     public void loadNewHomeData() {
         Disposable subscribe = DataLoader.getGithubApi().getHomeData()
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter(throwable -> {
-                    mutableLiveData.setValue(APIResult.failure(throwable.getMessage()));
-                })).subscribe(data ->
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(throwable ->
+                    mutableLiveData.setValue(APIResult.failure(throwable.getMessage()))
+                )).subscribe(data ->
                         mutableLiveData.setValue(APIResult.success(data))
                 );
         compositeDisposable.add(subscribe);

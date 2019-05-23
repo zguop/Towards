@@ -2,10 +2,10 @@ package com.waitou.towards.model.main
 
 import android.app.ActivityManager
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +13,7 @@ import android.widget.ImageView
 import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
+import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
@@ -24,25 +25,26 @@ import com.waitou.towards.model.main.fragment.CircleFragment
 import com.waitou.towards.model.main.fragment.FigureFragment
 import com.waitou.towards.model.main.fragment.PersonFragment
 import com.waitou.towards.model.main.fragment.home.HomeNewFragment
-import com.waitou.towards.model.main.fragment.joke.TextJokeFragment
+import com.waitou.towards.model.main.fragment.joke.JokeFragment
 import com.waitou.towards.view.dialog.BaseDialog
 import com.waitou.towards.view.dialog.ListOfDialog
 import com.waitou.wt_library.base.BaseActivity
-import com.waitou.wt_library.base.XFragmentAdapter
 import com.waitou.wt_library.recycler.LayoutManagerUtil
 import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.extensions.CacheImplementation
+import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+@ContainerOptions(CacheImplementation.SPARSE_ARRAY)
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val homeFragment = HomeNewFragment()
-    private val textJokeFragment by lazy { TextJokeFragment() }
+    private val homeFragment by lazy { HomeNewFragment() }
+    private val jokeFragment by lazy { JokeFragment() }
     private val figureFragment by lazy { FigureFragment() }
     private val circleFragment by lazy { CircleFragment() }
     private val personFragment by lazy { PersonFragment() }
@@ -59,8 +61,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         pageTitleBar.setPadding(0, StatusBarUtil.getStatusBarHeight(this), 0, 0)
-        StatusBarUtil.drawerLayoutForColor(this, Color.WHITE, drawerLayout)
-        val adapter = XFragmentAdapter(supportFragmentManager, homeFragment, textJokeFragment, figureFragment, circleFragment, personFragment)
+        StatusBarUtil.drawerLayoutForColor(this, ContextCompat.getColor(this, R.color.bg_grey), drawerLayout)
+        val adapter = BasePagerFragmentAdapter(supportFragmentManager, homeFragment, jokeFragment, figureFragment, circleFragment, personFragment)
         fContent.offscreenPageLimit = 4
         fContent.adapter = adapter
         mainTab.setupWithViewPager(fContent)
@@ -71,7 +73,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainTab.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> pageTitleBar.visibility = View.GONE
-                R.id.menu_joke -> pageTitleBar.replaceTitleView(textJokeFragment.jokeToolBar.root)
+                R.id.menu_joke -> pageTitleBar.replaceTitleView(jokeFragment.jokeTitleBar)
                 R.id.menu_figure -> pageTitleBar.restoreTitleView("趣图")
                 R.id.menu_circle -> pageTitleBar.restoreTitleView("圈子")
                 R.id.menu_personal -> pageTitleBar.restoreTitleView("我的")
@@ -80,15 +82,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    /**
-     * 左侧菜单是否被打开
-     */
-    private fun toggle(): Boolean {
-        return drawerLayout.isDrawerOpen(GravityCompat.START)
-    }
-
     override fun onBackPressed() {
-        if (toggle()) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
@@ -105,6 +100,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         R.id.nav_tuijian -> Router.newIntent().from(this).to(ColorActivity::class.java).launch()
                         R.id.nav_all -> {
                             Router.newIntent().from(this).to(GloadActivity::class.java).launch()
+
                         }
                         R.id.nav_meizi -> Router.newIntent().from(this).to(GalleryNewActivity::class.java).launch()
                         R.id.nav_graffiti -> Router.newIntent().from(this).to(GraffitiActivity::class.java).launch()

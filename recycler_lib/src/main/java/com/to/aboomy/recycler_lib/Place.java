@@ -1,5 +1,6 @@
 package com.to.aboomy.recycler_lib;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 
 /**
@@ -35,10 +36,22 @@ public class Place implements Displayable {
     }
 
     public static Place createPlace(int height) {
+        return createPlace(height, Color.TRANSPARENT);
+    }
+
+    public static Place createPlace(int height, int backgroundColor) {
         Place placeInfo = new Place();
         placeInfo.height = height;
-        placeInfo.backgroundColor = Color.TRANSPARENT;
+        placeInfo.backgroundColor = backgroundColor;
         return placeInfo;
+    }
+
+    public static Place createPlaceDp(int height) {
+        return createPlace((int) (height * Resources.getSystem().getDisplayMetrics().density + 0.5f));
+    }
+
+    public static Place createPlaceDp(int height, int backgroundColor) {
+        return createPlace((int) (height * Resources.getSystem().getDisplayMetrics().density + 0.5f), backgroundColor);
     }
 
     public static Place createPlaceLine() {
@@ -53,5 +66,6 @@ public class Place implements Displayable {
         placeLine.leftMargin = leftMargin;
         return placeLine;
     }
+
 
 }

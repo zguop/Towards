@@ -34,13 +34,15 @@ public class GalleryViewModule extends ViewModel {
 
     void getGirlPics(int page) {
         Disposable subscribe = DataLoader.getGankApi().getGirlPics(page)
+                .map(o -> o.results)
+                .doOnNext(RxTransformerHelper.verifyNullThrowable())
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(new SimpleErrorVerify() {
                     @Override
                     public void call(Throwable throwable) {
+                        super.call(throwable);
                         liveData.setValue(APIResult.failure(page, throwable.getMessage()));
                     }
                 }))
-                .map(o -> o.results)
                 .subscribe(galleryInfo -> liveData.setValue(APIResult.success(galleryInfo)));
         mCompositeDisposable.add(subscribe);
     }

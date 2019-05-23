@@ -2,28 +2,26 @@ package com.waitou.towards.model.main.fragment.home
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.app.ActivityCompat
-import android.support.v7.widget.LinearLayoutManager
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.blankj.utilcode.util.SizeUtils
+import com.billy.android.loading.Gloading
 import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter
 import com.to.aboomy.recycler_lib.Place
 import com.to.aboomy.recycler_lib.PlaceDelegate
 import com.to.aboomy.recycler_lib.PullRecyclerView
 import com.waitou.net_library.model.APIResult
-import com.waitou.towards.R
 import com.waitou.towards.bean.CanInfo
 import com.waitou.towards.bean.HomeDataInfo
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.BannerDelegate
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.BottomTipsDelegate
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.HomeFunctionDelegate
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.RoundImageDelegate
-import com.waitou.wt_library.base.LazyFragment
 import com.waitou.wt_library.base.IView
-import com.waitou.wt_library.manager.ViewManager
+import com.waitou.wt_library.base.LazyFragment
+import com.waitou.wt_library.manager.RecyclerViewManager
+import com.waitou.wt_library.manager.StateViewManager
 
 /**
  * auth aboom
@@ -31,7 +29,8 @@ import com.waitou.wt_library.manager.ViewManager
  */
 class HomeNewFragment : LazyFragment(), IView {
 
-    private lateinit var manager: ViewManager
+    private lateinit var list: PullRecyclerView
+    private lateinit var holder: Gloading.Holder
     private lateinit var homeNewViewModule: HomeNewViewModule
     private lateinit var adapter: MultipleRecyclerAdapter
 
@@ -40,9 +39,8 @@ class HomeNewFragment : LazyFragment(), IView {
     }
 
     override fun getContentView(): View {
-        val list = PullRecyclerView(activity!!)
-        list.setLayoutManager(LinearLayoutManager(activity))
-        adapter = MultipleRecyclerAdapter()
+        list = RecyclerViewManager.attachViewGetRefresh(activity)
+        adapter = list.contentView.adapter as MultipleRecyclerAdapter
         adapter.addDelegate(
                 BannerDelegate(),
                 HomeFunctionDelegate(),
@@ -50,42 +48,44 @@ class HomeNewFragment : LazyFragment(), IView {
                 BottomTipsDelegate(),
                 PlaceDelegate()
         )
-        list.setAdapter(adapter)
+        list.setOnRefreshListener { homeNewViewModule.loadNewHomeData() }
         return list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        val coordinatorLayout = CoordinatorLayout(activity!!)
-        coordinatorLayout.setStatusBarBackgroundColor(ActivityCompat.getColor(activity!!, R.color.bg_grey))
-        manager = ViewManager.getManager(coordinatorLayout)
-        manager.wrapXStateController(this, true)
+        holder = StateViewManager.wrapXStateController(this, false)
         homeNewViewModule = ViewModelProviders.of(this)[HomeNewViewModule::class.java]
         homeNewViewModule.mutableLiveData.observe(this@HomeNewFragment, Observer {
             it?.run { bindUI(it) }
         })
+        return holder.wrapper
+    }
+
+    override fun visibleCall() {
+        super.visibleCall()
         reloadData()
-        return coordinatorLayout
     }
 
     private fun reloadData() {
-        manager.showLoading()
+        holder.showLoading()
         homeNewViewModule.loadNewHomeData()
     }
 
     private fun bindUI(apiResult: APIResult<MutableList<HomeDataInfo>>?) {
         apiResult?.let {
+            list.loadComplete(true)
             if (!it.isSuccess) {
-                manager.showFailed()
+                holder.showLoadFailed()
                 return
             }
             val data = it.data
             if (data.isEmpty()) {
-                manager.showEmpty()
+                holder.showEmpty()
                 return
             }
-            manager.showContent()
+            holder.showLoadSuccess()
             adapter.replaceData(data)
-            adapter.addData(0, Place.createPlace(SizeUtils.dp2px(10f)))
+            adapter.addData(0, Place.createPlaceDp(15, Color.WHITE))
             adapter.addData(CanInfo())
         }
     }

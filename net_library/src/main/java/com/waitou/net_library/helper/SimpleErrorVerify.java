@@ -1,5 +1,7 @@
 package com.waitou.net_library.helper;
 
+import android.text.TextUtils;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.waitou.net_library.R;
 
@@ -7,9 +9,14 @@ import com.waitou.net_library.R;
  * Created by waitou on 17/2/17.
  */
 
-public interface SimpleErrorVerify extends ErrorVerify {
+public class SimpleErrorVerify implements ErrorVerify {
+
     @Override
-    default void call(Throwable throwable) {
-        ToastUtils.showShort(R.string.warn_net_error);
+    public void call(Throwable throwable) {
+        if (TextUtils.isEmpty(throwable.getMessage())) {
+            ToastUtils.showShort(R.string.warn_net_error);
+        } else {
+            ToastUtils.showShort(throwable.getMessage());
+        }
     }
 }

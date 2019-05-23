@@ -1,8 +1,7 @@
 package com.waitou.towards.net;
 
-import com.waitou.net_library.model.RequestParams;
 import com.waitou.towards.bean.BannerPageInfo;
-import com.waitou.towards.bean.BaseResponse;
+import com.waitou.towards.bean.JokeResponse;
 import com.waitou.towards.bean.GankIoDayInfo;
 import com.waitou.towards.bean.GankResultsInfo;
 import com.waitou.towards.bean.GankResultsTypeInfo;
@@ -17,7 +16,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
+import retrofit2.http.Query;
 
 /**
  * Created by waitou on 17/1/3.
@@ -47,7 +46,7 @@ public interface LoaderService {
     /*--------------- 段子接口 ---------------*/
 
     @GET("randJoke.php")
-    Observable<BaseResponse<List<JokeInfo>>> getTextJoke(@QueryMap RequestParams param); //笑话数据
+    Observable<JokeResponse<List<JokeInfo>>> getTextJoke(@Query("key") String key, @Query("page") int page, @Query("type") String type); //笑话数据
 
 
 

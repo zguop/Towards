@@ -2,14 +2,15 @@ package com.waitou.wt_library.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.to.aboomy.theme_lib.config.ThemeUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
 import com.waitou.wt_library.R;
 
@@ -19,7 +20,7 @@ import com.waitou.wt_library.R;
  * bar
  */
 
-public class TitleBar extends Toolbar implements SkinCompatSupportable {
+public class TitleBar extends FrameLayout implements SkinCompatSupportable {
 
     public TitleBar(Context context) {
         this(context, null);
@@ -31,12 +32,14 @@ public class TitleBar extends Toolbar implements SkinCompatSupportable {
             throw new IllegalArgumentException("Context 建议使用 Activity类型的");
         }
         inflate(context, R.layout.toolbar_content, this);
+        setElevation(SizeUtils.dp2px(5));
+        setBackgroundColor(Color.WHITE);
         applySkin();
     }
 
     @Override
     public void applySkin() {
-        setBackgroundColor(ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorPrimary));
+//        setBackgroundColor(ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorPrimary));
     }
 
     /**

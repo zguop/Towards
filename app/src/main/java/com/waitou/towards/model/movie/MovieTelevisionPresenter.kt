@@ -16,7 +16,7 @@ class MovieTelevisionPresenter : XPresent<MovieRecommendActivity>(), BaseViewAda
 
     override fun start() {
         v.pend(DataLoader.getMovieApi().homeMoviePage
-                .compose(RxTransformerHelper.applySchedulersAndAllFilter(object : SimpleErrorVerify {
+                .compose(RxTransformerHelper.applySchedulersAndAllFilter(object : SimpleErrorVerify() {
                     override fun call(throwable: Throwable?) {
                         v.showError()
                     }

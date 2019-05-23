@@ -10,12 +10,14 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey">
 
         <com.waitou.towards.view.CompatViewPager
             android:id="@+id/fContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:page_TouchMode="true"/>
 
         <com.waitou.wt_library.view.TitleBar
@@ -30,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:itemBackground="?android:attr/colorPrimary"
+            android:background="@android:color/white"
             app:itemIconTint="@color/skin_bottom_bar_not"
             app:itemTextColor="@color/skin_bottom_bar_not"
             app:layout_behavior="@string/widget_bottom_behavior"

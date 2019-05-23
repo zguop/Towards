@@ -3,5 +3,5 @@
     <item android:color="?attr/colorPrimary" android:state_checked="true"/>
     <item android:color="?attr/colorPrimary" android:state_pressed="true"/>
     <item android:color="?attr/colorPrimary" android:state_selected="true"/>
-    <item android:color="?attr/skin_kind_color_not"/>
+    <item android:color="@android:color/darker_gray"/>
 </selector>

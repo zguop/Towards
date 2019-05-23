@@ -21,10 +21,10 @@ public class APIResult<T> implements Serializable {
     private boolean success;
 
     /**
-     * 返回结果码
+     * 分页加载需要用的pageIndex
      */
     @Expose
-    private int code;
+    private int pageIndex;
 
     /**
      * 返回结果描述
@@ -40,28 +40,33 @@ public class APIResult<T> implements Serializable {
 
 
     public static <T> APIResult<T> success(T data) {
+        return success(-1, data);
+    }
+
+    public static <T> APIResult<T> success(int pageIndex, T data) {
         APIResult<T> apiResult = create();
         apiResult.setSuccess(true);
+        apiResult.setPageIndex(pageIndex);
         apiResult.setData(data);
         return apiResult;
     }
 
     public static <T> APIResult<T> failure(String message) {
-        return failure(0, message);
+        return failure(-1, message);
     }
 
-    public static <T> APIResult<T> failure(int code) {
+    public static <T> APIResult<T> failure(int pageIndex) {
         APIResult<T> apiResult = create();
         apiResult.setSuccess(false);
-        apiResult.setCode(code);
+        apiResult.setPageIndex(pageIndex);
         apiResult.setMessage(Utils.getApp().getString(R.string.warn_net_error));
         return apiResult;
     }
 
-    public static <T> APIResult<T> failure(int code, String message) {
+    public static <T> APIResult<T> failure(int pageIndex, String message) {
         APIResult<T> apiResult = create();
         apiResult.setSuccess(false);
-        apiResult.setCode(code);
+        apiResult.setPageIndex(pageIndex);
         apiResult.setMessage(message);
         return apiResult;
     }
@@ -75,16 +80,24 @@ public class APIResult<T> implements Serializable {
         return success;
     }
 
+    public boolean isFailed() {
+        return !success;
+    }
+
+    public boolean isFirstPage() {
+        return pageIndex == 1;
+    }
+
     public void setSuccess(boolean success) {
         this.success = success;
     }
 
-    public int getCode() {
-        return code;
+    public int getPageIndex() {
+        return pageIndex;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
     }
 
     public String getMessage() {

@@ -3,7 +3,9 @@ package com.waitou.wt_library.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.waitou.wt_library.manager.ViewManager;
+import com.billy.android.loading.Gloading;
+import com.waitou.wt_library.manager.RootViewManager;
+import com.waitou.wt_library.manager.StateViewManager;
 
 /**
  * auth aboom
@@ -11,13 +13,13 @@ import com.waitou.wt_library.manager.ViewManager;
  */
 public abstract class BasePageActivity extends BaseActivity implements IView {
 
-    public ViewManager viewManager;
+    private Gloading.Holder holder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewManager = ViewManager.getManager(this, initRootView());
-        viewManager.wrapXStateController(this, isLoadingStatusViewIfNeed());
+        RootViewManager.attachViewGet(this);
+        holder = StateViewManager.wrapXStateController(this, true);
         afterCreate(savedInstanceState);
     }
 
@@ -25,24 +27,24 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
 
     public abstract void afterCreate(Bundle savedInstanceState);
 
-    protected boolean isLoadingStatusViewIfNeed() { return Boolean.TRUE; }
-
     @Override
-    public Runnable run() { return this::reloadData; }
+    public Runnable run() {
+        return this::reloadData;
+    }
 
     public void showLoading() {
-        viewManager.showLoading();
+        holder.showLoading();
     }
 
     public void showContent() {
-        viewManager.showContent();
+        holder.showLoadSuccess();
     }
 
     public void showFailed() {
-        viewManager.showFailed();
+        holder.showLoadFailed();
     }
 
     public void showEmpty() {
-        viewManager.showEmpty();
+        holder.showEmpty();
     }
 }

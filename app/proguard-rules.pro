@@ -24,7 +24,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Optimization is turned off by default. Dex does not like code run
+# Optimization is turned off by default. Dex does not like pageIndex run
 # through the ProGuard optimize and preverify steps (and performs some
 # of these optimizations on its own).
 # -printmapping mapping.txt
@@ -186,7 +186,7 @@ public static java.lang.String TABLENAME;
 # fabric
 # remove this line for fabric auto upload mapping.txt
 # -printmapping mapping.txt
--optimizations !code/simplification/cast,!field/*,!class/merging/*
+-optimizations !pageIndex/simplification/cast,!field/*,!class/merging/*
 -keepattributes *Annotation*,InnerClasses
 -keepattributes Signature
 -keepattributes SourceFile,LineNumberTable

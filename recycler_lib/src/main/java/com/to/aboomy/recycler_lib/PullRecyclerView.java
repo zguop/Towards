@@ -2,6 +2,7 @@ package com.to.aboomy.recycler_lib;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -48,13 +49,20 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         a.recycle();
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setEnabled(Boolean.FALSE);
-        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN);
+        swipeRefreshLayout.setColorSchemeColors(Color.MAGENTA, Color.YELLOW, Color.RED, Color.BLUE, Color.GREEN);
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView = findViewById(R.id.recycler);
         if (scrollbarNone) {
             recyclerView.setVerticalScrollBarEnabled(Boolean.FALSE);
             recyclerView.setHorizontalScrollBarEnabled(Boolean.FALSE);
         }
+    }
+
+    public void distanceOffsetBar() {
+        post(() -> {
+            int distance = (int) (65 * Resources.getSystem().getDisplayMetrics().density + .5f) + swipeRefreshLayout.getProgressViewEndOffset();
+            swipeRefreshLayout.setProgressViewEndTarget(Boolean.TRUE, distance);
+        });
     }
 
     /**

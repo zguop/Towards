@@ -48,19 +48,13 @@ public class BottomSheetAdapterDialog extends NormalDialog {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int itemCount = 0;
+        int itemCount = adapter.getItemCount();
         if (spanCount > 0) {
-            RecyclerView recyclerView = view.findViewById(R.id.dl_list);
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof GridLayoutManager) {
-                itemCount = layoutManager.getItemCount();
-            }
-        } else {
-            itemCount = adapter.getItemCount();
+            itemCount = (int) Math.ceil(itemCount * 1.0f / spanCount);
         }
         int countHeight = itemCount * itemHeight;
         if (height > 0 && countHeight < height) {
-            setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+            height = WindowManager.LayoutParams.WRAP_CONTENT;
         }
     }
 

@@ -30,6 +30,10 @@
     <color name="color_blue_80">#801090da</color>
 
 
+    <!--95透明度白色-->
+    <color name="white_95">#80FFFFFF</color>
+    <!--浅色辅助色,可用作导航栏颜色-->
+    <color name="grey_FCFCFC">#FCFCFC</color>
     <!--文本内容颜色-->
     <color name="color_666666">#666666</color>
     <!--辅助灰色-->

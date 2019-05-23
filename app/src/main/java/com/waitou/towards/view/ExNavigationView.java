@@ -29,6 +29,5 @@ public class ExNavigationView extends BottomNavigationViewEx implements SkinComp
     public void applySkin() {
         setItemIconTintList(ThemeUtils.getColorStateList(getContext(), R.color.skin_bottom_bar_not));
         setItemTextColor(ThemeUtils.getColorStateList(getContext(), R.color.skin_bottom_bar_not));
-        setItemBackgroundResource(ThemeUtils.getThemeAttrId(getContext(), R.attr.colorPrimary));
     }
 }

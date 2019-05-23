@@ -41,11 +41,11 @@ public class ShadowLayout extends FrameLayout {
     private boolean isPalette;
 
     public ShadowLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public ShadowLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public ShadowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -93,6 +93,10 @@ public class ShadowLayout extends FrameLayout {
         }
     }
 
+    public int getShadowColor() {
+        return mShadowColor;
+    }
+
     public void setPalette(boolean palette) {
         isPalette = palette;
     }
@@ -105,7 +109,7 @@ public class ShadowLayout extends FrameLayout {
         int top = ((mShadowSide & TOP) == TOP) ? yPadding : 0;
         int right = ((mShadowSide & RIGHT) == RIGHT) ? xPadding : 0;
         int bottom = ((mShadowSide & BOTTOM) == BOTTOM) ? yPadding : 0;
-        setPadding(left, top, right, bottom);
+        setPadding(left + getPaddingLeft(), top + getPaddingTop(), right + getPaddingRight(), bottom + getPaddingBottom());
     }
 
     private void setBackgroundCompat(int w, int h) {
@@ -136,10 +140,10 @@ public class ShadowLayout extends FrameLayout {
         Canvas canvas = new Canvas(output);
 
         RectF shadowRect = new RectF(
-                shadowRadius,
-                shadowRadius,
-                shadowWidth - shadowRadius,
-                shadowHeight - shadowRadius);
+                ((mShadowSide & LEFT) == LEFT) ? shadowRadius : 0,
+                ((mShadowSide & TOP) == TOP) ? shadowRadius : 0,
+                ((mShadowSide & RIGHT) == RIGHT) ? shadowWidth - shadowRadius : shadowWidth,
+                ((mShadowSide & BOTTOM) == BOTTOM) ? shadowHeight - shadowRadius : shadowHeight);
 
         if (dy > 0) {
             shadowRect.top += dy;
@@ -167,7 +171,6 @@ public class ShadowLayout extends FrameLayout {
         }
 
         canvas.drawRoundRect(shadowRect, cornerRadius, cornerRadius, shadowPaint);
-
         return output;
     }
 

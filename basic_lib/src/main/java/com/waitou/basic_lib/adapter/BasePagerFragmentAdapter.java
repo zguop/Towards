@@ -1,4 +1,4 @@
-package com.waitou.wt_library.base;
+package com.waitou.basic_lib.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,17 +12,17 @@ import java.util.List;
  * Created by wanglei on 2016/12/10.
  */
 
-public class XFragmentAdapter extends FragmentPagerAdapter {
+public class BasePagerFragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList = new ArrayList<>();
     private String[] titles;
 
-    public XFragmentAdapter(FragmentManager fm, Fragment... fragment) {
+    public BasePagerFragmentAdapter(FragmentManager fm, Fragment... fragment) {
         super(fm);
         this.fragmentList.clear();
         Collections.addAll(fragmentList, fragment);
     }
 
-    public XFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles) {
+    public BasePagerFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] titles) {
         super(fm);
         this.fragmentList.clear();
         this.fragmentList.addAll(fragmentList);

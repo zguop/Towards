@@ -42,6 +42,9 @@ task appStart(type: Exec, dependsOn: 'installDebug') {
 kapt {
     generateStubs = true
 }
+androidExtensions {
+    experimental = true
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

@@ -14,4 +14,5 @@ dependencies {
     api project(':three_library')
     api project(':normal_dialog_lib')
     api project(':recycler_lib')
+    api project(':rx_lib')
 }

@@ -69,7 +69,7 @@ public class GalleryNewActivity extends BasePageActivity implements PullRecycler
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        StatusBarUtil.transparencyBar(this, true);
+        StatusBarUtil.transparencyBar(this, false);
         pullRecyclerView = f(R.id.list);
         floatingActionMenu = f(R.id.menu);
         layoutManager = new GalleryLayoutManager(GalleryLayoutManager.HORIZONTAL);
@@ -143,16 +143,12 @@ public class GalleryNewActivity extends BasePageActivity implements PullRecycler
 
     public void bindUI(APIResult<List<GankResultsTypeInfo>> apiResult) {
         if (!apiResult.isSuccess()) {
-            if (apiResult.getCode() == 1) {
+            if (apiResult.getPageIndex() == 1) {
                 showFailed();
             }
             return;
         }
         List<GankResultsTypeInfo> data = apiResult.getData();
-        if (ObjectUtils.isEmpty(data)) {
-            showEmpty();
-            return;
-        }
         showContent();
         adapter.addData(data);
         pullRecyclerView.loadComplete(data.size() < 10);
