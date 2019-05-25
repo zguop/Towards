@@ -13,10 +13,10 @@ import com.waitou.wt_library.R;
 public class RootViewManager {
 
     public static ViewGroup attachViewGet(Activity context) {
-        CoordinatorLayout toolbar = new CoordinatorLayout(context);
-        toolbar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        toolbar.setId(R.id.page_root_view);
-        context.setContentView(toolbar);
-        return toolbar;
+        CoordinatorLayout rootView = new CoordinatorLayout(context);
+        rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        rootView.setId(R.id.page_root_view);
+        context.setContentView(rootView);
+        return rootView;
     }
 }

@@ -138,7 +138,7 @@ public class PhotoPickerFinal {
         }
         if (action != null) {
             rx = RxBus.getDefault().toObservable(PhotoEvent.class)
-                    .subscribe(photoEvent -> action.accept(photoEvent.getSelectionList()));
+                     .subscribe(photoEvent -> action.accept(photoEvent.getSelectionList()));
         }
         if (mActivityWeakReference != null && mActivityWeakReference.get() != null) {
             Router.newIntent().from(mActivityWeakReference.get()).to(PhotoWallActivity.class).launch();

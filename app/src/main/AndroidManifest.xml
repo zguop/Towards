@@ -14,11 +14,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
         android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
-            android:name=".model.guide.SplashActivity"
+            android:name=".model.activity.PicSelectActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent">
@@ -67,6 +68,7 @@
         <activity android:name=".model.activity.GloadActivity"/>
 
         <activity android:name=".model.activity.ColorActivity"/>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-include ':app',
+include ':app', ':photopicker_lib',
         ':recycler_lib',
         ':meta_provider_lib',
         ':imgloader_lib',
