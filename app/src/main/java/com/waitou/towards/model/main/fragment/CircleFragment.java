@@ -27,7 +27,6 @@ public class CircleFragment extends XFragment<XPresent, FragmentHomeBinding> {
 
     @Override
     public void reloadData() {
-
     }
 
 }

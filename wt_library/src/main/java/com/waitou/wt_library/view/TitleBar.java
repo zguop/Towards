@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -31,7 +32,7 @@ public class TitleBar extends FrameLayout implements SkinCompatSupportable {
         if (!(context instanceof Activity)) {
             throw new IllegalArgumentException("Context 建议使用 Activity类型的");
         }
-        inflate(context, R.layout.toolbar_content, this);
+        LayoutInflater.from(context).inflate(R.layout.toolbar_content, this, true);
         setElevation(SizeUtils.dp2px(5));
         setBackgroundColor(Color.WHITE);
         applySkin();

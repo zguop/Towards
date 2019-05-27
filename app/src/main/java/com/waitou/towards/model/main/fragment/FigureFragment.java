@@ -17,7 +17,6 @@ import com.waitou.wt_library.base.LazyFragment;
 
 public class FigureFragment extends LazyFragment {
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         TextView textView  = new TextView(getActivity());

@@ -4,7 +4,6 @@
 
     <application>
 
-        <activity android:name=".PhotoWallActivity"/>
 
     </application>
 

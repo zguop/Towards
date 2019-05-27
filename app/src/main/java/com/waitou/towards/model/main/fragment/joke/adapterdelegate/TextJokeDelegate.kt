@@ -6,7 +6,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseViewHolder
 import com.to.aboomy.recycler_lib.AdapterDelegate
 import com.to.aboomy.recycler_lib.Displayable
-import com.waitou.basic_lib.DialogUtils
+import com.waitou.basic_lib.util.DialogUtils
 import com.waitou.three_library.share.ShareInfo
 import com.waitou.towards.R
 import com.waitou.towards.bean.JokeInfo

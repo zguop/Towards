@@ -3,6 +3,7 @@ package com.waitou.wt_library.manager;
 import android.app.Activity;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.waitou.wt_library.R;
 
@@ -13,10 +14,16 @@ import com.waitou.wt_library.R;
 public class RootViewManager {
 
     public static ViewGroup attachViewGet(Activity context) {
-        CoordinatorLayout rootView = new CoordinatorLayout(context);
-        rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return attachViewGet(context, new CoordinatorLayout(context));
+    }
+
+    public static ViewGroup attachViewGet(Activity context, ViewGroup rootView) {
+        if (rootView instanceof LinearLayout) {
+            ((LinearLayout) rootView).setOrientation(LinearLayout.VERTICAL);
+        }
         rootView.setId(R.id.page_root_view);
-        context.setContentView(rootView);
+        //默认会走向activity的子类添加打view中
+        context.setContentView(rootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return rootView;
     }
 }

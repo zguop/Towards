@@ -49,7 +49,7 @@ ext {
             "tinker_anno"              : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
             "gson"                     : "com.google.code.gson:gson:2.8.0",
             "zxing"                    : "com.google.zxing:core:3.3.0",
-            "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.7',
+            "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.8',
             "banner"                   : 'com.to.aboomy:banner:2.1.4',
             "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46',
             "utilcode"                 : 'com.blankj:utilcode:1.23.7',//有android x版本

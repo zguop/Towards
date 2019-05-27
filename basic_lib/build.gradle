@@ -1,4 +1,8 @@
 globleConfigure()
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     resourcePrefix 'bs'
 }
@@ -10,9 +14,17 @@ dependencies {
     api rootProject.ext.dependencies["flexbox"]
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["statusbarlib"]
+    api rootProject.ext.dependencies['lifecycle_extensions']
+
 
     api project(':three_library')
+    api project(':imgloader_lib')
     api project(':normal_dialog_lib')
     api project(':recycler_lib')
     api project(':rx_lib')
+
+    api project(':photopicker_lib')
+    api project(':wt_library')
+
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
 }

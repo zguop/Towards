@@ -12,7 +12,7 @@ import com.blankj.utilcode.util.SPStaticUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.waitou.basic_lib.DialogUtils;
+import com.waitou.basic_lib.util.DialogUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;

@@ -1,4 +1,4 @@
-package com.waitou.basic_lib;
+package com.waitou.basic_lib.util;
 
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.waitou.basic_lib.R;
 import com.waitou.normal_dialog_lib.BottomSheetAdapterDialog;
 import com.waitou.normal_dialog_lib.NormalDialog;
 import com.waitou.three_library.share.ShareEnum;

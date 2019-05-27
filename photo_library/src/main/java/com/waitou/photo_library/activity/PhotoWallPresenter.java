@@ -132,6 +132,7 @@ public class PhotoWallPresenter extends XPresent<PhotoWallActivity> implements L
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
     /**

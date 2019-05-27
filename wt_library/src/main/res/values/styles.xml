@@ -14,7 +14,7 @@
     <style name="AppThemePowder" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPowder</item>
-        <item name="colorPrimaryDark">@color/colorPowder</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorPowder</item>
 
         <item name="skin_kind_color_not">@color/colorWhite</item>
@@ -31,7 +31,7 @@
     <style name="AppThemeRed" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorRed</item>
-        <item name="colorPrimaryDark">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorRed</item>
         <item name="skin_kind_color_not">@color/colorWhite</item>
         <item name="skin_home_title_not">@color/home_title2</item>
@@ -46,9 +46,11 @@
     </style>
 
     <style name="AppThemeBlue" parent="AppTheme">
-        <!-- Customize your theme here. -->
+        <!-- 主题色 -->
         <item name="colorPrimary">@color/colorBlue</item>
-        <item name="colorPrimaryDark">@color/colorBlue</item>
+        <!--状态栏的颜色-->
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <!--各种view的默认色-->
         <item name="colorAccent">@color/colorBlue</item>
         <!--白色字体-->
         <item name="skin_kind_color_not">@color/colorWhite</item>

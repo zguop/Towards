@@ -49,7 +49,6 @@ androidExtensions {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies['cardview-v7']
-    implementation rootProject.ext.dependencies['lifecycle_extensions']
     implementation rootProject.ext.dependencies["smarttablayout"]
     implementation rootProject.ext.dependencies["fab"]
     implementation rootProject.ext.dependencies["stetho"]
@@ -61,7 +60,6 @@ dependencies {
 
     implementation 'github.hellocsl:GalleryLayoutManager:1.0.6'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation "com.android.databinding:compiler:3.1.4"
 
 
