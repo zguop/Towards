@@ -12,10 +12,7 @@ import com.waitou.photopicker.bean.Album
  * auth aboom
  * date 2019-05-25
  */
-class AlbumLoader
-// =============================================
-
-private constructor(context: Context, selection: String, selectionArgs: Array<String>) :
+class AlbumLoader private constructor(context: Context, selection: String, selectionArgs: Array<String>) :
         CursorLoader(context, MediaStore.Files.getContentUri("external"),
                 PROJECTION, selection, selectionArgs, MediaStore.Images.Media.DATE_TAKEN + " DESC") {
 

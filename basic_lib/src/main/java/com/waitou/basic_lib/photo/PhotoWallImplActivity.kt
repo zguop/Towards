@@ -7,6 +7,7 @@ import android.view.Gravity
 import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.waitou.basic_lib.R
 import com.waitou.basic_lib.photo.adapter.AlbumsAdapter
+import com.waitou.basic_lib.photo.view.FolderPopUpWindow
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
 import com.waitou.photopicker.PhotoWallActivity
 import com.waitou.photopicker.PhotoWallFragment
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.bs_activity_photo_wall_impl.*
  * date 2019-05-25
  */
 class PhotoWallImplActivity : PhotoWallActivity() {
-
 
     private val albumsAdapter by lazy { AlbumsAdapter() }
     private var popUpWindow: FolderPopUpWindow? = null
@@ -36,7 +36,7 @@ class PhotoWallImplActivity : PhotoWallActivity() {
         var fragment = supportFragmentManager.findFragmentByTag(PhotoWallImplFragment.TAG)
         if (fragment !is PhotoWallFragment) {
             fragment = PhotoWallImplFragment.newInstance()
-            supportFragmentManager.beginTransaction().replace(R.id.pageContentView, fragment, PhotoWallImplFragment.TAG).commitAllowingStateLoss()
+            supportFragmentManager.beginTransaction().replace(R.id.contentLayout, fragment, PhotoWallImplFragment.TAG).commitAllowingStateLoss()
         }
         return fragment
     }
@@ -45,6 +45,7 @@ class PhotoWallImplActivity : PhotoWallActivity() {
         data?.let {
             albumsAdapter.replaceData(it)
             folder.text = it[0].albumName
+            preview.text = getString(R.string.bs_preview_count, "0")
         }
     }
 
@@ -55,6 +56,7 @@ class PhotoWallImplActivity : PhotoWallActivity() {
                 if (albumsAdapter.currentAlbumPos != position) {
                     albumsAdapter.currentAlbumPos = position
                     val album = albumsAdapter.data[position]
+                    albumsAdapter.notifyDataSetChanged()
                     folder.text = album?.albumName
                     val fragment = supportFragmentManager.findFragmentByTag(PhotoWallImplFragment.TAG)
                     if (fragment is PhotoWallFragment) {
@@ -68,7 +70,7 @@ class PhotoWallImplActivity : PhotoWallActivity() {
             if (it.isShowing) {
                 it.dismiss()
             }
-            it.showAtLocation(footer,Gravity.BOTTOM,0, 400)
+            it.showAtLocation(footer, Gravity.BOTTOM, 0, 400)
         }
     }
 

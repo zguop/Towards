@@ -1,4 +1,4 @@
-package com.waitou.basic_lib.photo
+package com.waitou.basic_lib.photo.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

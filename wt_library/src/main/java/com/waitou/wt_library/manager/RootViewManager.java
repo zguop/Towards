@@ -21,7 +21,7 @@ public class RootViewManager {
         if (rootView instanceof LinearLayout) {
             ((LinearLayout) rootView).setOrientation(LinearLayout.VERTICAL);
         }
-        rootView.setId(R.id.page_root_view);
+        rootView.setId(R.id.pageRootView);
         //默认会走向activity的子类添加打view中
         context.setContentView(rootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return rootView;

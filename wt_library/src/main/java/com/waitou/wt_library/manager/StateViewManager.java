@@ -28,18 +28,18 @@ public class StateViewManager {
             parent.removeView(contentView);
         }
         if(contentView.getId() == View.NO_ID){
-            contentView.setId(R.id.page_content_view);
+            contentView.setId(R.id.pageContentView);
         }
 
         Context context = contentView.getContext();
         ViewGroup rootView = null;
         if (attachToRoot) {
             if (context instanceof Activity) {
-                rootView = ((Activity) context).findViewById(R.id.page_root_view);
+                rootView = ((Activity) context).findViewById(R.id.pageRootView);
             }
         }
         XStateController xStateController = (XStateController) LayoutInflater.from(context).inflate(R.layout.base_view_state, rootView, false);
-        xStateController.setId(R.id.page_state_view);
+        xStateController.setId(R.id.pageStateView);
         xStateController.contentView(contentView);
         if (rootView != null) {
             rootView.addView(xStateController);

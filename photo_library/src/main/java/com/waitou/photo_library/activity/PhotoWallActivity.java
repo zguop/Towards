@@ -65,7 +65,7 @@ public class PhotoWallActivity extends XActivity<PhotoWallPresenter, ActivityPho
         mPhotoGridAdapter.setPresenter(getP());
         getBinding().xList.setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3));
         getBinding().xList.setAdapter(mPhotoGridAdapter);
-        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, SizeUtils.dp2px(2), false));
+        getBinding().xList.addItemDecoration(new GridSpacingItemDecoration(3, SizeUtils.dp2px(4), true));
         reloadData();
     }
 

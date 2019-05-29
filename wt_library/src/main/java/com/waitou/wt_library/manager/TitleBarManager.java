@@ -19,10 +19,10 @@ public class TitleBarManager {
 
     public static TitleBar attachViewGet(Context context, boolean attachToRoot) {
         TitleBar toolbar = new TitleBar(context);
-        toolbar.setId(R.id.page_title_bar);
+        toolbar.setId(R.id.pageTitleBar);
         if (attachToRoot) {
             if (context instanceof Activity) {
-                ViewGroup rootView = ((Activity) context).findViewById(R.id.page_root_view);
+                ViewGroup rootView = ((Activity) context).findViewById(R.id.pageRootView);
                 rootView.addView(toolbar, 0);
             }
         }

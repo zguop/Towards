@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:background="@color/bg_grey">
 
     <com.waitou.wt_library.view.TitleBar
         android:id="@+id/titleBar"
@@ -11,9 +11,16 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:id="@+id/pageContentView"
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleBar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/footer"
+        android:background="?attr/colorPrimary"/>
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -22,18 +29,15 @@
         android:layout_alignParentBottom="true"
         android:background="#99ffffff">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="?attr/colorPrimary"/>
-
         <TextView
             android:id="@+id/folder"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:drawableEnd="@drawable/bs_svg_ic_oblique_triangle"
             android:gravity="center_vertical"
+            android:paddingStart="15dp"
             android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
             android:paddingRight="15dp"
             android:textColor="?attr/colorPrimary"
             android:textSize="15sp"
@@ -45,8 +49,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|end"
+            android:minWidth="80dp"
+            android:paddingStart="15dp"
             android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
             android:paddingRight="15dp"
             android:textColor="?attr/colorPrimary"
             tools:text="预览(0)"

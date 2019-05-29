@@ -5,10 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.view.View
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.call.ILoaderAlbumCall
 import com.waitou.photopicker.call.ILoaderMediaCall
+import com.waitou.photopicker.utils.startCamera
 import com.waitou.photopicker.loader.AlbumCollection
 import com.waitou.photopicker.loader.MediaCollection
 
@@ -29,8 +29,8 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         checkPermissionOnStart()
     }
 
@@ -48,7 +48,12 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLoading()
+                if (permissions.contains(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    startLoading()
+                }
+                if (permissions.contains(Manifest.permission.CAMERA)) {
+                    startCamera()
+                }
             } else {
                 if (shouldShowRequestPermissionRationale(permissions[0])) {
                     checkPermissionOnDenied(emptyArray(), permissions)
@@ -65,6 +70,16 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
 
     fun loadMedia(bucketId: String = Album.ALBUM_ID_ALL) {
         mediaCollection.loadMedia(bucketId)
+    }
+
+    fun takeMedia() {
+        activity?.let {
+            if (ActivityCompat.checkSelfPermission(it, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.CAMERA), PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
+            } else {
+                startCamera()
+            }
+        }
     }
 
     override fun onDestroy() {

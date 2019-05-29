@@ -27,7 +27,7 @@
 
     </data>
 
-    <com.waitou.wt_library.view.SquareRelativeLayout
+    <com.waitou.widget_lib.SquareRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:marginBottom="@{position == count - 1 ? 45 : 0}">
@@ -64,5 +64,5 @@
             app:buttonTintList="@{com.waitou.wt_library.R.attr.skin_contrast_color_not}"
             app:checked="@{presenter.selectionList.contains(item)}"/>
 
-    </com.waitou.wt_library.view.SquareRelativeLayout>
+    </com.waitou.widget_lib.SquareRelativeLayout>
 </layout>

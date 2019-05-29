@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="page_root_view" type="id"/>
-    <item name="page_content_view" type="id"/>
-    <item name="page_state_view" type="id"/>
-    <item name="page_title_bar" type="id"/>
+    <item name="pageRootView" type="id"/>
+    <item name="pageContentView" type="id"/>
+    <item name="pageStateView" type="id"/>
+    <item name="pageTitleBar" type="id"/>
 </resources>

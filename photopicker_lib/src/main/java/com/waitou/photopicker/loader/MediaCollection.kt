@@ -6,7 +6,6 @@ import android.support.annotation.NonNull
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
-import android.util.Log
 import com.waitou.photopicker.bean.Media
 import com.waitou.photopicker.call.ILoaderMediaCall
 import java.lang.ref.WeakReference
@@ -46,9 +45,11 @@ class MediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
     override fun onLoadFinished(p0: Loader<Cursor>, cursor: Cursor?) {
         context.get()?.let {
             cursor?.let {
-                Log.e("aa", " cursor count" + cursor.count)
+                if (!cursor.isBeforeFirst) {
+                    return
+                }
                 val list = mutableListOf<Media>()
-                while (cursor.moveToNext()) {
+                while (it.moveToNext()) {
                     val media = Media.valueOf(cursor)
                     list.add(media)
                 }

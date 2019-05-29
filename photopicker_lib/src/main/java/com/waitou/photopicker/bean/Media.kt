@@ -17,7 +17,7 @@ class Media(
         /**
          * 名称
          */
-        val displayName: String,
+        val mediaName: String,
         /**
          * type
          */
@@ -45,6 +45,10 @@ class Media(
         this.uri = ContentUris.withAppendedId(contentUri, mediaId.toLong())
     }
 
+    fun isCapture(): Boolean {
+        return ITEM_ID_CAPTURE == mediaId
+    }
+
     fun isImage(): Boolean {
         return mediaType.startsWith("image")
     }
@@ -54,10 +58,12 @@ class Media(
     }
 
     override fun toString(): String {
-        return "Media(mediaId='$mediaId', displayName='$displayName', mediaType='$mediaType', size=$size, duration=$duration, uri=$uri)"
+        return "Media(mediaId='$mediaId', mediaName='$mediaName', mediaType='$mediaType', size=$size, duration=$duration, uri=$uri)"
     }
 
     companion object {
+        const val ITEM_ID_CAPTURE: String = "-1"
+
         fun valueOf(cursor: Cursor): Media {
             return Media(
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)),

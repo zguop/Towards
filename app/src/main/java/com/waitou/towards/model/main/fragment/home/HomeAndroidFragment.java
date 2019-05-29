@@ -1,6 +1,7 @@
 package com.waitou.towards.model.main.fragment.home;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.waitou.net_library.model.Displayable;
 import com.waitou.towards.R;
@@ -37,6 +38,12 @@ public class HomeAndroidFragment extends XFragment<HomePresenter, IncludePullRec
         getBinding().xList.setAdapter(mAdapter);
         getBinding().xList.getRecyclerView().useDefLoadMoreView();
         getBinding().xList.getRecyclerView().setOnRefreshAndLoadMoreListener(this);
+    }
+
+    private View.OnClickListener onClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @Override

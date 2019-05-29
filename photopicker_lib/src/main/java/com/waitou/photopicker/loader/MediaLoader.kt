@@ -8,12 +8,13 @@ import android.database.MergeCursor
 import android.provider.MediaStore
 import android.support.v4.content.CursorLoader
 import com.waitou.photopicker.bean.Album
+import com.waitou.photopicker.bean.Media
 
 /**
  * auth aboom
  * date 2019-05-26
  */
-class MediaLoader(context: Context, selection: String?, selectionArgs: Array<String>?) :
+class MediaLoader private constructor(context: Context, selection: String?, selectionArgs: Array<String>?) :
         CursorLoader(context, MediaStore.Files.getContentUri("external"),
                 PROJECTION, selection, selectionArgs, MediaStore.Images.Media.DATE_TAKEN + " DESC") {
 
@@ -25,7 +26,7 @@ class MediaLoader(context: Context, selection: String?, selectionArgs: Array<Str
         }
         //添加一个相册的item
         val mc = MatrixCursor(PROJECTION)
-        mc.addRow(arrayOf(-1, "capture", "", 0, 0))
+        mc.addRow(arrayOf(Media.ITEM_ID_CAPTURE, "capture", "", 0, 0))
         return MergeCursor(arrayOf(mc, cursor))
     }
 

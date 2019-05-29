@@ -22,6 +22,7 @@ dependencies {
     api project(':normal_dialog_lib')
     api project(':recycler_lib')
     api project(':rx_lib')
+    api project(':widget_lib')
 
     api project(':photopicker_lib')
     api project(':wt_library')

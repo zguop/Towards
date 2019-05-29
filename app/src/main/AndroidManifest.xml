@@ -19,7 +19,7 @@
         android:theme="@style/AppThemeRed"
         tools:replace="android:label">
         <activity
-            android:name=".model.activity.PicSelectActivity"
+            android:name=".model.guide.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent">

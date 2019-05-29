@@ -6,12 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 
 class GridSpacingItemDecoration(private val spanCount: Int, spacing: Int, private val includeEdge: Boolean) : RecyclerView.ItemDecoration() {
-    private val spacing: Int
-
-    init {
-        this.spacing = (spacing * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-    }
-
+    private val spacing: Int = (spacing * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val position = parent.getChildAdapterPosition(view) // item position
         val column = position % spanCount // item column

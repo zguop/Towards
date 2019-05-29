@@ -6,7 +6,6 @@ import android.support.annotation.NonNull
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
-import android.util.Log
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.call.ILoaderAlbumCall
 import java.lang.ref.WeakReference
@@ -40,7 +39,9 @@ class AlbumCollection : LoaderManager.LoaderCallbacks<Cursor> {
     override fun onLoadFinished(p0: Loader<Cursor>, cursor: Cursor?) {
         context.get()?.let {
             cursor?.let {
-                Log.e("aa", " cursor count" + cursor.count)
+                if (!cursor.isBeforeFirst) {
+                    return
+                }
                 val list = mutableListOf<Album>()
                 while (it.moveToNext()) {
                     val photoFolder = Album.valueOf(it)

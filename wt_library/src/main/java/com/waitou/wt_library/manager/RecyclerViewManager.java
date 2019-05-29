@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter;
 import com.to.aboomy.recycler_lib.PullRecyclerView;
+import com.waitou.wt_library.R;
 
 /**
  * auth aboom
@@ -29,6 +30,7 @@ public class RecyclerViewManager {
         }
 
         RecyclerView recyclerView = new RecyclerView(activity);
+        recyclerView.setId(R.id.pageContentView);
         recyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         if (layoutManager != null) {
@@ -46,6 +48,7 @@ public class RecyclerViewManager {
         }
 
         PullRecyclerView recyclerView = new PullRecyclerView(activity);
+        recyclerView.setId(R.id.pageContentView);
         recyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         if (layoutManager != null) {

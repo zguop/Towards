@@ -1,14 +1,16 @@
 package com.waitou.basic_lib.photo
 
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.waitou.basic_lib.photo.adapter.MediasAdapter
+import com.waitou.basic_lib.photo.view.GridSpacingItemDecoration
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
 import com.waitou.photopicker.PhotoWallFragment
 import com.waitou.photopicker.bean.Album
@@ -21,16 +23,19 @@ import com.waitou.photopicker.bean.Media
 class PhotoWallImplFragment : PhotoWallFragment() {
 
     private lateinit var viewModule: PhotoWallViewModule
+    private lateinit var adapter: MediasAdapter
 
     override fun albumResult(albums: List<Album>) {
+        Log.e("aa", "albumResult size = " + albums.size)
         viewModule.albumLiveData.postValue(albums)
-        albums.forEach {
-            Log.e("aa", "----- " + it.toString())
-        }
     }
 
     override fun mediaResult(medias: List<Media>) {
-
+        Log.e("aa", "mediaResult size = " + medias.size)
+        if (medias.isEmpty()) {
+            return
+        }
+        adapter.replaceData(medias)
     }
 
     override fun startLoading() {
@@ -39,7 +44,7 @@ class PhotoWallImplFragment : PhotoWallFragment() {
     }
 
     companion object {
-        val TAG = PhotoWallImplFragment::class.java.simpleName
+        val TAG: String = PhotoWallImplFragment::class.java.simpleName
         fun newInstance(): PhotoWallFragment {
             return PhotoWallImplFragment()
         }
@@ -53,10 +58,14 @@ class PhotoWallImplFragment : PhotoWallFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val textView = TextView(activity)
-        textView.setTextColor(Color.BLACK)
-        textView.text = javaClass.simpleName
-        return textView
+        val recyclerView = RecyclerView(activity!!)
+        recyclerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        recyclerView.layoutManager = GridLayoutManager(activity, 3)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, true))
+        this.adapter = MediasAdapter()
+        recyclerView.adapter = adapter
+        adapter.cameraClick = View.OnClickListener { takeMedia() }
+        return recyclerView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

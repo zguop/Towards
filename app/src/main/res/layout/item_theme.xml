@@ -19,7 +19,7 @@
             type="int"/>
     </data>
 
-    <com.waitou.wt_library.view.SquareRelativeLayout
+    <com.waitou.widget_lib.SquareRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -43,6 +43,6 @@
             android:src="@drawable/icon_theme_duihao"
             android:visibility="@{item.focus ? View.VISIBLE : View.GONE}"/>
 
-    </com.waitou.wt_library.view.SquareRelativeLayout>
+    </com.waitou.widget_lib.SquareRelativeLayout>
 
 </layout>
