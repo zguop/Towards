@@ -9,9 +9,9 @@ import com.waitou.basic_lib.R
 import com.waitou.basic_lib.photo.adapter.AlbumsAdapter
 import com.waitou.basic_lib.photo.view.FolderPopUpWindow
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
-import com.waitou.photopicker.PhotoWallActivity
-import com.waitou.photopicker.PhotoWallFragment
 import com.waitou.photopicker.bean.Album
+import com.waitou.photopicker.ui.PhotoWallActivity
+import com.waitou.photopicker.ui.PhotoWallFragment
 import kotlinx.android.synthetic.main.bs_activity_photo_wall_impl.*
 
 /**

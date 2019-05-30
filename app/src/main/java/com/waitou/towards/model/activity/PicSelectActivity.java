@@ -1,13 +1,12 @@
 package com.waitou.towards.model.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.waitou.basic_lib.photo.PhotoWallImplActivity;
+import com.waitou.photopicker.Wisdom;
 import com.waitou.wt_library.base.BaseActivity;
 import com.waitou.wt_library.manager.RootViewManager;
 import com.waitou.wt_library.manager.TitleBarManager;
@@ -36,8 +35,7 @@ public class PicSelectActivity extends BaseActivity {
         Button button = new Button(this);
         button.setText("进入相册");
         button.setOnClickListener(v -> {
-            Intent i = new Intent(this, PhotoWallImplActivity.class);
-            startActivity(i);
+            Wisdom.of(this).open();
 
         });
 

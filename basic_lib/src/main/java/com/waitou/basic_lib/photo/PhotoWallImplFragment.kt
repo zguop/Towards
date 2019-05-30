@@ -12,9 +12,9 @@ import com.blankj.utilcode.util.ToastUtils
 import com.waitou.basic_lib.photo.adapter.MediasAdapter
 import com.waitou.basic_lib.photo.view.GridSpacingItemDecoration
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
-import com.waitou.photopicker.PhotoWallFragment
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.bean.Media
+import com.waitou.photopicker.ui.PhotoWallFragment
 
 /**
  * auth aboom
@@ -61,7 +61,7 @@ class PhotoWallImplFragment : PhotoWallFragment() {
         val recyclerView = RecyclerView(activity!!)
         recyclerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         recyclerView.layoutManager = GridLayoutManager(activity, 3)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, true))
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, false))
         this.adapter = MediasAdapter()
         recyclerView.adapter = adapter
         adapter.cameraClick = View.OnClickListener { takeMedia() }
@@ -71,6 +71,7 @@ class PhotoWallImplFragment : PhotoWallFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModule = ViewModelProviders.of(activity!!)[PhotoWallViewModule::class.java]
+
 
     }
 }

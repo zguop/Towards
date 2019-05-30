@@ -1,6 +1,8 @@
-package com.waitou.photopicker
+package com.waitou.photopicker.ui
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -8,9 +10,9 @@ import android.support.v4.app.Fragment
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.call.ILoaderAlbumCall
 import com.waitou.photopicker.call.ILoaderMediaCall
-import com.waitou.photopicker.utils.startCamera
 import com.waitou.photopicker.loader.AlbumCollection
 import com.waitou.photopicker.loader.MediaCollection
+import com.waitou.photopicker.utils.CameraStrategy
 
 /**
  * auth aboom
@@ -20,6 +22,7 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
 
     private val albumCollection by lazy { AlbumCollection() }
     private val mediaCollection by lazy { MediaCollection() }
+    private val cameraStrategy by lazy { CameraStrategy(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +55,7 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
                     startLoading()
                 }
                 if (permissions.contains(Manifest.permission.CAMERA)) {
-                    startCamera()
+                    takeMedia()
                 }
             } else {
                 if (shouldShowRequestPermissionRationale(permissions[0])) {
@@ -77,7 +80,19 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
             if (ActivityCompat.checkSelfPermission(it, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.CAMERA), PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
             } else {
-                startCamera()
+                cameraStrategy.startCamera(it, "${it.packageName}.utilcode.provider", null)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (Activity.RESULT_OK == resultCode) {
+            if (CameraStrategy.CAMERA_REQUEST == requestCode) {
+                val fileNamePath = cameraStrategy.fileNamePath
+                val i = Intent()
+                i.putExtra("path", fileNamePath)
+                activity?.setResult(Activity.RESULT_OK, i)
             }
         }
     }

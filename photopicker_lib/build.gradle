@@ -9,7 +9,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
-    implementation rootProject.ext.dependencies["statusbarlib"]
-    implementation rootProject.ext.dependencies['utilcode']
-    implementation project(':wt_library')
 }

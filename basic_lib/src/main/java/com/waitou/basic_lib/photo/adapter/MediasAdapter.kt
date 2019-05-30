@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.waitou.basic_lib.R
+import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.photopicker.bean.Media
 import kotlinx.android.synthetic.main.bs_item_camera.view.*
+import kotlinx.android.synthetic.main.bs_item_media.view.*
 
 /**
  * auth aboom
@@ -27,7 +29,7 @@ class MediasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (viewType == VIEW_TYPE_CAPTURE) {
             return CameraViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.bs_item_camera, p0, false))
         }
-        return MediaViewHolder(View(p0.context))
+        return MediaViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.bs_item_media, p0, false))
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -44,8 +46,7 @@ class MediasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holde.itemView.text.text = media.mediaName
             holde.itemView.setOnClickListener(cameraClick)
         } else {
-
-
+            ImageLoader.displayImage(holde.itemView.media, media.uri)
         }
     }
 
@@ -54,7 +55,6 @@ class MediasAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.medias.addAll(medias)
         notifyDataSetChanged()
     }
-
 
     private class CameraViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
 
