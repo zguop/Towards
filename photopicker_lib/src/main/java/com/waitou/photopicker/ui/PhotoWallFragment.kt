@@ -7,9 +7,13 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import com.waitou.photopicker.Wisdom
 import com.waitou.photopicker.bean.Album
+import com.waitou.photopicker.bean.ResultMedia
 import com.waitou.photopicker.call.ILoaderAlbumCall
 import com.waitou.photopicker.call.ILoaderMediaCall
+import com.waitou.photopicker.call.OnResultMediaListener
+import com.waitou.photopicker.config.WisdomConfig
 import com.waitou.photopicker.loader.AlbumCollection
 import com.waitou.photopicker.loader.MediaCollection
 import com.waitou.photopicker.utils.CameraStrategy
@@ -20,6 +24,7 @@ import com.waitou.photopicker.utils.CameraStrategy
  */
 abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCall {
 
+    var onResultMediaListener: OnResultMediaListener? = null
     private val albumCollection by lazy { AlbumCollection() }
     private val mediaCollection by lazy { MediaCollection() }
     private val cameraStrategy by lazy { CameraStrategy(this) }
@@ -80,29 +85,29 @@ abstract class PhotoWallFragment : Fragment(), ILoaderAlbumCall, ILoaderMediaCal
             if (ActivityCompat.checkSelfPermission(it, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.CAMERA), PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
             } else {
-                cameraStrategy.startCamera(it, "${it.packageName}.utilcode.provider", null)
+                cameraStrategy.startCamera(it, WisdomConfig.getInstance().authorities, WisdomConfig.getInstance().directory)
             }
         }
+    }
+
+    fun finish(resultMedias: ArrayList<ResultMedia>) {
+        val i = Intent()
+        i.putParcelableArrayListExtra(Wisdom.EXTRA_RESULT_SELECTION, resultMedias)
+        onResultMediaListener?.onResultFinish(i)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (Activity.RESULT_OK == resultCode) {
-            if (CameraStrategy.CAMERA_REQUEST == requestCode) {
-                val fileNamePath = cameraStrategy.fileNamePath
-                val i = Intent()
-                i.putExtra("path", fileNamePath)
-                activity?.setResult(Activity.RESULT_OK, i)
-            }
+        if (Activity.RESULT_OK != resultCode) {
+            return
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        albumCollection.onDestroy()
-        mediaCollection.onDestroy()
+        // the camera callback
+        if (CameraStrategy.CAMERA_REQUEST == requestCode) {
+            onCameraResult(cameraStrategy.onCameraResult())
+        }
     }
 
     abstract fun startLoading()
     open fun checkPermissionOnDenied(permissionsDeniedForever: Array<String>, permissionsDenied: Array<String>) {}
+    open fun onCameraResult(resultMedia: ResultMedia) {}
 }

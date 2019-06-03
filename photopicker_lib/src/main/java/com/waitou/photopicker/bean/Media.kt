@@ -23,6 +23,10 @@ class Media(
          */
         val mediaType: String,
         /**
+         * path
+         */
+        val path: String,
+        /**
          * size
          */
         val size: Long,
@@ -58,7 +62,7 @@ class Media(
     }
 
     override fun toString(): String {
-        return "Media(mediaId='$mediaId', mediaName='$mediaName', mediaType='$mediaType', size=$size, duration=$duration, uri=$uri)"
+        return "Media(mediaId='$mediaId', mediaName='$mediaName', mediaType='$mediaType', path='$path', size=$size, duration=$duration, uri=$uri)"
     }
 
     companion object {
@@ -69,6 +73,7 @@ class Media(
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)),
                     cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.SIZE)),
                     cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
             )

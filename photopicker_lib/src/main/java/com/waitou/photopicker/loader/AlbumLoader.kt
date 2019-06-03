@@ -7,6 +7,9 @@ import android.database.MergeCursor
 import android.provider.MediaStore
 import android.support.v4.content.CursorLoader
 import com.waitou.photopicker.bean.Album
+import com.waitou.photopicker.config.WisdomConfig
+import com.waitou.photopicker.config.isImages
+import com.waitou.photopicker.config.isVideos
 
 /**
  * auth aboom
@@ -71,20 +74,18 @@ class AlbumLoader private constructor(context: Context, selection: String, selec
         fun newInstance(context: Context): CursorLoader {
             val selectionArgs = mutableListOf<String>()
 
-            val onlyShowImages = false
-            val onlyShowVideos = false
-
             /**
              * SELECT _id, bucket_id, bucket_display_name, _data, COUNT(*) AS count FROM files WHERE ((media_type=? OR media_type=?) AND _size>0) GROUP BY（bucket_id) ORDER BY datetaken DESC
              */
-            val selection = if (onlyShowImages || onlyShowVideos) {
+            val mimeType = WisdomConfig.getInstance().mimeType
+            val selection = if (isImages(mimeType) || isVideos(mimeType)) {
                 "${MediaStore.Files.FileColumns.MEDIA_TYPE}=? AND ${MediaStore.MediaColumns.SIZE}>0) GROUP BY (${MediaStore.Images.Media.BUCKET_ID}"
             } else {
                 "(${MediaStore.Files.FileColumns.MEDIA_TYPE}=? OR ${MediaStore.Files.FileColumns.MEDIA_TYPE}=?) AND ${MediaStore.MediaColumns.SIZE}>0) GROUP BY (${MediaStore.Images.Media.BUCKET_ID}"
             }
             when {
-                onlyShowImages -> selectionArgs.add(SELECTION_ARGS[0])
-                onlyShowVideos -> selectionArgs.add(SELECTION_ARGS[1])
+                isImages(mimeType) -> selectionArgs.add(SELECTION_ARGS[0])
+                isVideos(mimeType) -> selectionArgs.add(SELECTION_ARGS[1])
                 else -> selectionArgs.addAll(SELECTION_ARGS)
             }
             return AlbumLoader(context, selection, selectionArgs.toTypedArray())

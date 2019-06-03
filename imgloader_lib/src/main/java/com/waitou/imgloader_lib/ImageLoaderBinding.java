@@ -22,5 +22,4 @@ public class ImageLoaderBinding {
                 .apply(new RequestOptions().placeholder(placeholderImage).error(failureImage))
                 .into(imageView);
     }
-
 }

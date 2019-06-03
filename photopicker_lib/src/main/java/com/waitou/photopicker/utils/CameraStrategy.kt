@@ -2,10 +2,12 @@ package com.waitou.photopicker.utils
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
+import com.waitou.photopicker.bean.ResultMedia
 import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -22,14 +24,14 @@ class CameraStrategy(fragment: Fragment) {
 
     private val weakReference = WeakReference<Fragment>(fragment)
 
-    var fileNamePath: File? = null
-
+    private var filePath: File? = null
+    private var fileUri: Uri? = null
     fun startCamera(context: Context, authority: String, directory: String?) {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.resolveActivity(context.packageManager)?.let {
-            fileNamePath = checkImageFileExistsAndCreate(directory) ?: return@let
-            val uriForFile = FileProvider.getUriForFile(context, authority, fileNamePath!!)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile)
+            filePath = checkImageFileExistsAndCreate(directory) ?: return@let
+            fileUri = FileProvider.getUriForFile(context, authority, filePath!!)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
             weakReference.get()?.startActivityForResult(intent, CAMERA_REQUEST)
         }
     }
@@ -54,6 +56,16 @@ class CameraStrategy(fragment: Fragment) {
             }
         }
         return null
+    }
+
+    fun onCameraResult(): ResultMedia {
+        filePath?.let {
+            weakReference.get()?.activity?.application?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(it)))
+        }
+        val resultMedia = ResultMedia()
+        resultMedia.mediaPath = filePath?.absolutePath
+        resultMedia.mediaUri = fileUri
+        return resultMedia
     }
 
     companion object {

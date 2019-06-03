@@ -13,6 +13,7 @@ class PhotoWallViewModule : ViewModel() {
 
     val albumLiveData = MutableLiveData<List<Album>>()
 
+    val selectCountLiveData = MutableLiveData<Int>()
 
 
 }

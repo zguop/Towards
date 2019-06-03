@@ -10,6 +10,7 @@ import com.waitou.basic_lib.photo.adapter.AlbumsAdapter
 import com.waitou.basic_lib.photo.view.FolderPopUpWindow
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
 import com.waitou.photopicker.bean.Album
+import com.waitou.photopicker.config.WisdomConfig
 import com.waitou.photopicker.ui.PhotoWallActivity
 import com.waitou.photopicker.ui.PhotoWallFragment
 import kotlinx.android.synthetic.main.bs_activity_photo_wall_impl.*
@@ -29,6 +30,9 @@ class PhotoWallImplActivity : PhotoWallActivity() {
         StatusBarUtil.immersiveStatusBarNeedDark(this)
         val viewModule = ViewModelProviders.of(this)[PhotoWallViewModule::class.java]
         viewModule.albumLiveData.observe(this, Observer { addAlbum(it) })
+        viewModule.selectCountLiveData.observe(this, Observer {
+            preview.text = getString(R.string.bs_preview_count, it, WisdomConfig.getInstance().maxSelectLimit)
+        })
         folder.setOnClickListener { showPop() }
     }
 
@@ -45,7 +49,7 @@ class PhotoWallImplActivity : PhotoWallActivity() {
         data?.let {
             albumsAdapter.replaceData(it)
             folder.text = it[0].albumName
-            preview.text = getString(R.string.bs_preview_count, "0")
+            preview.text = getString(R.string.bs_preview_count, 0, WisdomConfig.getInstance().maxSelectLimit)
         }
     }
 
@@ -73,5 +77,4 @@ class PhotoWallImplActivity : PhotoWallActivity() {
             it.showAtLocation(footer, Gravity.BOTTOM, 0, 400)
         }
     }
-
 }

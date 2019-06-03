@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="bs_CheckView">
+        <attr name="bs_check_color" format="color"/>
+        <attr name="bs_border_color" format="color"/>
+        <attr name="bs_check_text_color" format="color"/>
+        <attr name="bs_check_text_size" format="dimension"/>
+
+
+    </declare-styleable>
+
+</resources>

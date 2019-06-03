@@ -16,16 +16,18 @@ import java.lang.ref.WeakReference
  */
 class AlbumCollection : LoaderManager.LoaderCallbacks<Cursor> {
 
-    private val LOADER_ID = 1
+    companion object {
+        private const val LOADER_ID = 1
+    }
 
     private lateinit var context: WeakReference<FragmentActivity>
-    private var onLoaderCallbacks: ILoaderAlbumCall? = null
+    private lateinit var onLoaderCallbacks: WeakReference<ILoaderAlbumCall>
     private val loaderManager by lazy { context.get()?.let { LoaderManager.getInstance(it) } }
 
 
     fun onCreate(@NonNull activity: FragmentActivity, @NonNull onLoaderCallbacks: ILoaderAlbumCall) {
         this.context = WeakReference(activity)
-        this.onLoaderCallbacks = onLoaderCallbacks
+        this.onLoaderCallbacks = WeakReference(onLoaderCallbacks)
     }
 
     fun loadAlbum() {
@@ -37,7 +39,7 @@ class AlbumCollection : LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     override fun onLoadFinished(p0: Loader<Cursor>, cursor: Cursor?) {
-        context.get()?.let {
+        context.get()?.let { context ->
             cursor?.let {
                 if (!cursor.isBeforeFirst) {
                     return
@@ -47,16 +49,12 @@ class AlbumCollection : LoaderManager.LoaderCallbacks<Cursor> {
                     val photoFolder = Album.valueOf(it)
                     list.add(photoFolder)
                 }
-                onLoaderCallbacks?.albumResult(list)
+                onLoaderCallbacks.get()?.albumResult(list)
+                loaderManager?.destroyLoader(LOADER_ID)
             }
         }
     }
 
     override fun onLoaderReset(p0: Loader<Cursor>) {
-    }
-
-    fun onDestroy() {
-        loaderManager?.destroyLoader(LOADER_ID)
-        onLoaderCallbacks = null
     }
 }

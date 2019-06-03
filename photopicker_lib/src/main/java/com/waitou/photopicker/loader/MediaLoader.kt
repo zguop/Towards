@@ -9,6 +9,9 @@ import android.provider.MediaStore
 import android.support.v4.content.CursorLoader
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.bean.Media
+import com.waitou.photopicker.config.WisdomConfig
+import com.waitou.photopicker.config.isImages
+import com.waitou.photopicker.config.isVideos
 
 /**
  * auth aboom
@@ -21,12 +24,12 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
     override fun loadInBackground(): Cursor? {
         val cursor = super.loadInBackground()
         //设备不具备相机功能
-        if (!context.applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        if (!WisdomConfig.getInstance().isCamera || !context.applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             return cursor
         }
         //添加一个相册的item
         val mc = MatrixCursor(PROJECTION)
-        mc.addRow(arrayOf(Media.ITEM_ID_CAPTURE, "capture", "", 0, 0))
+        mc.addRow(arrayOf(Media.ITEM_ID_CAPTURE, "capture", "", "", 0, 0))
         return MergeCursor(arrayOf(mc, cursor))
     }
 
@@ -34,12 +37,13 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
         /**
          * 查询media的字段
          */
-        private val PROJECTION = arrayOf(
-                MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.DISPLAY_NAME,
-                MediaStore.Files.FileColumns.MIME_TYPE,
-                MediaStore.Files.FileColumns.SIZE,
-                MediaStore.Audio.AudioColumns.DURATION
+      private  val PROJECTION = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.MIME_TYPE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.SIZE,
+                MediaStore.Audio.Media.DURATION
         )
 
         /**
@@ -50,14 +54,10 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
                 MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString()
         )
 
-        fun newInstance(context: Context, albumId: String?): MediaLoader {
-            var selection: String
+        fun newInstance(context: Context, albumId: String?, mimeType: Int): MediaLoader {
             val selectionArgs = mutableListOf<String>()
 
-            val onlyShowImages = false
-            val onlyShowVideos = false
-
-            selection = if (onlyShowImages || onlyShowVideos) {
+            var selection = if (isImages(mimeType) || isVideos(mimeType)) {
                 "${MediaStore.Files.FileColumns.MEDIA_TYPE}=?"
             } else {
                 "(${MediaStore.Files.FileColumns.MEDIA_TYPE}=? OR ${MediaStore.Files.FileColumns.MEDIA_TYPE}=?)"
@@ -66,8 +66,8 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
             selection += " AND ${MediaStore.MediaColumns.SIZE}>0"
 
             when {
-                onlyShowImages -> selectionArgs.add(SELECTION_ALL_ARGS[0])
-                onlyShowVideos -> selectionArgs.add(SELECTION_ALL_ARGS[1])
+                isImages(mimeType) -> selectionArgs.add(SELECTION_ALL_ARGS[0])
+                isVideos(mimeType) -> selectionArgs.add(SELECTION_ALL_ARGS[1])
                 else -> selectionArgs.addAll(SELECTION_ALL_ARGS)
             }
 

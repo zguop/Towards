@@ -14,13 +14,16 @@ import com.waitou.basic_lib.photo.view.GridSpacingItemDecoration
 import com.waitou.basic_lib.photo.viewmodule.PhotoWallViewModule
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.bean.Media
+import com.waitou.photopicker.bean.ResultMedia
 import com.waitou.photopicker.ui.PhotoWallFragment
+import com.waitou.photopicker.utils.isSingleImage
 
 /**
  * auth aboom
  * date 2019-05-25
  */
-class PhotoWallImplFragment : PhotoWallFragment() {
+class PhotoWallImplFragment : PhotoWallFragment(), MediasAdapter.OnCheckedChangedListener {
+
 
     private lateinit var viewModule: PhotoWallViewModule
     private lateinit var adapter: MediasAdapter
@@ -57,6 +60,10 @@ class PhotoWallImplFragment : PhotoWallFragment() {
         ToastUtils.showShort(msg)
     }
 
+    override fun onCameraResult(resultMedia: ResultMedia) {
+        finish(arrayListOf(resultMedia))
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val recyclerView = RecyclerView(activity!!)
         recyclerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -64,7 +71,13 @@ class PhotoWallImplFragment : PhotoWallFragment() {
         recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, false))
         this.adapter = MediasAdapter()
         recyclerView.adapter = adapter
+        adapter.checkedListener = this
         adapter.cameraClick = View.OnClickListener { takeMedia() }
+        adapter.mediaClick = View.OnClickListener {
+            if (isSingleImage()) {
+                finish(arrayListOf(ResultMedia((it.tag as Media).path, (it.tag as Media).uri)))
+            }
+        }
         return recyclerView
     }
 
@@ -73,5 +86,9 @@ class PhotoWallImplFragment : PhotoWallFragment() {
         viewModule = ViewModelProviders.of(activity!!)[PhotoWallViewModule::class.java]
 
 
+    }
+
+    override fun onChange() {
+        viewModule.selectCountLiveData.postValue(adapter.selectMedias.size)
     }
 }

@@ -1,44 +1,84 @@
 package com.waitou.towards.model.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
+import com.waitou.basic_lib.photo.PhotoWallImplActivity;
+import com.waitou.basic_lib.photo.view.CheckView;
 import com.waitou.photopicker.Wisdom;
+import com.waitou.photopicker.bean.ResultMedia;
+import com.waitou.towards.R;
 import com.waitou.wt_library.base.BaseActivity;
-import com.waitou.wt_library.manager.RootViewManager;
-import com.waitou.wt_library.manager.TitleBarManager;
-import com.waitou.wt_library.view.TitleBar;
+
+import java.util.List;
 
 /**
  * auth aboom
  * date 2019-05-24
  */
 public class PicSelectActivity extends BaseActivity {
+    private boolean isCamera = true;
+    boolean isCheck = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        LinearLayout rootView = new LinearLayout(this);
-//        rootView.setId(R.mediaId.page_root_view);
-//        rootView.setOrientation(LinearLayout.VERTICAL);
-//        rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        setContentView(rootView);
-
-        ViewGroup rootView = RootViewManager.attachViewGet(this, new LinearLayout(this));
-
-        TitleBar titleBar = TitleBarManager.attachViewGet(this, true);
-//        rootView.addView(titleBar);
-
-        Button button = new Button(this);
-        button.setText("进入相册");
-        button.setOnClickListener(v -> {
-            Wisdom.of(this).open();
-
+        setContentView(R.layout.activity_pic);
+        CheckBox checkBox = findViewById(R.id.camera);
+        EditText num = findViewById(R.id.num);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isCamera = isChecked;
+            }
         });
 
-        rootView.addView(button);
+        findViewById(R.id.go).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Wisdom.of(PicSelectActivity.this)
+                        .config()
+                        .imageEngine(new GlideEngine())
+                        .selectLimit(Integer.valueOf(num.getText().toString()))
+                        .fileProvider(getPackageName() + ".utilcode.provider", "image")
+                        .isCamera(isCamera)
+                        .forResult(0x11, PhotoWallImplActivity.class);
+            }
+        });
+
+
+        CheckView checkView = findViewById(R.id.check1);
+
+        checkView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isCheck = !isCheck;
+                checkView.setCheckedNum(isCheck ? 1 : Integer.MAX_VALUE);
+
+
+                checkView.toggle();
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Activity.RESULT_OK == resultCode) {
+            if (requestCode == 0x11 && data != null) {
+                List<ResultMedia> resultMedia = Wisdom.obtainResult(data);
+                Log.e("aa", resultMedia.toString());
+
+            }
+        }
     }
 }

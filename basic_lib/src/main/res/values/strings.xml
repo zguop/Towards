@@ -1,3 +1,6 @@
 <resources>
-    <string name="bs_preview_count">预览(%s)</string>
+    <string name="bs_preview_count">预览(%1$d/%2$d)</string>
+    <string name="bs_max_select_error">最多只能选择 %1$s 个%2$s</string>
+    <string name="bs_picture">图片</string>
+    <string name="bs_video">视频</string>
 </resources>

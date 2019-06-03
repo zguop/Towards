@@ -19,7 +19,7 @@
         android:theme="@style/AppThemeRed"
         tools:replace="android:label">
         <activity
-            android:name=".model.guide.SplashActivity"
+            android:name=".model.activity.PicSelectActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent">
@@ -68,6 +68,9 @@
         <activity android:name=".model.activity.GloadActivity"/>
 
         <activity android:name=".model.activity.ColorActivity"/>
+
+
+        <!--<activity android:name=".model.activity.PicSelectActivity"/>-->
 
     </application>
 
