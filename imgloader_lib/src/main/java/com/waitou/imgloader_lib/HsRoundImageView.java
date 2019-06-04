@@ -14,8 +14,13 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
+/**
+ * 看属性就知道这是一个圆形 圆角 可以有边框线的 imageView
+ */
 public class HsRoundImageView extends ImageView {
 
     private boolean isCircle; // 是否显示为圆形，如果为圆形则设置的corner无效
@@ -30,6 +35,9 @@ public class HsRoundImageView extends ImageView {
     private int cornerTopRightRadius; // 右上角圆角半径
     private int cornerBottomLeftRadius; // 左下角圆角半径
     private int cornerBottomRightRadius; // 右下角圆角半径
+
+    private float aspectRatio;//宽高比
+
 
     private int maskColor; // 遮罩颜色
 
@@ -73,6 +81,7 @@ public class HsRoundImageView extends ImageView {
             cornerBottomLeftRadius = a.getDimensionPixelSize(R.styleable.HsRoundImageView_hs_corner_bottom_left_radius, cornerBottomLeftRadius);
             cornerBottomRightRadius = a.getDimensionPixelSize(R.styleable.HsRoundImageView_hs_corner_bottom_right_radius, cornerBottomRightRadius);
             maskColor = a.getColor(R.styleable.HsRoundImageView_hs_mask_color, maskColor);
+            aspectRatio = a.getFloat(R.styleable.HsRoundImageView_hs_view_aspect_ratio, 0);
         } finally {
             a.recycle();
         }
@@ -94,6 +103,33 @@ public class HsRoundImageView extends ImageView {
         }
         calculateRadii();
         clearInnerBorderWidth();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (aspectRatio >= 0 && layoutParams != null) {
+            int widthPadding = getPaddingLeft() + getPaddingRight();
+            int heightPadding = getPaddingTop() + getPaddingBottom();
+            if (shouldAdjust(layoutParams.height)) {
+                int widthSpecSize = View.MeasureSpec.getSize(widthMeasureSpec);
+                int desiredHeight = (int) ((widthSpecSize - widthPadding) / aspectRatio + heightPadding);
+                int resolvedHeight = View.resolveSize(desiredHeight, heightMeasureSpec);
+                heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(resolvedHeight, View.MeasureSpec.EXACTLY);
+
+            } else if (shouldAdjust(layoutParams.width)) {
+                int heightSpecSize = View.MeasureSpec.getSize(heightMeasureSpec);
+                int desiredWidth = (int) ((heightSpecSize - heightPadding) * aspectRatio + widthPadding);
+                int resolvedWidth = View.resolveSize(desiredWidth, widthMeasureSpec);
+                widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(resolvedWidth, View.MeasureSpec.EXACTLY);
+            }
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    private boolean shouldAdjust(int layoutDimension) {
+        // Note: wrap_content is supported for backwards compatibility, but should not be used.
+        return layoutDimension == 0 || layoutDimension == ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     @Override
@@ -312,5 +348,16 @@ public class HsRoundImageView extends ImageView {
     public void setMaskColor(@ColorInt int maskColor) {
         this.maskColor = maskColor;
         invalidate();
+    }
+
+    /**
+     * 宽高不能同时为wrap_content，需要使用match_parent或者一个固定值。
+     * 除非你使用viewAspectRatio设置比例，在这种条件下宽、高中的其中一方可以是wrap_content
+     *
+     * @param aspectRatio 宽或高比例
+     */
+    public void setAspectRatio(float aspectRatio) {
+        this.aspectRatio = aspectRatio;
+        requestLayout();
     }
 }

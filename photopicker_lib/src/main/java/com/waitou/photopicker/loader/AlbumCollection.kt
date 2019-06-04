@@ -39,7 +39,7 @@ class AlbumCollection : LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     override fun onLoadFinished(p0: Loader<Cursor>, cursor: Cursor?) {
-        context.get()?.let { context ->
+        context.get()?.let {
             cursor?.let {
                 if (!cursor.isBeforeFirst) {
                     return

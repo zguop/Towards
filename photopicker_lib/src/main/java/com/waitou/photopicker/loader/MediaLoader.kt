@@ -10,8 +10,8 @@ import android.support.v4.content.CursorLoader
 import com.waitou.photopicker.bean.Album
 import com.waitou.photopicker.bean.Media
 import com.waitou.photopicker.config.WisdomConfig
-import com.waitou.photopicker.config.isImages
-import com.waitou.photopicker.config.isVideos
+import com.waitou.photopicker.config.onlyImages
+import com.waitou.photopicker.config.onlyVideos
 
 /**
  * auth aboom
@@ -54,10 +54,10 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
                 MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString()
         )
 
-        fun newInstance(context: Context, albumId: String?, mimeType: Int): MediaLoader {
+        fun newInstance(context: Context, albumId: String?): MediaLoader {
             val selectionArgs = mutableListOf<String>()
 
-            var selection = if (isImages(mimeType) || isVideos(mimeType)) {
+            var selection = if (onlyImages() || onlyVideos()) {
                 "${MediaStore.Files.FileColumns.MEDIA_TYPE}=?"
             } else {
                 "(${MediaStore.Files.FileColumns.MEDIA_TYPE}=? OR ${MediaStore.Files.FileColumns.MEDIA_TYPE}=?)"
@@ -66,8 +66,8 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
             selection += " AND ${MediaStore.MediaColumns.SIZE}>0"
 
             when {
-                isImages(mimeType) -> selectionArgs.add(SELECTION_ALL_ARGS[0])
-                isVideos(mimeType) -> selectionArgs.add(SELECTION_ALL_ARGS[1])
+                onlyImages() -> selectionArgs.add(SELECTION_ALL_ARGS[0])
+                onlyVideos() -> selectionArgs.add(SELECTION_ALL_ARGS[1])
                 else -> selectionArgs.addAll(SELECTION_ALL_ARGS)
             }
 
@@ -75,7 +75,6 @@ class MediaLoader private constructor(context: Context, selection: String?, sele
                 selection += " AND ${MediaStore.Images.Media.BUCKET_ID}=?"
                 selectionArgs.add(albumId!!)
             }
-
             return MediaLoader(context, selection, selectionArgs.toTypedArray())
         }
     }

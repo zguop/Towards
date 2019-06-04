@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="bs_pop_style_fade">
-        <item name="android:windowEnterAnimation">@anim/bs_fade_in</item>
-        <item name="android:windowExitAnimation">@anim/bs_fade_out</item>
-    </style>
+
 
 </resources>

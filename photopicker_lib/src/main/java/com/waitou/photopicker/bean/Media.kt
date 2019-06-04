@@ -4,6 +4,9 @@ import android.content.ContentUris
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import com.waitou.photopicker.config.isGif
+import com.waitou.photopicker.config.isImage
+import com.waitou.photopicker.config.isVideo
 
 /**
  * auth aboom
@@ -54,11 +57,15 @@ class Media(
     }
 
     fun isImage(): Boolean {
-        return mediaType.startsWith("image")
+        return isImage(mediaType)
     }
 
     fun isVideo(): Boolean {
-        return mediaType.startsWith("video")
+        return isVideo(mediaType)
+    }
+
+    fun isGif():Boolean{
+        return isGif(mediaType)
     }
 
     override fun toString(): String {

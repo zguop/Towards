@@ -1,59 +1,20 @@
 package com.waitou.imgloader_lib;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
 /**
  * auth aboom
  * date 2018/8/8
- * 圆角变换 RoundedCorners
- * 圆形变换 circleCrop
- * <p>
- * <p>
- * CenterCrop,FitCenter
- * CenterCrop,FitCenter都是对目标图片进行裁剪,了解过ImageView的ScaleType属性就知道,
- * 这2种裁剪方式在ImageView上也是有的,分别对应ImageView的ImageView.ScaleType.CENTER_CROP和mageView.ScaleType.FIT_CENTER的.
- * <p>
- * DiskCacheStrategy.NONE:什么都不缓存
- * DiskCacheStrategy.SOURCE:仅缓存原图(全分辨率的图片)
- * DiskCacheStrategy.RESULT:仅缓存最终的图片,即修改了尺寸或者转换后的图片
- * DiskCacheStrategy.ALL:缓存所有版本的图片,默认模式
- * <p>
- * 下载优先级
- * • Priority.LOW
- * • Priority.NORMAL
- * • Priority.HIGH
- * • Priority.IMMEDIATE
- * <p>
- * Glide.with(context)
- * .load(url)
- * .asBitmap() 强制处理成bitmap
- * .asGif() 指明了加载gif图，即使不指定Glide也会自己判断
- * .placeholder() 加载中显示的图片
- * .error()加载错误显示的图片
- * .crossFade()淡入显示，如果设置了这个则需要去掉asBitmap
- * .dontAnimte()直接显示图片
- * .override(80,80).//设置最终显示的图片像素为80*80,注意:这个是像素,而不是控件的宽高
- * .centerCrop().//中心裁剪,缩放填充至整个ImageView
- * .skipMemoryCache(true).//跳过内存缓存
- * .diskCacheStrategy(DiskCacheStrategy.RESULT).//保存最终图片
- * .thumbnail(0.1f).//10%的原图大小
- * .transform(new BlurTransformation(this)).//高斯模糊处理
- * .animate(R.anim.left_in).//加载xml文件定义的动画
- * <p>
- * 清理磁盘缓存 需要在子线程中执行
- * Glide.get(this).clearDiskCache();
- * 清理内存缓存  可以在UI主线程中进
- * Glide.get(this).clearMemory();
  */
 public class ImageLoader {
 
@@ -66,9 +27,8 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .into(imageView);
-
     }
 
     /**
@@ -81,7 +41,7 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(imageView);
     }
@@ -96,7 +56,7 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .apply(getRequestOptions(options))
                 .into(imageView);
     }
@@ -108,7 +68,7 @@ public class ImageLoader {
         Glide.with(imageView)
                 .asBitmap()
                 .load(modelLoader)
-                .transition(new BitmapTransitionOptions().crossFade())
+                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
                 .into(target);
     }
 
@@ -119,7 +79,7 @@ public class ImageLoader {
         Glide.with(imageView)
                 .asBitmap()
                 .load(modelLoader)
-                .transition(new BitmapTransitionOptions().crossFade())
+                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(target);
     }
@@ -131,7 +91,7 @@ public class ImageLoader {
         Glide.with(imageView)
                 .asBitmap()
                 .load(modelLoader)
-                .transition(new BitmapTransitionOptions().crossFade())
+                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
                 .apply(getRequestOptions(options))
                 .into(target);
     }
@@ -142,7 +102,7 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader, DrawableImageViewTarget target) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .into(target);
     }
 
@@ -152,7 +112,7 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder, DrawableImageViewTarget target) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
                 .into(target);
     }
@@ -164,9 +124,17 @@ public class ImageLoader {
     public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options, DrawableImageViewTarget target) {
         Glide.with(imageView)
                 .load(modelLoader)
-                .transition(new DrawableTransitionOptions().crossFade())
+                .transition(DrawableTransitionOptions.with(crossFade()))
                 .apply(getRequestOptions(options))
                 .into(target);
+    }
+
+    private static RequestManager getManager(ImageView imageView) {
+        try {
+            return Glide.with(imageView);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -176,16 +144,13 @@ public class ImageLoader {
         Glide.with(imageView).clear(imageView);
     }
 
-    static boolean isValidContextForGlide(final Context context) {
-        if (context instanceof Activity) {
-            final Activity activity = (Activity) context;
-            return !activity.isDestroyed() && !activity.isFinishing();
-        }
-        return true;
+
+    private static DrawableCrossFadeFactory crossFade() {
+        return new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
     }
 
     @SuppressLint("CheckResult")
-    static RequestOptions getRequestOptions(DisplayOptions options) {
+    private static RequestOptions getRequestOptions(DisplayOptions options) {
         RequestOptions requestOptions = new RequestOptions();
         if (options == null) {
             return requestOptions;
@@ -196,7 +161,7 @@ public class ImageLoader {
         if (options.getPlaceholder() != DisplayOptions.RES_NONE) {
             requestOptions.placeholder(options.getPlaceholder());
         }
-        if (options.getPlaceholder() != DisplayOptions.RES_NONE) {
+        if (options.getError() != DisplayOptions.RES_NONE) {
             requestOptions.error(options.getError());
         }
         if (options.getTransformation() != null) {

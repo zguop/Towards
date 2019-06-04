@@ -20,7 +20,6 @@ import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.GloadActivity
-import com.waitou.towards.model.activity.PicSelectActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
 import com.waitou.towards.model.main.fragment.CircleFragment
@@ -111,8 +110,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //                                .setStrPhotoList("http://img.hb.aicdn.com/621034b37c53ffc81f5d6a23ae1226d5c67e2b9628267-BYuZLo_fw658", "http://img.hb.aicdn.com/e8cbd6ac1b44cf290debbf1ebcdfac6bdf20487f46146-uz70dU_fw658", "http://img.hb.aicdn.com/0d6adb99906f5dc5107962b8446623ea17b1be4d37679-oKTIYt_fw658", "http://img.hb.aicdn.com/d63edb11718f59390c92b17fe9399215c4f7c96c28643-CXnznk_fw658")
 //                                .executePreViewPhoto()
                         R.id.nav_theme -> changeNight()
-                        R.id.nav_about -> startActivity(Intent(this, PicSelectActivity::class.java))
-                        R.id.nav_collect-> pend(PhotoPickerFinal
+//                        R.id.nav_about -> startActivity(Intent(this, PicSelectActivity::class.java))
+                        R.id.nav_collect -> pend(PhotoPickerFinal
                                 .get()
                                 .with(this)
                                 .isMultiMode(true)

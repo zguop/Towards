@@ -11,9 +11,9 @@ import com.bumptech.glide.request.RequestOptions;
 /**
  * auth aboom
  * date 2019/4/21
- *
  */
 public class ImageLoaderBinding {
+
     @BindingAdapter(value = {"imageURI", "placeholderImage", "failureImage"}, requireAll = false)
     public static void displayImage(ImageView imageView, String url, Drawable placeholderImage, Drawable failureImage) {
         Glide.with(imageView)
@@ -22,4 +22,5 @@ public class ImageLoaderBinding {
                 .apply(new RequestOptions().placeholder(placeholderImage).error(failureImage))
                 .into(imageView);
     }
+
 }

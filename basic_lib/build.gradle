@@ -24,8 +24,6 @@ dependencies {
     api project(':rx_lib')
     api project(':widget_lib')
 
-    api project(':photopicker_lib')
     api project(':wt_library')
-
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
 }

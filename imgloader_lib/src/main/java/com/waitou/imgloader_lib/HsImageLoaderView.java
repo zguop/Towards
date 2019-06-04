@@ -10,6 +10,10 @@ import android.util.AttributeSet;
 /**
  * auth aboom
  * date 2018/8/13
+ *
+ * ####这个是为了替换fresco方便创建的view，不建议直接使用
+ * 圆形圆角使用建议使用 HsRoundImageView
+ * 通过ImageLoader.class工具类加载图片
  */
 public class HsImageLoaderView extends HsRoundImageView {
 

@@ -8,7 +8,6 @@ import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import com.waitou.photopicker.bean.Media
 import com.waitou.photopicker.call.ILoaderMediaCall
-import com.waitou.photopicker.config.WisdomConfig
 import java.lang.ref.WeakReference
 
 /**
@@ -19,6 +18,7 @@ class MediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         private const val ARGS_ALBUM_ID = "album_id"
+        private const val ARGS_LOAD_ID = 2
     }
 
     private lateinit var context: WeakReference<FragmentActivity>
@@ -34,12 +34,12 @@ class MediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
     fun loadMedia(albumId: String) {
         val bundle = Bundle()
         bundle.putString(ARGS_ALBUM_ID, albumId)
-        loaderManager?.initLoader(WisdomConfig.getInstance().mimeType, bundle, this)
+        loaderManager?.initLoader(ARGS_LOAD_ID, bundle, this)
     }
 
     override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor> {
         val albumId = bundle?.getString(ARGS_ALBUM_ID)
-        return MediaLoader.newInstance(context.get()!!, albumId, id)
+        return MediaLoader.newInstance(context.get()!!, albumId)
     }
 
     override fun onLoadFinished(p0: Loader<Cursor>, cursor: Cursor?) {
@@ -54,7 +54,7 @@ class MediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
                     list.add(media)
                 }
                 iLoaderMediaCall.get()?.mediaResult(list)
-                loaderManager?.destroyLoader(WisdomConfig.getInstance().mimeType)
+                loaderManager?.destroyLoader(ARGS_LOAD_ID)
             }
         }
     }
