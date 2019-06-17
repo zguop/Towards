@@ -39,12 +39,9 @@ task appStart(type: Exec, dependsOn: 'installDebug') {
             'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER'
 }
 
-kapt {
-    generateStubs = true
-}
-androidExtensions {
-    experimental = true
-}
+
+kapt { generateStubs = true }
+androidExtensions { experimental = true }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -62,8 +59,6 @@ dependencies {
 
     implementation "com.android.databinding:compiler:3.1.4"
 
-
-//    implementation project(':photo_library')
     implementation project(':zbar_lib')
     implementation project(':wt_library')
     implementation project(':meta_provider_lib')
@@ -75,8 +70,6 @@ dependencies {
 
 //configurations.all {
 //    resolutionStrategy {
-//        force rootProject.ext.dependencies["okhttpVersion"]
-//        force rootProject.ext.dependencies["multidexVersion"]
 //    }
 //}
 

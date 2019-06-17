@@ -24,6 +24,10 @@ dependencies {
     api project(':rx_lib')
     api project(':widget_lib')
 
+    api project(':flutter')
+
     api project(':wt_library')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
+
+
 }

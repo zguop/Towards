@@ -69,6 +69,8 @@
 
         <activity android:name=".model.activity.ColorActivity"/>
 
+        <activity android:name=".model.activity.FlutterActivity"/>
+
 
         <!--<activity android:name=".model.activity.PicSelectActivity"/>-->
 
