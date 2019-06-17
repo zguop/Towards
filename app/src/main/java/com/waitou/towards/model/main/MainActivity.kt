@@ -15,7 +15,6 @@ import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
-import com.waitou.photo_library.PhotoPickerFinal
 import com.waitou.towards.R
 import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.model.activity.ColorActivity
@@ -111,14 +110,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //                                .executePreViewPhoto()
                         R.id.nav_theme -> changeNight()
 //                        R.id.nav_about -> startActivity(Intent(this, PicSelectActivity::class.java))
-                        R.id.nav_collect -> pend(PhotoPickerFinal
-                                .get()
-                                .with(this)
-                                .isMultiMode(true)
-                                .setSelectLimit(3)
-                                .executePhoto {
-
-                                })
                     }
                 })
         return true

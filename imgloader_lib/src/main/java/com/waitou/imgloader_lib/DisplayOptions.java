@@ -52,32 +52,28 @@ public class DisplayOptions {
         return new DisplayOptions();
     }
 
-    public DisplayOptions setPlaceholder(int placeholder) {
+    public DisplayOptions placeholder(int placeholder) {
         this.placeholder = placeholder;
         return this;
     }
 
-    public DisplayOptions setError(int error) {
+    public DisplayOptions error(int error) {
         this.error = error;
         return this;
     }
 
-    public DisplayOptions setTransformation(Transformation<Bitmap> transformation) {
+    public DisplayOptions transformation(Transformation<Bitmap> transformation) {
         this.transformation = transformation;
         return this;
     }
 
-    public DisplayOptions setWidth(int width) {
+    public DisplayOptions override(int width,int height){
         this.width = width;
-        return this;
-    }
-
-    public DisplayOptions setHeight(int height) {
         this.height = height;
         return this;
     }
 
-    public DisplayOptions setDiskCacheStrategy(DiskCacheStrategy diskCacheStrategy) {
+    public DisplayOptions diskCacheStrategy(DiskCacheStrategy diskCacheStrategy) {
         this.diskCacheStrategy = diskCacheStrategy;
         return this;
     }

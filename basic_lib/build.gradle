@@ -15,7 +15,7 @@ dependencies {
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["statusbarlib"]
     api rootProject.ext.dependencies['lifecycle_extensions']
-
+    api rootProject.ext.dependencies['wisdom_impl']
 
     api project(':three_library')
     api project(':imgloader_lib')

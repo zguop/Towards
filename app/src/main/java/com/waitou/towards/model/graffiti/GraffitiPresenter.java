@@ -20,8 +20,6 @@ import com.blankj.utilcode.util.PathUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.waitou.photo_library.PhotoPickerFinal;
-import com.waitou.photo_library.bean.PhotoInfo;
 import com.waitou.towards.R;
 import com.waitou.towards.bean.GraffitiToolInfo;
 import com.waitou.towards.databinding.ItemSeekBarBinding;
@@ -29,6 +27,7 @@ import com.waitou.towards.enums.GraffitiToolEnum;
 import com.waitou.towards.util.KitUtils;
 import com.waitou.towards.view.dialog.BaseDialog;
 import com.waitou.towards.view.dialog.ListOfDialog;
+import com.waitou.wisdom_lib.bean.Media;
 import com.waitou.wt_library.base.XPresent;
 import com.waitou.wt_library.recycler.LayoutManagerUtil;
 import com.waitou.wt_library.recycler.adapter.BaseViewAdapter;
@@ -54,27 +53,27 @@ import io.reactivex.functions.Consumer;
 public class GraffitiPresenter extends XPresent<GraffitiActivity> implements BaseViewAdapter.Presenter {
 
     //工具选择的type
-    public ObservableInt           toolType      = new ObservableInt(0);
+    public ObservableInt toolType = new ObservableInt(0);
     //画笔粗细控制
-    public ObservableInt           toolWidth     = new ObservableInt(14);
+    public ObservableInt toolWidth = new ObservableInt(14);
     //画笔颜色
-    public ObservableInt           toolColor     = new ObservableInt(Color.parseColor("#99ff0000"));
+    public ObservableInt toolColor = new ObservableInt(Color.parseColor("#99ff0000"));
     //图片缩放
-    public ObservableFloat         scale         = new ObservableFloat(1.0f);
+    public ObservableFloat scale = new ObservableFloat(1.0f);
     //图片旋转
-    public ObservableInt           rotate        = new ObservableInt(0);
+    public ObservableInt rotate = new ObservableInt(0);
     //左移右移
-    public ObservableInt           leftMoveRight = new ObservableInt(0);
+    public ObservableInt leftMoveRight = new ObservableInt(0);
     //上移下移
-    public ObservableInt           topMoveBottom = new ObservableInt(0);
+    public ObservableInt topMoveBottom = new ObservableInt(0);
     //上传的图片
-    public ObservableField<Bitmap> bitmapField   = new ObservableField<>();
+    public ObservableField<Bitmap> bitmapField = new ObservableField<>();
     //图片是否可以操作
-    public ObservableBoolean       enable        = new ObservableBoolean(checkBitmap());
+    public ObservableBoolean enable = new ObservableBoolean(checkBitmap());
 
     private SingleTypeAdapter<GraffitiToolInfo> mGraffitiToolAdapter;
-    private BaseDialog                          mToolDialog;
-    private BaseDialog                          mSeekBarDialog;
+    private BaseDialog mToolDialog;
+    private BaseDialog mSeekBarDialog;
 
     /**
      * 选择工具
@@ -142,17 +141,15 @@ public class GraffitiPresenter extends XPresent<GraffitiActivity> implements Bas
      * 上传图片
      */
     public void uploadPic() {
-        getV().pend(PhotoPickerFinal.get()
-                .with(getV())
-                .isMultiMode(false)
-                .isCrop(true)
-                .executePhoto(info -> {
-                    PhotoInfo photoInfo = info.get(0);
-                    Bitmap resource = ImageUtils.getBitmap(photoInfo.photoPath, photoInfo.photoWidth, photoInfo.photoHeight);
-                    reset();
-                    bitmapField.set(resource);
-                    enable.set(checkBitmap());
-                }));
+        getV().startPhotoPicker();
+    }
+
+    void uploadPicResult(Media media) {
+        Bitmap bitmap = ImageUtils.getBitmap(media.getPath(), 480, 800);
+        if (bitmap != null) {
+            bitmapField.set(bitmap);
+            enable.set(checkBitmap());
+        }
     }
 
     /**

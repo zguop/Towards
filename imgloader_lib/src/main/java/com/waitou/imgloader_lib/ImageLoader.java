@@ -42,7 +42,7 @@ public class ImageLoader {
         Glide.with(imageView)
                 .load(modelLoader)
                 .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
+                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
                 .into(imageView);
     }
 
@@ -80,7 +80,7 @@ public class ImageLoader {
                 .asBitmap()
                 .load(modelLoader)
                 .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
+                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
                 .into(target);
     }
 
@@ -113,7 +113,7 @@ public class ImageLoader {
         Glide.with(imageView)
                 .load(modelLoader)
                 .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().setPlaceholder(placeholder)))
+                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
                 .into(target);
     }
 

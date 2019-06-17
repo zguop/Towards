@@ -46,7 +46,7 @@ class HomeFunctionDelegate : AdapterDelegate() {
                 override fun onBind(pos: Int, itemCount: Int, t: FunctionInfo?, holder: ViewHolder?) {
                     holder?.apply {
                         val img = getView<CustomCircleImageView>(R.id.img)
-                        ImageLoader.displayImage(img, t?.picUrl, DisplayOptions.build().setPlaceholder(R.drawable.base_ic_retry))
+                        ImageLoader.displayImage(img, t?.picUrl, DisplayOptions.build().placeholder(R.drawable.base_ic_retry))
                         getView<TextView>(R.id.text).text = t?.description
                         convertView.setOnClickListener {
 

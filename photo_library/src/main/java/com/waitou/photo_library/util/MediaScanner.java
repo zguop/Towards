@@ -2,7 +2,6 @@ package com.waitou.photo_library.util;
 
 import android.media.MediaScannerConnection;
 
-
 import com.blankj.utilcode.util.Utils;
 
 import io.reactivex.functions.Action;
@@ -23,4 +22,5 @@ public class MediaScanner {
             }
         });
     }
+
 }

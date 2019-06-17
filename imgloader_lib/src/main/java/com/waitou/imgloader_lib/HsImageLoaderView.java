@@ -33,7 +33,7 @@ public class HsImageLoaderView extends HsRoundImageView {
         try {
             int placeholderImageId = a.getResourceId(R.styleable.HsImageLoaderView_hs_placeholder_image, DisplayOptions.RES_NONE);
             int failureImageId = a.getResourceId(R.styleable.HsImageLoaderView_hs_failure_image, DisplayOptions.RES_NONE);
-            displayOptions = DisplayOptions.build().setPlaceholder(placeholderImageId).setError(failureImageId);
+            displayOptions = DisplayOptions.build().placeholder(placeholderImageId).error(failureImageId);
         } finally {
             a.recycle();
         }
