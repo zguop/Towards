@@ -27,6 +27,7 @@ import com.waitou.towards.net.DataLoader;
 
 import java.util.List;
 
+import io.flutter.facade.Flutter;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
@@ -64,6 +65,9 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
         initThemeLib();
         //tinker补丁检查模拟
         tinkerPatch();
+
+        Flutter.startInitialization(getApplication());
+
         for (ISubApplication iSubApplication : subApp) {
             iSubApplication.onMainCreate(getApplication());
         }

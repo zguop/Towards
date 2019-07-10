@@ -26,8 +26,8 @@ public abstract class BasePageMvpActivity<P extends IPresent> extends BasePageAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (getP() != null) {
-            getP().detachV();
+        if (p != null) {
+            p.detachV();
         }
         p = null;
     }

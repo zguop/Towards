@@ -68,12 +68,7 @@ dependencies {
     implementation project(':basic_lib')
 }
 
-//configurations.all {
-//    resolutionStrategy {
-//    }
-//}
-
-//apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
+apply from: "$rootProject.projectDir/tinkerConfigure.gradle"
 
 
 

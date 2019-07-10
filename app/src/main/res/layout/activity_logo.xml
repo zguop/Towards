@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-
-        <variable
-            name="presenter"
-            type="com.waitou.towards.model.guide.SplashPresenter"/>
-    </data>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/logo_iv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@{presenter.drawable}"/>
-    </RelativeLayout>
-</layout>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/logoIv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitXY" />

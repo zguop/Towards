@@ -1,9 +1,10 @@
 package com.waitou.towards.model.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.waitou.wt_library.base.BasePageActivity;
+import com.waitou.wt_library.base.BaseActivity;
 
 import io.flutter.facade.Flutter;
 
@@ -11,20 +12,12 @@ import io.flutter.facade.Flutter;
  * auth aboom
  * date 2019-06-17
  */
-public class FlutterActivity extends BasePageActivity {
-    @Override
-    public void reloadData() {
-
-    }
+public class FlutterActivity extends BaseActivity {
 
     @Override
-    public void afterCreate(Bundle savedInstanceState) {
-        showContent();
-    }
-
-    @Override
-    public View getContentView() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         View flutterView = Flutter.createView(this, getLifecycle(), "route1");
-        return flutterView;
+        setContentView(flutterView);
     }
 }

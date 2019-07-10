@@ -45,7 +45,7 @@ ext {
             "bugly_nativecrashreport"  : 'com.tencent.bugly:nativecrashreport:latest.release',
             "tinker_lib"               : "com.tencent.tinker:tinker-android-lib:${tinkerVersion}",
             "tinker_anno"              : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
-            "gson"                     : "com.google.code.gson:gson:2.8.0",
+            "gson"                     : "com.google.code.gson:gson:2.8.5",
             "zxing"                    : "com.google.zxing:core:3.3.0",
             "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.8',
             "banner"                   : 'com.to.aboomy:banner:2.1.4',

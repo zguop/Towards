@@ -1,11 +1,6 @@
 package com.waitou.towards.model.guide;
 
-import android.databinding.ObservableField;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.ImageUtils;
@@ -20,16 +15,14 @@ import com.waitou.towards.greendao.LogoImg;
 import com.waitou.towards.greendao.LogoImgDao;
 import com.waitou.towards.net.DataLoader;
 import com.waitou.towards.util.KitUtils;
-import com.waitou.wt_library.base.XPresent;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -37,17 +30,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * 闪屏 greendao 数据库操作
  */
 
-public class SplashPresenter extends XPresent<SplashActivity> {
+public class SplashPresenter implements SplashContract.SplashPresenter {
 
-    public ObservableField<Drawable> drawable = new ObservableField<>();
+    private SplashContract.SplashView view;
+    private Disposable subscribe;
 
-    void setLogoImg() {
+    public SplashPresenter(SplashContract.SplashView view) {
+        this.view = view;
+    }
+
+    @Override
+    public void setLogoImg() {
         //获取数据库所以得logo 图片
         LogoImgDao logoImgDao = GreenDaoHelper.getDaoHelper().getLogoImgDao();
         //查询所有数据
         List<LogoImg> logoImgList = logoImgDao.loadAll();
         //去请求网络上的logo图片
-        pend(DataLoader.getGithubApi().getLogoList()
+        subscribe = DataLoader.getGithubApi().getLogoList()
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(null))
                 .filter(strings -> strings != null && strings.size() > 0)
                 .doOnNext(strings -> {
@@ -91,10 +90,10 @@ public class SplashPresenter extends XPresent<SplashActivity> {
                     LogUtils.e(" 插入数据库的图片 ： " + logoImg.getImgUrl());
                     logoImgDao.insert(logoImg); //插入数据 直接开始下载图片
                     downLoaderImg(logoImg.getImgUrl(), logoImg, logoImgDao);
-                }));
+                });
 
         if (logoImgList.isEmpty()) {
-            initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
+            view.initImageResource(view.getImgDrawable(R.drawable.logo));
             return;
         }
         List<LogoImg> downloadList = new ArrayList<>();
@@ -119,7 +118,7 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         LogUtils.e(" 显示的图片有 " + showLogoList.size() + " 张");
         //如果没有显示的图片 设置默认的图片
         if (showLogoList.isEmpty()) {
-            initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
+            view.initImageResource(view.getImgDrawable(R.drawable.logo));
             return;
         }
 
@@ -167,46 +166,14 @@ public class SplashPresenter extends XPresent<SplashActivity> {
         LogUtils.e(" 显示的图片本地路径是 ： " + file.getAbsolutePath());
         Bitmap bitmap = ImageUtils.getBitmap(file, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenHeight());
         if (bitmap == null) {
-            initImageResource(ContextCompat.getDrawable(getV(), R.drawable.logo));
+            view.initImageResource(view.getImgDrawable(R.drawable.logo));
             boolean b = FileUtils.deleteFile(file);//加载失败的图片需要删除
             LogUtils.e("加载失败了，删除掉这张图片 = " + b);
         } else {
-            initImageResource(ImageUtils.bitmap2Drawable(bitmap));
+            view.initImageResource(ImageUtils.bitmap2Drawable(bitmap));
         }
     }
 
-    /**
-     * 设置img图片并开始动画 延迟100毫秒使动画更流畅
-     *
-     * @param drawable 需要显示的图片
-     */
-    private void initImageResource(Drawable drawable) {
-        this.drawable.set(drawable);
-        pend(Observable.timer(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .subscribe(aLong -> initializeImageConfig()));
-    }
-
-    /**
-     * 执行动画
-     */
-    private void initializeImageConfig() {
-        Animation animation = AnimationUtils.loadAnimation(getV(), R.anim.splash);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                getV().navigateToMain();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        getV().animateBackgroundImage(animation);
-    }
 
     /**
      * 主要用下载图片 保存到cache目录
@@ -217,5 +184,12 @@ public class SplashPresenter extends XPresent<SplashActivity> {
             logoImg.setSavePath(path);
             logoImgDao.update(logoImg);
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
     }
 }
