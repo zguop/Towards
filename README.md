@@ -23,6 +23,9 @@
 * [wisdom](https://github.com/zguop/wisdom):：多图片选择框架
 
 ...还有很多使用到的主流框架
+
+### 项目构建
+由于加入了flutter模块，初始化项目需要进入到flutter目录执行 flutter packages get 命令初始化flutter，然后重新构建项目
         
 ### 项目截图
 ![](gif/auto2.gif)
