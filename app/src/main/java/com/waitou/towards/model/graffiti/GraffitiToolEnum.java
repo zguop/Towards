@@ -1,4 +1,4 @@
-package com.waitou.towards.enums;
+package com.waitou.towards.model.graffiti;
 
 import com.waitou.towards.R;
 

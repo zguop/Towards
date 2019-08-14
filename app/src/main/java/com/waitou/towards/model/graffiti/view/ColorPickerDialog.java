@@ -1,4 +1,4 @@
-package com.waitou.towards.model.graffiti;
+package com.waitou.towards.model.graffiti.view;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

@@ -30,12 +30,12 @@ import io.reactivex.disposables.Disposable;
  * 闪屏 greendao 数据库操作
  */
 
-public class SplashPresenter implements SplashContract.SplashPresenter {
+public class SplashPresent implements SplashContract.SplashPresenter {
 
     private SplashContract.SplashView view;
     private Disposable subscribe;
 
-    public SplashPresenter(SplashContract.SplashView view) {
+    public SplashPresent(SplashContract.SplashView view) {
         this.view = view;
     }
 

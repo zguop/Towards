@@ -12,10 +12,6 @@
             name="item"
             type="com.waitou.towards.bean.MovieInfo"/>
 
-        <variable
-            name="presenter"
-            type="com.waitou.towards.model.movie.MovieTelevisionPresenter"/>
-
     </data>
 
     <ImageView

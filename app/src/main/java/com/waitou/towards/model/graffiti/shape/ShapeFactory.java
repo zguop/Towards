@@ -1,6 +1,6 @@
 package com.waitou.towards.model.graffiti.shape;
 
-import com.waitou.towards.enums.GraffitiToolEnum;
+import com.waitou.towards.model.graffiti.GraffitiToolEnum;
 
 /**
  * Created by waitou on 17/3/19.

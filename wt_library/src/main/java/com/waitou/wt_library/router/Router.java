@@ -9,10 +9,6 @@ import android.support.annotation.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
-/**
- * Created by wanglei on 2016/11/29.
- */
 public class Router {
 
     private Intent   intent;

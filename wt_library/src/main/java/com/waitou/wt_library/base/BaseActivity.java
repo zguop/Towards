@@ -23,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private CompositeDisposable mCompositeDisposable;
-    public  boolean             isImmersiveStatusBar;
+    public boolean isImmersiveStatusBar;
 
     @SuppressWarnings("unchecked")
     public <T extends View> T ff(int id) {
@@ -45,9 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
-        if (immersiveStatusBar()) {
-            isImmersiveStatusBar = StatusBarUtil.setStatusBarColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-        }
+        isImmersiveStatusBar = immersiveStatusBar();
     }
 
     @Override
@@ -56,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public boolean immersiveStatusBar() {
-        return Boolean.TRUE;
+        return StatusBarUtil.setStatusBarColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
     }
 
     @Override

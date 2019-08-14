@@ -1,4 +1,4 @@
-package com.waitou.towards.model.graffiti;
+package com.waitou.towards.model.graffiti.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,15 +17,15 @@ import android.view.SurfaceView;
 public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mSurfaceHolder;
-    private boolean       isCreate;
-    private Bitmap        canvasBitmap;
-    private Matrix        mMatrix;
-    private float         scale; //缩放的倍数
-    private int           rotate; //旋转的角度
-    private float         transX;
-    private float         transY;
-    private float         bitmapWidth;
-    private float         bitmapHeight;
+    private boolean isCreate;
+    private Bitmap canvasBitmap;
+    private Matrix mMatrix;
+    private float scale = 1.0f;
+    private int rotate;
+    private float transX;
+    private float transY;
+    private float bitmapWidth;
+    private float bitmapHeight;
 
     public GraffitiPicView(Context context) {
         this(context, null);
@@ -96,14 +96,31 @@ public class GraffitiPicView extends SurfaceView implements SurfaceHolder.Callba
         resizeMatrix();
     }
 
-    public void setTransX(int transX) {
+    public void setTransX(float transX) {
         this.transX = transX;
         resizeMatrix();
     }
 
-    public void setTransY(int transY) {
+    public void setTransY(float transY) {
         this.transY = transY;
         resizeMatrix();
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public int getRotate() {
+        return rotate;
+    }
+
+
+    public float getTransX() {
+        return transX;
+    }
+
+    public float getTransY() {
+        return transY;
     }
 
     public boolean checkSave() {

@@ -1,4 +1,4 @@
-package com.waitou.towards.model.graffiti;
+package com.waitou.towards.model.graffiti.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -53,7 +53,7 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
         setKeepScreenOn(true);
     }
 
-    public void setShape(int type) {
+    public void setShapeType(int type) {
         this.type = type;
     }
 
@@ -64,6 +64,21 @@ public class GraffitiView extends SurfaceView implements SurfaceHolder.Callback 
     public void setColor(int color) {
         this.color = color;
     }
+
+    public int getShapeType(){
+        return type;
+    }
+
+    public int getStrokeWidth(){
+        return this.width;
+    }
+
+    public int getColor(){
+        return color;
+    }
+
+
+
 
     private void createTool() {
         mShape = ShapeFactory.create(type);

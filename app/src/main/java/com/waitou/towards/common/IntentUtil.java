@@ -1,9 +1,7 @@
 package com.waitou.towards.common;
 
 import android.content.Context;
-import android.content.Intent;
 
-import com.waitou.towards.model.movie.MovieRecommendActivity;
 import com.waitou.wt_library.browser.WebUtil;
 
 /**
@@ -19,8 +17,8 @@ public class IntentUtil {
         }
         //影视推荐
         else if (pathValue.equals(Values.PATH_MOVIE_RECOMMEND)) {
-            Intent intent = new Intent(context, MovieRecommendActivity.class);
-            context.startActivity(intent);
+//            Intent intent = new Intent(context, MovieRecommendActivity.class);
+//            context.startActivity(intent);
         }
     }
 }

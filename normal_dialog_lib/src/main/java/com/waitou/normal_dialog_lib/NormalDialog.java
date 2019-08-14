@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.lang.ref.WeakReference;
+
 /**
  * auth aboom
  * date 2019-04-25
@@ -32,6 +34,7 @@ public class NormalDialog extends DialogFragment {
     public static final String NORMAL_DIALOG_HEIGHT     = "normal_dialog_height";
     public static final String NORMAL_DIALOG_ANIM_STYLE = "normal_dialog_anim_style";
     public static final String NORMAL_DIALOG_OUT_TOUCH  = "normal_dialog_out_touch";
+    public static final String NORMAL_DIALOG_DIALOG_VIEW = "normal_dialog_dialog_view";
 
     protected Bundle  bundle = new Bundle();
     protected int     animStyle;
@@ -40,8 +43,7 @@ public class NormalDialog extends DialogFragment {
     protected int     gravity;
     protected float   dimAmount;
     protected boolean outTouchOutside;
-
-    private IDialogView iDialogView;
+    protected WeakReference<IDialogView> iDialogView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,13 +57,14 @@ public class NormalDialog extends DialogFragment {
             height = arguments.getInt(NORMAL_DIALOG_HEIGHT, WindowManager.LayoutParams.WRAP_CONTENT);
             animStyle = arguments.getInt(NORMAL_DIALOG_ANIM_STYLE);
             outTouchOutside = arguments.getBoolean(NORMAL_DIALOG_OUT_TOUCH, true);
+            iDialogView = new WeakReference<>(arguments.getParcelable(NORMAL_DIALOG_DIALOG_VIEW));
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return iDialogView != null ? iDialogView.getContentView(inflater, container) : new View(getActivity());
+        return iDialogView != null && iDialogView.get() != null ? iDialogView.get().getContentView(inflater, container) : new View(getActivity());
     }
 
     @NonNull
@@ -96,8 +99,8 @@ public class NormalDialog extends DialogFragment {
     /**
      * 设置view
      */
-    public NormalDialog setDialogView(IDialogView iDialogView) {
-        this.iDialogView = iDialogView;
+    public NormalDialog  setDialogView(IDialogView iDialogView) {
+        bundle.putParcelable(NORMAL_DIALOG_DIALOG_VIEW,iDialogView);
         return this;
     }
 
@@ -175,7 +178,7 @@ public class NormalDialog extends DialogFragment {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment old = fragmentManager.findFragmentByTag(simpleName);
         if (old != null) {
-            ft.remove(old).commit();
+            ft.remove(old).commitAllowingStateLoss();
         }
         setArguments(bundle);
         ft.add(this, simpleName);

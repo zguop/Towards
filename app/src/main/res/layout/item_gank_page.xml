@@ -18,10 +18,7 @@
             name="item"
             type="com.waitou.towards.bean.GankResultsTypeInfo"/>
 
-        <variable
-            name="presenter"
-            type="com.waitou.towards.model.main.fragment.home.HomePresenter"/>
-
+       \
     </data>
 
     <android.support.v7.widget.CardView
@@ -31,94 +28,94 @@
         app:cardBackgroundColor="@color/colorWhite"
         app:cardElevation="2dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> presenter.onLinkClick(0,item.url)}"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="5dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="@{() -> presenter.onLinkClick(0,item.url)}"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingLeft="16dp"-->
+            <!--android:paddingRight="16dp"-->
+            <!--android:paddingTop="5dp">-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/icon_home_commend"
-                android:visibility="@{item.isShowTitle ? View.VISIBLE : View.GONE}"/>
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:src="@drawable/icon_home_commend"-->
+                <!--android:visibility="@{item.isShowTitle ? View.VISIBLE : View.GONE}"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?android:attr/colorPrimary"
-                    android:src="@{item.typeLogo}"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:tint="?android:attr/colorPrimary"-->
+                    <!--android:src="@{item.typeLogo}"/>-->
 
-                <TextView
-                    android:id="@+id/tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{Html.fromHtml(@string/home_gank_title(item.type,item.who))}"
-                    android:textColor="@android:color/darker_gray"
-                    tools:text="来自话题"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="@{Html.fromHtml(@string/home_gank_title(item.type,item.who))}"-->
+                    <!--android:textColor="@android:color/darker_gray"-->
+                    <!--tools:text="来自话题"/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@{item.desc}"
-                android:textColor="@color/color_666666"
-                android:textSize="18dp"/>
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingBottom="5dp"-->
+                <!--android:paddingTop="5dp"-->
+                <!--android:text="@{item.desc}"-->
+                <!--android:textColor="@color/color_666666"-->
+                <!--android:textSize="18dp"/>-->
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:visibility="@{item.images == null ? View.GONE :View.VISIBLE}"
-                app:imageURI="@{item.images[0]}"/>
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:visibility="@{item.images == null ? View.GONE :View.VISIBLE}"-->
+                <!--app:imageURI="@{item.images[0]}"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@{presenter.setGankPageTime(item.publishedAt)}"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13dp"
-                    tools:text="段子"/>
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="@{presenter.setGankPageTime(item.publishedAt)}"-->
+                    <!--android:textColor="@color/color_666666"-->
+                    <!--android:textSize="13dp"-->
+                    <!--tools:text="段子"/>-->
 
-                <TextView
-                    android:onClick="@{() -> presenter.share(item)}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/joke_share"
-                    android:drawablePadding="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="10dp"
-                    android:text="分享"
-                    android:textColor="@color/color_666666"
-                    android:textSize="11dp"/>
-            </LinearLayout>
-        </LinearLayout>
+                <!--<TextView-->
+                    <!--android:onClick="@{() -> presenter.share(item)}"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:drawableLeft="@drawable/joke_share"-->
+                    <!--android:drawablePadding="5dp"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:text="分享"-->
+                    <!--android:textColor="@color/color_666666"-->
+                    <!--android:textSize="11dp"/>-->
+            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
     </android.support.v7.widget.CardView>
 
 </layout>

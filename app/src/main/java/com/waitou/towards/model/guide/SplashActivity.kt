@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_logo.*
 
 class SplashActivity : BaseActivity(), SplashContract.SplashView {
 
-    private val presenter: SplashContract.SplashPresenter  by lazy { SplashPresenter(this) }
+    private val presenter: SplashContract.SplashPresenter  by lazy { SplashPresent(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

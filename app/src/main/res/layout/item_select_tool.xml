@@ -1,52 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="40dp"
+    android:gravity="center">
 
-    <data>
-
-        <import type="android.view.View"/>
-
-        <variable
-            name="presenter"
-            type="com.waitou.towards.model.graffiti.GraffitiPresenter"/>
-
-        <variable
-            name="item"
-            type="com.waitou.towards.bean.GraffitiToolInfo"/>
-
-        <variable
-            name="position"
-            type="int"/>
-    </data>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
         android:gravity="center"
-        android:onClick="@{() -> presenter.selectToolItemClick(position)}">
+        android:textColor="@color/skin_general_text_not"
+        android:textSize="14dp"
+        tools:text="工具玩意"
+        tools:textColor="#000" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="@{item.tool}"
-            android:textColor="@color/skin_general_text_not"
-            android:textSize="14dp"
-            app:selected="@{presenter.toolType == position}"
-            tools:text="工具玩意"
-            tools:textColor="#000"/>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/icon_theme_duihao" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/icon_theme_duihao"
-            android:visibility="@{presenter.toolType == position ? View.VISIBLE : View.INVISIBLE}"/>
-
-    </LinearLayout>
-
-</layout>
+</LinearLayout>
