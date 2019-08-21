@@ -66,9 +66,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             when (it.itemId) {
                 R.id.menu_home -> pageTitleBar.visibility = View.GONE
                 R.id.menu_joke -> pageTitleBar.replaceTitleView(jokeFragment.jokeTitleBar)
-                R.id.menu_figure -> pageTitleBar.restoreTitleView("趣图")
-                R.id.menu_circle -> pageTitleBar.restoreTitleView("圈子")
-                R.id.menu_personal -> pageTitleBar.restoreTitleView("我的")
+//                R.id.menu_figure -> pageTitleBar.restoreTitleView("趣图")
+//                R.id.menu_circle -> pageTitleBar.restoreTitleView("圈子")
+//                R.id.menu_personal -> pageTitleBar.restoreTitleView("我的")
             }
             true
         }

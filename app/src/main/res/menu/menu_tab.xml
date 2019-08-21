@@ -9,18 +9,18 @@
         android:id="@+id/menu_joke"
         android:icon="@drawable/icon_joke"
         android:title="@string/joke"/>
-    <item
-        android:id="@+id/menu_figure"
-        android:icon="@drawable/icon_figure"
-        android:title="@string/figure"/>
-    <item
-        android:id="@+id/menu_circle"
-        android:icon="@drawable/icon_weather"
-        android:title="@string/circle"/>
-    <item
-        android:id="@+id/menu_personal"
-        android:icon="@drawable/icon_personal"
-        android:title="@string/personal"/>
+    <!--<item-->
+        <!--android:id="@+id/menu_figure"-->
+        <!--android:icon="@drawable/icon_figure"-->
+        <!--android:title="@string/figure"/>-->
+    <!--<item-->
+        <!--android:id="@+id/menu_circle"-->
+        <!--android:icon="@drawable/icon_weather"-->
+        <!--android:title="@string/circle"/>-->
+    <!--<item-->
+        <!--android:id="@+id/menu_personal"-->
+        <!--android:icon="@drawable/icon_personal"-->
+        <!--android:title="@string/personal"/>-->
 
 
 </menu>
