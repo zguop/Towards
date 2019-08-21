@@ -1,0 +1,130 @@
+[
+  {
+    "template": 0,
+    "templateJson": [
+      {
+        "picUrl": "http://b-ssl.duitang.com/uploads/item/201504/28/20150428212640_vLBGX.thumb.700_0.jpeg",
+        "description": "催泪常在",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553865014529&di=09677f3819feaf6529be2d8a9dc29cc4&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-fo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F8694a4c27d1ed21b004fa687a56eddc450da3fc9.jpg",
+        "description": "",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://image.tupian114.com/20151014/07010241.jpg",
+        "description": "世界第一公主",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://pic.rmb.bdstatic.com/4b1a1de2e4d776c12d47f58c86a86ee3.jpeg",
+        "description": "火影动漫",
+        "value": "",
+        "type": 0,
+        "link": "http://baijiahao.baidu.com/s?id=1628209946382103567&wfr=spider&for=pc"
+      },
+      {
+        "picUrl": "http://img5.imgtn.bdimg.com/it/u=3598597128,3510245469&fm=26&gp=0.jpg",
+        "description": "火影动漫",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://00.minipic.eastday.com/20170815/20170815145451_d41d8cd98f00b204e9800998ecf8427e_34.jpeg",
+        "description": "点兔",
+        "value": "",
+        "type": 0,
+        "link": ""
+      }
+    ]
+  },
+  {
+    "template": 1,
+    "templateJson": [
+      {
+        "picUrl": "http://img0.pconline.com.cn/pconline/1506/29/6638168_1755_thumb.jpg",
+        "description": "搞事情",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://img0.pconline.com.cn/pconline/1506/29/6638168_1758_thumb.jpg",
+        "description": "哪里跑",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://img0.pconline.com.cn/pconline/1506/29/6638168_1756_thumb.jpg",
+        "description": "听音乐",
+        "value": "",
+        "type": 0,
+        "link": ""
+      },
+      {
+        "picUrl": "http://img0.pconline.com.cn/pconline/1506/29/6638168_1754_thumb.jpg",
+        "description": "看视频",
+        "value": "",
+        "type": 0,
+        "link": ""
+      }
+    ]
+  },
+  {
+    "template": 2,
+    "templateJson": [
+      {
+        "picUrl": "http://pic1.win4000.com/wallpaper/2018-07-17/5b4ddcdb0f988.jpg",
+        "description": "WanAndroid",
+        "value": "/open/wanAndroid",
+        "type": 1,
+        "link": ""
+      }
+    ]
+  },
+  {
+    "template": 2,
+    "templateJson": [
+      {
+        "picUrl": "http://b-ssl.duitang.com/uploads/item/201608/11/20160811211842_Ef5jd.jpeg",
+        "description": "GankIO",
+        "value": "/open/GankIO",
+        "type": 1,
+        "link": ""
+      }
+    ]
+  },
+  {
+    "template": 2,
+    "templateJson": [
+      {
+        "picUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557491044703&di=72af2d27757512dba85d999cd6eb49e8&imgtype=0&src=http%3A%2F%2Fp2.so.qhmsg.com%2Ft0119b875bb89cf764c.jpg",
+        "description": "towards",
+        "value": "/open/towards",
+        "type": 1,
+        "link": ""
+      }
+    ]
+  },
+  {
+    "template": 2,
+    "templateJson": [
+      {
+        "picUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557491080600&di=440b34480d8af8c71be92b8e08dcba24&imgtype=0&src=http%3A%2F%2Fp3.so.qhimgs1.com%2Ft017a2cb6052f28eb13.jpg",
+        "description": "emmmm...",
+        "value": "/open/emmm",
+        "type": 1,
+        "link": ""
+      }
+    ]
+  }
+]

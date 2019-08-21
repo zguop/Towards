@@ -3,6 +3,8 @@ package com.waitou.towards.model.main.fragment.home;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ResourceUtils;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.net_library.model.APIResult;
 import com.waitou.towards.bean.HomeDataInfo;
@@ -26,7 +28,9 @@ public class HomeNewViewModule extends ViewModel {
     public void loadNewHomeData() {
         Disposable subscribe = DataLoader.getGithubApi().getHomeData()
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(throwable ->
-                    mutableLiveData.setValue(APIResult.failure(throwable.getMessage()))
+                        mutableLiveData.setValue(APIResult.success(GsonUtils.fromJson(
+                                ResourceUtils.readAssets2String("wt_home.json"),
+                                GsonUtils.getListType(HomeDataInfo.class))))
                 )).subscribe(data ->
                         mutableLiveData.setValue(APIResult.success(data))
                 );

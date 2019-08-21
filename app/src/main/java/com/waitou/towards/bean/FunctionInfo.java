@@ -3,11 +3,13 @@ package com.waitou.towards.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * auth aboom
  * date 2019/4/13
  */
-public class FunctionInfo {
+public class FunctionInfo implements Serializable {
 
     @SerializedName("picUrl")
     @Expose

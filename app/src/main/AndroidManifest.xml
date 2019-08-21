@@ -20,7 +20,6 @@
         tools:replace="android:label">
         <activity
             android:name=".model.guide.SplashActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent">
             <intent-filter>

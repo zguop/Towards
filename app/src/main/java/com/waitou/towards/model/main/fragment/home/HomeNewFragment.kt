@@ -72,21 +72,25 @@ class HomeNewFragment : LazyFragment(), IView {
     }
 
     private fun bindUI(apiResult: APIResult<MutableList<HomeDataInfo>>?) {
-        apiResult?.let {
-            list.loadComplete(true)
-            if (!it.isSuccess) {
-                holder.showLoadFailed()
-                return
+        try {
+            apiResult?.let {
+                list.loadComplete(true)
+                if (!it.isSuccess) {
+                    holder.showLoadFailed()
+                    return
+                }
+                val data = it.data
+                if (data.isEmpty()) {
+                    holder.showEmpty()
+                    return
+                }
+                holder.showLoadSuccess()
+                adapter.replaceData(data)
+                adapter.addData(0, Place.createPlaceDp(15, Color.WHITE))
+                adapter.addData(CanInfo())
             }
-            val data = it.data
-            if (data.isEmpty()) {
-                holder.showEmpty()
-                return
-            }
-            holder.showLoadSuccess()
-            adapter.replaceData(data)
-            adapter.addData(0, Place.createPlaceDp(15, Color.WHITE))
-            adapter.addData(CanInfo())
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

@@ -6,23 +6,24 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ResourceUtils
 import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.to.aboomy.theme_lib.ChangeModeController
 import com.umeng.socialize.UMShareAPI
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
+import com.waitou.towards.bean.HomeDataInfo
 import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.FlutterActivity
 import com.waitou.towards.model.activity.GloadActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
-import com.waitou.towards.model.main.fragment.CircleFragment
-import com.waitou.towards.model.main.fragment.FigureFragment
-import com.waitou.towards.model.main.fragment.PersonFragment
 import com.waitou.towards.model.main.fragment.home.HomeNewFragment
 import com.waitou.towards.model.main.fragment.joke.JokeFragment
 import com.waitou.wt_library.base.BaseActivity
@@ -39,9 +40,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private val homeFragment by lazy { HomeNewFragment() }
     private val jokeFragment by lazy { JokeFragment() }
-    private val figureFragment by lazy { FigureFragment() }
-    private val circleFragment by lazy { CircleFragment() }
-    private val personFragment by lazy { PersonFragment() }
 
 //    private var mThemeAdapter: SingleTypeAdapter<ThemeInfo>? = null
 //    private var mThemeDialog: BaseDialog? = null
@@ -56,7 +54,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
         pageTitleBar.setPadding(0, StatusBarUtil.getStatusBarHeight(this), 0, 0)
         StatusBarUtil.drawerLayoutForColor(this, ContextCompat.getColor(this, R.color.bg_grey), drawerLayout)
-        val adapter = BasePagerFragmentAdapter(supportFragmentManager, homeFragment, jokeFragment, figureFragment, circleFragment, personFragment)
+        val adapter = BasePagerFragmentAdapter(supportFragmentManager, homeFragment, jokeFragment)
         fContent.offscreenPageLimit = 4
         fContent.adapter = adapter
         mainTab.setupWithViewPager(fContent)
@@ -74,6 +72,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             true
         }
+
+        val readAssets2String = ResourceUtils.readAssets2String("wt_home.json")
+        Log.e("aa", " readAssets2String " +readAssets2String)
+
+        val fromJson = GsonUtils.fromJson<List<HomeDataInfo>>(
+                ResourceUtils.readAssets2String("wt_home.json"),
+                GsonUtils.getListType(HomeDataInfo::class.java))
+        fromJson.forEach {
+            Log.e("aa",it.template.toString())
+        }
     }
 
     override fun onBackPressed() {
@@ -81,8 +89,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-//            Observable.timer(800, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-//                    .subscribe { killAll() }
         }
     }
 
