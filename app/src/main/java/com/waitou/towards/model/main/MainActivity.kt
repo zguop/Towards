@@ -2,7 +2,6 @@ package com.waitou.towards.model.main
 
 import android.app.ActivityManager
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
@@ -16,7 +15,6 @@ import com.umeng.socialize.UMShareAPI
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
-import com.waitou.towards.bean.ThemeInfo
 import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.FlutterActivity
 import com.waitou.towards.model.activity.GloadActivity
@@ -27,18 +25,13 @@ import com.waitou.towards.model.main.fragment.FigureFragment
 import com.waitou.towards.model.main.fragment.PersonFragment
 import com.waitou.towards.model.main.fragment.home.HomeNewFragment
 import com.waitou.towards.model.main.fragment.joke.JokeFragment
-import com.waitou.towards.view.dialog.BaseDialog
-import com.waitou.towards.view.dialog.ListOfDialog
 import com.waitou.wt_library.base.BaseActivity
-import com.waitou.wt_library.recycler.LayoutManagerUtil
-import com.waitou.wt_library.recycler.adapter.SingleTypeAdapter
 import com.waitou.wt_library.router.Router
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.extensions.CacheImplementation
 import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 @ContainerOptions(CacheImplementation.SPARSE_ARRAY)
@@ -50,8 +43,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val circleFragment by lazy { CircleFragment() }
     private val personFragment by lazy { PersonFragment() }
 
-    private var mThemeAdapter: SingleTypeAdapter<ThemeInfo>? = null
-    private var mThemeDialog: BaseDialog? = null
+//    private var mThemeAdapter: SingleTypeAdapter<ThemeInfo>? = null
+//    private var mThemeDialog: BaseDialog? = null
 
     override fun immersiveStatusBar(): Boolean {
         return false
@@ -120,41 +113,41 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      * 主题更换
      */
     private fun changeNight() {
-        if (mThemeAdapter == null) {
-            mThemeAdapter = SingleTypeAdapter(this, R.layout.item_theme)
-            val themeInfoList = ArrayList<ThemeInfo>()
-            val theme = ChangeModeController.get().themeModel
-            for (themeModel in ChangeModeController.get().themes) {
-                val themeInfo = ThemeInfo()
-                themeInfo.themeModule = themeModel
-                themeInfo.focus = theme.colorId == themeInfo.themeModule?.colorId
-                themeInfoList.add(themeInfo)
-            }
-            mThemeAdapter!!.set(themeInfoList)
-            mThemeAdapter!!.setPresenter(SingleTypeAdapter.Presenter<ThemeInfo> { themeInfo ->
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-                    themeInfoList.stream()
-                            .filter { info -> info.focus }
-                            .forEach { info -> info.focus = false }
-                } else {
-                    pend(Observable.fromIterable(themeInfoList)
-                            .filter { info -> info.focus }
-                            .subscribe { info -> info.focus = false })
-                }
-                themeInfo.focus = true
-                ChangeModeController.get().changeNight(this@MainActivity, themeInfo.themeModule)
-                mThemeDialog!!.dismiss()
-                mThemeDialog = null
-            })
-        }
-        if (mThemeDialog == null) {
-            mThemeDialog = ListOfDialog(this)
-                    .setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3))
-                    .setAdapter(mThemeAdapter)
-                    .setTitle("更换主题")
-                    .setCancel("取消", null)
-        }
-        mThemeDialog!!.show()
+//        if (mThemeAdapter == null) {
+//            mThemeAdapter = SingleTypeAdapter(this, R.layout.item_theme)
+//            val themeInfoList = ArrayList<ThemeInfo>()
+//            val theme = ChangeModeController.get().themeModel
+//            for (themeModel in ChangeModeController.get().themes) {
+//                val themeInfo = ThemeInfo()
+//                themeInfo.themeModule = themeModel
+//                themeInfo.focus = theme.colorId == themeInfo.themeModule?.colorId
+//                themeInfoList.add(themeInfo)
+//            }
+//            mThemeAdapter!!.set(themeInfoList)
+//            mThemeAdapter!!.setPresenter(SingleTypeAdapter.Presenter<ThemeInfo> { themeInfo ->
+//                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+//                    themeInfoList.stream()
+//                            .filter { info -> info.focus }
+//                            .forEach { info -> info.focus = false }
+//                } else {
+//                    pend(Observable.fromIterable(themeInfoList)
+//                            .filter { info -> info.focus }
+//                            .subscribe { info -> info.focus = false })
+//                }
+//                themeInfo.focus = true
+//                ChangeModeController.get().changeNight(this@MainActivity, themeInfo.themeModule)
+//                mThemeDialog!!.dismiss()
+//                mThemeDialog = null
+//            })
+//        }
+//        if (mThemeDialog == null) {
+//            mThemeDialog = ListOfDialog(this)
+//                    .setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3))
+//                    .setAdapter(mThemeAdapter)
+//                    .setTitle("更换主题")
+//                    .setCancel("取消", null)
+//        }
+//        mThemeDialog!!.show()
     }
 
 
