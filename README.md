@@ -24,6 +24,15 @@
 
 ...还有很多使用到的主流框架
 
+##### 模块介绍
+* **normal_dialog_lib**：通用的DialogFragment
+* **wisdom_lib**：在依赖中可以找到，图片选择框架，纯kotlin编写
+* **recycler_lib**：RecyclerView的列表和下拉刷新
+* **theme_lib**：无缝切换的主题切换框架，使用于app内View视图改变。
+* **imgloader_lib**：图片加载工具
+* **net_lib**：网络请求
+* **meta_provider_lib**：服务提供商，需要在manifest注册的
+
 ### 项目构建
 由于加入了flutter模块，初始化项目需要进入到flutter目录执行 flutter packages get 命令初始化flutter，然后重新构建项目
         
