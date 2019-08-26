@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.waitou.basic_lib.R;
-import com.waitou.normal_dialog_lib.BottomSheetAdapterDialog;
+import com.waitou.normal_dialog_lib.SheetAdapterDialog;
 import com.waitou.normal_dialog_lib.NormalDialog;
 import com.waitou.three_library.share.ShareEnum;
 import com.waitou.three_library.share.ShareInfo;
@@ -48,7 +48,7 @@ public class DialogUtils {
             int spanCount,
             IConvert<T> iConvert
     ) {
-        BottomSheetAdapterDialog dialog = new BottomSheetAdapterDialog();
+        SheetAdapterDialog dialog = new SheetAdapterDialog();
         dialog.setRecyclerAdapter(new BaseQuickAdapter<T, BaseViewHolder>(layoutId, data) {
             @Override
             protected void convert(BaseViewHolder helper, T item) {

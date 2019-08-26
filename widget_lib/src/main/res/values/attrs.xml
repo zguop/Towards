@@ -15,4 +15,9 @@
             <flag name="bottom" value="0x08"/>
         </attr>
     </declare-styleable>
+
+
+    <declare-styleable name="widget_RectView">
+        <attr name="widget_radius" format="dimension"/>
+    </declare-styleable>
 </resources>

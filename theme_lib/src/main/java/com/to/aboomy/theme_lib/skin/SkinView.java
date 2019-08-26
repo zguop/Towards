@@ -2,6 +2,8 @@ package com.to.aboomy.theme_lib.skin;
 
 import android.view.View;
 
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
+
 import java.util.List;
 
 /**

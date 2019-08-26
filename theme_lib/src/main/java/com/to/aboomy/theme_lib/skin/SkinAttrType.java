@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.to.aboomy.theme_lib.R;
 import com.to.aboomy.theme_lib.config.ThemeConstant;
-import com.to.aboomy.theme_lib.config.ThemeUtils;
+import com.to.aboomy.theme_lib.utils.ThemeUtils;
 
 /**
  * auth aboom

@@ -125,7 +125,7 @@ public class GloadActivity extends BasePageActivity {
                         });
 
 
-//                new BottomSheetAdapterDialog()
+//                new SheetAdapterDialog()
 //                        .setTitle("标题")
 //                        .setRecyclerAdapter(new MainAdapter(GloadActivity.this, data))
 //                        .setItemHeight(SizeUtils.dp2px(40))

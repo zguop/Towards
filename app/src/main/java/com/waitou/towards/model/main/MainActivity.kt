@@ -6,19 +6,20 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
-import android.util.Log
+import android.support.v7.app.AppCompatDelegate
+import android.support.v7.app.SkinAppCompatDelegateImpl
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.ResourceUtils
 import com.to.aboomy.statusbar_lib.StatusBarUtil
-import com.to.aboomy.theme_lib.ChangeModeController
+import com.to.aboomy.theme_lib.annotation.Skinable
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable
 import com.umeng.socialize.UMShareAPI
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
+import com.waitou.normal_dialog_lib.SheetAdapterDialog
 import com.waitou.towards.R
-import com.waitou.towards.bean.HomeDataInfo
 import com.waitou.towards.model.activity.ColorActivity
 import com.waitou.towards.model.activity.FlutterActivity
 import com.waitou.towards.model.activity.GloadActivity
@@ -35,21 +36,22 @@ import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
+@Skinable
 @ContainerOptions(CacheImplementation.SPARSE_ARRAY)
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, SkinCompatSupportable {
+
+    override fun applySkin() {
+
+    }
 
     private val homeFragment by lazy { HomeNewFragment() }
     private val jokeFragment by lazy { JokeFragment() }
-
-//    private var mThemeAdapter: SingleTypeAdapter<ThemeInfo>? = null
-//    private var mThemeDialog: BaseDialog? = null
 
     override fun immersiveStatusBar(): Boolean {
         return false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ChangeModeController.get().init(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         pageTitleBar.setPadding(0, StatusBarUtil.getStatusBarHeight(this), 0, 0)
@@ -72,16 +74,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             true
         }
+    }
 
-        val readAssets2String = ResourceUtils.readAssets2String("wt_home.json")
-        Log.e("aa", " readAssets2String " +readAssets2String)
-
-        val fromJson = GsonUtils.fromJson<List<HomeDataInfo>>(
-                ResourceUtils.readAssets2String("wt_home.json"),
-                GsonUtils.getListType(HomeDataInfo::class.java))
-        fromJson.forEach {
-            Log.e("aa",it.template.toString())
-        }
+    override fun getDelegate(): AppCompatDelegate {
+        return SkinAppCompatDelegateImpl.get(this, this)
     }
 
     override fun onBackPressed() {
@@ -104,7 +100,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         }
                         R.id.nav_meizi -> Router.newIntent().from(this).to(GalleryNewActivity::class.java).launch()
                         R.id.nav_graffiti -> Router.newIntent().from(this).to(GraffitiActivity::class.java).launch()
-//                        R.mediaId.nav_collect -> PhotoPickerFinal.get()
+//                        R.mediaId.nav_collect -> PhotoPickerFinal.getInstance()
 //                                .with(this)
 //                                .setStrPhotoList("http://img.hb.aicdn.com/621034b37c53ffc81f5d6a23ae1226d5c67e2b9628267-BYuZLo_fw658", "http://img.hb.aicdn.com/e8cbd6ac1b44cf290debbf1ebcdfac6bdf20487f46146-uz70dU_fw658", "http://img.hb.aicdn.com/0d6adb99906f5dc5107962b8446623ea17b1be4d37679-oKTIYt_fw658", "http://img.hb.aicdn.com/d63edb11718f59390c92b17fe9399215c4f7c96c28643-CXnznk_fw658")
 //                                .executePreViewPhoto()
@@ -115,47 +111,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+
     /**
      * 主题更换
      */
     private fun changeNight() {
-//        if (mThemeAdapter == null) {
-//            mThemeAdapter = SingleTypeAdapter(this, R.layout.item_theme)
-//            val themeInfoList = ArrayList<ThemeInfo>()
-//            val theme = ChangeModeController.get().themeModel
-//            for (themeModel in ChangeModeController.get().themes) {
-//                val themeInfo = ThemeInfo()
-//                themeInfo.themeModule = themeModel
-//                themeInfo.focus = theme.colorId == themeInfo.themeModule?.colorId
-//                themeInfoList.add(themeInfo)
-//            }
-//            mThemeAdapter!!.set(themeInfoList)
-//            mThemeAdapter!!.setPresenter(SingleTypeAdapter.Presenter<ThemeInfo> { themeInfo ->
-//                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-//                    themeInfoList.stream()
-//                            .filter { info -> info.focus }
-//                            .forEach { info -> info.focus = false }
-//                } else {
-//                    pend(Observable.fromIterable(themeInfoList)
-//                            .filter { info -> info.focus }
-//                            .subscribe { info -> info.focus = false })
-//                }
-//                themeInfo.focus = true
-//                ChangeModeController.get().changeNight(this@MainActivity, themeInfo.themeModule)
-//                mThemeDialog!!.dismiss()
-//                mThemeDialog = null
-//            })
-//        }
-//        if (mThemeDialog == null) {
-//            mThemeDialog = ListOfDialog(this)
-//                    .setLayoutManager(LayoutManagerUtil.getGridLayoutManager(this, 3))
-//                    .setAdapter(mThemeAdapter)
-//                    .setTitle("更换主题")
-//                    .setCancel("取消", null)
-//        }
-//        mThemeDialog!!.show()
+        drawerLayout.closeDrawer(GravityCompat.START)
+        val adapter = StylesAdapter(this)
+        val dialog = SheetAdapterDialog()
+                .grid(3)
+                .setTitle("更换主题")
+                .setRecyclerAdapter(adapter)
+                .setGravity(Gravity.CENTER)
+        dialog.show(supportFragmentManager)
+        adapter.call = {
+            dialog.dismiss()
+        }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -165,8 +137,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onDestroy() {
         super.onDestroy()
-        ChangeModeController.get().cancel()
         UMShareAPI.get(this).release()
+        killAll()
     }
 
     /**

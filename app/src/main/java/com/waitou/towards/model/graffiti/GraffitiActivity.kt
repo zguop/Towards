@@ -11,9 +11,9 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.waitou.basic_lib.util.GlideEngine
-import com.waitou.normal_dialog_lib.BottomSheetAdapterDialog
 import com.waitou.normal_dialog_lib.IDialogView
 import com.waitou.normal_dialog_lib.NormalDialog
+import com.waitou.normal_dialog_lib.SheetAdapterDialog
 import com.waitou.towards.R
 import com.waitou.towards.model.graffiti.view.ColorPickerDialog
 import com.waitou.towards.util.KitUtils
@@ -146,7 +146,7 @@ class GraffitiActivity : BaseActivity() {
                 graffiti.shapeType = it
                 dialog?.dismiss()
             }
-            dialog = BottomSheetAdapterDialog()
+            dialog = SheetAdapterDialog()
                     .setTitle("工具选择")
                     .grid(3)
                     .setItemHeight(SizeUtils.dp2px(40f))

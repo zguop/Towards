@@ -3,8 +3,8 @@ package com.waitou.wt_library.view;
 import android.content.Context;
 
 import com.to.aboomy.banner.IndicatorView;
-import com.to.aboomy.theme_lib.config.ThemeUtils;
-import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.utils.ThemeUtils;
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
 import com.waitou.wt_library.R;
 
 /**

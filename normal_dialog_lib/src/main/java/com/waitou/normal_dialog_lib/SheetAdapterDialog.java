@@ -18,7 +18,7 @@ import android.widget.TextView;
  * auth aboom
  * date 2019-04-26
  */
-public class BottomSheetAdapterDialog extends NormalDialog {
+public class SheetAdapterDialog extends NormalDialog {
 
     private RecyclerView.Adapter adapter;
     private String               title;
@@ -58,22 +58,22 @@ public class BottomSheetAdapterDialog extends NormalDialog {
         }
     }
 
-    public BottomSheetAdapterDialog setTitle(String title) {
+    public SheetAdapterDialog setTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public BottomSheetAdapterDialog setItemHeight(int height) {
+    public SheetAdapterDialog setItemHeight(int height) {
         this.itemHeight = height;
         return this;
     }
 
-    public BottomSheetAdapterDialog setRecyclerAdapter(RecyclerView.Adapter adapter) {
+    public SheetAdapterDialog setRecyclerAdapter(RecyclerView.Adapter adapter) {
         this.adapter = adapter;
         return this;
     }
 
-    public BottomSheetAdapterDialog grid(int spanCount) {
+    public SheetAdapterDialog grid(int spanCount) {
         this.spanCount = spanCount;
         return this;
     }

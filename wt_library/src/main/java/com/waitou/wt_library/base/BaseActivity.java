@@ -7,8 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.to.aboomy.statusbar_lib.StatusBarUtil;
-import com.to.aboomy.theme_lib.ChangeModeController;
-import com.to.aboomy.theme_lib.config.ThemeUtils;
+import com.to.aboomy.theme_lib.utils.ThemeUtils;
 import com.waitou.wt_library.R;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -43,7 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        ChangeModeController.get().setTheme(this);
         super.onCreate(savedInstanceState);
         isImmersiveStatusBar = immersiveStatusBar();
     }

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
-import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
 import com.waitou.wt_library.R;
 
 

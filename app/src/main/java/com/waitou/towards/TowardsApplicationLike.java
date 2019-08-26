@@ -15,14 +15,13 @@ import com.blankj.utilcode.util.ThreadUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.stetho.Stetho;
 import com.to.aboomy.rx_lib.RxComposite;
-import com.to.aboomy.theme_lib.ChangeModeController;
+import com.to.aboomy.theme_lib.SkinModeController;
 import com.to.aboomy.tinker_lib.TinkerApplicationLike;
 import com.to.aboomy.tinker_lib.util.TinkerManager;
 import com.waitou.meta_provider_lib.ISubApplication;
 import com.waitou.meta_provider_lib.JlMetaProvider;
 import com.waitou.net_library.helper.RxTransformerHelper;
 import com.waitou.towards.bean.PatchInfo;
-import com.waitou.towards.common.ThemeImpl;
 import com.waitou.towards.net.DataLoader;
 
 import java.util.List;
@@ -124,9 +123,7 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
     }
 
     private void initThemeLib() {
-        ChangeModeController changeModeController = ChangeModeController.get();
-        ThemeImpl themeImpl = new ThemeImpl();
-        changeModeController.initConfig(themeImpl);
+        SkinModeController.init(getApplication());
     }
 
     private void tinkerPatch() {

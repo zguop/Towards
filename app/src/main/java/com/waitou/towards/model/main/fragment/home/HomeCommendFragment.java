@@ -46,7 +46,7 @@ package com.waitou.towards.model.main.fragment.home;
 //        IndicatorView qyIndicator = new Indicator(getActivity())
 //                .setGravity(Gravity.CENTER)
 //                .setIndicatorInColor(ThemeUtils.getThemeAttrColor(getActivity(), R.attr.colorPrimary));
-//        ChangeModeController.get().addSkinView(qyIndicator);
+//        SkinModeController.getInstance().addSkinView(qyIndicator);
 //        mAdapter.add(0, new BannerAdapterInfo(bannerAdapter, qyIndicator), 0);
 //
 //    }
@@ -63,7 +63,7 @@ package com.waitou.towards.model.main.fragment.home;
 //        showContent();
 //        if (gankIoDayInfo.size() > 0) {
 //            for (int i = 0; i < gankIoDayInfo.size(); i++) {
-//                List<GankResultsTypeInfo> gankResultsTypeInfo = gankIoDayInfo.get(i);
+//                List<GankResultsTypeInfo> gankResultsTypeInfo = gankIoDayInfo.getInstance(i);
 //                mAdapter.addAll(gankResultsTypeInfo, 2);
 //            }
 //        } else {

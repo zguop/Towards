@@ -27,7 +27,7 @@ package com.waitou.towards.model.main.fragment.home;
 //        ShareInfo shareInfo = new ShareInfo();
 //        shareInfo.title = item.type;
 //        shareInfo.content = item.desc;
-//        shareInfo.imageUrl = item.images != null && !item.images.isEmpty() ? item.images.get(0) : "";
+//        shareInfo.imageUrl = item.images != null && !item.images.isEmpty() ? item.images.getInstance(0) : "";
 //        shareInfo.targetUrl = item.url;
 //        shareInfo.type = ShareInfo.WEB0;
 //        DialogUtils.showShareDialog(getV().getActivity(), shareInfo, new UShare.OnShareListener() {
@@ -136,7 +136,7 @@ package com.waitou.towards.model.main.fragment.home;
 //                            lists.add(gankResultsInfo.前端);
 //                        }
 //                        if (lists.size() > 0) {
-//                            lists.get(0).get(0).isShowTitle = true;
+//                            lists.getInstance(0).getInstance(0).isShowTitle = true;
 //                        }
 //
 //                    }
@@ -164,11 +164,11 @@ package com.waitou.towards.model.main.fragment.home;
 //
 //    private void addWelfareImg(List<GankResultsTypeInfo> list) {
 //        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).type.equals("福利")) {
-//                list.get(i).desc = "今日美图";
-//                if (list.get(i).images == null) {
-//                    list.get(i).images = new ArrayList<>();
-//                    list.get(i).images.add(list.get(i).url);
+//            if (list.getInstance(i).type.equals("福利")) {
+//                list.getInstance(i).desc = "今日美图";
+//                if (list.getInstance(i).images == null) {
+//                    list.getInstance(i).images = new ArrayList<>();
+//                    list.getInstance(i).images.add(list.getInstance(i).url);
 //                }
 //            }
 //        }
@@ -229,13 +229,13 @@ package com.waitou.towards.model.main.fragment.home;
 //                    helper.setText(R.id.text, data.getDesc());
 //                    helper.itemView.setOnClickListener(v -> {
 //                        dialog.dismiss();
-//                        if (ObjectUtils.equals(data.getDesc(), txName.get())) {
-//                            ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
+//                        if (ObjectUtils.equals(data.getDesc(), txName.getInstance())) {
+//                            ToastUtils.showShort("当前已经是 " + txName.getInstance() + " 分类");
 //                            return;
 //                        }
 //                        txName.set(data.getDesc());
 //                        mCargoFragment.showLoading();
-//                        loadCargoData(txName.get(), 1);
+//                        loadCargoData(txName.getInstance(), 1);
 //                    });
 //                }
 //        );
@@ -244,13 +244,13 @@ package com.waitou.towards.model.main.fragment.home;
 ////        new BottomSheet.Builder(getV().getActivity())
 ////                .title("选择分类").sheet(R.menu.menu_gank_bottom_sheet)
 ////                .listener(item -> {
-////                    if (ObjectUtils.equals(item.getTitle(), txName.get())) {
-////                        ToastUtils.showShort("当前已经是 " + txName.get() + " 分类");
+////                    if (ObjectUtils.equals(item.getTitle(), txName.getInstance())) {
+////                        ToastUtils.showShort("当前已经是 " + txName.getInstance() + " 分类");
 ////                        return true;
 ////                    }
 ////                    txName.set(item.getTitle().toString());
 ////                    mCargoFragment.showLoading();
-////                    loadCargoData(txName.get(), 1);
+////                    loadCargoData(txName.getInstance(), 1);
 ////                    return true;
 ////                }).grid().show();
 //    }

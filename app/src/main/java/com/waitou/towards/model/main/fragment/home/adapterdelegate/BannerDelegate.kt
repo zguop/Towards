@@ -11,7 +11,7 @@ import com.to.aboomy.banner.LoopPagerAdapter
 import com.to.aboomy.banner.ScalePageTransformer
 import com.to.aboomy.recycler_lib.AdapterDelegate
 import com.to.aboomy.recycler_lib.Displayable
-import com.to.aboomy.theme_lib.config.ThemeUtils
+import com.to.aboomy.theme_lib.utils.ThemeUtils
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.FunctionInfo

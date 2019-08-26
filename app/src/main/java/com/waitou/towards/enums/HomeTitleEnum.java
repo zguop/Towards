@@ -22,8 +22,6 @@ public enum HomeTitleEnum {
 
     public static int valueOf(int position) {
         switch (position) {
-            case 0:
-                return icon_recommended.drawableId;
             case 1:
                 return icon_cargo.drawableId;
             case 2:

@@ -4,12 +4,13 @@ apply from: "conf.gradle"
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        jcenter()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath("com.tencent.tinker:tinker-patch-gradle-plugin:${tinkerVersion}")
@@ -29,8 +30,10 @@ allprojects {
 subprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
+        jcenter()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
 }
 

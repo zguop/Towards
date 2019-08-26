@@ -7,7 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 
 import com.to.aboomy.statusbar_lib.StatusBarUtil;
-import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
 import com.waitou.towards.R;
 
 /**

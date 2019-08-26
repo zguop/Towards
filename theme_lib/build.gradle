@@ -1,5 +1,6 @@
 globleConfigure()
 dependencies {
+//    compileOnly rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["utilcode"]
 }

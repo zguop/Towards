@@ -39,8 +39,4 @@
         <attr name="page_TouchMode" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="RectView">
-        <attr name="radius" format="dimension"/>
-    </declare-styleable>
-
 </resources>

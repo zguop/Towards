@@ -3,8 +3,8 @@ package com.waitou.towards.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.to.aboomy.theme_lib.config.ThemeUtils;
-import com.to.aboomy.theme_lib.skin.SkinCompatSupportable;
+import com.to.aboomy.theme_lib.utils.ThemeUtils;
+import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
 import com.waitou.imgloader_lib.HsRoundImageView;
 import com.waitou.towards.R;
 

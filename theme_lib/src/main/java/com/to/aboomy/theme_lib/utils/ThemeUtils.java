@@ -1,4 +1,4 @@
-package com.to.aboomy.theme_lib.config;
+package com.to.aboomy.theme_lib.utils;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -23,8 +23,8 @@ import java.lang.reflect.Field;
 public class ThemeUtils {
 
     private static final String TYPE_DRAWABLE = "drawable"; //资源在drawable目录下
-    private static final String TYPE_COLOR    = "color"; //资源在color目录下
-    private static final String TYPE_ATTR     = "attr";
+    private static final String TYPE_COLOR = "color"; //资源在color目录下
+    private static final String TYPE_ATTR = "attr";
 
     private static final int[] TEMP_ARRAY = new int[1];
 
@@ -137,4 +137,7 @@ public class ThemeUtils {
         }
     }
 
+    public static int getColorPrimary(Context context){
+        return getThemeAttrColor(context,R.attr.colorPrimary);
+    }
 }

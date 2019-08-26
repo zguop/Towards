@@ -36,7 +36,7 @@ package com.waitou.towards.model.main.fragment.home;
 //    @Override
 //    public void reloadData() {
 //        showLoading();
-//        getP().loadCargoData(getP().txName.get(), 1);
+//        getP().loadCargoData(getP().txName.getInstance(), 1);
 //    }
 //
 //    public void onSuccess(List<GankResultsTypeInfo> info, boolean isClear) {
@@ -51,11 +51,11 @@ package com.waitou.towards.model.main.fragment.home;
 //
 //    @Override
 //    public void onRefresh() {
-//        getP().loadCargoData(getP().txName.get(), 1);
+//        getP().loadCargoData(getP().txName.getInstance(), 1);
 //    }
 //
 //    @Override
 //    public void onLoadMore(int page) {
-//        getP().loadCargoData(getP().txName.get(), page);
+//        getP().loadCargoData(getP().txName.getInstance(), page);
 //    }
 //}

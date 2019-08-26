@@ -1,4 +1,4 @@
-package com.to.aboomy.theme_lib.skin;
+package com.to.aboomy.theme_lib.compat;
 
 /**
  * Created by waitou on 17/2/22.
