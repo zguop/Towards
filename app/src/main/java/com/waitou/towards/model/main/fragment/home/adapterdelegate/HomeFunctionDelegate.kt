@@ -1,7 +1,7 @@
 package com.waitou.towards.model.main.fragment.home.adapterdelegate
 
 import android.graphics.Color
-import android.widget.TextView
+import android.view.View
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
 import com.to.aboomy.recycler_lib.AdapterDelegate
@@ -9,20 +9,14 @@ import com.to.aboomy.recycler_lib.Displayable
 import com.waitou.imgloader_lib.DisplayOptions
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
-import com.waitou.towards.bean.FunctionInfo
 import com.waitou.towards.bean.HomeDataInfo
-import com.waitou.towards.view.CustomCircleImageView
-import com.waitou.widget_lib.bindview.BindViewHelper
-import com.waitou.widget_lib.bindview.OnSimpleBindData
-import com.waitou.widget_lib.bindview.ViewHolder
+import kotlinx.android.synthetic.main.item_home_function.view.*
 
 /**
  * auth aboom
  * date 2019-05-18
  */
 class HomeFunctionDelegate : AdapterDelegate() {
-
-    var bindViewHelper: BindViewHelper<FunctionInfo>? = null
 
     override fun layout(): Int {
         return R.layout.item_view_fiex_box
@@ -34,31 +28,20 @@ class HomeFunctionDelegate : AdapterDelegate() {
 
     override fun convert(helper: BaseViewHolder, data: Displayable, position: Int) {
         val info = data as HomeDataInfo
-        if (bindViewHelper == null) {
-            val flexboxLayout = helper.getView<FlexboxLayout>(R.id.flex_box)
-            flexboxLayout.setBackgroundColor(Color.WHITE)
-            flexboxLayout.flexWrap = FlexboxLayout.FLEX_WRAP_NOWRAP
-            flexboxLayout.justifyContent = FlexboxLayout.JUSTIFY_CONTENT_SPACE_AROUND
-            bindViewHelper = BindViewHelper(flexboxLayout)
-        }
-        bindViewHelper?.let {
-            it.setBindData(object : OnSimpleBindData<FunctionInfo>() {
-                override fun onBind(pos: Int, itemCount: Int, t: FunctionInfo?, holder: ViewHolder?) {
-                    holder?.apply {
-                        val img = getView<CustomCircleImageView>(R.id.img)
-                        ImageLoader.displayImage(img, t?.picUrl, DisplayOptions.build().placeholder(R.drawable.base_ic_retry))
-                        getView<TextView>(R.id.text).text = t?.description
-                        convertView.setOnClickListener {
+        val flexboxLayout = helper.getView<FlexboxLayout>(R.id.flex_box)
+        flexboxLayout.setBackgroundColor(Color.WHITE)
+        flexboxLayout.flexWrap = FlexboxLayout.FLEX_WRAP_NOWRAP
+        flexboxLayout.justifyContent = FlexboxLayout.JUSTIFY_CONTENT_SPACE_AROUND
+        flexboxLayout.removeAllViews()
+        info.templateJson.forEach {
+            val inflate = View.inflate(context, R.layout.item_home_function, null)
+            ImageLoader.displayImage(inflate.img, it.picUrl, DisplayOptions.build().placeholder(R.drawable.base_ic_retry))
+            inflate.text.text = it.description
+            inflate.setOnClickListener {
 
-                        }
-                    }
-                }
-
-                override fun onLayout(): Int {
-                    return R.layout.item_home_function
-                }
-            })
-            it.replaceData(info.templateJson)
+            }
+            flexboxLayout.addView(inflate)
         }
+
     }
 }

@@ -11,6 +11,7 @@ import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter
 import com.to.aboomy.recycler_lib.Place
 import com.to.aboomy.recycler_lib.PlaceDelegate
 import com.to.aboomy.recycler_lib.PullRecyclerView
+import com.to.aboomy.theme_lib.utils.ThemeUtils
 import com.waitou.net_library.model.APIResult
 import com.waitou.towards.bean.CanInfo
 import com.waitou.towards.bean.HomeDataInfo
@@ -40,6 +41,7 @@ class HomeNewFragment : LazyFragment(), IView {
 
     override fun getContentView(): View {
         list = RecyclerViewManager.attachViewGetRefresh(activity)
+        list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
         adapter = list.contentView.adapter as MultipleRecyclerAdapter
         adapter.addDelegate(
                 BannerDelegate(),
@@ -92,6 +94,11 @@ class HomeNewFragment : LazyFragment(), IView {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun applySkin() {
+        adapter.notifyDataSetChanged()
+        list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
     }
 }
 

@@ -20,4 +20,10 @@
     <declare-styleable name="widget_RectView">
         <attr name="widget_radius" format="dimension"/>
     </declare-styleable>
+
+
+    <declare-styleable name="widget_CompatViewPager">
+        <attr name="widget_page_TouchMode" format="boolean"/>
+    </declare-styleable>
+
 </resources>

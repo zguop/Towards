@@ -30,11 +30,11 @@
         app:widget_sl_shadow="4dp"
         app:widget_sl_dy="3dp">
 
-        <com.waitou.towards.view.CustomCircleImageView
+        <com.waitou.imgloader_lib.HsRoundImageView
             android:id="@+id/img"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             app:hs_border_color="?android:attr/colorPrimary"
             app:hs_border_width="2dp"
             app:hs_oval="true"

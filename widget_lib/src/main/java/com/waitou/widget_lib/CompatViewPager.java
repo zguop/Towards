@@ -1,13 +1,12 @@
-package com.waitou.towards.view;
+package com.waitou.widget_lib;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-
-import com.waitou.towards.R;
 
 /**
  * Created by waitou on 17/2/1.
@@ -22,12 +21,13 @@ public class CompatViewPager extends ViewPager {
         this(context, null);
     }
 
+    @SuppressLint("CustomViewStyleable")
     public CompatViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CompatViewPager);
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.widget_CompatViewPager);
         if (typedArray != null) {
             try {
-                mViewTouchMode = typedArray.getBoolean(R.styleable.CompatViewPager_page_TouchMode, false);
+                mViewTouchMode = typedArray.getBoolean(R.styleable.widget_CompatViewPager_widget_page_TouchMode, false);
             } finally {
                 typedArray.recycle();
             }

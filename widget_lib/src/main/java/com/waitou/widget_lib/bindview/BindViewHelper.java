@@ -17,13 +17,27 @@ import java.util.List;
 public class BindViewHelper<T> {
 
     private final List<ViewHolder> mCachesList = new ArrayList<>();
-    private final List<T>          listData    = new ArrayList<>();
+    private final List<T> listData = new ArrayList<>();
 
-    private final WeakReference<ViewGroup> mWeakReference;
-    private       OnBindData<T>            onBindData;
+    private WeakReference<ViewGroup> mWeakReference;
+    private OnBindData<T> onBindData;
+
+    public BindViewHelper() {
+    }
 
     public BindViewHelper(ViewGroup viewGroup) {
         mWeakReference = new WeakReference<>(viewGroup);
+    }
+
+    public void setWeakReference(ViewGroup viewGroup) {
+        if (mWeakReference != null) {
+            mWeakReference.clear();
+        }
+        this.mWeakReference = new WeakReference<>(viewGroup);
+    }
+
+    public boolean hasGroup() {
+        return mWeakReference != null && mWeakReference.get() != null;
     }
 
     public void notifyDataSetChanged() {
@@ -80,10 +94,8 @@ public class BindViewHelper<T> {
     }
 
     public void replaceData(@NonNull Collection<T> data) {
-        if (data != this.listData) {
-            listData.clear();
-            listData.addAll(data);
-        }
+        listData.clear();
+        listData.addAll(data);
         notifyDataSetChanged();
     }
 }

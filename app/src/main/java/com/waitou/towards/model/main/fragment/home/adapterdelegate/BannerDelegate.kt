@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseViewHolder
 import com.to.aboomy.banner.Banner
+import com.to.aboomy.banner.IndicatorView
 import com.to.aboomy.banner.LoopPagerAdapter
 import com.to.aboomy.banner.ScalePageTransformer
 import com.to.aboomy.recycler_lib.AdapterDelegate
@@ -16,7 +17,6 @@ import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.FunctionInfo
 import com.waitou.towards.bean.HomeDataInfo
-import com.waitou.wt_library.view.Indicator
 
 /**
  * auth aboom
@@ -34,7 +34,7 @@ class BannerDelegate : AdapterDelegate() {
     override fun convert(helper: BaseViewHolder, data: Displayable, position: Int) {
         val info = data as HomeDataInfo
         val banner = helper.getView<Banner>(R.id.banner)
-        val indicator = Indicator(context)
+        val indicator = IndicatorView(context)
                 .setGravity(Gravity.CENTER)
                 .setIndicatorInColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary))
         banner.setPageMargins(SizeUtils.dp2px(30f), SizeUtils.dp2px(10f), SizeUtils.dp2px(30f), SizeUtils.dp2px(20f), SizeUtils.dp2px(10f))

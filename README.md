@@ -32,6 +32,7 @@
 * **imgloader_lib**：图片加载工具
 * **net_lib**：网络请求
 * **meta_provider_lib**：服务提供商，需要在manifest注册的
+* **zbar_lib**：二维码扫描工具
 
 ### 项目构建
 由于加入了flutter模块，初始化项目需要进入到flutter目录执行 flutter packages get 命令初始化flutter，然后重新构建项目

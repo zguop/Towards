@@ -35,8 +35,5 @@
         <attr name="pstsSelectedTabTextColor" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="CompatViewPager">
-        <attr name="page_TouchMode" format="boolean"/>
-    </declare-styleable>
 
 </resources>

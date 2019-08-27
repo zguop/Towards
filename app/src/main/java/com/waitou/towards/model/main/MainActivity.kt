@@ -15,6 +15,7 @@ import android.widget.ImageView
 import com.to.aboomy.statusbar_lib.StatusBarUtil
 import com.to.aboomy.theme_lib.annotation.Skinable
 import com.to.aboomy.theme_lib.compat.SkinCompatSupportable
+import com.to.aboomy.theme_lib.utils.ThemeUtils
 import com.umeng.socialize.UMShareAPI
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.imgloader_lib.ImageLoader
@@ -40,9 +41,6 @@ import java.util.concurrent.TimeUnit
 @ContainerOptions(CacheImplementation.SPARSE_ARRAY)
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, SkinCompatSupportable {
 
-    override fun applySkin() {
-
-    }
 
     private val homeFragment by lazy { HomeNewFragment() }
     private val jokeFragment by lazy { JokeFragment() }
@@ -111,6 +109,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+    override fun applySkin() {
+        StatusBarUtil.drawerLayoutForColor(this, ContextCompat.getColor(this, R.color.bg_grey), drawerLayout)
+        mainTab.itemIconTintList = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
+        mainTab.itemTextColor = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
+        homeFragment.applySkin()
+    }
 
     /**
      * 主题更换

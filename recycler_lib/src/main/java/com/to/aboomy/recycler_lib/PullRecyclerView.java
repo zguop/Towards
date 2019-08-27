@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,7 +30,6 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
     private boolean isLastPage;
     private boolean loadMore;
 
-
     public PullRecyclerView(@NonNull Context context) {
         this(context, null);
     }
@@ -49,7 +47,6 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         a.recycle();
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setEnabled(Boolean.FALSE);
-        swipeRefreshLayout.setColorSchemeColors(Color.MAGENTA, Color.YELLOW, Color.RED, Color.BLUE, Color.GREEN);
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView = findViewById(R.id.recycler);
         if (scrollbarNone) {
@@ -70,6 +67,10 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
      */
     public RecyclerView getContentView() {
         return recyclerView;
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout(){
+        return swipeRefreshLayout;
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {

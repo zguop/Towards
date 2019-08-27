@@ -34,7 +34,7 @@ public class SkinModeController {
         return skinModeController;
     }
 
-    public static SkinModeController init(Application application) {
+    public static void init(Application application) {
         if (skinModeController == null) {
             synchronized (SkinModeController.class) {
                 if (skinModeController == null) {
@@ -44,12 +44,12 @@ public class SkinModeController {
         }
         SkinPreference.init(application);
         skinActivityLifecycle = SkinActivityLifecycle.init(application);
-        return skinModeController;
     }
 
     public void changeSkin(@StyleRes int styleResId) {
         skinActivityLifecycle.applySkin(styleResId);
     }
+
     /**
      * 刷新 StatusBar
      */
