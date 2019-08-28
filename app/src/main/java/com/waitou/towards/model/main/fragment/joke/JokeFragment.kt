@@ -50,4 +50,9 @@ class JokeFragment : LazyFragment() {
             }
         })
     }
+
+    fun applySkin() {
+
+
+    }
 }

@@ -114,6 +114,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainTab.itemIconTintList = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
         mainTab.itemTextColor = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
         homeFragment.applySkin()
+        jokeFragment.applySkin()
     }
 
     /**

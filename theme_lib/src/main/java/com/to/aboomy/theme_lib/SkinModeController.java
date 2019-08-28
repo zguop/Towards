@@ -1,14 +1,10 @@
 package com.to.aboomy.theme_lib;
 
-import android.app.Activity;
 import android.app.Application;
-import android.os.Build;
 import android.support.annotation.StyleRes;
-import android.support.v4.app.ActivityCompat;
 
 import com.to.aboomy.theme_lib.compat.SkinActivityLifecycle;
 import com.to.aboomy.theme_lib.utils.SkinPreference;
-import com.to.aboomy.theme_lib.utils.ThemeUtils;
 
 
 /**
@@ -48,15 +44,5 @@ public class SkinModeController {
 
     public void changeSkin(@StyleRes int styleResId) {
         skinActivityLifecycle.applySkin(styleResId);
-    }
-
-    /**
-     * 刷新 StatusBar
-     */
-    private void refreshStatusBar(Activity ctx) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            int resourceId = ThemeUtils.getThemeAttrId(ctx, R.attr.colorPrimaryDark);
-            ctx.getWindow().setStatusBarColor(ActivityCompat.getColor(ctx, resourceId));
-        }
     }
 }

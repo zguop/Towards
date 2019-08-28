@@ -13,7 +13,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.waitou.imgloader_lib.HsRoundImageView;
 import com.waitou.imgloader_lib.ImageLoader;
 import com.waitou.towards.R;
-import com.waitou.towards.view.CustomCircleImageView;
 import com.waitou.wt_library.base.BasePageActivity;
 
 /**
@@ -34,7 +33,7 @@ public class ColorActivity extends BasePageActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         showContent();
-        CustomCircleImageView viewById = findViewById(R.id.img);
+        HsRoundImageView viewById = findViewById(R.id.img);
         ImageLoader.displayImage(viewById, url1,new BitmapImageViewTarget(viewById) {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

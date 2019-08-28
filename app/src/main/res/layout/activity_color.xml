@@ -53,7 +53,7 @@
         app:widget_sl_dy="4dp"
         app:widget_sl_shadow="4dp">
 
-        <com.waitou.towards.view.CustomCircleImageView
+        <com.waitou.imgloader_lib.HsRoundImageView
             android:id="@+id/img"
             android:layout_width="150dp"
             android:layout_height="150dp"
