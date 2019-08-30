@@ -2,13 +2,12 @@ package com.waitou.towards.bean
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.waitou.net_library.model.Displayable
 import java.io.Serializable
 
 /**
  * Created by waitou on 17/5/26.
  */
-class MovieInfo : Displayable, Serializable {
+class MovieInfo : Serializable {
 
     @SerializedName("airTime")
     @Expose

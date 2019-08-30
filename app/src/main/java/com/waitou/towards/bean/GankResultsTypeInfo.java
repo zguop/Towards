@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.waitou.net_library.model.Displayable;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * Created by waitou on 17/2/16.
  */
 
-public class GankResultsTypeInfo implements  Displayable, com.to.aboomy.recycler_lib.Displayable {
+public class GankResultsTypeInfo implements   com.to.aboomy.recycler_lib.Displayable {
 
     @SerializedName("_id")
     @Expose
