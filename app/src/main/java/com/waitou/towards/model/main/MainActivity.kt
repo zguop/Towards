@@ -26,6 +26,7 @@ import com.waitou.towards.model.activity.FlutterActivity
 import com.waitou.towards.model.activity.GloadActivity
 import com.waitou.towards.model.gallery.GalleryNewActivity
 import com.waitou.towards.model.graffiti.GraffitiActivity
+import com.waitou.towards.model.main.adater.StylesAdapter
 import com.waitou.towards.model.main.fragment.home.HomeNewFragment
 import com.waitou.towards.model.main.fragment.joke.JokeFragment
 import com.waitou.wt_library.base.BaseActivity
@@ -40,7 +41,6 @@ import java.util.concurrent.TimeUnit
 @Skinable
 @ContainerOptions(CacheImplementation.SPARSE_ARRAY)
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, SkinCompatSupportable {
-
 
     private val homeFragment by lazy { HomeNewFragment() }
     private val jokeFragment by lazy { JokeFragment() }
@@ -114,7 +114,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mainTab.itemIconTintList = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
         mainTab.itemTextColor = ThemeUtils.getColorStateList(this, R.color.skin_bottom_bar_not)
         homeFragment.applySkin()
-        jokeFragment.applySkin()
     }
 
     /**

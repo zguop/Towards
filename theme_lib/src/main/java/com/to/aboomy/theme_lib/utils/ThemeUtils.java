@@ -13,14 +13,16 @@ import android.util.TypedValue;
 import com.to.aboomy.theme_lib.R;
 import com.to.aboomy.theme_lib.appres.AppCompatResources;
 
-import java.lang.reflect.Field;
-
 
 /**
  * Created by waitou on 17/1/18.
  */
 
 public class ThemeUtils {
+
+    public static final String ATTR_PREFIX        = "skin"; //开头
+    public static final String COLOR_PRIMARY = "colorPrimary";
+
 
     private static final String TYPE_DRAWABLE = "drawable"; //资源在drawable目录下
     private static final String TYPE_COLOR = "color"; //资源在color目录下
@@ -82,27 +84,7 @@ public class ThemeUtils {
         if (identifier == 0) {
             identifier = getThemeAttrId(context, resources.getIdentifier(resName, TYPE_ATTR, defPackage));
         }
-        if (identifier == 0) {
-            throw new Resources.NotFoundException("未找到资源");
-        }
         return identifier;
-    }
-
-
-    /**
-     * 反射获取文件id
-     *
-     * @param attrName 属性名称
-     * @return 属性id
-     */
-    public static int getAttr(Class draw, String attrName) {
-        try {
-            Field field = draw.getDeclaredField(attrName);
-            //field.setAccessible(true);
-            return field.getInt(attrName);
-        } catch (Exception e) {
-            return R.attr.colorPrimary;
-        }
     }
 
     /**
@@ -137,7 +119,7 @@ public class ThemeUtils {
         }
     }
 
-    public static int getColorPrimary(Context context){
-        return getThemeAttrColor(context,R.attr.colorPrimary);
+    public static int getColorPrimary(Context context) {
+        return getThemeAttrColor(context, R.attr.colorPrimary);
     }
 }

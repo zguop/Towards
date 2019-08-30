@@ -16,13 +16,9 @@ public class SkinPreference {
 
     private static final String PRE_THEME_MODEL = "skin_theme_id"; //sp 保存当前的主题
 
-
-
-
     private static SkinPreference SKIN_PREFERENCE;
 
     private final SharedPreferences preferences;
-
 
     private SkinPreference(Context context) {
         preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);

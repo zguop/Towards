@@ -24,7 +24,7 @@ public class SkinCompatViewInflater {
             "android.webkit."
     };
 
-    public View createViewFromTag(Context context, String name, AttributeSet attrs) {
+    View createViewFromTag(Context context, String name, AttributeSet attrs) {
         if ("view".equals(name)) {
             name = attrs.getAttributeValue(null, "class");
         }

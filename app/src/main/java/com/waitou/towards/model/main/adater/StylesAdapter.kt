@@ -1,4 +1,4 @@
-package com.waitou.towards.model.main
+package com.waitou.towards.model.main.adater
 
 import android.content.Context
 import android.support.v4.app.ActivityCompat

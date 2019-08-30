@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.to.aboomy.theme_lib.config.ThemeConstant;
 import com.to.aboomy.theme_lib.skin.SkinAttr;
 import com.to.aboomy.theme_lib.skin.SkinAttrType;
 import com.to.aboomy.theme_lib.skin.SkinView;
@@ -21,6 +20,7 @@ import java.util.List;
  * date 2019-08-22
  */
 public class SkinCompatDelegate implements LayoutInflater.Factory2 {
+
     private final SkinCompatViewInflater skinCompatViewInflater;
     private List<SkinView> skinViews = new ArrayList<>();
 
@@ -48,7 +48,7 @@ public class SkinCompatDelegate implements LayoutInflater.Factory2 {
         return view;
     }
 
-    public void applySkin() {
+    void applySkin() {
         for (SkinView skinView : skinViews) {
             if (skinView != null) {
                 skinView.apply();
@@ -83,7 +83,7 @@ public class SkinCompatDelegate implements LayoutInflater.Factory2 {
                     //通过资源id 获取到资源的名称
                     String entryName = context.getResources().getResourceEntryName(id);
                     //如果匹配 资源名称 表示都是使用了换肤的 属性则保存起来
-                    if (entryName.equals(ThemeConstant.COLOR_PRIMARY) || entryName.equals(ThemeConstant.COLOR_PRIMARY_DARK) || entryName.equals(ThemeConstant.COLOR_ACCENT) || entryName.startsWith(ThemeConstant.ATTR_PREFIX)) {
+                    if (entryName.equals(ThemeUtils.COLOR_PRIMARY) || entryName.startsWith(ThemeUtils.ATTR_PREFIX)) {
                         String typeName = context.getResources().getResourceTypeName(id);
                         skinAttr = new SkinAttr(attrType, entryName, attributeName, typeName);
                         skinAttrsList.add(skinAttr);
