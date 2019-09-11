@@ -55,9 +55,7 @@ public class JlMetaProvider {
                             " is not an instance of " + clz.getName());
                 }
                 metas.add(service);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (ClassNotFoundException | IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -93,9 +91,6 @@ public class JlMetaProvider {
             try {
                 appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(),
                         PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-                return null;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;

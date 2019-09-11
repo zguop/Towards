@@ -20,7 +20,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:widget_page_TouchMode="true"/>
 
-        <com.waitou.widget_lib.TitleBar
+        <com.waitou.wt_library.base.TitleBar
             android:id="@+id/pageTitleBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

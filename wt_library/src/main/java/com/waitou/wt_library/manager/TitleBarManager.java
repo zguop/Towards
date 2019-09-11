@@ -5,7 +5,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.waitou.wt_library.R;
-import com.waitou.widget_lib.TitleBar;
+import com.waitou.wt_library.base.TitleBar;
 
 /**
  * auth aboom

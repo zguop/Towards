@@ -81,7 +81,7 @@
         android:layout_marginRight="80dp"
         android:gravity="center">
 
-        <com.waitou.wt_library.view.DoubleClickTextView
+        <com.waitou.widget_lib.DoubleClickTextView
             android:id="@+id/title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="match_parent"

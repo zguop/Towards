@@ -1,4 +1,4 @@
-package com.waitou.widget_lib;
+package com.waitou.wt_library.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.waitou.wt_library.R;
 
 
 /**
