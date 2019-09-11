@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.waitou.wt_library.view.TitleBar
+    <com.waitou.widget_lib.TitleBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -13,7 +13,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
-    </com.waitou.wt_library.view.TitleBar>
+    </com.waitou.widget_lib.TitleBar>
 
 
 </layout>

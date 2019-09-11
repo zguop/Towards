@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.waitou.wt_library.base.BasePageActivity;
 import com.waitou.wt_library.manager.TitleBarManager;
-import com.waitou.wt_library.view.TitleBar;
+import com.waitou.widget_lib.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;

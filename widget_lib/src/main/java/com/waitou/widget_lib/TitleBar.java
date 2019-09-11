@@ -1,7 +1,8 @@
-package com.waitou.wt_library.view;
+package com.waitou.widget_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,17 +12,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SizeUtils;
-import com.to.aboomy.theme_lib.compat.SkinCompatSupportable;
-import com.waitou.wt_library.R;
-
 
 /**
  * Created by waitou on 17/1/26.
  * bar
  */
 
-public class TitleBar extends FrameLayout implements SkinCompatSupportable {
+public class TitleBar extends FrameLayout {
 
     public TitleBar(Context context) {
         this(context, null);
@@ -33,14 +30,9 @@ public class TitleBar extends FrameLayout implements SkinCompatSupportable {
             throw new IllegalArgumentException("Context 建议使用 Activity类型的");
         }
         LayoutInflater.from(context).inflate(R.layout.toolbar_content, this, true);
-        setElevation(SizeUtils.dp2px(5));
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        setElevation((int) (5 * scale + 0.5f));
         setBackgroundColor(Color.WHITE);
-        applySkin();
-    }
-
-    @Override
-    public void applySkin() {
-//        setBackgroundColor(ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorPrimary));
     }
 
     /**

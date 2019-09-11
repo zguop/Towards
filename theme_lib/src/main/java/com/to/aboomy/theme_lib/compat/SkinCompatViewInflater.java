@@ -13,7 +13,7 @@ import java.util.Map;
  * auth aboom
  * date 2019-08-22
  */
-public class SkinCompatViewInflater {
+class SkinCompatViewInflater {
 
     private static final Map<String, Constructor<? extends View>> sConstructorMap = new ArrayMap<>();
     private static final Class<?>[] sConstructorSignature = new Class[]{Context.class, AttributeSet.class};

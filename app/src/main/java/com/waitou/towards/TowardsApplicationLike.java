@@ -127,6 +127,7 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
     }
 
     private void tinkerPatch() {
+
         Observable<PatchInfo> observable = DataLoader.getGithubApi().checkPatch()
                 .compose(RxTransformerHelper.applySchedulersAndAllFilter(null));
         Consumer<PatchInfo> consumer = patchInfo -> {

@@ -1,4 +1,4 @@
-package com.waitou.wt_library.view;
+package com.waitou.widget_lib;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;

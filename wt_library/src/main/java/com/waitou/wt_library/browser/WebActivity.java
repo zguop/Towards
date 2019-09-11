@@ -21,7 +21,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.BaseActivity;
-import com.waitou.wt_library.view.TitleBar;
+import com.waitou.widget_lib.TitleBar;
 
 /**
  * Created by waitou on 17/3/17.
