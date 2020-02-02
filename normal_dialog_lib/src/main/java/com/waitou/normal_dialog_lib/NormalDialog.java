@@ -13,14 +13,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 
 import java.lang.ref.WeakReference;
 
 /**
  * auth aboom
- * date 2019-04-25
  * DialogFragment生命周期
  * onCreate-->onCreateDialog-->onCreateView-->onViewCreated-->onStart
  * 屏幕旋转处理
@@ -29,19 +27,19 @@ import java.lang.ref.WeakReference;
 public class NormalDialog extends DialogFragment {
 
     public static final String NORMAL_DIALOG_DIM_AMOUNT = "normal_dialog_dim_amount";
-    public static final String NORMAL_DIALOG_GRAVITY    = "normal_dialog_gravity";
-    public static final String NORMAL_DIALOG_WIDTH      = "normal_dialog_width";
-    public static final String NORMAL_DIALOG_HEIGHT     = "normal_dialog_height";
+    public static final String NORMAL_DIALOG_GRAVITY = "normal_dialog_gravity";
+    public static final String NORMAL_DIALOG_WIDTH = "normal_dialog_width";
+    public static final String NORMAL_DIALOG_HEIGHT = "normal_dialog_height";
     public static final String NORMAL_DIALOG_ANIM_STYLE = "normal_dialog_anim_style";
-    public static final String NORMAL_DIALOG_OUT_TOUCH  = "normal_dialog_out_touch";
+    public static final String NORMAL_DIALOG_OUT_TOUCH = "normal_dialog_out_touch";
     public static final String NORMAL_DIALOG_DIALOG_VIEW = "normal_dialog_dialog_view";
 
-    protected Bundle  bundle = new Bundle();
-    protected int     animStyle;
-    protected int     width;//宽度
-    protected int     height;//高度
-    protected int     gravity;
-    protected float   dimAmount;
+    protected Bundle bundle = new Bundle();
+    protected int animStyle;
+    protected int width;//宽度
+    protected int height;//高度
+    protected int gravity;
+    protected float dimAmount;
     protected boolean outTouchOutside;
     protected WeakReference<IDialogView> iDialogView;
 
@@ -70,42 +68,26 @@ public class NormalDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        InnerDialog dialog = new InnerDialog(requireContext());
+        dialog.setAnimStyle(animStyle);
+        dialog.setDimAmount(dimAmount);
+        dialog.setGravity(gravity);
+        dialog.setHeight(height);
+        dialog.setWidth(width);
         dialog.setCanceledOnTouchOutside(outTouchOutside);
         return dialog;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Window window = getDialog().getWindow();
-        if (window != null) {
-            WindowManager.LayoutParams attributes = window.getAttributes();
-            attributes.width = width;
-            attributes.height = height;
-            attributes.gravity = gravity;
-            attributes.dimAmount = dimAmount;
-            if (gravity == Gravity.BOTTOM) {
-                if (animStyle == 0) {
-                    animStyle = R.style.dl_anim_slide_share_from_bottom;
-                }
-            }
-            window.setWindowAnimations(animStyle);
-            window.setAttributes(attributes);
-            window.setBackgroundDrawableResource(android.R.color.transparent);
-        }
     }
 
     /**
      * 设置view
      */
-    public NormalDialog  setDialogView(IDialogView iDialogView) {
-        bundle.putParcelable(NORMAL_DIALOG_DIALOG_VIEW,iDialogView);
+    public NormalDialog setDialogView(IDialogView iDialogView) {
+        bundle.putParcelable(NORMAL_DIALOG_DIALOG_VIEW, iDialogView);
         return this;
     }
 
     /**
-     * 屏幕外不可点击取消
+     * 屏幕外不可点击取消 屏幕内都不可以点击取消
      */
     public NormalDialog setOutCancelable(boolean cancelable) {
         super.setCancelable(cancelable);

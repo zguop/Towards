@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * auth aboom
- * date 2019-04-25
- */
+
 public abstract class IDialogView implements Parcelable {
 
     protected abstract View getContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);

@@ -1,9 +1,10 @@
-package com.to.aboomy.recycler_lib;
+package com.to.aboomy.recycler_lib.delegate;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.to.aboomy.recycler_lib.adapter.Displayable;
 
 /**
  * auth aboom
@@ -17,5 +18,8 @@ public abstract class AdapterDelegate {
 
     public abstract int layout();
 
-    public void convert(BaseViewHolder helper, Displayable data, int position) {}
+    protected void viewHolderCreated(@NonNull BaseViewHolder helper) {}
+
+    public abstract void convert(BaseViewHolder helper, Displayable data, int position);
+
 }

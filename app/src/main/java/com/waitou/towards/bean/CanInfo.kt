@@ -1,6 +1,6 @@
 package com.waitou.towards.bean
 
-import com.to.aboomy.recycler_lib.Displayable
+import com.to.aboomy.recycler_lib.adapter.Displayable
 
 
 /**

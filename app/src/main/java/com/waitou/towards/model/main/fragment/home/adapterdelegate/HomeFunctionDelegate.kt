@@ -4,8 +4,8 @@ import android.graphics.Color
 import android.view.View
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
-import com.to.aboomy.recycler_lib.AdapterDelegate
-import com.to.aboomy.recycler_lib.Displayable
+import com.to.aboomy.recycler_lib.adapter.Displayable
+import com.to.aboomy.recycler_lib.delegate.AdapterDelegate
 import com.waitou.imgloader_lib.DisplayOptions
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R

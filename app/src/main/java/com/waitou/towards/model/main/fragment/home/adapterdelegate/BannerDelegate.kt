@@ -10,9 +10,10 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.to.aboomy.banner.Banner
 import com.to.aboomy.banner.IndicatorView
 import com.to.aboomy.banner.ScaleInTransformer
-import com.to.aboomy.recycler_lib.AdapterDelegate
-import com.to.aboomy.recycler_lib.Displayable
+import com.to.aboomy.recycler_lib.adapter.Displayable
+import com.to.aboomy.recycler_lib.delegate.AdapterDelegate
 import com.to.aboomy.theme_lib.utils.ThemeUtils
+import com.umeng.socialize.utils.DeviceConfig.context
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.FunctionInfo

@@ -1,13 +1,9 @@
 package com.to.aboomy.rx_lib;
 
-import android.os.Looper;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 
 /**
  * auth aboom
@@ -36,22 +32,4 @@ public class RxUtil {
                 .map(increaseTime -> countTime - increaseTime.intValue())
                 .take(countTime + 1);
     }
-
-    /**
-     * 安全的线程操作
-     */
-    public static Disposable safelyTask(Action action0) {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            return Observable.empty().subscribe(o -> action0.run());
-        } else {
-            return AndroidSchedulers.mainThread().scheduleDirect(() -> {
-                try {
-                    action0.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-    }
-
 }

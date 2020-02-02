@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.billy.android.loading.Gloading
-import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter
-import com.to.aboomy.recycler_lib.Place
-import com.to.aboomy.recycler_lib.PlaceDelegate
 import com.to.aboomy.recycler_lib.PullRecyclerView
+import com.to.aboomy.recycler_lib.adapter.MultipleAdapter
+import com.to.aboomy.recycler_lib.species.Place
+import com.to.aboomy.recycler_lib.species.PlaceDelegate
 import com.to.aboomy.theme_lib.utils.ThemeUtils
 import com.waitou.net_library.model.APIResult
 import com.waitou.towards.bean.CanInfo
@@ -33,7 +33,7 @@ class HomeNewFragment : LazyFragment(), IView {
     private lateinit var list: PullRecyclerView
     private lateinit var holder: Gloading.Holder
     private lateinit var homeNewViewModule: HomeNewViewModule
-    private lateinit var adapter: MultipleRecyclerAdapter
+    private lateinit var adapter: MultipleAdapter
 
     override fun run(): Runnable {
         return Runnable { reloadData() }
@@ -42,7 +42,7 @@ class HomeNewFragment : LazyFragment(), IView {
     override fun getContentView(): View {
         list = RecyclerViewManager.attachViewGetRefresh(activity)
         list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
-        adapter = list.contentView.adapter as MultipleRecyclerAdapter
+        adapter = list.contentView.adapter as MultipleAdapter
         adapter.addDelegate(
                 BannerDelegate(),
                 HomeFunctionDelegate(),

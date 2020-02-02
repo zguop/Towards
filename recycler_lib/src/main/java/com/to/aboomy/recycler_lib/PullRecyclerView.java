@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,14 +20,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
  */
 public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
-    private RecyclerView       recyclerView;
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.Adapter adapter;
-    private OnRefreshListener    onRefresh;
-    private OnLoadMoreListener   onLoadMore;
+    private OnRefreshListener onRefresh;
+    private OnLoadMoreListener onLoadMore;
 
-    private int     currentPage = 1;
+    private int currentPage = 1;
+    /**
+     * 默认是加载20条
+     */
+    private int pageSize = 20;
+
     private boolean isLastPage;
     private boolean loadMore;
 
@@ -62,6 +68,10 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         });
     }
 
+    public void setColorSchemeColors(@ColorInt int... colors) {
+        swipeRefreshLayout.setColorSchemeColors(colors);
+    }
+
     /**
      * 返回recyclerView让你设置一些额外的属性
      */
@@ -69,7 +79,7 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         return recyclerView;
     }
 
-    public SwipeRefreshLayout getSwipeRefreshLayout(){
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
 
@@ -109,6 +119,7 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         }
     }
 
+
     public void showRefresh() {
         swipeRefreshLayout.setRefreshing(Boolean.TRUE);
     }
@@ -132,6 +143,10 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
         }
     }
 
+    public void loadComplete(int dataSize) {
+        loadComplete(dataSize < pageSize);
+    }
+
     public void loadMoreFail() {
         if (loadMore) {
             BaseQuickAdapter baseQuickAdapter = (BaseQuickAdapter) adapter;
@@ -152,6 +167,22 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
      */
     public int getCurrentPage() {
         return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public boolean isLastPage() {
+        return isLastPage;
     }
 
     /**

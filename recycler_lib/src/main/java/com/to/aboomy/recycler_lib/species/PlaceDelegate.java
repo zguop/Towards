@@ -1,10 +1,13 @@
-package com.to.aboomy.recycler_lib;
+package com.to.aboomy.recycler_lib.species;
 
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.to.aboomy.recycler_lib.R;
+import com.to.aboomy.recycler_lib.adapter.Displayable;
+import com.to.aboomy.recycler_lib.delegate.AdapterDelegate;
 
 /**
  * auth aboom

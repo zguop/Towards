@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.billy.android.loading.Gloading
 import com.blankj.utilcode.util.ObjectUtils
-import com.to.aboomy.recycler_lib.MultipleRecyclerAdapter
-import com.to.aboomy.recycler_lib.Place
-import com.to.aboomy.recycler_lib.PlaceDelegate
 import com.to.aboomy.recycler_lib.PullRecyclerView
+import com.to.aboomy.recycler_lib.adapter.MultipleAdapter
+import com.to.aboomy.recycler_lib.species.Place
+import com.to.aboomy.recycler_lib.species.PlaceDelegate
 import com.waitou.net_library.model.APIResult
 import com.waitou.towards.bean.JokeInfo
 import com.waitou.towards.common.Values
@@ -41,7 +41,7 @@ class JokeLotFragment : LazyFragment(), IView, PullRecyclerView.OnRefreshAndLoad
 
     private lateinit var pullRecyclerView: PullRecyclerView
     private lateinit var holder: Gloading.Holder
-    private lateinit var adapter: MultipleRecyclerAdapter
+    private lateinit var adapter: MultipleAdapter
 
     private val viewModule by lazy { ViewModelProviders.of(this@JokeLotFragment)[JokeLotViewModule::class.java] }
     private val type by lazy { arguments?.getInt(Values.JOKE_CONTENT_TYPE) }
@@ -54,7 +54,7 @@ class JokeLotFragment : LazyFragment(), IView, PullRecyclerView.OnRefreshAndLoad
         pullRecyclerView = RecyclerViewManager.attachViewGetRefresh(activity)
         pullRecyclerView.distanceOffsetBar()
         pullRecyclerView.setRefreshAndLoadMoreListener(this)
-        adapter = pullRecyclerView.contentView.adapter as MultipleRecyclerAdapter
+        adapter = pullRecyclerView.contentView.adapter as MultipleAdapter
         adapter.addDelegate(ImageJokeDelegate(), TextJokeDelegate(), PlaceDelegate())
         return pullRecyclerView
     }

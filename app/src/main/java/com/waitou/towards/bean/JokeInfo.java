@@ -2,7 +2,7 @@ package com.waitou.towards.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.to.aboomy.recycler_lib.Displayable;
+import com.to.aboomy.recycler_lib.adapter.Displayable;
 
 /**
  * Created by waitou on 17/1/4.

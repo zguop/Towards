@@ -4,8 +4,8 @@ import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseViewHolder
-import com.to.aboomy.recycler_lib.AdapterDelegate
-import com.to.aboomy.recycler_lib.Displayable
+import com.to.aboomy.recycler_lib.adapter.Displayable
+import com.to.aboomy.recycler_lib.delegate.AdapterDelegate
 import com.waitou.basic_lib.util.DialogUtils
 import com.waitou.three_library.share.ShareInfo
 import com.waitou.towards.R
@@ -27,7 +27,6 @@ class ImageJokeDelegate : AdapterDelegate() {
     }
 
     override fun convert(helper: BaseViewHolder?, data: Displayable?, position: Int) {
-        super.convert(helper, data, position)
         val item = data as JokeInfo
         helper?.let {
             it.itemView.share.setOnClickListener {

@@ -1,6 +1,11 @@
 package com.waitou.imgloader_lib;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -9,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
@@ -24,11 +30,12 @@ public class ImageLoader {
      * @param imageView   加载的view
      * @param modelLoader glide load方法支持的所有类型
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .into(imageView);
+    public static void displayImage(ImageView imageView, Object modelLoader) {
+        RequestManager requestManager = parseWithAction(imageView);
+        if (requestManager != null)
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .into(imageView);
     }
 
     /**
@@ -38,12 +45,13 @@ public class ImageLoader {
      * @param modelLoader glide load方法支持的所有类型
      * @param placeholder 占位图
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
-                .into(imageView);
+    public static void displayImage(ImageView imageView, Object modelLoader, int placeholder) {
+        RequestManager requestManager = parseWithAction(imageView);
+        if (requestManager != null)
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
+                    .into(imageView);
     }
 
     /**
@@ -53,87 +61,92 @@ public class ImageLoader {
      * @param modelLoader glide load方法支持的所有类型
      * @param options     配置属性
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(options))
-                .into(imageView);
+    public static void displayImage(ImageView imageView, Object modelLoader, DisplayOptions options) {
+        RequestManager requestManager = parseWithAction(imageView);
+        if (requestManager != null) {
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .apply(getRequestOptions(options))
+                    .into(imageView);
+        }
     }
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, BitmapImageViewTarget target) {
-        Glide.with(imageView)
-                .asBitmap()
-                .load(modelLoader)
-                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
-                .into(target);
+    public static void displayImage(Object with, Object modelLoader, BitmapImageViewTarget target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.asBitmap()
+                    .load(modelLoader)
+                    .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
+                    .into(target);
+        }
     }
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder, BitmapImageViewTarget target) {
-        Glide.with(imageView)
-                .asBitmap()
-                .load(modelLoader)
-                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
-                .into(target);
+    public static void displayImage(Object with, Object modelLoader, int placeholder, BitmapImageViewTarget target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.asBitmap()
+                    .load(modelLoader)
+                    .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
+                    .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
+                    .into(target);
+        }
     }
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options, BitmapImageViewTarget target) {
-        Glide.with(imageView)
-                .asBitmap()
-                .load(modelLoader)
-                .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
-                .apply(getRequestOptions(options))
-                .into(target);
+    public static void displayImage(Object with, Object modelLoader, DisplayOptions options, BitmapImageViewTarget target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.asBitmap()
+                    .load(modelLoader)
+                    .transition(BitmapTransitionOptions.withCrossFade(crossFade()))
+                    .apply(getRequestOptions(options))
+                    .into(target);
+        }
     }
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, DrawableImageViewTarget target) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .into(target);
+    public static void displayImage(Object with, Object modelLoader, CustomTarget<Drawable> target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .into(target);
+        }
     }
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, int placeholder, DrawableImageViewTarget target) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
-                .into(target);
+    public static void displayImage(Object with, Object modelLoader, int placeholder, DrawableImageViewTarget target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .apply(getRequestOptions(DisplayOptions.build().placeholder(placeholder)))
+                    .into(target);
+        }
     }
-
 
     /**
      * 图片加载方法回调加载
      */
-    public static <T> void displayImage(ImageView imageView, T modelLoader, DisplayOptions options, DrawableImageViewTarget target) {
-        Glide.with(imageView)
-                .load(modelLoader)
-                .transition(DrawableTransitionOptions.with(crossFade()))
-                .apply(getRequestOptions(options))
-                .into(target);
-    }
-
-    private static RequestManager getManager(ImageView imageView) {
-        try {
-            return Glide.with(imageView);
-        } catch (Exception e) {
-            return null;
+    public static void displayImage(Object with, Object modelLoader, DisplayOptions options, DrawableImageViewTarget target) {
+        RequestManager requestManager = parseWithAction(with);
+        if (requestManager != null) {
+            requestManager.load(modelLoader)
+                    .transition(DrawableTransitionOptions.with(crossFade()))
+                    .apply(getRequestOptions(options))
+                    .into(target);
         }
     }
 
@@ -144,9 +157,28 @@ public class ImageLoader {
         Glide.with(imageView).clear(imageView);
     }
 
-
-    private static DrawableCrossFadeFactory crossFade() {
+    static DrawableCrossFadeFactory crossFade() {
         return new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
+    }
+
+    static RequestManager parseWithAction(Object o) {
+        try {
+            if (o instanceof View) {
+                return Glide.with((View) o);
+            }
+            if (o instanceof Fragment) {
+                return Glide.with((Fragment) o);
+            }
+            if (o instanceof Activity) {
+                return Glide.with((Activity) o);
+            }
+            if (o instanceof Context) {
+                return Glide.with((Context) o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @SuppressLint("CheckResult")

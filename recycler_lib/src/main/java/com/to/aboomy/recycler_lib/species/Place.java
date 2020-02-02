@@ -1,7 +1,10 @@
-package com.to.aboomy.recycler_lib;
+package com.to.aboomy.recycler_lib.species;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+
+import com.to.aboomy.recycler_lib.adapter.Displayable;
+
 
 /**
  * auth aboom
@@ -68,4 +71,9 @@ public class Place implements Displayable {
     }
 
 
+
+    @Override
+    public Class[] getHolderClass() {
+        return new Class[]{PlaceDelegate.class};
+    }
 }

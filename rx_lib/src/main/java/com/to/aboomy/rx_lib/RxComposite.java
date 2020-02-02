@@ -24,7 +24,7 @@ public class RxComposite {
         while (TASK_MAP.get(increasingRequestCode) != null) {
             increasingRequestCode++;
         }
-        int finalIncreasingRequestCode = increasingRequestCode;
+        final int finalIncreasingRequestCode = increasingRequestCode;
         final Action unSubscribe = () -> {
             if (TASK_MAP.get(finalIncreasingRequestCode) != null) {
                 TASK_MAP.get(finalIncreasingRequestCode).dispose();
@@ -34,7 +34,7 @@ public class RxComposite {
         TASK_MAP.put(finalIncreasingRequestCode, observable
                 .doOnComplete(unSubscribe)
                 .doOnError(throwable -> unSubscribe.run())
-                .subscribe(onNext));
+                .subscribe(onNext, throwable -> unSubscribe.run()));
     }
 
 
