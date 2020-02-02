@@ -1,15 +1,15 @@
 package com.waitou.towards.model.main.fragment.home.adapterdelegate
 
-import android.content.Context
-import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseViewHolder
 import com.to.aboomy.banner.Banner
 import com.to.aboomy.banner.IndicatorView
-import com.to.aboomy.banner.LoopPagerAdapter
-import com.to.aboomy.banner.ScalePageTransformer
+import com.to.aboomy.banner.ScaleInTransformer
 import com.to.aboomy.recycler_lib.AdapterDelegate
 import com.to.aboomy.recycler_lib.Displayable
 import com.to.aboomy.theme_lib.utils.ThemeUtils
@@ -34,19 +34,29 @@ class BannerDelegate : AdapterDelegate() {
     override fun convert(helper: BaseViewHolder, data: Displayable, position: Int) {
         val info = data as HomeDataInfo
         val banner = helper.getView<Banner>(R.id.banner)
+
+        val layoutParams = banner.getChildAt(0).layoutParams as RelativeLayout.LayoutParams
+        layoutParams.topMargin = SizeUtils.dp2px(20f)
+        layoutParams.bottomMargin = SizeUtils.dp2px(20f)
+
+        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL)
         val indicator = IndicatorView(context)
-                .setGravity(Gravity.CENTER)
-                .setIndicatorInColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary))
-        banner.setPageMargins(SizeUtils.dp2px(30f), SizeUtils.dp2px(10f), SizeUtils.dp2px(30f), SizeUtils.dp2px(20f), SizeUtils.dp2px(10f))
-        banner.setPageTransformer(true, ScalePageTransformer(0.8f))
-        banner.setIndicator(indicator)
-        banner.setAdapter(object : LoopPagerAdapter<FunctionInfo>(info.templateJson) {
-            override fun newView(context: Context?, realPosition: Int, t: FunctionInfo?): View {
-                val view = View.inflate(context, R.layout.item_banner_image, null)
-                val image = view.findViewById<ImageView>(R.id.img)
-                ImageLoader.displayImage(image, t?.picUrl)
-                return view
-            }
-        })
+                .setParams(params)
+                .setIndicatorStyle(IndicatorView.IndicatorStyle.INDICATOR_CIRCLE_RECT)
+                .setIndicatorColor(ColorUtils.getColor(R.color.color_666666))
+                .setIndicatorSelectorColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary))
+        banner.setPageTransformer(true, ScaleInTransformer(0.8f))
+        banner.setPageMargin(SizeUtils.dp2px(10f), -SizeUtils.dp2px(14f))
+                .setIndicator(indicator)
+                .setHolderCreator { context, _, o ->
+                    val view = View.inflate(context, R.layout.item_banner_image, null)
+                    val image = view.findViewById<ImageView>(R.id.img)
+                    ImageLoader.displayImage(image, (o as FunctionInfo).picUrl)
+                    view
+                }
+                .setPages(info.templateJson)
+
     }
 }

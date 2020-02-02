@@ -171,8 +171,6 @@ public static java.lang.String TABLENAME;
 
 -keep class * extends java.lang.annotation.Annotation
 
--keep interface com.maihaoche.bentley.entry.domain.PickViewText { *; }
-
 #--------------------------------common part------------------------------------------
 -dontoptimize
 -optimizationpasses 5
