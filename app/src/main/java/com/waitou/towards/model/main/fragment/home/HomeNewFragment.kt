@@ -3,16 +3,20 @@ package com.waitou.towards.model.main.fragment.home
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
+import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.billy.android.loading.Gloading
-import com.to.aboomy.recycler_lib.PullRecyclerView
+import com.blankj.utilcode.util.SizeUtils
 import com.to.aboomy.recycler_lib.adapter.MultipleAdapter
 import com.to.aboomy.recycler_lib.species.Place
 import com.to.aboomy.recycler_lib.species.PlaceDelegate
 import com.to.aboomy.theme_lib.utils.ThemeUtils
 import com.waitou.net_library.model.APIResult
+import com.waitou.towards.R
 import com.waitou.towards.bean.CanInfo
 import com.waitou.towards.bean.HomeDataInfo
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.BannerDelegate
@@ -21,8 +25,9 @@ import com.waitou.towards.model.main.fragment.home.adapterdelegate.HomeFunctionD
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.RoundImageDelegate
 import com.waitou.wt_library.base.IView
 import com.waitou.wt_library.base.LazyFragment
-import com.waitou.wt_library.manager.RecyclerViewManager
 import com.waitou.wt_library.manager.StateViewManager
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 /**
  * auth aboom
@@ -30,19 +35,20 @@ import com.waitou.wt_library.manager.StateViewManager
  */
 class HomeNewFragment : LazyFragment(), IView {
 
-    private lateinit var list: PullRecyclerView
     private lateinit var holder: Gloading.Holder
     private lateinit var homeNewViewModule: HomeNewViewModule
     private lateinit var adapter: MultipleAdapter
 
-    override fun run(): Runnable {
-        return Runnable { reloadData() }
+    override fun run() {
+        reloadData()
     }
 
     override fun getContentView(): View {
-        list = RecyclerViewManager.attachViewGetRefresh(activity)
-        list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
-        adapter = list.contentView.adapter as MultipleAdapter
+        val inflate = View.inflate(activity!!, R.layout.fragment_home, null)
+        inflate.list.setLayoutManager(LinearLayoutManager(activity))
+        adapter = MultipleAdapter()
+        inflate.list.setAdapter(adapter)
+        inflate.list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
         adapter.addDelegate(
                 BannerDelegate(),
                 HomeFunctionDelegate(),
@@ -50,17 +56,26 @@ class HomeNewFragment : LazyFragment(), IView {
                 BottomTipsDelegate(),
                 PlaceDelegate()
         )
-        list.setOnRefreshListener { homeNewViewModule.loadNewHomeData() }
-        return list
+        inflate.list.setOnRefreshListener { homeNewViewModule.loadNewHomeData() }
+        inflate.search.editView.isFocusable = false
+        inflate.search.editView.setOnClickListener {
+
+        }
+        inflate.postDelayed({ translationScaleSearch() }, 1000)
+        return inflate
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        holder = StateViewManager.wrapXStateController(this, false)
+        holder = StateViewManager.wrapStateController(this, false)
+        return holder.wrapper
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         homeNewViewModule = ViewModelProviders.of(this)[HomeNewViewModule::class.java]
         homeNewViewModule.mutableLiveData.observe(this@HomeNewFragment, Observer {
             it?.run { bindUI(it) }
         })
-        return holder.wrapper
     }
 
     override fun visibleCall() {
@@ -99,6 +114,51 @@ class HomeNewFragment : LazyFragment(), IView {
     fun applySkin() {
         adapter.notifyDataSetChanged()
         list.swipeRefreshLayout.setColorSchemeColors(ThemeUtils.getColorPrimary(activity))
+    }
+
+    private fun translationScaleSearch() {
+        list.contentView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private val searchLayoutParams = search.layoutParams as ViewGroup.MarginLayoutParams
+            //向上滑动顶部的距离
+            private val TOP_MARGIN = appName.top - appName.top / 4 + statusBar.height * 1.0f
+            //原来的初始位置距离
+            private val MAX_MARGIN = search.top
+            //搜索框的完整宽度
+            private val MAX_WIDTH = search.width
+            //搜索框的最小宽度
+            private val MIN_WIDTH = search.width - appName.width - SizeUtils.dp2px(16f)
+            //累加距离
+            private var mDy = 0
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                mDy += dy
+                var searchLayoutNewTopMargin = MAX_MARGIN - mDy * 0.5f
+                if (searchLayoutNewTopMargin < TOP_MARGIN) {
+                    searchLayoutNewTopMargin = TOP_MARGIN
+                }
+                val alpha = (MAX_MARGIN - mDy * 1.0f) / searchLayoutNewTopMargin
+                titleView.alpha = alpha
+                titleView.visibility = if (alpha > 0) View.VISIBLE else View.GONE
+
+
+                qrCode.alpha = alpha
+                qrCode.visibility = if (alpha > 0) View.VISIBLE else View.GONE
+
+                var searchLayoutNewWidth = MAX_WIDTH - mDy * 0.5f//此处 * 1.3f 可以设置搜索框宽度缩放的速率
+                if (searchLayoutNewWidth < MIN_WIDTH) {
+                    searchLayoutNewWidth = MIN_WIDTH.toFloat()
+                }
+
+                val appNameAlpha = (MAX_WIDTH - mDy * 2.0f) / searchLayoutNewWidth
+                appName.alpha = if (1 - appNameAlpha < 0) 1f else 1 - appNameAlpha
+                appName.visibility = if (appName.alpha > 0) View.VISIBLE else View.INVISIBLE
+
+                searchLayoutParams.topMargin = searchLayoutNewTopMargin.toInt()
+                searchLayoutParams.width = searchLayoutNewWidth.toInt()
+                search.layoutParams = searchLayoutParams
+            }
+        })
     }
 }
 

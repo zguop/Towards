@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.billy.android.loading.Gloading;
+import com.waitou.widget_lib.StateController;
 import com.waitou.wt_library.R;
 import com.waitou.wt_library.base.IView;
-
-import cn.droidlover.xstatecontroller.XStateController;
 
 /**
  * auth aboom
@@ -18,7 +17,7 @@ import cn.droidlover.xstatecontroller.XStateController;
  */
 public class StateViewManager {
 
-    public static Gloading.Holder wrapXStateController(IView iView, boolean attachToRoot) {
+    public static Gloading.Holder wrapStateController(IView iView, boolean attachToRoot) {
         View contentView = iView.getContentView();
         if (contentView == null) {
             throw new IllegalStateException("contentView can not be null");
@@ -27,10 +26,9 @@ public class StateViewManager {
             ViewGroup parent = (ViewGroup) contentView.getParent();
             parent.removeView(contentView);
         }
-        if(contentView.getId() == View.NO_ID){
+        if (contentView.getId() == View.NO_ID) {
             contentView.setId(R.id.pageContentView);
         }
-
         Context context = contentView.getContext();
         ViewGroup rootView = null;
         if (attachToRoot) {
@@ -38,12 +36,12 @@ public class StateViewManager {
                 rootView = ((Activity) context).findViewById(R.id.pageRootView);
             }
         }
-        XStateController xStateController = (XStateController) LayoutInflater.from(context).inflate(R.layout.base_view_state, rootView, false);
-        xStateController.setId(R.id.pageStateView);
-        xStateController.contentView(contentView);
+        StateController stateController = (StateController) LayoutInflater.from(context).inflate(R.layout.base_view_state, rootView, false);
+        stateController.setId(R.id.pageStateView);
+        stateController.contentView(contentView);
         if (rootView != null) {
-            rootView.addView(xStateController);
+            rootView.addView(stateController);
         }
-        return Gloading.getDefault().wrap(xStateController).withRetry(iView.run());
+        return Gloading.getDefault().wrap(stateController).withRetry(iView);
     }
 }

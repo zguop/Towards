@@ -13,7 +13,6 @@ import com.to.aboomy.banner.ScaleInTransformer
 import com.to.aboomy.recycler_lib.adapter.Displayable
 import com.to.aboomy.recycler_lib.delegate.AdapterDelegate
 import com.to.aboomy.theme_lib.utils.ThemeUtils
-import com.umeng.socialize.utils.DeviceConfig.context
 import com.waitou.imgloader_lib.ImageLoader
 import com.waitou.towards.R
 import com.waitou.towards.bean.FunctionInfo
@@ -37,7 +36,7 @@ class BannerDelegate : AdapterDelegate() {
         val banner = helper.getView<Banner>(R.id.banner)
 
         val layoutParams = banner.getChildAt(0).layoutParams as RelativeLayout.LayoutParams
-        layoutParams.topMargin = SizeUtils.dp2px(20f)
+        layoutParams.topMargin = SizeUtils.dp2px(10f)
         layoutParams.bottomMargin = SizeUtils.dp2px(20f)
 
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)

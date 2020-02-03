@@ -17,8 +17,7 @@ dependencies {
     api rootProject.ext.dependencies['utilcode']
 
     implementation rootProject.ext.dependencies["avi-loading"]
-    implementation 'com.github.limedroid:XStateController:v1.1.1'
-    api 'com.billy.android:gloading:1.0.0'
+    api 'com.billy.android:gloading:1.1.0'
 
 
     debugImplementation rootProject.ext.dependencies["leakcanary-canary-debug"]

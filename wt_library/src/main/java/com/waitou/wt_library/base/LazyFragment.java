@@ -90,7 +90,6 @@ public abstract class LazyFragment extends Fragment {
         }
     }
 
-
     /**
      * fragment的懒加载 默认可见调用一次后，不会再次调用
      * isLoadCompleted 改为false，那么每次可见都会调用该方法

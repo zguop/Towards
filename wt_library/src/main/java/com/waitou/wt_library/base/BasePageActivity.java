@@ -19,18 +19,13 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RootViewManager.attachViewGet(this);
-        holder = StateViewManager.wrapXStateController(this, true);
+        holder = StateViewManager.wrapStateController(this, true);
         afterCreate(savedInstanceState);
     }
 
     public abstract void reloadData();
 
     public abstract void afterCreate(Bundle savedInstanceState);
-
-    @Override
-    public Runnable run() {
-        return this::reloadData;
-    }
 
     public void showLoading() {
         holder.showLoading();
@@ -46,5 +41,10 @@ public abstract class BasePageActivity extends BaseActivity implements IView {
 
     public void showEmpty() {
         holder.showEmpty();
+    }
+
+    @Override
+    public void run() {
+        reloadData();
     }
 }

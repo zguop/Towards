@@ -47,7 +47,7 @@ ext {
             "tinker_anno"              : "com.tencent.tinker:tinker-android-anno:${tinkerVersion}",
             "gson"                     : "com.google.code.gson:gson:2.8.5",
             "zxing"                    : "com.google.zxing:core:3.3.0",
-            "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.1.8',
+            "statusbarlib"             : 'com.to.aboomy:statusbar_lib:1.2.1',
             "banner"                   : 'com.to.aboomy:banner:3.1.0',
             "wisdom_impl"              : 'com.waitou:wisdom_impl:1.0.4',
             "adapterHelper"            : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50',

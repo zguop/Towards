@@ -21,16 +21,22 @@ import android.widget.TextView;
 public class SheetAdapterDialog extends NormalDialog {
 
     private RecyclerView.Adapter adapter;
-    private String               title;
-    private int                  itemHeight;
-    private int                  spanCount;
+    private String title;
+    private int itemHeight;
+    private int spanCount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gravity = Gravity.BOTTOM;
         width = WindowManager.LayoutParams.MATCH_PARENT;
-        height = height == WindowManager.LayoutParams.WRAP_CONTENT ? getResources().getDimensionPixelSize(R.dimen.dl_bottom_sheet_dialog_default_height) : height;
+        int itemCount = adapter.getItemCount();
+        if (spanCount > 0) {
+            itemCount = (int) Math.ceil(itemCount * 1.0f / spanCount);
+        }
+        int maxHeight = getResources().getDimensionPixelSize(R.dimen.dl_bottom_sheet_dialog_default_height);
+        int countHeight = itemCount * itemHeight;
+        height = countHeight < maxHeight ? WindowManager.LayoutParams.WRAP_CONTENT : maxHeight;
     }
 
     @Nullable
@@ -44,18 +50,6 @@ public class SheetAdapterDialog extends NormalDialog {
         dlList.setLayoutManager(spanCount > 0 ? new GridLayoutManager(getActivity(), spanCount) : new LinearLayoutManager(getActivity()));
         dlList.setAdapter(adapter);
         return inflate;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int itemCount = adapter.getItemCount();
-        if (spanCount > 0) {
-            itemCount = (int) Math.ceil(itemCount * 1.0f / spanCount);
-        }
-        int countHeight = itemCount * itemHeight;
-        if (height > 0 && countHeight < height) {
-            height = WindowManager.LayoutParams.WRAP_CONTENT;
-        }
     }
 
     public SheetAdapterDialog setTitle(String title) {

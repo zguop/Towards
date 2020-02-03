@@ -18,7 +18,7 @@ public enum SkinAttrType {
         @Override
         public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
             Context context = view.getContext();
-            int identifier = ThemeUtils.getIdentifier(context, attrName, context.getPackageName());
+            int identifier = ThemeUtils.getIdentifier(context, attrName, attrValueTypeName);
             view.setBackground(ThemeUtils.getDrawable(context, identifier));
         }
     },
@@ -26,7 +26,7 @@ public enum SkinAttrType {
         @Override
         public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
             Context context = view.getContext();
-            int identifier = ThemeUtils.getIdentifier(context, attrName, context.getPackageName());
+            int identifier = ThemeUtils.getIdentifier(context, attrName, attrValueTypeName);
             ((TextView) view).setTextColor(ThemeUtils.getColorStateList(context, identifier));
         }
     },
@@ -34,7 +34,7 @@ public enum SkinAttrType {
         @Override
         public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
             Context context = view.getContext();
-            int identifier = ThemeUtils.getIdentifier(context, attrName, context.getPackageName());
+            int identifier = ThemeUtils.getIdentifier(context, attrName, attrValueTypeName);
 
             ((ImageView) view).setImageDrawable(ThemeUtils.getDrawable(context, identifier));
         }
@@ -44,7 +44,7 @@ public enum SkinAttrType {
         public void apply(View view, String attrName, String attrValueResName, String attrValueTypeName) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                 Context context = view.getContext();
-                int identifier = ThemeUtils.getIdentifier(context, attrName, context.getPackageName());
+                int identifier = ThemeUtils.getIdentifier(context, attrName, attrValueTypeName);
                 ((ImageView) view).setImageTintList(ThemeUtils.getColorStateList(context, identifier));
             }
         }

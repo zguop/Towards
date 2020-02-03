@@ -138,7 +138,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         UMShareAPI.get(this).release()

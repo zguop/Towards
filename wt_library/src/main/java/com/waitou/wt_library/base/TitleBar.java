@@ -55,13 +55,13 @@ public class TitleBar extends FrameLayout {
      * @param listener 点击事件
      * @return ImageView
      */
-    public ImageView setLeftIcon(int resId, View.OnClickListener listener) {
+    public ImageView setLeftIcon(int resId, OnClickListener listener) {
         visible();
         ImageView leftImg = findViewById(R.id.left_back);
         leftImg.setVisibility(View.VISIBLE);
         leftImg.setImageResource(resId);
         if (listener != null) {
-            leftImg.setOnClickListener(listener);
+            ((View) leftImg.getParent()).setOnClickListener(v -> listener.onClick(leftImg));
         }
         return leftImg;
     }
@@ -73,13 +73,13 @@ public class TitleBar extends FrameLayout {
      * @param listener 点击事件
      * @return setRightText
      */
-    public TextView setLeftText(String leftTxt, View.OnClickListener listener) {
+    public TextView setLeftText(String leftTxt, OnClickListener listener) {
         visible();
         TextView textMenu = findViewById(R.id.left_txt);
         textMenu.setVisibility(View.VISIBLE);
         textMenu.setText(leftTxt);
         if (listener != null) {
-            textMenu.setOnClickListener(listener);
+            ((View) textMenu.getParent()).setOnClickListener(v -> listener.onClick(textMenu));
         }
         return textMenu;
     }
@@ -104,11 +104,13 @@ public class TitleBar extends FrameLayout {
      * @param header   标题文字
      * @param listener 自定义左侧图标返回事件
      */
-    public TextView initializeHeader(String header, View.OnClickListener listener) {
+    public TextView initializeHeader(String header, OnClickListener listener) {
         visible();
         View view = findViewById(R.id.left_back);
         view.setVisibility(View.VISIBLE);
-        view.setOnClickListener(listener);
+        if (listener != null) {
+            ((View) view.getParent()).setOnClickListener(v -> listener.onClick(view));
+        }
         TextView title = findViewById(R.id.title);
         title.setVisibility(View.VISIBLE);
         title.setText(header);
@@ -122,14 +124,13 @@ public class TitleBar extends FrameLayout {
      * @param listener 点击事件
      * @return ImageView
      */
-    public ImageView setRightIcon(int resId, View.OnClickListener listener) {
+    public ImageView setRightIcon(int resId, OnClickListener listener) {
         visible();
         ImageView rightImg = findViewById(R.id.icon_menu);
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(resId);
         if (listener != null) {
-            View click = findViewById(R.id.right_click);
-            click.setOnClickListener(listener);
+            ((View) rightImg.getParent()).setOnClickListener(v -> listener.onClick(rightImg));
         }
         return rightImg;
     }
@@ -141,38 +142,16 @@ public class TitleBar extends FrameLayout {
      * @param listener 点击事件
      * @return setRightText
      */
-    public TextView setRightText(String rightTxt, View.OnClickListener listener) {
+    public TextView setRightText(String rightTxt, OnClickListener listener) {
         visible();
         TextView textMenu = findViewById(R.id.text_menu);
         textMenu.setVisibility(View.VISIBLE);
         textMenu.setText(rightTxt);
         if (listener != null) {
-            View click = findViewById(R.id.right_click);
-            click.setOnClickListener(listener);
+            ((View) textMenu.getParent()).setOnClickListener(v -> listener.onClick(textMenu));
         }
         return textMenu;
     }
-
-    /**
-     * 设置右边菜单icon
-     */
-    public View[] setRightTextIcon(int resId, String leftTxt, View.OnClickListener listener) {
-        visible();
-        TextView textView = setRightText(leftTxt, null);
-        ImageView imageView = setRightIcon(resId, listener);
-        return new View[]{textView, imageView};
-    }
-
-    /**
-     * 设置右边菜单icon
-     */
-    public View[] setLeftTextIcon(int resId, String leftTxt, View.OnClickListener listener) {
-        visible();
-        TextView textView = setLeftText(leftTxt, null);
-        ImageView imageView = setLeftIcon(resId, listener);
-        return new View[]{textView, imageView};
-    }
-
 
     public void restoreTitleView(String title) {
         replaceTitleView(null);

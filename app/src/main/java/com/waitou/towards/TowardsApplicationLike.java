@@ -74,7 +74,6 @@ public class TowardsApplicationLike extends TinkerApplicationLike {
 
     @Override
     public void onBaseContextAttached(Context base) {
-//        MultiDex.install(base);
         super.onBaseContextAttached(base);
         if (subApp == null) {
             JlMetaProvider.register(getApplication(), "SUB_APP", ISubApplication.class);

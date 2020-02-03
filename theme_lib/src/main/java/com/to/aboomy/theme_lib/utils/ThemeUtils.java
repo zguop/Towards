@@ -20,7 +20,7 @@ import com.to.aboomy.theme_lib.appres.AppCompatResources;
 
 public class ThemeUtils {
 
-    public static final String ATTR_PREFIX        = "skin"; //开头
+    public static final String ATTR_PREFIX = "skin"; //开头
     public static final String COLOR_PRIMARY = "colorPrimary";
 
 
@@ -71,18 +71,14 @@ public class ThemeUtils {
     /**
      * 获取color drawable 目录资源
      *
-     * @param resName    资源名字
-     * @param defPackage 包名
+     * @param resName 资源名字
      * @return 资源id
      */
-    public static int getIdentifier(Context context, String resName, String defPackage) {
+    public static int getIdentifier(Context context, String resName, String defType) {
         Resources resources = context.getResources();
-        int identifier = resources.getIdentifier(resName, TYPE_DRAWABLE, defPackage);
-        if (identifier == 0) {
-            identifier = resources.getIdentifier(resName, TYPE_COLOR, defPackage);
-        }
-        if (identifier == 0) {
-            identifier = getThemeAttrId(context, resources.getIdentifier(resName, TYPE_ATTR, defPackage));
+        int identifier = resources.getIdentifier(resName, defType, context.getPackageName());
+        if (TYPE_ATTR.equals(defType)) {
+            identifier = getThemeAttrId(context, identifier);
         }
         return identifier;
     }

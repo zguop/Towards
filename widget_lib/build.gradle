@@ -6,4 +6,6 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["flexbox"]
     implementation rootProject.ext.dependencies["palette"]
+    implementation rootProject.ext.dependencies['utilcode']
+
 }

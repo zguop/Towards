@@ -6,9 +6,6 @@ import android.view.View;
  * auth aboom
  * date 2019/4/7
  */
-public interface IView {
-
+public interface IView extends Runnable {
     View getContentView();
-
-    Runnable run();
 }

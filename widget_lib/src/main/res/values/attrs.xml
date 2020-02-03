@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="widget_ShadowLayout">
-        <attr name="widget_sl_cornerRadius" format="dimension"/>
-        <attr name="widget_sl_shadow" format="dimension"/>
-        <attr name="widget_sl_shadowColor" format="color"/>
-        <attr name="widget_sl_dx" format="dimension"/>
-        <attr name="widget_sl_dy" format="dimension"/>
-        <attr name="widget_sl_palette" format="boolean"/>
+        <attr name="widget_sl_cornerRadius" format="dimension" />
+        <attr name="widget_sl_shadow" format="dimension" />
+        <attr name="widget_sl_shadowColor" format="color" />
+        <attr name="widget_sl_dx" format="dimension" />
+        <attr name="widget_sl_dy" format="dimension" />
+        <attr name="widget_sl_palette" format="boolean" />
         <attr name="widget_sl_side">
-            <flag name="all" value="0x0f"/>
-            <flag name="left" value="0x01"/>
-            <flag name="top" value="0x02"/>
-            <flag name="right" value="0x04"/>
-            <flag name="bottom" value="0x08"/>
+            <flag name="all" value="0x0f" />
+            <flag name="left" value="0x01" />
+            <flag name="top" value="0x02" />
+            <flag name="right" value="0x04" />
+            <flag name="bottom" value="0x08" />
         </attr>
     </declare-styleable>
 
 
     <declare-styleable name="widget_RectView">
-        <attr name="widget_radius" format="dimension"/>
+        <attr name="widget_radius" format="dimension" />
     </declare-styleable>
 
 
     <declare-styleable name="widget_CompatViewPager">
-        <attr name="widget_page_TouchMode" format="boolean"/>
+        <attr name="widget_page_TouchMode" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="widget_SearchView">
+        <attr name="widget_search_hint" format="string" />
+        <attr name="widget_search_default_center" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="widget_StateController">
+        <attr name="widget_contentLayoutId" format="reference" />
+        <attr name="widget_loadingLayoutId" format="reference" />
+        <attr name="widget_emptyLayoutId" format="reference" />
+        <attr name="widget_errorLayoutId" format="reference" />
+    </declare-styleable>
+
 
 </resources>

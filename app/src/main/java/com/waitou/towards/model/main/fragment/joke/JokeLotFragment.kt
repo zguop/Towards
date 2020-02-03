@@ -46,8 +46,8 @@ class JokeLotFragment : LazyFragment(), IView, PullRecyclerView.OnRefreshAndLoad
     private val viewModule by lazy { ViewModelProviders.of(this@JokeLotFragment)[JokeLotViewModule::class.java] }
     private val type by lazy { arguments?.getInt(Values.JOKE_CONTENT_TYPE) }
 
-    override fun run(): Runnable {
-        return Runnable { visibleCall() }
+    override fun run()  {
+        visibleCall()
     }
 
     override fun getContentView(): View {
@@ -60,7 +60,7 @@ class JokeLotFragment : LazyFragment(), IView, PullRecyclerView.OnRefreshAndLoad
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        holder = StateViewManager.wrapXStateController(this, false)
+        holder = StateViewManager.wrapStateController(this, false)
         return holder.wrapper
     }
 

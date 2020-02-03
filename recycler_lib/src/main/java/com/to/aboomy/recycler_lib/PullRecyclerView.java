@@ -84,8 +84,7 @@ public class PullRecyclerView extends FrameLayout implements SwipeRefreshLayout.
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
-        if (layoutManager != null)
-            recyclerView.setLayoutManager(layoutManager);
+        if (layoutManager != null) recyclerView.setLayoutManager(layoutManager);
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

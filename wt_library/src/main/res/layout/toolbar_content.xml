@@ -29,7 +29,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:textColor="?attr/skin_text_dark_color"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:visibility="gone"
             tools:text="杭州"
             tools:visibility="visible" />
@@ -42,32 +42,34 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
+
         <ImageView
             android:id="@+id/icon_menu"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/base_svg_ic_back"
             android:visibility="gone"
+            tools:src="@drawable/base_svg_ic_back"
             tools:visibility="visible" />
 
         <TextView
             android:id="@+id/text_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:textColor="?attr/skin_text_dark_color"
-            android:textSize="15dp"
+            android:textSize="16sp"
             android:visibility="gone"
             tools:text="菜单"
             tools:visibility="visible" />
+
 
     </LinearLayout>
 
@@ -81,7 +83,7 @@
         android:layout_marginRight="80dp"
         android:gravity="center">
 
-        <com.waitou.widget_lib.DoubleClickTextView
+        <TextView
             android:id="@+id/title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="match_parent"
@@ -91,7 +93,7 @@
             android:maxLines="1"
             android:minWidth="70dp"
             android:textColor="?attr/skin_text_dark_color"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textStyle="bold"
             tools:text="标题" />
 

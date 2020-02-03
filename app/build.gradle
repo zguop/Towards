@@ -60,7 +60,7 @@ dependencies {
     implementation "com.android.databinding:compiler:3.1.4"
 
     implementation project(':zbar_lib')
-    implementation project(':wt_library')
+    api project(':wt_library')
     implementation project(':meta_provider_lib')
     implementation project(':tinker_lib')
     implementation project(':imgloader_lib')

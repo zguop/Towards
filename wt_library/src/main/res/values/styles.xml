@@ -24,7 +24,6 @@
         <item name="skin_transparent_theme_color">@color/color_powder_80</item>
         <item name="skin_text_dark_color">@color/color_373737</item>
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
-        <item name="skin_Background_drawable">@drawable/theme_bg2</item>
 
     </style>
 
@@ -40,7 +39,6 @@
         <item name="skin_transparent_theme_color">@color/color_red_80</item>
         <item name="skin_text_dark_color">@color/color_373737</item>
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
-        <item name="skin_Background_drawable">@drawable/theme_bg1</item>
 
 
     </style>
@@ -66,8 +64,6 @@
         <item name="skin_text_dark_color">@color/color_373737</item>
         <!--灰色字体-->
         <item name="skin_text_gray_color">@color/color_a7a7a7</item>
-        <!--背景图片-->
-        <item name="skin_Background_drawable">@drawable/theme_bg3</item>
     </style>
 
 

@@ -1,16 +1,15 @@
 package com.waitou.wt_library.base;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.to.aboomy.rx_lib.RxHelper;
 import com.to.aboomy.statusbar_lib.StatusBarUtil;
 import com.to.aboomy.theme_lib.utils.ThemeUtils;
 import com.waitou.wt_library.R;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 
@@ -21,7 +20,7 @@ import io.reactivex.disposables.Disposable;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private CompositeDisposable mCompositeDisposable;
+    public RxHelper rxHelper = RxHelper.getHelper();
     public boolean isImmersiveStatusBar;
 
     @SuppressWarnings("unchecked")
@@ -46,33 +45,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         isImmersiveStatusBar = immersiveStatusBar();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
     public boolean immersiveStatusBar() {
         return StatusBarUtil.setStatusBarColor(this, ThemeUtils.getThemeAttrColor(this, R.attr.colorPrimary));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();
-        }
     }
 
     /**
      * 向队列中添加一个Subscription
      */
     public void pend(Disposable disposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = new CompositeDisposable();
-        }
         if (disposable != null) {
-            mCompositeDisposable.add(disposable);
+            rxHelper.pend(disposable);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        rxHelper.onDestroy();
     }
 
     @Override
