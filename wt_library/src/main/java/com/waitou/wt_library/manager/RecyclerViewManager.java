@@ -2,9 +2,10 @@ package com.waitou.wt_library.manager;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.to.aboomy.recycler_lib.PullRecyclerView;
 import com.to.aboomy.recycler_lib.adapter.MultipleAdapter;

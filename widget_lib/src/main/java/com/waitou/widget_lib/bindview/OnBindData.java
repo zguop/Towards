@@ -1,6 +1,7 @@
 package com.waitou.widget_lib.bindview;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * auth aboom by 2018/7/26.

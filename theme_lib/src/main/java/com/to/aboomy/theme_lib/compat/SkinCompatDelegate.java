@@ -1,11 +1,12 @@
 package com.to.aboomy.theme_lib.compat;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.to.aboomy.theme_lib.skin.SkinAttr;
 import com.to.aboomy.theme_lib.skin.SkinAttrType;

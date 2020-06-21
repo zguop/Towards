@@ -1,7 +1,8 @@
 package com.to.aboomy.theme_lib;
 
 import android.app.Application;
-import android.support.annotation.StyleRes;
+
+import androidx.annotation.StyleRes;
 
 import com.to.aboomy.theme_lib.compat.SkinActivityLifecycle;
 import com.to.aboomy.theme_lib.utils.SkinPreference;

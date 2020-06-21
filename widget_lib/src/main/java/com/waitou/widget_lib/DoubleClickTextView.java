@@ -1,11 +1,12 @@
 package com.waitou.widget_lib;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * Created by waitou on 17/1/25.

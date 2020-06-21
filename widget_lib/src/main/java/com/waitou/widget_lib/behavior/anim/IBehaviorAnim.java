@@ -1,8 +1,9 @@
 package com.waitou.widget_lib.behavior.anim;
 
-import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.animation.Interpolator;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 /**
  * auth aboom

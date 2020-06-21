@@ -1,15 +1,16 @@
 package com.waitou.basic_lib.util;
 
-import android.support.annotation.LayoutRes;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.LayoutRes;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.waitou.basic_lib.R;
-import com.waitou.normal_dialog_lib.SheetAdapterDialog;
 import com.waitou.normal_dialog_lib.NormalDialog;
+import com.waitou.normal_dialog_lib.SheetAdapterDialog;
 import com.waitou.three_library.share.ShareEnum;
 import com.waitou.three_library.share.ShareInfo;
 import com.waitou.three_library.share.UShare;

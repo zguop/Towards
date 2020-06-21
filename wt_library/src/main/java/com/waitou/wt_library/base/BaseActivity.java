@@ -1,9 +1,10 @@
 package com.waitou.wt_library.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.to.aboomy.rx_lib.RxHelper;
 import com.to.aboomy.statusbar_lib.StatusBarUtil;

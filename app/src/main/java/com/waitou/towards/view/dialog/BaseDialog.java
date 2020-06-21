@@ -2,13 +2,14 @@ package com.waitou.towards.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 
 import com.waitou.towards.R;
 import com.waitou.towards.databinding.DialogBaseBinding;

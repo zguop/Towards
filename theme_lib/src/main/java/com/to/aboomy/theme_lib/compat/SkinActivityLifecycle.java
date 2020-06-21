@@ -9,10 +9,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.core.view.LayoutInflaterCompat;
 
 import com.to.aboomy.theme_lib.annotation.Skinable;
 import com.to.aboomy.theme_lib.utils.SkinPreference;

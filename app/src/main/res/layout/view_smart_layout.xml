@@ -10,7 +10,7 @@
 
         <variable
             name="viewPager"
-            type="android.support.v4.view.ViewPager"/>
+            type="androidx.viewpager.widget.ViewPager"/>
     </data>
 
 

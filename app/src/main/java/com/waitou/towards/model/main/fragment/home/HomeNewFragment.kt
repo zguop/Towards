@@ -1,15 +1,16 @@
 package com.waitou.towards.model.main.fragment.home
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.billy.android.loading.Gloading
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.to.aboomy.recycler_lib.adapter.MultipleAdapter
 import com.to.aboomy.recycler_lib.species.Place
@@ -19,6 +20,7 @@ import com.waitou.net_library.model.APIResult
 import com.waitou.towards.R
 import com.waitou.towards.bean.CanInfo
 import com.waitou.towards.bean.HomeDataInfo
+import com.waitou.towards.model.QrScanActivity
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.BannerDelegate
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.BottomTipsDelegate
 import com.waitou.towards.model.main.fragment.home.adapterdelegate.HomeFunctionDelegate
@@ -62,6 +64,9 @@ class HomeNewFragment : LazyFragment(), IView {
 
         }
         inflate.postDelayed({ translationScaleSearch() }, 1000)
+        inflate.qrCode.setOnClickListener {
+            ActivityUtils.startActivity(QrScanActivity::class.java)
+        }
         return inflate
     }
 

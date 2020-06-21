@@ -18,10 +18,9 @@
             name="item"
             type="com.waitou.towards.bean.GankResultsTypeInfo"/>
 
-       \
     </data>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -116,6 +115,6 @@
                     <!--android:textSize="11dp"/>-->
             <!--</LinearLayout>-->
         <!--</LinearLayout>-->
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </layout>

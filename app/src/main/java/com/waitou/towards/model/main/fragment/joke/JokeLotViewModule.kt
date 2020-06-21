@@ -1,7 +1,7 @@
 package com.waitou.towards.model.main.fragment.joke
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.to.aboomy.rx_lib.RxHelper
 import com.waitou.net_library.helper.RxTransformerHelper
 import com.waitou.net_library.helper.SimpleErrorVerify

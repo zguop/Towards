@@ -1,7 +1,7 @@
 package com.waitou.towards.model.main.fragment.joke.adapterdelegate
 
-import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
+import androidx.fragment.app.FragmentActivity
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseViewHolder

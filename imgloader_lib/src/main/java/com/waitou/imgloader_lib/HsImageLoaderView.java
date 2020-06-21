@@ -4,8 +4,9 @@ package com.waitou.imgloader_lib;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
+import androidx.annotation.Nullable;
 
 /**
  * auth aboom

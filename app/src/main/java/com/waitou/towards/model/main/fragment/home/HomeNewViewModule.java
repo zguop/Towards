@@ -1,7 +1,8 @@
 package com.waitou.towards.model.main.fragment.home;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ResourceUtils;

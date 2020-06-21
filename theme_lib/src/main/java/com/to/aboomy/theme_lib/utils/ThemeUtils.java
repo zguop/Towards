@@ -5,10 +5,11 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.AttrRes;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
+
+import androidx.annotation.AttrRes;
+import androidx.core.content.ContextCompat;
 
 import com.to.aboomy.theme_lib.R;
 import com.to.aboomy.theme_lib.appres.AppCompatResources;

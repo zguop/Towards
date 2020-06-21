@@ -34,21 +34,20 @@ class BannerDelegate : AdapterDelegate() {
     override fun convert(helper: BaseViewHolder, data: Displayable, position: Int) {
         val info = data as HomeDataInfo
         val banner = helper.getView<Banner>(R.id.banner)
-
         val layoutParams = banner.getChildAt(0).layoutParams as RelativeLayout.LayoutParams
         layoutParams.topMargin = SizeUtils.dp2px(10f)
         layoutParams.bottomMargin = SizeUtils.dp2px(20f)
-
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         params.addRule(RelativeLayout.CENTER_HORIZONTAL)
+
         val indicator = IndicatorView(context)
                 .setParams(params)
                 .setIndicatorStyle(IndicatorView.IndicatorStyle.INDICATOR_CIRCLE_RECT)
                 .setIndicatorColor(ColorUtils.getColor(R.color.color_666666))
                 .setIndicatorSelectorColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary))
         banner.setPageTransformer(true, ScaleInTransformer(0.8f))
-        banner.setPageMargin(SizeUtils.dp2px(10f), -SizeUtils.dp2px(14f))
+        banner.setPageMargin(SizeUtils.dp2px(10f), SizeUtils.dp2px(14f))
                 .setIndicator(indicator)
                 .setHolderCreator { context, _, o ->
                     val view = View.inflate(context, R.layout.item_banner_image, null)

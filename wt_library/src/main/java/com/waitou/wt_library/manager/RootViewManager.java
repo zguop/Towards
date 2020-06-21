@@ -1,9 +1,10 @@
 package com.waitou.wt_library.manager;
 
 import android.app.Activity;
-import android.support.design.widget.CoordinatorLayout;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.waitou.wt_library.R;
 

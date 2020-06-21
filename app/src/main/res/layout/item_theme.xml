@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         app:widget_radius="20dp" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/themeItemFocus"
         android:layout_width="20dp"
         android:layout_height="20dp"

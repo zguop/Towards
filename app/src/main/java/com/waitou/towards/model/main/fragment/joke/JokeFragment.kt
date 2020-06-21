@@ -1,10 +1,10 @@
 package com.waitou.towards.model.main.fragment.joke
 
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.ViewPager
 import com.waitou.basic_lib.adapter.BasePagerFragmentAdapter
 import com.waitou.towards.R
 import com.waitou.wt_library.base.LazyFragment

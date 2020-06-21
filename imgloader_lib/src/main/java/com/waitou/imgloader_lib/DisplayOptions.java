@@ -1,7 +1,8 @@
 package com.waitou.imgloader_lib;
 
 import android.graphics.Bitmap;
-import android.support.annotation.IdRes;
+
+import androidx.annotation.IdRes;
 
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;

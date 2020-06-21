@@ -1,7 +1,8 @@
 package com.waitou.wt_library.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.billy.android.loading.Gloading;
 import com.waitou.wt_library.manager.RootViewManager;

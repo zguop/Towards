@@ -1,7 +1,7 @@
 package com.to.aboomy.recycler_lib.species;
 
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 
 import com.to.aboomy.recycler_lib.adapter.Displayable;
 

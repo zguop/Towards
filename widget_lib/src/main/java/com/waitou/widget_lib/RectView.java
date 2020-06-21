@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.v4.app.ActivityCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * Created by waitou on 17/2/8.

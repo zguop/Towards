@@ -1,8 +1,9 @@
 package com.waitou.widget_lib.behavior;
 
-import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 /**
  * auth aboom

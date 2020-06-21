@@ -1,8 +1,9 @@
 package com.waitou.imgloader_lib;
 
-import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;

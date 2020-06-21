@@ -8,4 +8,7 @@ android {
 dependencies {
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["adapterHelper"]
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation 'com.scwang.smart:refresh-header-material:2.0.1'
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'
 }

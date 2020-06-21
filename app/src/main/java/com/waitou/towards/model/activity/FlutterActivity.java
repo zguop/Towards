@@ -1,8 +1,9 @@
 package com.waitou.towards.model.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.waitou.wt_library.base.BaseActivity;
 

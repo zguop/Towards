@@ -1,9 +1,10 @@
 package com.waitou.widget_lib.bindview;
 
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

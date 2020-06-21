@@ -5,18 +5,19 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.bertsir.zbar.Qr.Symbol;
-import cn.bertsir.zbar.camera.QrConfig;
-import cn.bertsir.zbar.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class ScanView extends View {
+import cn.bertsir.zbar.Qr.Symbol;
+import cn.bertsir.zbar.R;
+import cn.bertsir.zbar.camera.QrConfig;
+
+public class  ScanView extends View {
 
     /**
      * 提示文字标题

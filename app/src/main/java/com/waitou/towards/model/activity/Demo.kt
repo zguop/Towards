@@ -2,13 +2,13 @@ package com.waitou.towards.model.activity
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.waitou.towards.model.activity.coroutine.startCoroutine
 import com.waitou.towards.model.activity.coroutine.startLogoPic

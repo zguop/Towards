@@ -2,10 +2,10 @@ package com.waitou.towards.model.guide
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.v4.app.ActivityCompat
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.annotation.DrawableRes
+import androidx.core.app.ActivityCompat
 import com.blankj.utilcode.util.ScreenUtils
 import com.waitou.towards.R
 import com.waitou.towards.model.main.MainActivity

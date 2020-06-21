@@ -1,9 +1,10 @@
 package com.waitou.widget_lib.behavior.anim;
 
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
 import android.view.animation.Interpolator;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 /**
  * auth aboom
